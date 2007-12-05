@@ -1,5 +1,6 @@
 * text=auto !eol
 trunk/COPYING.txt -text
+trunk/docs/how-to-compile.txt -text
 trunk/installer/HeaderImage.bmp -text
 trunk/installer/HeaderImage.xcf -text
 trunk/installer/InstallScript.nsi -text
