@@ -1,5 +1,6 @@
 * text=auto !eol
 /COPYING.txt -text
+docs/how-to-compile.txt -text
 installer/HeaderImage.bmp -text
 installer/HeaderImage.xcf -text
 installer/InstallScript.nsi -text

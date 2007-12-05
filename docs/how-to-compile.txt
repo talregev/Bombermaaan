@@ -1,0 +1,31 @@
+These are the steps how to get Bombermaaan successfully compiled on Windows.
+
+PLEASE NOTE: This how-to is incomplete so far!
+
+
+
+- You need the Windows Platform SDK from Microsoft. I've read on another sf.net project site that this 
+  isn't necessary if you have a full Visual C++ installation, not the Express Edition.
+  Although the title says "Vista" I'm using this also on Win XP.
+  1 GB download, ISO file
+  http://www.microsoft.com/downloads/details.aspx?familyid=FF6467E6-5BBA-4BF5-B562-9199BE864D29&displaylang=en
+  According to http://en.wikipedia.org/wiki/Microsoft_Windows_SDK there is also the 
+  possibility of a web installation so you don't need to burn a DVD.
+  The installation takes some minutes.
+
+- Get a C++ compiler. In this example, I'm using Microsofts Visual C++ Express Edition.
+  http://en.wikipedia.org/wiki/Microsoft_Visual_Studio_Express#Visual_C.2B.2B_Express
+  Download web installer Visual C++ 2008 Express Edition (vcsetup.exe):
+  http://go.microsoft.com/?linkid=7729279
+  Run vcsetup.exe, the needed files will be downloaded by the installer (90 MB for me).
+
+- Install service packs. For example for Visual C++ 2005 (!) Express Edition
+  https://www.microsoft.com/downloads/details.aspx?FamilyID=7b0b0339-613a-46e6-ab4d-080d4d4a8c4e&DisplayLang=en
+
+>> The other steps will be added soon.
+
+
+
+
+By Bernd Arnold
+http://bombermaaan.sourceforge.net/
