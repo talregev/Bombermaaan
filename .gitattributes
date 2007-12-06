@@ -113,3 +113,4 @@ src/Bombermaaan/CWindow.h -text
 src/Bombermaaan/CWinner.cpp -text
 src/Bombermaaan/CWinner.h -text
 src/Bombermaaan/WinMain.cpp -text
+web/index.php -text
