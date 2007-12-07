@@ -63,10 +63,10 @@ SetCompressor lzma
     You should have received a copy of the GNU General Public License \
     along with this program.  If not, see <http://www.gnu.org/licenses/>."
   VIAddVersionKey "Website" "http://bombermaaan.sourceforge.net/"
-;  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" "Test Application is a trademark of Fake company"
+;  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" "..."
   VIAddVersionKey "LegalCopyright" "© Thibaut Tollemer"
   VIAddVersionKey "FileDescription" "Installer for Bombermaaan"
-  VIAddVersionKey "FileVersion" "1.02"
+  VIAddVersionKey "FileVersion" "2"
 
 ;ProductName
 ;Comments
@@ -148,7 +148,7 @@ Section "Common files (required)" SecCommonReq
   File ..\..\Bomberman\Bomberman.dat
   File ..\..\Bomberman\Bomberman.exe
   File ..\..\Bomberman\FMOD.DLL
-  File ..\..\Bomberman\Read.Me.FIRST.txt
+  File ..\docs\Readme.html
 
   SetOutPath "$INSTDIR\Levels"
   File ..\..\Bomberman\Levels\L1.TXT
@@ -172,7 +172,7 @@ Section "Common files (required)" SecCommonReq
     ;Create shortcuts
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bomberman.lnk" "$INSTDIR\Bomberman.exe"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Readme.lnk" "$INSTDIR\Read.Me.FIRST.txt"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Readme.lnk" "$INSTDIR\Readme.html"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   
   !insertmacro MUI_STARTMENU_WRITE_END
@@ -204,7 +204,7 @@ Section "Uninstall"
   Delete "$INSTDIR\Bomberman.exe"
   Delete "$INSTDIR\Bomberman.dat"
   Delete "$INSTDIR\FMOD.DLL"
-  Delete "$INSTDIR\Read.Me.FIRST.txt"
+  Delete "$INSTDIR\Readme.html"
   Delete "$INSTDIR\Levels\L1.TXT"
   Delete "$INSTDIR\Levels\L2.TXT"
   Delete "$INSTDIR\Levels\L3.TXT"
