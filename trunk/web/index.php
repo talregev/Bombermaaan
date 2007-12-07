@@ -5,6 +5,10 @@ header("Vary: Accept");
     header("Content-Type: application/xhtml+xml; charset=utf-8");
 #else
 #    header("Content-Type: text/html; charset=utf-8");
+
+$downloadurl = "http://downloads.sourceforge.net/bombermaaan/Bombermaaan_1.02_Setup.exe?modtime=1197055380&big_mirror=0";
+$filemd5 = "4a708baed1d671be6ff0ba14bcd851e2";
+$filesha1 = "d57361ee3c83f4cd03bee0d881f14a02b6a953ad";
 	
 ?>
 <?php echo '<?' . 'xml version="1.0" encoding="UTF-8"?>' . "\n"; ?>
@@ -48,7 +52,7 @@ Download the files from here:
 </p>
 
 <ul>
-<li><a href="http://downloads.sourceforge.net/bombermaaan/Bombermaaan_1.02-Setup.exe?modtime=1196818801&amp;big_mirror=0">Installer for Win32 - Version 1.02</a></li>
+<li><a href="<?php echo htmlentities( $downloadurl ); ?>">Installer for Win32 - Version 1.02</a><br /><small>MD5:&nbsp;<?php echo $filemd5; ?>, SHA1:&nbsp;<?php echo $filesha1; ?></small></li>
 <li><a href="http://downloads.sourceforge.net/bombermaaan/Bombermaaan_102_src.zip?modtime=1083110400&amp;big_mirror=0">Source files - Version 1.02</a></li>
 </ul>
 
