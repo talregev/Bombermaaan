@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.00"
-	Name="Bomberman"
+	Name="Bombermaaan"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>
@@ -27,7 +27,7 @@
 				RuntimeLibrary="5"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Debug/Bomberman.pch"
+				PrecompiledHeaderFile=".\Debug/Bombermaaan.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -41,14 +41,14 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="ws2_32.lib fmodvc.lib ddraw.lib dxguid.lib dinput.lib odbc32.lib odbccp32.lib"
-				OutputFile=".\..\_Test_\Debug/Bomberman.exe"
+				OutputFile=".\..\_Test_\Debug/Bombermaaan.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="../DXSDK/Lib,../FMOD"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\_Test_\Debug/Bomberman.pdb"
+				ProgramDatabaseFile=".\..\_Test_\Debug/Bombermaaan.pdb"
 				GenerateMapFile="TRUE"
-				MapFileName=".\Debug/Bomberman.map"
+				MapFileName=".\Debug/Bombermaaan.map"
 				SubSystem="2"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -56,7 +56,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\_Test_\Debug/Bomberman.tlb"/>
+				TypeLibraryName=".\..\_Test_\Debug/Bombermaaan.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -90,7 +90,7 @@
 				EnableFunctionLevelLinking="TRUE"
 				UsePrecompiledHeader="3"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Release/Bomberman.pch"
+				PrecompiledHeaderFile=".\Release/Bombermaaan.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -103,7 +103,7 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="ws2_32.lib fmodvc.lib ddraw.lib dxguid.lib dinput.lib odbc32.lib odbccp32.lib"
-				OutputFile=".\..\_Test_\Release/Bomberman.exe"
+				OutputFile=".\..\_Test_\Release/Bombermaaan.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
 				AdditionalLibraryDirectories="../DXSDK/Lib,../FMOD"
@@ -114,7 +114,7 @@
 				MkTypLibCompatible="TRUE"
 				SuppressStartupBanner="TRUE"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\_Test_\Release/Bomberman.tlb"/>
+				TypeLibraryName=".\..\_Test_\Release/Bombermaaan.tlb"/>
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
@@ -474,10 +474,10 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\Bomberman.ico">
+			RelativePath=".\Bombermaaan.ico">
 		</File>
 		<File
-			RelativePath=".\Bomberman.rc">
+			RelativePath=".\Bombermaaan.rc">
 		</File>
 		<File
 			RelativePath=".\WinMain.cpp">

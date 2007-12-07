@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="Bomberman" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="Bombermaaan" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Application" 0x0101
 
-CFG=Bomberman - Win32 Release
+CFG=Bombermaaan - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Bomberman.mak".
+!MESSAGE NMAKE /f "Bombermaaan.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Bomberman.mak" CFG="Bomberman - Win32 Release"
+!MESSAGE NMAKE /f "Bombermaaan.mak" CFG="Bombermaaan - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Bomberman - Win32 Release" (based on "Win32 (x86) Application")
-!MESSAGE "Bomberman - Win32 Debug" (based on "Win32 (x86) Application")
+!MESSAGE "Bombermaaan - Win32 Release" (based on "Win32 (x86) Application")
+!MESSAGE "Bombermaaan - Win32 Debug" (based on "Win32 (x86) Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,7 +29,7 @@ CPP=cl.exe
 MTL=midl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Bomberman - Win32 Release"
+!IF  "$(CFG)" == "Bombermaaan - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -55,7 +55,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
 # ADD LINK32 ws2_32.lib fmodvc.lib ddraw.lib dxguid.lib dinput.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /profile /machine:I386 /libpath:"../DXSDK/Lib" /libpath:"../FMOD"
 
-!ELSEIF  "$(CFG)" == "Bomberman - Win32 Debug"
+!ELSEIF  "$(CFG)" == "Bombermaaan - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -86,8 +86,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Bomberman - Win32 Release"
-# Name "Bomberman - Win32 Debug"
+# Name "Bombermaaan - Win32 Release"
+# Name "Bombermaaan - Win32 Debug"
 # Begin Group "Screens"
 
 # PROP Default_Filter ""
@@ -538,11 +538,11 @@ SOURCE=.\CAiManager.h
 # End Group
 # Begin Source File
 
-SOURCE=.\Bomberman.ico
+SOURCE=.\Bombermaaan.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\Bomberman.rc
+SOURCE=.\Bombermaaan.rc
 # End Source File
 # Begin Source File
 

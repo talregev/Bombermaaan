@@ -1,9 +1,9 @@
 * text=auto !eol
-branches/project_file_migration_to_vc2008/Bomberman.dsw -text
-branches/project_file_migration_to_vc2008/Bomberman.sln -text
-branches/project_file_migration_to_vc2008/Bomberman/Bomberman.dsp -text
-branches/project_file_migration_to_vc2008/Bomberman/Bomberman.rc -text
-branches/project_file_migration_to_vc2008/Bomberman/Bomberman.vcproj -text
+branches/project_file_migration_to_vc2008/Bombermaaan.dsw -text
+branches/project_file_migration_to_vc2008/Bombermaaan.sln -text
+branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.dsp -text
+branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.rc -text
+branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.vcproj -text
 branches/project_file_migration_to_vc2008/RES/RES.dsp -text
 branches/project_file_migration_to_vc2008/RES/RES.vcproj -text
 trunk/COPYING.txt -text

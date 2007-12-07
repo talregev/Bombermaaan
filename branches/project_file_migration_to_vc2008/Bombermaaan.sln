@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 7.00
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bomberman", "Bomberman\Bomberman.vcproj", "{CF0E1EDA-9BF5-4995-B6D9-AA07ED4BEB21}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bombermaaan", "Bombermaaan\Bombermaaan.vcproj", "{CF0E1EDA-9BF5-4995-B6D9-AA07ED4BEB21}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RES", "RES\RES.vcproj", "{E8C3FF7A-C478-4173-970F-6B195606F77F}"
 EndProject
