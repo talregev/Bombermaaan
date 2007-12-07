@@ -63,7 +63,7 @@ public:
     void            LogLastError();                         //!< Log the last occured error!
     long            Write ( const char *pMessage, ... );
     long            WriteLine( const char *pMessage, ... ); //!< Write a line to the log
-    inline bool     IsOpen();                               //!< Return weather the log is open or not
+    inline bool     IsOpen();                               //!< Return whether the log is open or not
 
 private:
 
@@ -75,7 +75,7 @@ private:
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Return weather the log is open or not
+// Return whether the log is open or not
 inline bool CLog::IsOpen()
 {
     return m_bOpen;
