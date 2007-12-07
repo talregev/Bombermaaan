@@ -112,5 +112,7 @@ src/Bombermaaan/CWindow.cpp -text
 src/Bombermaaan/CWindow.h -text
 src/Bombermaaan/CWinner.cpp -text
 src/Bombermaaan/CWinner.h -text
+src/Bombermaaan/STDAFX.CPP -text
+src/Bombermaaan/STDAFX.H -text
 src/Bombermaaan/WinMain.cpp -text
 web/index.php -text
