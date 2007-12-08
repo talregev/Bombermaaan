@@ -1,510 +1,704 @@
-<?xml version="1.0" encoding = "Windows-1252"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.00"
+	Version="9,00"
 	Name="Bombermaaan"
-	SccProjectName=""
-	SccLocalPath="">
+	ProjectGUID="{CF0E1EDA-9BF5-4995-B6D9-AA07ED4BEB21}"
+	TargetFrameworkVersion="131072"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\_Test_\Debug"
 			IntermediateDirectory=".\Debug"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\_Test_\Debug/Bombermaaan.tlb"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../DXSDK/Include,../STL,../FMOD"
 				PreprocessorDefinitions="WIN32,_DEBUG,_WINDOWS"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
-				UsePrecompiledHeader="3"
+				RuntimeLibrary="1"
+				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Debug/Bombermaaan.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
 				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
+				SuppressStartupBanner="true"
 				DebugInformationFormat="4"
-				CompileAs="0"/>
+				CompileAs="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1036"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="ws2_32.lib fmodvc.lib ddraw.lib dxguid.lib dinput.lib odbc32.lib odbccp32.lib"
 				OutputFile=".\..\_Test_\Debug/Bombermaaan.exe"
 				LinkIncremental="2"
-				SuppressStartupBanner="TRUE"
+				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="../DXSDK/Lib,../FMOD"
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\..\_Test_\Debug/Bombermaaan.pdb"
-				GenerateMapFile="TRUE"
+				GenerateMapFile="true"
 				MapFileName=".\Debug/Bombermaaan.map"
-				SubSystem="2"/>
+				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\_Test_\Debug/Bombermaaan.tlb"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1036"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\_Test_\Release"
 			IntermediateDirectory=".\Release"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\_Test_\Release/Bombermaaan.tlb"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="../DXSDK/Include,../STL,../FMOD"
 				PreprocessorDefinitions="WIN32,NDEBUG,_WINDOWS"
-				StringPooling="TRUE"
-				RuntimeLibrary="4"
-				EnableFunctionLevelLinking="TRUE"
-				UsePrecompiledHeader="3"
+				StringPooling="true"
+				RuntimeLibrary="0"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
 				PrecompiledHeaderFile=".\Release/Bombermaaan.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
 				WarningLevel="3"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
+				SuppressStartupBanner="true"
+				CompileAs="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1036"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="ws2_32.lib fmodvc.lib ddraw.lib dxguid.lib dinput.lib odbc32.lib odbccp32.lib"
 				OutputFile=".\..\_Test_\Release/Bombermaaan.exe"
 				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
+				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="../DXSDK/Lib,../FMOD"
-				SubSystem="2"/>
+				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\_Test_\Release/Bombermaaan.tlb"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1036"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Screens"
-			Filter="">
+			>
 			<File
-				RelativePath=".\CBoard.cpp">
+				RelativePath=".\CBoard.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CBoard.h">
+				RelativePath=".\CBoard.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CClock.cpp">
+				RelativePath=".\CClock.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CClock.h">
+				RelativePath=".\CClock.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CCloudManager.cpp">
+				RelativePath=".\CCloudManager.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CCloudManager.h">
+				RelativePath=".\CCloudManager.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CCommandChunk.cpp">
+				RelativePath=".\CCommandChunk.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CCommandChunk.h">
+				RelativePath=".\CCommandChunk.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CControls.cpp">
+				RelativePath=".\CControls.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CControls.h">
+				RelativePath=".\CControls.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CDemo.cpp">
+				RelativePath=".\CDemo.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CDemo.h">
+				RelativePath=".\CDemo.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CDrawGame.cpp">
+				RelativePath=".\CDrawGame.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CDrawGame.h">
+				RelativePath=".\CDrawGame.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CHurryMessage.cpp">
+				RelativePath=".\CHurryMessage.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CHurryMessage.h">
+				RelativePath=".\CHurryMessage.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMatch.cpp">
+				RelativePath=".\CMatch.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMatch.h">
+				RelativePath=".\CMatch.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenu.cpp">
+				RelativePath=".\CMenu.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenu.h">
+				RelativePath=".\CMenu.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuBase.cpp">
+				RelativePath=".\CMenuBase.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuBase.h">
+				RelativePath=".\CMenuBase.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuBomber.cpp">
+				RelativePath=".\CMenuBomber.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuBomber.h">
+				RelativePath=".\CMenuBomber.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuInput.cpp">
+				RelativePath=".\CMenuInput.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuInput.h">
+				RelativePath=".\CMenuInput.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuLevel.cpp">
+				RelativePath=".\CMenuLevel.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuLevel.h">
+				RelativePath=".\CMenuLevel.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuMatch.cpp">
+				RelativePath=".\CMenuMatch.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuMatch.h">
+				RelativePath=".\CMenuMatch.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuYesNo.cpp">
+				RelativePath=".\CMenuYesNo.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMenuYesNo.h">
+				RelativePath=".\CMenuYesNo.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CModeScreen.cpp">
+				RelativePath=".\CModeScreen.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CModeScreen.h">
+				RelativePath=".\CModeScreen.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMosaic.cpp">
+				RelativePath=".\CMosaic.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMosaic.h">
+				RelativePath=".\CMosaic.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CPauseMessage.cpp">
+				RelativePath=".\CPauseMessage.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CPauseMessage.h">
+				RelativePath=".\CPauseMessage.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CRandomMosaic.cpp">
+				RelativePath=".\CRandomMosaic.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CRandomMosaic.h">
+				RelativePath=".\CRandomMosaic.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CScroller.cpp">
+				RelativePath=".\CScroller.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CScroller.h">
+				RelativePath=".\CScroller.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CTitle.cpp">
+				RelativePath=".\CTitle.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CTitle.h">
+				RelativePath=".\CTitle.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CVictory.cpp">
+				RelativePath=".\CVictory.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CVictory.h">
+				RelativePath=".\CVictory.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CWinner.cpp">
+				RelativePath=".\CWinner.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CWinner.h">
+				RelativePath=".\CWinner.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="System"
-			Filter="">
+			>
 			<File
-				RelativePath=".\CConsole.cpp">
+				RelativePath=".\CConsole.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CConsole.h">
+				RelativePath=".\CConsole.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CDirectDraw.cpp">
+				RelativePath=".\CDirectDraw.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CDirectDraw.h">
+				RelativePath=".\CDirectDraw.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CDirectInput.cpp">
+				RelativePath=".\CDirectInput.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CDirectInput.h">
+				RelativePath=".\CDirectInput.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CLog.cpp">
+				RelativePath=".\CLog.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CLog.h">
+				RelativePath=".\CLog.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CTimer.h">
+				RelativePath=".\CTimer.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CWindow.cpp">
+				RelativePath=".\CWindow.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CWindow.h">
+				RelativePath=".\CWindow.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Game"
-			Filter="">
+			>
 			<File
-				RelativePath=".\CDebug.cpp">
+				RelativePath=".\CDebug.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CDebug.h">
+				RelativePath=".\CDebug.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CDisplay.cpp">
+				RelativePath=".\CDisplay.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CDisplay.h">
+				RelativePath=".\CDisplay.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CFont.cpp">
+				RelativePath=".\CFont.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CFont.h">
+				RelativePath=".\CFont.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CGame.cpp">
+				RelativePath=".\CGame.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CGame.h">
+				RelativePath=".\CGame.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CInput.cpp">
+				RelativePath=".\CInput.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CInput.h">
+				RelativePath=".\CInput.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CMainInput.cpp">
+				RelativePath=".\CMainInput.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CMainInput.h">
+				RelativePath=".\CMainInput.h"
+				>
 			</File>
 			<File
-				RelativePath=".\COptions.cpp">
+				RelativePath=".\COptions.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\COptions.h">
+				RelativePath=".\COptions.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CPlayerInput.cpp">
+				RelativePath=".\CPlayerInput.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CPlayerInput.h">
+				RelativePath=".\CPlayerInput.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CScores.cpp">
+				RelativePath=".\CScores.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CScores.h">
+				RelativePath=".\CScores.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CSound.cpp">
+				RelativePath=".\CSound.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CSound.h">
+				RelativePath=".\CSound.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Arena"
-			Filter="">
+			>
 			<File
-				RelativePath=".\CArena.cpp">
+				RelativePath=".\CArena.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CArena.h">
+				RelativePath=".\CArena.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CArenaCloser.cpp">
+				RelativePath=".\CArenaCloser.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CArenaCloser.h">
+				RelativePath=".\CArenaCloser.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CArenaSnapshot.cpp">
+				RelativePath=".\CArenaSnapshot.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CArenaSnapshot.h">
+				RelativePath=".\CArenaSnapshot.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CBomb.cpp">
+				RelativePath=".\CBomb.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CBomb.h">
+				RelativePath=".\CBomb.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CBomber.cpp">
+				RelativePath=".\CBomber.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CBomber.h">
+				RelativePath=".\CBomber.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CBomberMove.cpp">
+				RelativePath=".\CBomberMove.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CBomberMove.h">
+				RelativePath=".\CBomberMove.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CElement.cpp">
+				RelativePath=".\CElement.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CElement.h">
+				RelativePath=".\CElement.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CExplosion.cpp">
+				RelativePath=".\CExplosion.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CExplosion.h">
+				RelativePath=".\CExplosion.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CFloor.cpp">
+				RelativePath=".\CFloor.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CFloor.h">
+				RelativePath=".\CFloor.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CItem.cpp">
+				RelativePath=".\CItem.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CItem.h">
+				RelativePath=".\CItem.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CWall.cpp">
+				RelativePath=".\CWall.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CWall.h">
+				RelativePath=".\CWall.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Computer"
-			Filter="">
+			>
 			<File
-				RelativePath=".\CAiArena.cpp">
+				RelativePath=".\CAiArena.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CAiArena.h">
+				RelativePath=".\CAiArena.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CAiBomber.cpp">
+				RelativePath=".\CAiBomber.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CAiBomber.h">
+				RelativePath=".\CAiBomber.h"
+				>
 			</File>
 			<File
-				RelativePath=".\CAiManager.cpp">
+				RelativePath=".\CAiManager.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\CAiManager.h">
+				RelativePath=".\CAiManager.h"
+				>
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\Bombermaaan.ico">
+			RelativePath=".\Bombermaaan.ico"
+			>
 		</File>
 		<File
-			RelativePath=".\Bombermaaan.rc">
+			RelativePath=".\Bombermaaan.rc"
+			>
 		</File>
 		<File
-			RelativePath=".\WinMain.cpp">
+			RelativePath=".\doc.txt"
+			>
 		</File>
 		<File
-			RelativePath=".\doc.txt">
+			RelativePath=".\resource.h"
+			>
 		</File>
 		<File
-			RelativePath=".\resource.h">
-		</File>
-		<File
-			RelativePath=".\stdafx.cpp">
+			RelativePath=".\stdafx.cpp"
+			>
 			<FileConfiguration
-				Name="Debug|Win32">
+				Name="Debug|Win32"
+				>
 				<Tool
 					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"/>
+					UsePrecompiledHeader="1"
+				/>
 			</FileConfiguration>
 			<FileConfiguration
-				Name="Release|Win32">
+				Name="Release|Win32"
+				>
 				<Tool
 					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"/>
+					UsePrecompiledHeader="1"
+				/>
 			</FileConfiguration>
 		</File>
 		<File
-			RelativePath=".\stdafx.h">
+			RelativePath=".\stdafx.h"
+			>
+		</File>
+		<File
+			RelativePath=".\WinMain.cpp"
+			>
 		</File>
 	</Files>
 	<Globals>
