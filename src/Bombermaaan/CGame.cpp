@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -66,6 +66,9 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 // This is the game mode that is set at start up. Should be set to GAMEMODE_TITLE for a release.
 #define START_UP_GAME_MODE GAMEMODE_TITLE
 
+// Define the name of the DLL (where sprites and sound samples are stored)
+#define NAME_OF_BOMBERMAN_DLL "Bombermaaan.dll"
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -120,24 +123,24 @@ bool CGame::Create (const char* pCommandLine)
     theDebug.Create();
 
     // If the resource file does not exist
-    if (GetFileAttributes("Bomberman.dat") == -1)
+    if (GetFileAttributes( NAME_OF_BOMBERMAN_DLL ) == -1)
     {
         // Failure
-        theLog.WriteLine ("Game            => !!! Could not find Bomberman.dat.");
-        MessageBox(m_hWnd, "Could not find Bomberman.dat!", "Error", MB_OK);
+        theLog.WriteLine ("Game            => !!! Could not find " NAME_OF_BOMBERMAN_DLL ".");
+        MessageBox(m_hWnd, "Could not find " NAME_OF_BOMBERMAN_DLL "!", "Error", MB_OK);
         
         // Get out
         return false;
     }
     
     // Establish connection to the DLL
-    m_hModule = LoadLibrary ("Bomberman.dat");
+    m_hModule = LoadLibrary ( NAME_OF_BOMBERMAN_DLL );
     
     // If it failed
     if (m_hModule == NULL)
     {
         // Log error
-        theLog.WriteLine ("Game            => !!! Could not load Bomberman.dat");
+        theLog.WriteLine ("Game            => !!! Could not load " NAME_OF_BOMBERMAN_DLL );
         theLog.LogLastError();
         
         // Get out
