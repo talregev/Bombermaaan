@@ -5,6 +5,11 @@ docs/how-to-compile.txt -text
 installer/HeaderImage.bmp -text
 installer/HeaderImage.xcf -text
 installer/InstallScript.nsi -text
+src/Bombermaaan.dsw -text
+src/Bombermaaan.sln -text
+src/Bombermaaan/Bombermaaan.dsp -text
+src/Bombermaaan/Bombermaaan.rc -text
+src/Bombermaaan/Bombermaaan.vcproj -text
 src/Bombermaaan/CAiArena.cpp -text
 src/Bombermaaan/CAiArena.h -text
 src/Bombermaaan/CAiBomber.cpp -text
@@ -115,4 +120,6 @@ src/Bombermaaan/CWinner.h -text
 src/Bombermaaan/STDAFX.CPP -text
 src/Bombermaaan/STDAFX.H -text
 src/Bombermaaan/WinMain.cpp -text
+src/RES/RES.dsp -text
+src/RES/RES.vcproj -text
 web/index.php -text
