@@ -1,19 +1,11 @@
 * text=auto !eol
 branches/project_file_migration_to_vc2008/Bombermaaan.dsw -text
 branches/project_file_migration_to_vc2008/Bombermaaan.sln -text
-branches/project_file_migration_to_vc2008/Bombermaaan.sln.old -text
 branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.dsp -text
 branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.rc -text
 branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.vcproj -text
-branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.vcproj.7.00.old -text
 branches/project_file_migration_to_vc2008/RES/RES.dsp -text
 branches/project_file_migration_to_vc2008/RES/RES.vcproj -text
-branches/project_file_migration_to_vc2008/RES/RES.vcproj.7.00.old -text
-branches/project_file_migration_to_vc2008/UpgradeLog.XML -text
-branches/project_file_migration_to_vc2008/_UpgradeReport_Files/UpgradeReport.css -text
-branches/project_file_migration_to_vc2008/_UpgradeReport_Files/UpgradeReport.xslt -text
-branches/project_file_migration_to_vc2008/_UpgradeReport_Files/UpgradeReport_Minus.gif -text
-branches/project_file_migration_to_vc2008/_UpgradeReport_Files/UpgradeReport_Plus.gif -text
 trunk/COPYING.txt -text
 trunk/docs/Readme.html -text
 trunk/docs/how-to-compile.txt -text
