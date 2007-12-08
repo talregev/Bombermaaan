@@ -1,0 +1,88 @@
+/************************************************************************************
+
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+
+    This file is part of Bombermaaan.
+
+    Bombermaaan is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Bombermaaan is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Bombermaaan.  If not, see <http://www.gnu.org/licenses/>.
+
+************************************************************************************/
+
+
+#ifndef __STDAFX_H__
+#define __STDAFX_H__
+
+#include <winsock2.h>
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <windowsx.h>  // GetWindowStyle(), GetWindowExStyle()
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <assert.h>
+#include <io.h>
+
+//#include <string>
+//#include <slist>
+//#include <set>
+#include <vector>
+#include <list>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <map>
+
+using namespace std;
+
+#ifndef ASSERT
+#define ASSERT assert
+#endif
+
+#define MEMSET(_p,_value,_size)     memset (_p, _value, _size)
+#define MEMZERO(_p,_size)           memset (_p, 0, _size)
+#define MEMCOPY(_dst,_src,_size)    memcpy (_dst, _src, _size)
+
+#define ABS(_x)     ((_x) > 0 ? (_x) : -(_x))
+#define MIN(_x,_y)  ((_x) < (_y) ? (_x) : (_y))
+#define MAX(_x,_y)  ((_x) > (_y) ? (_x) : (_y))
+#define SQRT(_x)    sqrt(_x)
+
+#define SEED_RANDOM(seed)     srand(seed)
+#define RANDOM(max)       (rand() % max)
+
+#include "CLog.h"
+#include "CConsole.h"
+#include "CDebug.h"
+#include "CTimer.h"
+#include "..\RES\resource.h"
+#include "resource.h"
+
+#define PLAYER_WHITE                    0       // Player number to get the right bomber
+#define PLAYER_BLACK                    1
+#define PLAYER_RED                      2
+#define PLAYER_BLUE                     3
+#define PLAYER_GREEN                    4
+#define MAX_PLAYERS                     5       // Maximum number of players
+#define MAX_PLAYER_SCORE                5       // Maximum score for a player
+#define MAX_DRAWGAME_SCORE              5       // Maximum score for draw games
+#define ARENA_WIDTH                     15      // Arena width in blocks
+#define ARENA_HEIGHT                    13      // Arena height in blocks
+#define BLOCK_SIZE                      16      // Block size in pixels
+#define BLOCK_POSITION_SHIFT            4       // Shift number when translating position<->block : i.e. position >> 4
+#define VIEW_WIDTH                      240     // Size of the game view (size of client area in windowed mode)
+#define VIEW_HEIGHT                     234
+
+#endif
