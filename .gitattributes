@@ -1,18 +1,4 @@
 * text=auto !eol
-branches/preparing_lib_and_include_directories_in_project_settings/Bombermaaan.dsw -text
-branches/preparing_lib_and_include_directories_in_project_settings/Bombermaaan.sln -text
-branches/preparing_lib_and_include_directories_in_project_settings/Bombermaaan/Bombermaaan.dsp -text
-branches/preparing_lib_and_include_directories_in_project_settings/Bombermaaan/Bombermaaan.rc -text
-branches/preparing_lib_and_include_directories_in_project_settings/Bombermaaan/Bombermaaan.vcproj -text
-branches/preparing_lib_and_include_directories_in_project_settings/RES/RES.dsp -text
-branches/preparing_lib_and_include_directories_in_project_settings/RES/RES.vcproj -text
-branches/project_file_migration_to_vc2008/Bombermaaan.dsw -text
-branches/project_file_migration_to_vc2008/Bombermaaan.sln -text
-branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.dsp -text
-branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.rc -text
-branches/project_file_migration_to_vc2008/Bombermaaan/Bombermaaan.vcproj -text
-branches/project_file_migration_to_vc2008/RES/RES.dsp -text
-branches/project_file_migration_to_vc2008/RES/RES.vcproj -text
 trunk/COPYING.txt -text
 trunk/docs/Readme.html -text
 trunk/docs/how-to-compile.txt -text
