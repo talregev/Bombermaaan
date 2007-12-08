@@ -67,6 +67,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1036"
+				AdditionalIncludeDirectories="C:\Program Files\Microsoft SDKs\Windows\v6.0\Samples\winui\tsfapp"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -160,6 +161,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1036"
+				AdditionalIncludeDirectories="C:\Program Files\Microsoft SDKs\Windows\v6.0\Samples\winui\tsfapp"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
