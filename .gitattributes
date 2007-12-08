@@ -19,6 +19,11 @@ trunk/docs/how-to-compile.txt -text
 trunk/installer/HeaderImage.bmp -text
 trunk/installer/HeaderImage.xcf -text
 trunk/installer/InstallScript.nsi -text
+trunk/src/Bombermaaan.dsw -text
+trunk/src/Bombermaaan.sln -text
+trunk/src/Bombermaaan/Bombermaaan.dsp -text
+trunk/src/Bombermaaan/Bombermaaan.rc -text
+trunk/src/Bombermaaan/Bombermaaan.vcproj -text
 trunk/src/Bombermaaan/CAiArena.cpp -text
 trunk/src/Bombermaaan/CAiArena.h -text
 trunk/src/Bombermaaan/CAiBomber.cpp -text
@@ -129,4 +134,6 @@ trunk/src/Bombermaaan/CWinner.h -text
 trunk/src/Bombermaaan/STDAFX.CPP -text
 trunk/src/Bombermaaan/STDAFX.H -text
 trunk/src/Bombermaaan/WinMain.cpp -text
+trunk/src/RES/RES.dsp -text
+trunk/src/RES/RES.vcproj -text
 trunk/web/index.php -text
