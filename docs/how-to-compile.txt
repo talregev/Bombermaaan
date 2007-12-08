@@ -35,6 +35,11 @@ PLEASE NOTE: This how-to is incomplete so far!
   fmod.h, fmod_errors.h from the fmodapi375win\api\inc folder, place them in the FMOD folder (needing to compile Bombermaaan)
   fmod.dll from the fmodapi375win\api folder, place it in the folder where Bombermaaan.exe resides (needing for runtime)
 
+- Place afxres.h and winres.h in the Bombermaaan directory. You'll find these two files in a subdirectory of the installed Windows Platform SDK.
+  I found the files in this subdirectory:
+  C:\Program Files\Microsoft SDKs\Windows\v6.0\Samples\winui\tsfapp
+
+
 >> The other steps will be added soon.
 
 
