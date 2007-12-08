@@ -236,7 +236,7 @@ bool CSound::LoadSample (ESample Sample, int ResourceID)
     m_Samples[Sample] = FSOUND_Sample_Load (FSOUND_FREE, 
                                                   (const char *) pData, 
                                                   FSOUND_LOADMEMORY | FSOUND_LOOP_OFF | FSOUND_2D, 
-                                                  DataSize);
+                                                  0, DataSize );
 
     // If it failed
     if (m_Samples[Sample] == NULL)
@@ -289,7 +289,7 @@ bool CSound::LoadSong (ESong Song, int ResourceID)
     }
 
     // Tell FMOD to load the song that is currently in memory, and store the song handle
-    m_Songs[Song] = FMUSIC_LoadSongMemory ((void *) pData, DataSize);
+	m_Songs[Song] = FMUSIC_LoadSongEx ((char *) pData, 0, DataSize, FSOUND_LOADMEMORY, NULL, 0);
 
     // If it failed
     if (m_Songs[Song] == NULL)
