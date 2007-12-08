@@ -13,7 +13,7 @@ PLEASE NOTE: This how-to is incomplete so far!
   possibility of a web installation so you don't need to burn a DVD.
   The installation takes some minutes.
 
-- Get a C++ compiler. In this example, I'm using Microsofts Visual C++ Express Edition.
+- Get a C++ compiler. In this example, I'm using Microsoft Visual C++ Express Edition.
   http://en.wikipedia.org/wiki/Microsoft_Visual_Studio_Express#Visual_C.2B.2B_Express
   Download web installer Visual C++ 2008 Express Edition (vcsetup.exe):
   http://go.microsoft.com/?linkid=7729279
@@ -22,9 +22,18 @@ PLEASE NOTE: This how-to is incomplete so far!
 - Install service packs. For example for Visual C++ 2005 (!) Express Edition
   https://www.microsoft.com/downloads/details.aspx?FamilyID=7b0b0339-613a-46e6-ab4d-080d4d4a8c4e&DisplayLang=en
 
-- Download the DirectX SDK
+- Download and install the DirectX SDK
   http://www.microsoft.com/downloads/details.aspx?FamilyID=86CF7FA2-E953-475C-ABDE-F016E4F7B61A&displaylang=en
   dxsdk_apr2007.exe, about 440 MB
+
+- Download FMOD 3 Programmers API
+  http://www.fmod.org/index.php/download
+  fmodapi375win.zip, about 2 MB
+  (FMOD Sound System, copyright (C) Firelight Technologies Pty, Ltd., 1994-2007)
+
+- Bombermaaan needs the following files from fmodapi375win.zip:
+  fmod.h, fmod_errors.h from the fmodapi375win\api\inc folder, place them in the FMOD folder (needing to compile Bombermaaan)
+  fmod.dll from the fmodapi375win\api folder, place it in the folder where Bombermaaan.exe resides (needing for runtime)
 
 >> The other steps will be added soon.
 
