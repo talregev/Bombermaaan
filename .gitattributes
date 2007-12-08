@@ -117,6 +117,7 @@ trunk/src/Bombermaaan/CWindow.cpp -text
 trunk/src/Bombermaaan/CWindow.h -text
 trunk/src/Bombermaaan/CWinner.cpp -text
 trunk/src/Bombermaaan/CWinner.h -text
+trunk/src/Bombermaaan/RESOURCE.H -text
 trunk/src/Bombermaaan/STDAFX.CPP -text
 trunk/src/Bombermaaan/STDAFX.H -text
 trunk/src/Bombermaaan/WinMain.cpp -text
