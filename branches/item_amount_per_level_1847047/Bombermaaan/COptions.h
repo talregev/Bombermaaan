@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -238,9 +238,6 @@ inline EBlockType COptions::GetBlockType (int X, int Y)
 
 inline int COptions::GetNumberOfItemsInWalls ( EItemType ItemType )
 {
-	theConsole.Write( "XXX=%d\n", m_Level);
-	theConsole.Write( "Ptr=%p\n", m_NumberOfItemsInWalls);
-
 	ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
 	ASSERT (ItemType > ITEM_NONE && ItemType < NUMBER_OF_ITEMS);
 

@@ -257,9 +257,6 @@ inline EBlockType COptions::GetBlockType (int X, int Y)
 
 inline int COptions::GetInitialBomberSkills ( EBomberSkills BomberSkill )
 {
-//	theConsole.Write( "XXX=%d\n", m_Level);
-	//theConsole.Write( "Ptr=%p\n", m_InitialBomberSkills);
-
 	ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
 	ASSERT (BomberSkill > BOMBERSKILL_NONE && BomberSkill < NUMBER_OF_BOMBERSKILLS);
 

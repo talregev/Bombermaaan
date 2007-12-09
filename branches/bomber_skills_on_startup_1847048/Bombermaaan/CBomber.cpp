@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -253,8 +253,6 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
 
     m_Dead = DEAD_ALIVE;
 
-    ///m_FlameSize = INITIAL_FLAMESIZE;
-    ///m_TotalBombs = INITIAL_BOMBS;
 	m_FlameSize = options->GetInitialBomberSkills( BOMBERSKILL_FLAME );
 	m_TotalBombs = options->GetInitialBomberSkills( BOMBERSKILL_BOMBS );
     m_UsedBombs = 0;
@@ -277,33 +275,12 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
     
     Animate (0.0f);
         
-    ///m_NumberOfBombItems = 0;    
-    ///m_NumberOfFlameItems = 0;   
-    ///m_NumberOfRollerItems = 0;
-    ///m_NumberOfKickItems = 0;
-    ///m_NumberOfThrowItems = 0;
-    ///m_NumberOfPunchItems = 0;
     m_NumberOfBombItems = options->GetInitialBomberSkills( BOMBERSKILL_BOMBITEMS );
     m_NumberOfFlameItems = options->GetInitialBomberSkills( BOMBERSKILL_FLAMEITEMS );
     m_NumberOfRollerItems = options->GetInitialBomberSkills( BOMBERSKILL_ROLLERITEMS );
 	m_NumberOfKickItems = options->GetInitialBomberSkills( BOMBERSKILL_KICKITEMS );
     m_NumberOfThrowItems = options->GetInitialBomberSkills( BOMBERSKILL_THROWITEMS );
     m_NumberOfPunchItems = options->GetInitialBomberSkills( BOMBERSKILL_PUNCHITEMS );
-
-	//// theConsole.Write( "%d\n", m_Player);
-
-	//// Just to make the first bomber a little better
-	//if ( m_Player == 0 ) {
-	//	m_NumberOfBombItems = 20;    
-	//	m_NumberOfFlameItems = 20;   
-	//	m_NumberOfRollerItems = 0;
-	//	m_NumberOfKickItems = 1;
-	//	m_NumberOfThrowItems = 1;
-	//	m_NumberOfPunchItems = 1;
-	//	m_FlameSize = INITIAL_FLAMESIZE + 5;
-	//	m_TotalBombs = INITIAL_BOMBS + 15;
-	//    m_Speed = SPEED_NORMAL * 2;
-	//}
 
     m_ReturnedItems = false;
 

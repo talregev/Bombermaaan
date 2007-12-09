@@ -80,13 +80,6 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 //******************************************************************************************************************************
 
 // Bomber speeds (in pixels per second)
-/*
-Old values for 16x16 pixels:
-#define SPEED_SLOW      38                // Speed with SLOW sickness
-#define SPEED_FAST      225               // Speed with FAST sickness
-#define SPEED_NORMAL    60                // Normal speed
-#define SPEED_INC       7                 // Speed increase each time a roller item is picked up
-*/
 #define SPEED_SLOW      76                // Speed with SLOW sickness
 #define SPEED_FAST      450               // Speed with FAST sickness
 #define SPEED_NORMAL    120               // Normal speed

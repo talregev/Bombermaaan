@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -209,13 +209,13 @@ void CArena::Create (void)
     // Create some items under soft walls
     CItem::CreateItems (this,
                         ITEMPLACE_SOFTWALLS, 
-			m_pOptions->GetNumberOfItemsInWalls (ITEM_BOMB),  //// Original: INITIAL_ITEMBOMB, 
-                        m_pOptions->GetNumberOfItemsInWalls (ITEM_FLAME),  //// Original: INITIAL_ITEMFLAME, 
-                        m_pOptions->GetNumberOfItemsInWalls (ITEM_ROLLER),  //// Original: INITIAL_ITEMROLLER, 
-                        m_pOptions->GetNumberOfItemsInWalls (ITEM_KICK),  //// Original: INITIAL_ITEMKICK, 
-                        m_pOptions->GetNumberOfItemsInWalls (ITEM_SKULL),  //// Original: INITIAL_ITEMSKULL,
-                        m_pOptions->GetNumberOfItemsInWalls (ITEM_THROW),  //// Original: INITIAL_ITEMTHROW,
-                        m_pOptions->GetNumberOfItemsInWalls (ITEM_PUNCH));  //// Original: INITIAL_ITEMPUNCH);
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_BOMB),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_FLAME),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_ROLLER),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_KICK),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_SKULL),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_THROW),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_PUNCH));
 
     //-----------------
     // Finish creation
