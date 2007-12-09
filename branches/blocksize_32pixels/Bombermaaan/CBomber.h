@@ -1,0 +1,340 @@
+/************************************************************************************
+
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+
+    This file is part of Bombermaaan.
+
+    Bombermaaan is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Bombermaaan is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Bombermaaan.  If not, see <http://www.gnu.org/licenses/>.
+
+************************************************************************************/
+
+
+//////////////
+// CBomber.h
+
+#ifndef __CBOMBER_H__
+#define __CBOMBER_H__
+
+#include "CElement.h"
+#include "CBomberMove.h"
+
+class CArena;
+class CDisplay;
+class CBomb;
+class CArenaSnapshot;
+
+enum EBombKick;
+enum EBombFlightType;
+enum EItemType;
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+//! Describes a bomber action command
+
+enum EBomberAction
+{
+    BOMBERACTION_NONE,              //!< None
+    BOMBERACTION_ACTION1,           //!< Drop or hold a bomb
+    BOMBERACTION_ACTION2            //!< Stop or punch a bomb
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+//! Describes the state of a bomber : what is he doing? what is happening to him?
+enum EBomberState
+{
+    BOMBERSTATE_WALK,       //!< Not holding a bomb ; walking or not walking.
+    BOMBERSTATE_WALK_HOLD,  //!< Holding a bomb ; walking or not walking.
+    BOMBERSTATE_DEATH,      //!< Dying
+    BOMBERSTATE_LIFT,       //!< Lifting a bomb
+    BOMBERSTATE_THROW,      //!< Throwing a bomb
+    BOMBERSTATE_PUNCH,      //!< Punching a bomb
+    BOMBERSTATE_STUNT,      //!< Stunt by a bomb that bounced on his head
+    MAX_NUMBER_OF_STATES
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+//! Describes a sprite table with bomber sprites inside
+struct SBomberSpriteTable
+{
+    int SpriteTableNumber;          //!< Number of the sprite table
+    int NumberOfSpritesPerColor;    //!< Number of sprites representing a single bomber color (white, red, etc).
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+//! Describes the dead state of the bomber
+
+enum EDead
+{
+    DEAD_ALIVE,          //!< Healthy
+    DEAD_DYING,          //!< Almost dead
+    DEAD_DEAD            //!< Dead
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+                                        
+//! Describes a sickness
+
+enum ESick
+{
+    SICK_NOTSICK     = -1,      //!< No sickness
+    SICK_INVERTION   = 0,       //!< Inverted controls
+    SICK_SMALLFLAME,            //!< Bombs with small flames
+    SICK_CONSTIPATED,           //!< Cannot drop bomb
+    SICK_COLIC,                 //!< Always drop bomb
+    SICK_SLOW,                  //!< Slow move
+    SICK_FAST,                  //!< Fast move
+    SICK_INERTIA,               //!< Always move
+    SICK_LONGBOMB,              //!< Bombs tick twice longer
+    SICK_SHORTBOMB,             //!< Bombs tick twice shorter
+    NUMBER_SICKNESSES           //!< Number of sicknesses
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+//! An element in the arena which represents a bomber. 
+class CBomber : public CElement
+{
+private:                            
+    
+    CBomberMove     m_BomberMove;                   //!< Bomber movement manager object.
+    EBomberAction   m_BomberAction;                 //!< Describes the action that the owner player currently wants the bomber to perform.
+    EBomberAction   m_LastBomberAction;             //!< Action from last game update
+    int             m_Sprite;                       //!< Current bomber's sprite to display
+    int             m_AnimationSprites[5];          //!< Sprite numbers for animations, their values depend on bomber direction
+    int             m_Page;                         //!< Current sprite page number to use when displaying
+    float           m_Timer;                        //!< Time counter for general use (walk and death animation, delay...)
+    float           m_SickTimer;                    //!< Time counter for sickness flashing animation
+    int             m_TotalBombs;                   //!< Number of bombs the bomber can drop together
+    int             m_UsedBombs;                    //!< Current number of its bombs ticking in the arena
+    int             m_FlameSize;                    //!< Size of the flames when one of his bombs explodes
+    int             m_Speed;                        //!< Current speed of the bomber in pixels per second (when not sick)
+    ESick           m_Sickness;                     //!< Type of current sickness
+    int             m_NumberOfBombItems;            //!< Number of picked up bomb items
+    int             m_NumberOfFlameItems;           //!< Number of picked up flame items
+    int             m_NumberOfRollerItems;          //!< Number of picked up roller items
+    int             m_NumberOfKickItems;            //!< Number of picked up kick items
+    int             m_NumberOfThrowItems;           //!< Number of picked up throw items
+    int             m_NumberOfPunchItems;           //!< Number of picked up punch items
+    bool            m_ReturnedItems;                //!< Did the bomber return the items he picked up to the arena?
+    int             m_Player;                       //!< Number of the player represented by the bomber
+    EDead           m_Dead;                         //!< Dead state : alive, dying or dead
+    bool            m_Victorious;                   //!< Has the bomber won the current match he is playing in?
+    bool            m_Neighbours[MAX_PLAYERS];      //!< Bombers who are on the same block as this bomber
+    bool            m_JustGotSick;                  //!< True if the bomber just got sick
+    float           m_LiftingTimeElapsed;           //!< How many seconds have elapsed since we started lifting a bomb?
+    float           m_ThrowingTimeElapsed;          //!< How many seconds have elapsed since we started throwing a bomb?
+    float           m_PunchingTimeElapsed;          //!< How many seconds have elapsed since we started punching a bomb?
+    float           m_StuntTimeElapsed;             //!< How many seconds have elapsed since we got stunt?
+    EBomberState    m_BomberState;                  //!< State of the bomber, describes what he is currenly doing.
+    int             m_BombIndex;                    //!< Index of the bomb the bomber is either holding, lifting or punching (when the bomber is throwing, this index is -1).
+    static SBomberSpriteTable m_BomberSpriteTables[MAX_NUMBER_OF_STATES]; //!< Information about the sprite table to use for each bomber state.
+    
+    void            Animate (float DeltaTime);      //!< Update the bomber's sprite table and sprite to display.
+    void            ReturnItems (float DeltaTime);  //!< Manage the return of the items this bomber owns if he is dead
+    void            Action (void);                  //!< Make the bomber perform the bomber action he was ordered.
+    void            Contamination (void);           //!< Manage sickness contamination (contaminate if sick), update contamination members.
+    void            UsedBombs (void);               //!< Update the number of bombs the bomber is currently using.
+    void            Heal (void);                    //!< Remove the bomber sickness if he is sick.
+    bool            TryMove (float fPixels);        //!< Make the bomber move in the current direction (bomber move) and return if he could move.
+    void            Die (void);                     //!< Make the bomber start dying.
+    float           GetBombTime (void);             //!< Get the current bomb time, i.e. the time left before a bomb this bomber drops will explode. It depends on current sickness.
+    void            MakeBombFly (EBombFlightType FlightType);
+
+protected:
+
+    // These methods are protected so that bombers can check
+    // each other's positions for the contamination ability.
+
+    inline void     SetSickness (ESick Sickness);   //!< Set the current sickness of the bomber.
+    inline int      GetX (void);                    //!< Get the integer X position (in pixels) of the bomber in the arena
+    inline int      GetY (void);                    //!< Get the integer Y position (in pixels) of the bomber in the arena
+                                        
+public:                                 
+
+                    CBomber (void);                 //!< Constructor (initialize the base class)
+    virtual         ~CBomber (void);                //!< Destructor (uninitialize the base class)
+    inline void     SetArena (CArena* pArena);      //!< Redefinition of the inherited method.
+    void            Create (int BlockX, int BlockY, int Player); //!< Initialize the bomber
+    void            Destroy (void);                 //!< Uninitialize the bomber
+    bool            Update (float DeltaTime);       //!< Update the bomber. Return whether the element should be deleted by the arena.
+    void            Display (void);                 //!< Display the bomber
+    void            OnWriteSnapshot (CArenaSnapshot& Snapshot);
+    void            OnReadSnapshot (CArenaSnapshot& Snapshot);
+    void            Command (EBomberMove BomberMove, EBomberAction BomberAction); //!< Give a move and action order to the bomber for next update.
+    void            Victorious (void);              //!< Tell the bomber he has won the current battle he is playing in.
+    void            Burn (void);                    //!< Make the bomber react when he is burnt by an explosion
+    void            Crush (void);                   //!< Make the bomber react when he is crushed by a wall
+    void            Stunt (void);                   //!< Make the bomber react when a bomb bounces on his head
+    void            ItemEffect (EItemType Type);    //!< Apply the effects of the specified item type on the bomber.
+    void            TryKickBomb (int BlockX, int BlockY, EBombKick BombKick); //!< Kick a bomb if there is one on the specified block.
+    int             GetFlameSize (void);            //!< Get the current flame size of the bombs dropped by the bomber. Depends on its current sickness. 
+    int             GetPixelsPerSecond (void);      //!< Return the speed (in pixels per second) the bomber can walk.
+    bool            IsObstacle (int BlockX, int BlockY); //!< Return whether there is a wall or a bomb on the specified block.    
+    inline bool     IsAlive (void);                 //!< Return whether the bomber is alive (not dead and not dying)
+    inline bool     IsDying (void);                 //!< Return whether the bomber is dying
+    inline bool     IsDead (void);                  //!< Return whether the bomber is dead (but not dying)
+    inline bool     IsActor (void);                 //!< Return whether the bomber can currently do something (i.e. execute commands).
+    inline int      GetBlockX (void);               //!< Return the block position X of the bomber
+    inline int      GetBlockY (void);               //!< Return the block position Y of the bomber
+    inline int      GetPlayer (void);               //!< Return the number of the player who controls this bomber
+    inline int      GetSickness (void);             //!< Return the bomber's sickness value
+    inline bool     CanKickBombs (void);            //!< Return whether the bomber is able to kick bombs
+    inline bool     CanThrowBombs (void);           //!< Return whether the bomber is able to throw bombs
+    inline bool     CanPunchBombs (void);           //!< Return whether the bomber is able to punch bombs
+    inline int      GetUsedBombsCount (void);       //!< Return how many bombs the bomber are currently ticking in the arena
+    inline int      GetBombItemsCount (void);       //!< Return how many bomb items the bomber has picked up
+    inline int      GetFlameItemsCount (void);      //!< Return how many flame items the bomber has picked up
+    inline int      GetRollerItemsCount (void);     //!< Return how many roller items the bomber has picked up
+    inline int      GetTotalBombs (void);           //!< Return how many bombs the bomber can currently drop
+    inline EBomberState GetState (void);            //!< Return the state of the bomber
+    inline int      GetBombIndex (void);            //!< Return the index of the bomb the bomber is possibly holding, lifting, or punching (if the bomber is throwing, this index is -1).
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+inline void CBomber::SetArena (CArena *pArena)
+{
+    CElement::SetArena (pArena);
+    m_BomberMove.SetArena (pArena);
+}
+
+inline bool CBomber::IsAlive (void)  
+{ 
+    return m_Dead == DEAD_ALIVE; 
+}
+
+inline bool CBomber::IsDying (void) 
+{ 
+    return m_Dead == DEAD_DYING; 
+}
+
+inline bool CBomber::IsDead (void) 
+{ 
+    return m_Dead == DEAD_DEAD; 
+}
+
+inline bool CBomber::IsActor (void) 
+{ 
+    return m_Dead == DEAD_ALIVE && m_BomberState != BOMBERSTATE_STUNT; 
+}
+
+inline int CBomber::GetBlockX (void) 
+{ 
+    return m_BomberMove.GetBlockX(); 
+}           
+
+inline int CBomber::GetBlockY (void) 
+{ 
+    return m_BomberMove.GetBlockY(); 
+}           
+
+inline int CBomber::GetPlayer (void) 
+{ 
+    return m_Player; 
+}           
+
+inline int CBomber::GetSickness (void) 
+{ 
+    return m_Sickness; 
+}   
+
+inline bool CBomber::CanKickBombs (void) 
+{ 
+    return m_NumberOfKickItems > 0; 
+}    
+
+inline bool CBomber::CanThrowBombs (void)
+{
+    return m_NumberOfThrowItems > 0; 
+}    
+
+inline bool CBomber::CanPunchBombs (void)
+{ 
+    return m_NumberOfPunchItems > 0; 
+}    
+
+inline int CBomber::GetUsedBombsCount (void) 
+{ 
+    return m_UsedBombs; 
+}        
+
+inline int CBomber::GetBombItemsCount (void) 
+{ 
+    return m_NumberOfBombItems; 
+}
+
+inline int CBomber::GetFlameItemsCount (void) 
+{ 
+    return m_NumberOfFlameItems; 
+}
+
+inline int CBomber::GetRollerItemsCount (void) 
+{ 
+    return m_NumberOfRollerItems; 
+}
+
+inline int CBomber::GetTotalBombs (void) 
+{ 
+    return m_NumberOfBombItems + 1; 
+}
+
+inline int CBomber::GetX (void) 
+{ 
+    return m_BomberMove.GetX(); 
+}
+
+inline int CBomber::GetY (void) 
+{ 
+    return m_BomberMove.GetY(); 
+}
+
+inline void CBomber::SetSickness (ESick Sickness) 
+{ 
+    m_Sickness = Sickness; 
+    m_JustGotSick = true; 
+}
+
+inline EBomberState CBomber::GetState (void)
+{
+    return m_BomberState;
+}
+
+inline int CBomber::GetBombIndex (void)
+{
+    ASSERT(m_BombIndex != -1);
+    return m_BombIndex;
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+#endif
