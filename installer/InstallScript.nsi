@@ -121,6 +121,11 @@ SetCompressor lzma
   !insertmacro MUI_PAGE_STARTMENU Application $STARTMENU_FOLDER
 
   !insertmacro MUI_PAGE_INSTFILES
+  
+  !define MUI_FINISHPAGE_RUN Bomberman.exe
+  !define MUI_FINISHPAGE_RUN_NOTCHECKED
+  !define MUI_FINISHPAGE_SHOWREADME Readme.html
+  !define MUI_FINISHPAGE_SHOWREADME_CHECKED
   !insertmacro MUI_PAGE_FINISH
   
   !insertmacro MUI_UNPAGE_CONFIRM
