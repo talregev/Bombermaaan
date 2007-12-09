@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -40,6 +40,9 @@
 #define CONFIGURATION_KEYBOARD_1      0
 #define CONFIGURATION_KEYBOARD_2      1
 #define CONFIGURATION_JOYSTICK_1      2
+
+// Define the name of the Bombermaaan config file
+#define NAME_OF_BOMBERMAAAN_CFG "Bombermaaan.cfg"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -166,7 +169,7 @@ void COptions::Destroy (void)
 void COptions::SaveBeforeExit (void)
 {
    // Try to open the configuration file
-    FILE* pConfigFile = fopen("Bomberman.cfg", "wb");
+    FILE* pConfigFile = fopen(NAME_OF_BOMBERMAAAN_CFG, "wb");
     
     // Write configuration to file
     if (pConfigFile != NULL)
@@ -183,7 +186,7 @@ void COptions::SaveBeforeExit (void)
 bool COptions::LoadConfiguration (void)
 {
     // Try to open the configuration file
-    FILE* pConfigFile = fopen("Bomberman.cfg", "rb");
+    FILE* pConfigFile = fopen(NAME_OF_BOMBERMAAAN_CFG, "rb");
     
     // If the configuration file doesn't exist
     if (pConfigFile == NULL)
@@ -238,13 +241,13 @@ bool COptions::LoadConfiguration (void)
         m_Level = 0;
 
         // Create the configuration file
-        pConfigFile = fopen("Bomberman.cfg", "wb");
+        pConfigFile = fopen(NAME_OF_BOMBERMAAAN_CFG, "wb");
         
         // If creation failed
         if (pConfigFile == NULL)
         {
             // Log failure
-            theLog.WriteLine ("Options         => !!! Could not create Bomberman.cfg.");
+            theLog.WriteLine ("Options         => !!! Could not create " NAME_OF_BOMBERMAAAN_CFG ".");
 
             return false;
         }
