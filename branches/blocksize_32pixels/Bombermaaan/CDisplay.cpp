@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -85,15 +85,15 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
         
         // Load the sprite tables. If at least one sprite table could not be loaded
         if (
-            !LoadSprites (2,      1,      16,     16,     false,    BMP_ARENA_FLOOR               ) ||
-            !LoadSprites (7,      1,      16,     16,     true,     BMP_ARENA_WALL                ) ||
-            !LoadSprites (28,     1,      16,     16,     true,     BMP_ARENA_FLAME               ) ||
-            !LoadSprites (14,     1,      16,     16,     false,    BMP_ARENA_ITEM                ) ||
-            !LoadSprites (3,      1,      16,     16,     true,     BMP_ARENA_BOMB                ) ||
-            !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_WALK         ) ||
-            !LoadSprites (7,      1,      26,     27,     true,     BMP_ARENA_FIRE                ) ||
-            !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_WALK_HOLD    ) ||
-            !LoadSprites (4,      1,      16,     16,     true,     BMP_ARENA_FLY                 ) ||
+/* Verdoppelt */            !LoadSprites (2,      1,      32,     32,     false,    BMP_ARENA_FLOOR               ) ||
+/* Verdoppelt */            !LoadSprites (7,      1,      32,     32,     true,     BMP_ARENA_WALL                ) ||
+/* Verdoppelt */            !LoadSprites (28,     1,      32,     32,     true,     BMP_ARENA_FLAME               ) ||
+/* Verdoppelt */            !LoadSprites (14,     1,      32,     32,     false,    BMP_ARENA_ITEM                ) ||
+/* Verdoppelt */            !LoadSprites (3,      1,      32,     32,     true,     BMP_ARENA_BOMB                ) ||
+/* Verdoppelt */            !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_WALK         ) ||
+/* Verdoppelt */            !LoadSprites (7,      1,      52,     54,     true,     BMP_ARENA_FIRE                ) ||
+/* Verdoppelt */            !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_WALK_HOLD    ) ||
+/* Verdoppelt */            !LoadSprites (4,      1,      32,     32,     true,     BMP_ARENA_FLY                 ) ||
             !LoadSprites (1,      1,      240,    26,     false,    BMP_BOARD_BACKGROUND          ) ||
             !LoadSprites (12,     1,      7,      10,     true,     BMP_BOARD_TIME                ) || // 10
             !LoadSprites (2,      1,      15,     7,      true,     BMP_BOARD_CLOCK_TOP           ) ||
@@ -143,11 +143,11 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (1,      1,      66,     22,     true,     BMP_TITLE_CLOUD_3             ) ||
             !LoadSprites (4,      1,       8,      8,     false,    BMP_LEVEL_MINI_TILES          ) ||
             !LoadSprites (5,      1,      12,     10,     true,     BMP_LEVEL_MINI_BOMBERS        ) ||
-            !LoadSprites (7,      5,      21,     22,     true,     BMP_ARENA_BOMBER_DEATH        ) ||
-            !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_LIFT         ) || 
-            !LoadSprites (20,     6,      21,     22,     true,     BMP_ARENA_BOMBER_THROW        ) || // 60
-            !LoadSprites (8,      6,      21,     22,     true,     BMP_ARENA_BOMBER_PUNCH        ) ||
-            !LoadSprites (4,      6,      21,     22,     true,     BMP_ARENA_BOMBER_STUNT        )
+/* Verdoppelt */            !LoadSprites (7,      5,      42,     44,     true,     BMP_ARENA_BOMBER_DEATH        ) ||
+/* Verdoppelt */            !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_LIFT         ) || 
+/* Verdoppelt */            !LoadSprites (20,     6,      42,     44,     true,     BMP_ARENA_BOMBER_THROW        ) || // 60
+/* Verdoppelt */            !LoadSprites (8,      6,      42,     44,     true,     BMP_ARENA_BOMBER_PUNCH        ) ||
+/* Verdoppelt */            !LoadSprites (4,      6,      42,     44,     true,     BMP_ARENA_BOMBER_STUNT        )
            )
         {
             // Failure, get out (error is logged by the LoadSprites() method)
@@ -157,6 +157,9 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
         // Save origin where to draw from
         m_ViewOriginX = (Width - VIEW_WIDTH) / 2;
         m_ViewOriginY = (Height - VIEW_HEIGHT) / 2;
+
+		// Einen Versuch ist es wert...
+		m_ViewOriginX = m_ViewOriginY = 0;
 
         m_DirectDraw.SetOrigin (m_ViewOriginX, m_ViewOriginY);
     }
