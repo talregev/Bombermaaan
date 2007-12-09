@@ -911,12 +911,13 @@ void CArena::NewBomber (int BlockX, int BlockY, int Player)
     ASSERT (BlockY >= 0 && BlockY < ARENA_HEIGHT);
     ASSERT (Player >= 0 && Player < MAX_PLAYERS);
     ASSERT (!m_Bombers[Player].Exist());
+	ASSERT (m_pOptions != NULL);
 
     // Create the bomber and map the player number with it
     m_Bombers[Player].SetArena (this);
     m_Bombers[Player].SetDisplay (m_pDisplay);
     m_Bombers[Player].SetSound (m_pSound);
-    m_Bombers[Player].Create (BlockX, BlockY, Player);
+    m_Bombers[Player].Create (BlockX, BlockY, Player, m_pOptions);
 }
 
 //******************************************************************************************************************************

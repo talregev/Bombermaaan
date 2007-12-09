@@ -27,6 +27,7 @@
 #define __COPTIONS_H__
 
 #include "CDisplay.h"
+#include "CItem.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -55,6 +56,24 @@ enum EBlockType
     BLOCKTYPE_REDBOMBER,    //!< The red bomber must start here
     BLOCKTYPE_BLUEBOMBER,   //!< The blue bomber must start here
     BLOCKTYPE_GREENBOMBER   //!< The green bomber must start here
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+enum EBomberSkills
+{
+	BOMBERSKILL_DUMMYFIRST,
+    BOMBERSKILL_FLAME,
+	BOMBERSKILL_BOMBS,
+	BOMBERSKILL_BOMBITEMS,
+	BOMBERSKILL_FLAMEITEMS,
+	BOMBERSKILL_ROLLERITEMS,
+	BOMBERSKILL_KICKITEMS,
+	BOMBERSKILL_THROWITEMS,
+	BOMBERSKILL_PUNCHITEMS,
+	NUMBER_OF_BOMBERSKILLS
 };
 
 //******************************************************************************************************************************
@@ -94,6 +113,7 @@ private:
     char**              m_LevelsName;
     int                 m_Level;
     int                 m_NumberOfLevels;
+	int**				m_InitialBomberSkills;
 
     void                ReadData (FILE* pConfigFile);   //!< Read the options from the configuration file
     void                WriteData (FILE* pConfigFile);  //!< Write the options to the configuration file
@@ -126,6 +146,7 @@ public:
     inline int          GetControl (int PlayerInput, int Control);
     inline void         SetControl (int PlayerInput, int Control, int Value);
     inline EBlockType   GetBlockType (int X, int Y);
+	inline int			GetInitialBomberSkills (EBomberSkills BomberSkill);
     inline void         SetLevel (int Level);
     inline int          GetLevel (void);
     inline int          GetNumberOfLevels (void);
@@ -231,6 +252,18 @@ inline EBlockType COptions::GetBlockType (int X, int Y)
     ASSERT (Y >= 0 && Y < ARENA_HEIGHT);
 
     return m_LevelsData[m_Level][X][Y];
+}
+
+
+inline int COptions::GetInitialBomberSkills ( EBomberSkills BomberSkill )
+{
+//	theConsole.Write( "XXX=%d\n", m_Level);
+	//theConsole.Write( "Ptr=%p\n", m_InitialBomberSkills);
+
+	ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
+	ASSERT (BomberSkill > BOMBERSKILL_NONE && BomberSkill < NUMBER_OF_BOMBERSKILLS);
+
+	return m_InitialBomberSkills[m_Level][BomberSkill];
 }
 
 inline void COptions::SetLevel (int Level)
