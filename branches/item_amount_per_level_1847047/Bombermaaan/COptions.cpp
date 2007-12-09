@@ -26,6 +26,7 @@
 #include "stdafx.h"
 #include "COptions.h"
 #include "CInput.h"
+#include "CItem.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -49,6 +50,7 @@ COptions::COptions (void)
 {
     m_LevelsData = NULL;
     m_LevelsName = NULL;
+	m_NumberOfItemsInWalls = NULL;
 }
 
 //******************************************************************************************************************************
@@ -100,6 +102,11 @@ COptions& COptions::operator = (COptions& Copy)
         for (j = 0 ; j < ARENA_WIDTH ; j++)
             for (k = 0 ; k < ARENA_HEIGHT ; k++)
                 m_LevelsData[i][j][k] = Copy.m_LevelsData[i][j][k];
+
+		for (j = ITEM_NONE ; j < NUMBER_OF_ITEMS ; j++) {
+			m_NumberOfItemsInWalls[i][j] = Copy.m_NumberOfItemsInWalls[i][j];
+		}
+
     }
 
 	return *this;
@@ -155,6 +162,10 @@ void COptions::Destroy (void)
             m_LevelsName = NULL;
         }
 
+		for (int i = 0 ; i < m_NumberOfLevels ; i++) {
+			delete [] m_NumberOfItemsInWalls;
+		}
+		m_NumberOfItemsInWalls = NULL;
         m_NumberOfLevels = 0;
     }
 }
@@ -312,8 +323,10 @@ void COptions::AllocateLevels (int NumberOfLevels)
 {
     ASSERT(m_LevelsData == NULL);
     ASSERT(m_LevelsName == NULL);
+	ASSERT(m_NumberOfItemsInWalls == NULL);
     
     m_LevelsData = new EBlockType** [NumberOfLevels];
+	m_NumberOfItemsInWalls = new int* [NumberOfLevels];
 
     for (int i = 0 ; i < NumberOfLevels ; i++)
     {
@@ -321,7 +334,9 @@ void COptions::AllocateLevels (int NumberOfLevels)
 
         for (int j = 0 ; j < ARENA_WIDTH ; j++)
             m_LevelsData[i][j] = new EBlockType [ARENA_HEIGHT];
-    }    
+
+		m_NumberOfItemsInWalls[i] = new int [NUMBER_OF_ITEMS];
+    }
 
     m_LevelsName = new char* [NumberOfLevels];
 }
@@ -400,6 +415,8 @@ bool COptions::LoadLevels (void)
             m_LevelsName[CurrentLevel] = new char [strlen(FindData.name) + 1];
             strcpy(m_LevelsName[CurrentLevel], FindData.name);
 
+            theLog.WriteLine ("Options         => Loading level file %s...", LevelFileName);
+
             // Open the existing level file for reading
             File = fopen(LevelFileName, "rt");
 
@@ -471,6 +488,34 @@ bool COptions::LoadLevels (void)
                     break;
                 }
             }
+
+			//// Read level configuration for items
+			if ( ( fscanf( File, "BombItems_in_walls = %d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] ) != 1 ) ||
+				 ( fscanf( File, "FlameItems_in_walls = %d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] ) != 1 ) ||
+				 ( fscanf( File, "KickItems_in_walls = %d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] ) != 1 ) ||
+				 ( fscanf( File, "RollerItems_in_walls = %d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] ) != 1 ) ||
+				 ( fscanf( File, "SkullItems_in_walls = %d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] ) != 1 ) ||
+				 ( fscanf( File, "ThrowItems_in_walls = %d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] ) != 1 ) ||
+				 ( fscanf( File, "PunchItems_in_walls = %d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] ) != 1 ) ) {
+                // Log there is a problem
+                theLog.WriteLine ("Options         => !!! Level file %s is incorrect (Items in walls).", LevelFileName);
+
+                // Close the level file
+                fclose(File);
+
+                // Stop loading levels
+                StopReadingFile = true;
+                break;
+			}
+
+			theLog.WriteLine( "Options         => ItemsInWalls: Bombs=%d, Flames=%d, Kicks=%d, Rollers=%d, Skulls=%d, Throws=%d, Punches=%d",
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] );
 
             // Close the level file
             fclose(File);

@@ -209,13 +209,13 @@ void CArena::Create (void)
     // Create some items under soft walls
     CItem::CreateItems (this,
                         ITEMPLACE_SOFTWALLS, 
-                        INITIAL_ITEMBOMB, 
-                        INITIAL_ITEMFLAME, 
-                        INITIAL_ITEMROLLER, 
-                        INITIAL_ITEMKICK, 
-                        INITIAL_ITEMSKULL,
-                        INITIAL_ITEMTHROW,
-                        INITIAL_ITEMPUNCH);
+			m_pOptions->GetNumberOfItemsInWalls (ITEM_BOMB),  //// Original: INITIAL_ITEMBOMB, 
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_FLAME),  //// Original: INITIAL_ITEMFLAME, 
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_ROLLER),  //// Original: INITIAL_ITEMROLLER, 
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_KICK),  //// Original: INITIAL_ITEMKICK, 
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_SKULL),  //// Original: INITIAL_ITEMSKULL,
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_THROW),  //// Original: INITIAL_ITEMTHROW,
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_PUNCH));  //// Original: INITIAL_ITEMPUNCH);
 
     //-----------------
     // Finish creation

@@ -27,6 +27,7 @@
 #define __COPTIONS_H__
 
 #include "CDisplay.h"
+#include "CItem.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -94,6 +95,7 @@ private:
     char**              m_LevelsName;
     int                 m_Level;
     int                 m_NumberOfLevels;
+	int**				m_NumberOfItemsInWalls;
 
     void                ReadData (FILE* pConfigFile);   //!< Read the options from the configuration file
     void                WriteData (FILE* pConfigFile);  //!< Write the options to the configuration file
@@ -126,6 +128,7 @@ public:
     inline int          GetControl (int PlayerInput, int Control);
     inline void         SetControl (int PlayerInput, int Control, int Value);
     inline EBlockType   GetBlockType (int X, int Y);
+	inline int			GetNumberOfItemsInWalls (EItemType ItemType);
     inline void         SetLevel (int Level);
     inline int          GetLevel (void);
     inline int          GetNumberOfLevels (void);
@@ -231,6 +234,17 @@ inline EBlockType COptions::GetBlockType (int X, int Y)
     ASSERT (Y >= 0 && Y < ARENA_HEIGHT);
 
     return m_LevelsData[m_Level][X][Y];
+}
+
+inline int COptions::GetNumberOfItemsInWalls ( EItemType ItemType )
+{
+	theConsole.Write( "XXX=%d\n", m_Level);
+	theConsole.Write( "Ptr=%p\n", m_NumberOfItemsInWalls);
+
+	ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
+	ASSERT (ItemType > ITEM_NONE && ItemType < NUMBER_OF_ITEMS);
+
+    return m_NumberOfItemsInWalls[m_Level][ItemType];
 }
 
 inline void COptions::SetLevel (int Level)
