@@ -23,7 +23,6 @@
 
 
 $transform = array(
-	"ff0000	00ff00",		// Transparency
 	"dbdbdb	dfd8df",		// Helmet bright 80%
 	"dedede	dfd8df",		// Helmet bright 80%
 	"b0b0b0	b0b0b0",		// Helmet bright 60%
@@ -44,7 +43,6 @@ $transform = array(
 );
 
 $transform_b = array(
-	"ff0000	00ff00",		// Transparency
 	"dbdbdb	b50000",		// Helmet bright 80%
 	"dedede	b50000",		// Helmet bright 80%
 	"b0b0b0	b50000",		// Helmet bright 60%
@@ -64,17 +62,18 @@ $transform_b = array(
 	"979797	ff9400",
 );
 
+$transparency_to_color = "00ff00";
 
-TransFormPicture( "stunt-front-32.png", "output_stunt-front-32.png", $transform );
-TransFormPicture( "stunt-side-32.png", "output_stunt-side-32.png", $transform );
-TransFormPicture( "stunt-back-32.png", "output_stunt-back-32.png", $transform );
+TransFormPicture( "stunt-front-32.png", "output_stunt-front-32.png", $transform, $transparency_to_color );
+TransFormPicture( "stunt-side-32.png", "output_stunt-side-32.png", $transform, $transparency_to_color );
+TransFormPicture( "stunt-back-32.png", "output_stunt-back-32.png", $transform, $transparency_to_color );
 
-TransFormPicture( "stunt-front-32.png", "output_stunt-front-32b.png", $transform_b );
-TransFormPicture( "stunt-side-32.png", "output_stunt-side-32b.png", $transform_b );
-TransFormPicture( "stunt-back-32.png", "output_stunt-back-32b.png", $transform_b );
+TransFormPicture( "stunt-front-32.png", "output_stunt-front-32b.png", $transform_b, $transparency_to_color );
+TransFormPicture( "stunt-side-32.png", "output_stunt-side-32b.png", $transform_b, $transparency_to_color );
+TransFormPicture( "stunt-back-32.png", "output_stunt-back-32b.png", $transform_b, $transparency_to_color );
 
 
-function TransFormPicture( $inputfname, $outputfname, $transform ) {
+function TransFormPicture( $inputfname, $outputfname, $transform, $backgroundcolor ) {
 
 	$img_in = ImageCreateFromPNG( $inputfname );
 
@@ -84,7 +83,8 @@ function TransFormPicture( $inputfname, $outputfname, $transform ) {
 	$img_out = @ImageCreateTrueColor( $sizex, $sizey )
 	      or die ( "Cannot create image handle." );
 
-
+    imagefill( $img_out, 0, 0, hexdec( $backgroundcolor ) );
+	
 	ImageCopy( $img_out, $img_in, 0, 0, 0, 0, $sizex, $sizey );
 
 	for ( $x = 0; $x < $sizex; $x ++ ) {
