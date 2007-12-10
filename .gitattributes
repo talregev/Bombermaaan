@@ -362,6 +362,7 @@ branches/item_amount_per_level_1847047/RES/RES.vcproj -text
 trunk/COPYING.txt -text
 trunk/docs/Readme.html -text
 trunk/docs/how-to-compile.txt -text
+trunk/images/Convert_svg2png.cmd -text
 trunk/images/Title.svg -text
 trunk/installer/HeaderImage.bmp -text
 trunk/installer/HeaderImage.xcf -text
