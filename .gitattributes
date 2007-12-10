@@ -2,6 +2,7 @@
 /COPYING.txt -text
 docs/Readme.html -text
 docs/how-to-compile.txt -text
+images/Title.svg -text
 installer/HeaderImage.bmp -text
 installer/HeaderImage.xcf -text
 installer/InstallScript.nsi -text
