@@ -109,7 +109,7 @@ function TransFormPicture( $inputfname, $outputfname, $transform ) {
 		}
 	}
 
-	ImagePNG( $img_out, $outputfname );
+	ImagePNG( $img_out, "out/$outputfname" );
 
 	imagedestroy( $img_in );
 	imagedestroy( $img_out );
