@@ -23,12 +23,9 @@
 
 
 $transform = array(
-	"dbdbdb	dfd8df",		// Helmet bright 80%
 	"dedede	dfd8df",		// Helmet bright 80%
-	"b0b0b0	b0b0b0",		// Helmet bright 60%
 	"b5b5b5	b0b0b0",		// Helmet bright 60%
 	"fcfcfc	fdfdfd",		// Helmet bright 100%
-	"909090	909090",		// Helmet bright 40%
 	"949494	909090",		// Helmet bright 40%
 	"717171	ff4800",		// Eyes around
 	"959595	ff9000",		// Eyes between
@@ -43,12 +40,9 @@ $transform = array(
 );
 
 $transform_b = array(
-	"dbdbdb	b50000",		// Helmet bright 80%
 	"dedede	b50000",		// Helmet bright 80%
-	"b0b0b0	b50000",		// Helmet bright 60%
 	"b5b5b5	b50000",		// Helmet bright 60%
 	"fcfcfc	ff0000",		// Helmet bright 100%
-	"909090	940000",		// Helmet bright 40%
 	"949494	940000",		// Helmet bright 40%
 	"717171	ff4800",		// Eyes around
 	"959595	ff9000",		// Eyes between
