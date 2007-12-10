@@ -118,6 +118,13 @@ branches/blocksize_32pixels/Bombermaaan/WinMain.cpp -text
 branches/blocksize_32pixels/RES/RES.dsp -text
 branches/blocksize_32pixels/RES/RES.vcproj -text
 branches/blocksize_32pixels/_images/patterns/analyze-32.php -text
+branches/blocksize_32pixels/_images/patterns/item-0.png -text
+branches/blocksize_32pixels/_images/patterns/item-1.png -text
+branches/blocksize_32pixels/_images/patterns/item-2.png -text
+branches/blocksize_32pixels/_images/patterns/item-3.png -text
+branches/blocksize_32pixels/_images/patterns/item-4.png -text
+branches/blocksize_32pixels/_images/patterns/item-5.png -text
+branches/blocksize_32pixels/_images/patterns/item-6.png -text
 branches/blocksize_32pixels/_images/patterns/stunt-back-32.png -text
 branches/blocksize_32pixels/_images/patterns/stunt-front-32.png -text
 branches/blocksize_32pixels/_images/patterns/stunt-side-32.png -text
