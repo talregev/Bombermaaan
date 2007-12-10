@@ -154,6 +154,7 @@ Section "Common files (required)" SecCommonReq
   File ..\..\Bomberman\Bomberman.exe
   File ..\..\Bomberman\FMOD.DLL
   File ..\docs\Readme.html
+  File ..\COPYING.txt
 
   SetOutPath "$INSTDIR\Levels"
   File ..\..\Bomberman\Levels\L1.TXT
@@ -210,6 +211,7 @@ Section "Uninstall"
   Delete "$INSTDIR\Bomberman.dat"
   Delete "$INSTDIR\FMOD.DLL"
   Delete "$INSTDIR\Readme.html"
+  Delete "$INSTDIR\COPYING.txt"
   Delete "$INSTDIR\Levels\L1.TXT"
   Delete "$INSTDIR\Levels\L2.TXT"
   Delete "$INSTDIR\Levels\L3.TXT"
