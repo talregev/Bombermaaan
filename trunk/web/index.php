@@ -63,11 +63,6 @@ You need administrative rights for installing Bombermaaan. This is considered to
 The uninstaller was tested on Win XP with ServicePack 2 and Win Vista.
 </p>
 
-<p style="margin-top: 5em;">
-<a href="http://sourceforge.net"><img style="border: 0px;" src="http://sflogo.sourceforge.net/sflogo.php?group_id=81520&amp;type=4" width="125" height="37" alt="SourceForge.net Logo" /></a>
-<a href="http://validator.w3.org/check?uri=referer"><img style="border: 0px;" src="http://www.w3.org/Icons/valid-xhtml11-blue" alt="Valid XHTML 1.1" height="31" width="88" /></a>
-</p>
-
 </div>
 
 <div>
@@ -81,6 +76,57 @@ The uninstaller was tested on Win XP with ServicePack 2 and Win Vista.
 </p>
 
 </div>
+
+<div style="clear: both;">
+
+<h2 style="margin-top: 5em;">Todo list</h2>
+
+<table>
+
+<tr>
+<th>Item</th>
+<th>Progress</th>
+<th>Status</th>
+<th>Description</th>
+<th>Added</th>
+<th>Last changed</th>
+</tr>
+
+<tr>
+<td>Blocks where bombs start moving/change direction</td>
+<td>0 %</td>
+<td>Planned</td>
+<td>There are certain blocks in the arena. When a bomber puts a bomb there or when a moving bomb arrives there, the bomb begins moving or changes the direction.</td>
+<td>2007-12-10</td>
+<td>2007-12-10</td>
+</tr>
+
+<tr>
+<td>Skins</td>
+<td>0 %</td>
+<td>Planned</td>
+<td>Skins with different images.</td>
+<td>2007-12-10</td>
+<td>2007-12-10</td>
+</tr>
+
+<tr>
+<td>More than two keyboard inputs</td>
+<td>0 %</td>
+<td>Planned</td>
+<td>Since you can plug many USB keyboards, it could be possible to have five human players in the same game.</td>
+<td>2007-12-10</td>
+<td>2007-12-10</td>
+</tr>
+
+</table>
+
+</div>
+
+<p style="margin-top: 5em;">
+<a href="http://sourceforge.net"><img style="border: 0px;" src="http://sflogo.sourceforge.net/sflogo.php?group_id=81520&amp;type=4" width="125" height="37" alt="SourceForge.net Logo" /></a>
+<a href="http://validator.w3.org/check?uri=referer"><img style="border: 0px;" src="http://www.w3.org/Icons/valid-xhtml11-blue" alt="Valid XHTML 1.1" height="31" width="88" /></a>
+</p>
 
 </body>
 
