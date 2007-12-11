@@ -125,5 +125,17 @@ src/Bombermaaan/STDAFX.H -text
 src/Bombermaaan/WinMain.cpp -text
 src/RES/RES.dsp -text
 src/RES/RES.vcproj -text
+src/_Test_/Debug/Levels/L1.TXT -text
+src/_Test_/Debug/Levels/L2.TXT -text
+src/_Test_/Debug/Levels/L3.TXT -text
+src/_Test_/Debug/Levels/L4.TXT -text
+src/_Test_/Debug/Levels/L5.TXT -text
+src/_Test_/Debug/Levels/L6.TXT -text
+src/_Test_/Release/Levels/L1.TXT -text
+src/_Test_/Release/Levels/L2.TXT -text
+src/_Test_/Release/Levels/L3.TXT -text
+src/_Test_/Release/Levels/L4.TXT -text
+src/_Test_/Release/Levels/L5.TXT -text
+src/_Test_/Release/Levels/L6.TXT -text
 web/index.php -text
 web/standard.css -text
