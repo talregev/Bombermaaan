@@ -120,6 +120,15 @@ The uninstaller was tested on Win XP with ServicePack 2 and Win Vista.
 <td>2007-12-10</td>
 </tr>
 
+<tr>
+<td>Team mode</td>
+<td>0 %</td>
+<td>Planned</td>
+<td>Players can be assigned to teams. The match is finished if there is only one team alive. In addition, there could be an option if items are shared in a team.</td>
+<td>2007-12-11</td>
+<td>2007-12-11</td>
+</tr>
+
 </table>
 
 </div>
