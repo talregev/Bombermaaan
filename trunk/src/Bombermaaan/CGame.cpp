@@ -677,12 +677,6 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
     // If the CTRL key is not pressed while the key specified by wParam is released
     if (!(GetKeyState(VK_CONTROL) & 0x8000))
     {
-        // Quickly exit the game with CTRL + F12
-        if (wParam == VK_F12)
-        {
-            FinishGameMode();
-            StartGameMode(GAMEMODE_EXIT);
-        }
         
         EDisplayMode DisplayMode = DISPLAYMODE_NONE;
         
@@ -709,7 +703,17 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
             // Save it in the options
             m_Options.SetDisplayMode (DisplayMode);
         }
-    }
+
+	} else {
+
+        // Quickly exit the game with CTRL + F12
+        if (wParam == VK_F12)
+        {
+            FinishGameMode();
+            StartGameMode(GAMEMODE_EXIT);
+        }
+
+	}
 }
 
 
