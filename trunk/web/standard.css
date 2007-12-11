@@ -1,0 +1,17 @@
+th {
+	color: black;
+	background-color: #ccc;
+}
+
+tr td {
+	border-bottom: 1px solid gray;
+}
+
+td.center {
+	text-align: right;
+}
+
+tr:hover {
+	color: black;
+	background-color: #eb5;
+}

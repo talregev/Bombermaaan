@@ -500,3 +500,4 @@ trunk/src/Bombermaaan/WinMain.cpp -text
 trunk/src/RES/RES.dsp -text
 trunk/src/RES/RES.vcproj -text
 trunk/web/index.php -text
+trunk/web/standard.css -text
