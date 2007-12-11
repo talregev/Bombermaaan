@@ -126,3 +126,4 @@ src/Bombermaaan/WinMain.cpp -text
 src/RES/RES.dsp -text
 src/RES/RES.vcproj -text
 web/index.php -text
+web/standard.css -text

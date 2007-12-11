@@ -26,6 +26,7 @@ $filesha1 = "d57361ee3c83f4cd03bee0d881f14a02b6a953ad";
 <meta name="Language" content="English" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
+<link rel="stylesheet" href="standard.css" type="text/css"/>
 <title>Bomberman game project</title>
 </head>
 
