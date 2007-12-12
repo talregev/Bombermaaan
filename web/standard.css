@@ -1,3 +1,10 @@
+body {
+	color: black;
+	background-color: #dfe;
+	margin: 0px;
+	padding: 0.5em;
+}
+
 th {
 	color: black;
 	background-color: #ccc;
@@ -14,4 +21,36 @@ td.center {
 tr:hover {
 	color: black;
 	background-color: #eb5;
+}
+
+div#tail {
+	margin-top: 5em;
+	text-align: center;
+}
+
+div#content {
+	margin-left: 13em;
+}
+
+div#menu {
+	color: #000;
+	background-color: #ccf;
+	width: 9em;
+	float: left;
+	margin-top: 5em;
+	padding: 0.3em;
+	border: 2px solid #bbe;
+}
+
+div#menu div a {
+	display: block;
+	text-decoration: none;
+	padding: 2px;
+	padding-left: 5px;
+	border: 1px dashed #ccf;
+}
+
+div#menu div a:hover {
+	background-color: #bbe;
+	border: 1px dashed #88c;
 }

@@ -137,5 +137,10 @@ src/_Test_/Release/Levels/L3.TXT -text
 src/_Test_/Release/Levels/L4.TXT -text
 src/_Test_/Release/Levels/L5.TXT -text
 src/_Test_/Release/Levels/L6.TXT -text
+web/download.php -text
+web/inc/webpage.php -text
 web/index.php -text
+web/license.php -text
+web/screenshots.php -text
 web/standard.css -text
+web/todo.php -text
