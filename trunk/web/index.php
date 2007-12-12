@@ -26,11 +26,15 @@ $webpage->head();
 
 <h2>Introduction</h2>
 
+<p>
 Bombermaaan is a classic bomberman game. Thibaut Tollemer started this
 project on July 2000. He's been using this project as a demo of what he 
 could do as a game programmer, in order to be hired.
+</p>
 
-As he was hired, he published the source code and created a project space on sourceforge.net.
+<p>
+As he was hired, he published the source code and created a project space on sourceforge.net. Unfortunately, he doesn't have so much time for programming new features now.
+</p>
 
 <h2>Resources</h2>
 
