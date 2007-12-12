@@ -73,6 +73,10 @@ foreach ( $downloads as $item ) {
 </ul>
 
 <p>
+Checkout the latest subversion revision with <br /><code>svn co https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk bombermaaan</code>.
+</p>
+
+<p>
 Notes:
 </p>
 
