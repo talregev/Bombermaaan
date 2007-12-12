@@ -511,5 +511,10 @@ trunk/src/_Test_/Release/Levels/L3.TXT -text
 trunk/src/_Test_/Release/Levels/L4.TXT -text
 trunk/src/_Test_/Release/Levels/L5.TXT -text
 trunk/src/_Test_/Release/Levels/L6.TXT -text
+trunk/web/download.php -text
+trunk/web/inc/webpage.php -text
 trunk/web/index.php -text
+trunk/web/license.php -text
+trunk/web/screenshots.php -text
 trunk/web/standard.css -text
+trunk/web/todo.php -text
