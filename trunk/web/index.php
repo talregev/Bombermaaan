@@ -30,22 +30,22 @@ $downloads = array(
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<meta name="Title" content="Bomberman game project" />
+<meta name="Title" content="Bombermaaan game project" />
 <meta name="Author" content="Fury" />
 <meta name="Revisit" content="After 15 days" />
 <meta name="Keywords" content="bomberman bomber man bombermaaan maaan fury game windows download arena bomb explosion item wall victory player players play" />
-<meta name="Description" content="Bomberman game project. A DirectX Bomberman game for Windows 95 and later. Original and classic game play. Up to 5 players on the same computer..." />
-<meta name="Abstract" content="Bomberman game project. A DirectX Bomberman game for Windows 95 and later. Original and classic game play. Up to 5 players on the same computer..." />
+<meta name="Description" content="Bombermaaan game project. A DirectX Bomberman game for Windows 95 and later. Original and classic game play. Up to 5 players on the same computer..." />
+<meta name="Abstract" content="Bombermaaan game project. A DirectX Bomberman game for Windows 95 and later. Original and classic game play. Up to 5 players on the same computer..." />
 <meta name="Robots" content="INDEX,FOLLOW" />
 <meta name="Language" content="English" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
 <link rel="stylesheet" href="standard.css" type="text/css"/>
-<title>Bomberman game project</title>
+<title>Bombermaaan game project</title>
 </head>
 
 <body>
-<h1>Bomberman game project on sourceforge.net</h1>
+<h1>Bombermaaan game project on sourceforge.net</h1>
 
 
 <div style="float: left; width: 40%;">
