@@ -32,6 +32,27 @@ could do as a game programmer, in order to be hired.
 
 As he was hired, he published the source code and created a project space on sourceforge.net.
 
+<h2>Resources</h2>
+
+You may want to view ...
+
+<ul>
+<li><a href="http://fury94.free.fr/">Thibaut's original project page</a></li>
+<li>the <a href="https://sourceforge.net/projects/bombermaaan/">project page on sourceforge.net</a></li>
+<li>the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download section on sourceforge.net</a></li>
+<li>the <a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/">subversion repository</a> on sourceforge.net</li>
+<li>the <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/Readme.html?revision=5&amp;pathrev=5">README file</a> (very latest version out of the subversion repository)</li>
+</ul>
+
+Pages on sourceforge.net ...
+
+<ul>
+<li><a href="http://sourceforge.net/tracker/?atid=563210&amp;group_id=81520&amp;func=browse">bug reporting</a></li>
+<li><a href="http://sourceforge.net/tracker/?atid=563213&amp;group_id=81520&amp;func=browse">feature requests</a></li>
+<li><a href="http://sourceforge.net/forum/?group_id=81520">forums</a></li>
+<li><a href="http://sourceforge.net/export/rss2_project.php?group_id=81520">list of RSS feeds</a></li>
+</ul>
+
 </div>
 
 <?php
