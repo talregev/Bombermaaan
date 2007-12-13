@@ -16,7 +16,7 @@ class WebPage {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta name="Title" content="Bombermaaan game project" />
-<meta name="Author" content="Fury" />
+<meta name="Author" content="Thibaut Tollemer, Bernd Arnold" />
 <meta name="Revisit" content="After 15 days" />
 <meta name="Keywords" content="bomberman bomber man bombermaaan maaan fury game windows download arena bomb explosion item wall victory player players play" />
 <meta name="Description" content="Bombermaaan game project. A DirectX Bomberman game for Windows 95 and later. Original and classic game play. Up to 5 players on the same computer..." />
