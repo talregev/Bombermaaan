@@ -64,6 +64,12 @@ class WebPage {
 	function menu() {
 
 		?>
+<div id="side">
+
+<div id="logoimage">
+<img src="images/title.png" />
+</div>
+
 <div id="menu">
 
 <div>
@@ -84,6 +90,8 @@ class WebPage {
 
 <div>
 <a href="todo.php">To-Do</a>
+</div>
+
 </div>
 
 </div>
