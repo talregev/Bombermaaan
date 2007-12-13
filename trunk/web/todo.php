@@ -70,9 +70,27 @@ This list shows the ideas we had and don't want to forget.
 <td>Team mode</td>
 <td>0 %</td>
 <td>Planned</td>
-<td>Players can be assigned to teams. The match is finished if there is only one team alive. In addition, there could be an option if items are shared in a team.</td>
+<td>Players can be assigned to teams. The match is finished if there is only one team alive. In addition, there could be an option if item effects are shared in a team.</td>
 <td>2007-12-11</td>
 <td>2007-12-11</td>
+</tr>
+
+<tr>
+<td>Retain bomber skills between matches</td>
+<td>0 %</td>
+<td>Planned</td>
+<td>Bomber skills are reset each time a match starts. What about an option where the bombers keep their skills between matches?</td>
+<td>2007-12-13</td>
+<td>2007-12-13</td>
+</tr>
+
+<tr>
+<td>Remote control lets bombs explode</td>
+<td>0 %</td>
+<td>Planned</td>
+<td>A new item can be picked up by the bombers to let the players decide whether they want their bomb explode before the default time ends. This shouldn't work when the bomber is contaminated with the &quot;long bomb explode time&quot; and the "short bomb explode time&quot;.</td>
+<td>2007-12-13</td>
+<td>2007-12-13</td>
 </tr>
 
 </table>
