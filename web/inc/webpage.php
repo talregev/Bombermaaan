@@ -67,7 +67,7 @@ class WebPage {
 <div id="side">
 
 <div id="logoimage">
-<img src="images/title.png" />
+<a href="/"><img src="images/title.png" /></a>
 </div>
 
 <div id="menu">
