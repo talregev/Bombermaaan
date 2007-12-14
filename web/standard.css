@@ -1,17 +1,32 @@
 body {
 	color: black;
-	background-color: #dfe;
-	margin: 0px;
+	background-color: #ff9;
+	margin: 0;
 	padding: 0.5em;
+	font-style: normal;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 85%;
+}
+
+table {
+	border-collapse: collapse;
 }
 
 th {
 	color: black;
 	background-color: #ccc;
+	border-bottom: 2px solid #444;
+	padding: 0.5em;
 }
 
 tr td {
-	border-bottom: 1px solid gray;
+	border-bottom: 1px dashed gray;
+	padding: 0.5em;
+}
+
+tr {
+	color: black;
+	background-color: #ffa;
 }
 
 td.center {
@@ -20,7 +35,7 @@ td.center {
 
 tr:hover {
 	color: black;
-	background-color: #eb5;
+	background-color: #ee6;
 }
 
 div#tail {
@@ -45,9 +60,9 @@ div#logoimage {
 
 div#menu {
 	color: #000;
-	background-color: #ccf;
+	background-color: #fd9;
 	margin-top: 2em;
-	border: 2px solid #bbe;
+	border: 2px solid #ec4;
 }
 
 div#menu div a {
@@ -55,12 +70,12 @@ div#menu div a {
 	text-decoration: none;
 	padding: 2px;
 	padding-left: 5px;
-	border: 1px dashed #ccf;
+	border: 2px solid #fd9;
 }
 
 div#menu div a:hover {
-	background-color: #bbe;
-	border: 1px dashed #88c;
+	background-color: #ec4;
+	border: 2px solid #db3;
 }
 
 h1 {
