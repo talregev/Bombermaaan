@@ -26,6 +26,7 @@
 #include "stdafx.h"
 #include "COptions.h"
 #include "CInput.h"
+#include "CItem.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -52,6 +53,8 @@ COptions::COptions (void)
 {
     m_LevelsData = NULL;
     m_LevelsName = NULL;
+	m_NumberOfItemsInWalls = NULL;
+	m_InitialBomberSkills = NULL;
 }
 
 //******************************************************************************************************************************
@@ -103,6 +106,15 @@ COptions& COptions::operator = (COptions& Copy)
         for (j = 0 ; j < ARENA_WIDTH ; j++)
             for (k = 0 ; k < ARENA_HEIGHT ; k++)
                 m_LevelsData[i][j][k] = Copy.m_LevelsData[i][j][k];
+
+		for (j = ITEM_NONE ; j < NUMBER_OF_ITEMS ; j++) {
+			m_NumberOfItemsInWalls[i][j] = Copy.m_NumberOfItemsInWalls[i][j];
+		}
+
+		for (j = BOMBERSKILL_DUMMYFIRST ; j < NUMBER_OF_BOMBERSKILLS ; j++) {
+			m_InitialBomberSkills[i][j] = Copy.m_InitialBomberSkills[i][j];
+		}
+
     }
 
 	return *this;
@@ -157,6 +169,14 @@ void COptions::Destroy (void)
             delete [] m_LevelsName;
             m_LevelsName = NULL;
         }
+
+		for (int i = 0 ; i < m_NumberOfLevels ; i++) {
+			delete [] m_InitialBomberSkills;
+			delete [] m_NumberOfItemsInWalls;
+		}
+
+		m_NumberOfItemsInWalls = NULL;
+		m_InitialBomberSkills = NULL;
 
         m_NumberOfLevels = 0;
     }
@@ -315,8 +335,12 @@ void COptions::AllocateLevels (int NumberOfLevels)
 {
     ASSERT(m_LevelsData == NULL);
     ASSERT(m_LevelsName == NULL);
+	ASSERT(m_NumberOfItemsInWalls == NULL);
+	ASSERT(m_InitialBomberSkills == NULL);
     
     m_LevelsData = new EBlockType** [NumberOfLevels];
+	m_NumberOfItemsInWalls = new int* [NumberOfLevels];
+	m_InitialBomberSkills = new int* [NumberOfLevels];
 
     for (int i = 0 ; i < NumberOfLevels ; i++)
     {
@@ -324,7 +348,10 @@ void COptions::AllocateLevels (int NumberOfLevels)
 
         for (int j = 0 ; j < ARENA_WIDTH ; j++)
             m_LevelsData[i][j] = new EBlockType [ARENA_HEIGHT];
-    }    
+
+		m_NumberOfItemsInWalls[i] = new int [NUMBER_OF_ITEMS];
+		m_InitialBomberSkills[i] = new int [NUMBER_OF_BOMBERSKILLS];
+    }
 
     m_LevelsName = new char* [NumberOfLevels];
 }
@@ -403,6 +430,8 @@ bool COptions::LoadLevels (void)
             m_LevelsName[CurrentLevel] = new char [strlen(FindData.name) + 1];
             strcpy(m_LevelsName[CurrentLevel], FindData.name);
 
+            theLog.WriteLine ("Options         => Loading level file %s...", LevelFileName);
+
             // Open the existing level file for reading
             File = fopen(LevelFileName, "rt");
 
@@ -475,7 +504,67 @@ bool COptions::LoadLevels (void)
                 }
             }
 
-            // Close the level file
+			//// Read level configuration for items
+			if ( ( fscanf( File, "ItemsInWalls.Bombs=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] ) != 1 ) ||
+				 ( fscanf( File, "ItemsInWalls.Flames=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] ) != 1 ) ||
+				 ( fscanf( File, "ItemsInWalls.Kicks=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] ) != 1 ) ||
+				 ( fscanf( File, "ItemsInWalls.Rollers=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] ) != 1 ) ||
+				 ( fscanf( File, "ItemsInWalls.Skulls=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] ) != 1 ) ||
+				 ( fscanf( File, "ItemsInWalls.Throws=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] ) != 1 ) ||
+				 ( fscanf( File, "ItemsInWalls.Punches=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] ) != 1 ) ) {
+                // Log there is a problem
+                theLog.WriteLine ("Options         => !!! Level file %s is incorrect (Items in walls).", LevelFileName);
+
+                // Close the level file
+                fclose(File);
+
+                // Stop loading levels
+                StopReadingFile = true;
+                break;
+			}
+
+			theLog.WriteLine( "Options         => ItemsInWalls: Bombs=%d, Flames=%d, Kicks=%d, Rollers=%d, Skulls=%d, Throws=%d, Punches=%d",
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW],
+				m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] );
+
+
+			if ( ( fscanf( File, "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.MaxBombs=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.BombItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.FlameItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.RollerItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.KickItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.ThrowItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.PunchItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] ) != 1 ) ) {
+
+                // Log there is a problem
+                theLog.WriteLine ("Options         => !!! Level file %s is incorrect (Initial skill of bomber).", LevelFileName);
+
+                // Close the level file
+                fclose(File);
+
+                // Stop loading levels
+                StopReadingFile = true;
+                break;
+			}
+
+			theLog.WriteLine( "Options         => BomberSkills: Flame=%d, Bombs=%d, BombItems=%d, FlameItems=%d, RollerItems=%d, KickItems=%d, ThrowItems=%d, PunchItems=%d",
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAME],
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBS],
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBITEMS],
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAMEITEMS],
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_ROLLERITEMS],
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_KICKITEMS],
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_THROWITEMS],
+				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_PUNCHITEMS]	);
+
+
+			// Close the level file
             fclose(File);
         
             // If there wasn't any problem

@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -28,6 +28,7 @@
 
 #include "CElement.h"
 #include "CBomberMove.h"
+#include "COptions.h"
 
 class CArena;
 class CDisplay;
@@ -180,7 +181,7 @@ public:
                     CBomber (void);                 //!< Constructor (initialize the base class)
     virtual         ~CBomber (void);                //!< Destructor (uninitialize the base class)
     inline void     SetArena (CArena* pArena);      //!< Redefinition of the inherited method.
-    void            Create (int BlockX, int BlockY, int Player); //!< Initialize the bomber
+    void            Create (int BlockX, int BlockY, int Player, COptions* options); //!< Initialize the bomber
     void            Destroy (void);                 //!< Uninitialize the bomber
     bool            Update (float DeltaTime);       //!< Update the bomber. Return whether the element should be deleted by the arena.
     void            Display (void);                 //!< Display the bomber
