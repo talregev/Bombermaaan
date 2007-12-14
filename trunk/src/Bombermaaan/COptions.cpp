@@ -107,17 +107,17 @@ COptions& COptions::operator = (COptions& Copy)
             for (k = 0 ; k < ARENA_HEIGHT ; k++)
                 m_LevelsData[i][j][k] = Copy.m_LevelsData[i][j][k];
 
-		for (j = ITEM_NONE ; j < NUMBER_OF_ITEMS ; j++) {
-			m_NumberOfItemsInWalls[i][j] = Copy.m_NumberOfItemsInWalls[i][j];
-		}
+        for (j = ITEM_NONE ; j < NUMBER_OF_ITEMS ; j++) {
+            m_NumberOfItemsInWalls[i][j] = Copy.m_NumberOfItemsInWalls[i][j];
+        }
 
-		for (j = BOMBERSKILL_DUMMYFIRST ; j < NUMBER_OF_BOMBERSKILLS ; j++) {
-			m_InitialBomberSkills[i][j] = Copy.m_InitialBomberSkills[i][j];
-		}
+        for (j = BOMBERSKILL_DUMMYFIRST ; j < NUMBER_OF_BOMBERSKILLS ; j++) {
+            m_InitialBomberSkills[i][j] = Copy.m_InitialBomberSkills[i][j];
+        }
 
     }
 
-	return *this;
+    return *this;
 }
 
 //******************************************************************************************************************************
@@ -353,14 +353,14 @@ void COptions::AllocateLevels (int NumberOfLevels)
         for (int j = 0 ; j < ARENA_WIDTH ; j++)
             m_LevelsData[i][j] = new EBlockType [ARENA_HEIGHT];
 
-		m_NumberOfItemsInWalls[i] = new int [NUMBER_OF_ITEMS];
-		m_InitialBomberSkills[i] = new int [NUMBER_OF_BOMBERSKILLS];
+        m_NumberOfItemsInWalls[i] = new int [NUMBER_OF_ITEMS];
+        m_InitialBomberSkills[i] = new int [NUMBER_OF_BOMBERSKILLS];
     }
 
     m_LevelsName = new char* [NumberOfLevels];
-	for ( int i = 0; i < NumberOfLevels; i++ ) {
-		m_LevelsName[ i ] = NULL;
-	}
+    for ( int i = 0; i < NumberOfLevels; i++ ) {
+        m_LevelsName[ i ] = NULL;
+    }
 }
 
 //******************************************************************************************************************************
