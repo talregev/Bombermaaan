@@ -11,3 +11,18 @@
 * *-*-*-*-*-* *
 *4 --------- 2*
 ***************
+ItemsInWalls.Bombs=5
+ItemsInWalls.Flames=3
+ItemsInWalls.Kicks=3
+ItemsInWalls.Rollers=5
+ItemsInWalls.Skulls=1
+ItemsInWalls.Throws=2
+ItemsInWalls.Punches=2
+BomberSkillsAtStart.FlameSize=2
+BomberSkillsAtStart.MaxBombs=3
+BomberSkillsAtStart.BombItems=5
+BomberSkillsAtStart.FlameItems=2
+BomberSkillsAtStart.RollerItems=0
+BomberSkillsAtStart.KickItems=1
+BomberSkillsAtStart.ThrowItems=1
+BomberSkillsAtStart.PunchItems=1

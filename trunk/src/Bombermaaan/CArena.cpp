@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -209,13 +209,13 @@ void CArena::Create (void)
     // Create some items under soft walls
     CItem::CreateItems (this,
                         ITEMPLACE_SOFTWALLS, 
-                        INITIAL_ITEMBOMB, 
-                        INITIAL_ITEMFLAME, 
-                        INITIAL_ITEMROLLER, 
-                        INITIAL_ITEMKICK, 
-                        INITIAL_ITEMSKULL,
-                        INITIAL_ITEMTHROW,
-                        INITIAL_ITEMPUNCH);
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_BOMB),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_FLAME),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_ROLLER),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_KICK),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_SKULL),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_THROW),
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_PUNCH));
 
     //-----------------
     // Finish creation
@@ -911,12 +911,13 @@ void CArena::NewBomber (int BlockX, int BlockY, int Player)
     ASSERT (BlockY >= 0 && BlockY < ARENA_HEIGHT);
     ASSERT (Player >= 0 && Player < MAX_PLAYERS);
     ASSERT (!m_Bombers[Player].Exist());
+	ASSERT (m_pOptions != NULL);
 
     // Create the bomber and map the player number with it
     m_Bombers[Player].SetArena (this);
     m_Bombers[Player].SetDisplay (m_pDisplay);
     m_Bombers[Player].SetSound (m_pSound);
-    m_Bombers[Player].Create (BlockX, BlockY, Player);
+    m_Bombers[Player].Create (BlockX, BlockY, Player, m_pOptions);
 }
 
 //******************************************************************************************************************************

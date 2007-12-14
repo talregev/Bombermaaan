@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -84,7 +84,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define SPEED_FAST      225               // Speed with FAST sickness
 #define SPEED_NORMAL    60                // Normal speed
 #define SPEED_INC       7                 // Speed increase each time a roller item is picked up
-                                                            
+
 // Sick flashing animation times (in seconds)
 #define ANIMSICK_TIME1      0.090f
 #define ANIMSICK_TIME2      ANIMSICK_TIME1 * 2
@@ -241,7 +241,7 @@ CBomber::~CBomber (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CBomber::Create (int BlockX, int BlockY, int Player)
+void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
 {
     CElement::Create();
 
@@ -253,8 +253,8 @@ void CBomber::Create (int BlockX, int BlockY, int Player)
 
     m_Dead = DEAD_ALIVE;
 
-    m_FlameSize = INITIAL_FLAMESIZE;
-    m_TotalBombs = INITIAL_BOMBS;
+	m_FlameSize = options->GetInitialBomberSkills( BOMBERSKILL_FLAME );
+	m_TotalBombs = options->GetInitialBomberSkills( BOMBERSKILL_BOMBS );
     m_UsedBombs = 0;
     m_Speed = SPEED_NORMAL;
     
@@ -275,12 +275,12 @@ void CBomber::Create (int BlockX, int BlockY, int Player)
     
     Animate (0.0f);
         
-    m_NumberOfBombItems = 0;    
-    m_NumberOfFlameItems = 0;   
-    m_NumberOfRollerItems = 0;
-    m_NumberOfKickItems = 0;
-    m_NumberOfThrowItems = 0;
-    m_NumberOfPunchItems = 0;
+    m_NumberOfBombItems = options->GetInitialBomberSkills( BOMBERSKILL_BOMBITEMS );
+    m_NumberOfFlameItems = options->GetInitialBomberSkills( BOMBERSKILL_FLAMEITEMS );
+    m_NumberOfRollerItems = options->GetInitialBomberSkills( BOMBERSKILL_ROLLERITEMS );
+	m_NumberOfKickItems = options->GetInitialBomberSkills( BOMBERSKILL_KICKITEMS );
+    m_NumberOfThrowItems = options->GetInitialBomberSkills( BOMBERSKILL_THROWITEMS );
+    m_NumberOfPunchItems = options->GetInitialBomberSkills( BOMBERSKILL_PUNCHITEMS );
 
     m_ReturnedItems = false;
 
