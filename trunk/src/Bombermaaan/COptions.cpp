@@ -157,7 +157,8 @@ void COptions::Destroy (void)
 
             delete [] m_LevelsData[i];
             
-            if (m_LevelsName != NULL)
+			// Maybe bug? (wopfel)
+            if (m_LevelsName[i] != NULL)
                 delete [] m_LevelsName[i];
         }
 
@@ -170,9 +171,10 @@ void COptions::Destroy (void)
             m_LevelsName = NULL;
         }
 
+		// Also buggy? (wopfel)
 		for (int i = 0 ; i < m_NumberOfLevels ; i++) {
-			delete [] m_InitialBomberSkills;
-			delete [] m_NumberOfItemsInWalls;
+			delete [] m_InitialBomberSkills[i];
+			delete [] m_NumberOfItemsInWalls[i];
 		}
 
 		m_NumberOfItemsInWalls = NULL;
@@ -354,6 +356,10 @@ void COptions::AllocateLevels (int NumberOfLevels)
     }
 
     m_LevelsName = new char* [NumberOfLevels];
+	// Maybe bug? (wopfel)
+	for ( int i = 0; i < NumberOfLevels; i++ ) {
+		m_LevelsName[ i ] = NULL;
+	}
 }
 
 //******************************************************************************************************************************
