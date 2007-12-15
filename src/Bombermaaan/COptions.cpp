@@ -716,34 +716,60 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
     }
 
     getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Punches=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] ) != 1 )  {
+    if ( sscanf( s.c_str(), "ItemsInWalls.Punches=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] ) != 1 ) {
         theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
         // TODO: Error
     }
 
-/***
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
 
-			if ( ( fscanf( File, "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.MaxBombs=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.BombItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.FlameItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.RollerItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.KickItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.ThrowItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.PunchItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] ) != 1 ) ) {
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.MaxBombs=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
 
-                // Log there is a problem
-                theLog.WriteLine ("Options         => !!! Level file %s is incorrect (Initial skill of bomber).", LevelFileName);
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.BombItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
 
-                // Close the level file
-                fclose(File);
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.FlameItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
 
-                // Stop loading levels
-                StopReadingFile = true;
-                break;
-			}
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.RollerItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
 
-            *****/
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.KickItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.ThrowItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "BomberSkillsAtStart.PunchItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+// TODO: Return successful
 
     return false;
 
