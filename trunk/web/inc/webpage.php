@@ -4,11 +4,11 @@ class WebPage {
 
 	function head() {
 	
-		header( "Vary: Accept" );
+		#header( "Vary: Accept" );
 		#if (stristr($_SERVER["HTTP_ACCEPT"], "application/xhtml+xml")) 
-		    header( "Content-Type: application/xhtml+xml; charset=utf-8" );
+		#    header( "Content-Type: application/xhtml+xml; charset=utf-8" );
 		#else
-		#    header("Content-Type: text/html; charset=utf-8");
+		    header("Content-Type: text/html; charset=utf-8");
 
 		echo '<?' . 'xml version="1.0" encoding="UTF-8"?>' . "\n";
 		echo '<!' . 'DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">' . "\n";
@@ -25,7 +25,7 @@ class WebPage {
 <meta name="Language" content="English" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
-<link rel="stylesheet" href="/css.php" type="text/css"/>
+<link rel="stylesheet" href="/css.php" type="text/css" />
 <title>Bombermaaan game project</title>
 </head>
 
