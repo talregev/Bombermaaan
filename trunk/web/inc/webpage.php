@@ -67,7 +67,7 @@ class WebPage {
 <div id="side">
 
 <div id="logoimage">
-<a href="/"><img src="images/title.png" /></a>
+<a href="/"><img src="images/title.png" alt="The Bombermaaan logo" /></a>
 </div>
 
 <div id="menu">
