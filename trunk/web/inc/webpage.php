@@ -25,7 +25,7 @@ class WebPage {
 <meta name="Language" content="English" />
 <link rel="icon" href="/favicon.ico" type="image/ico" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
-<link rel="stylesheet" href="standard.css" type="text/css"/>
+<link rel="stylesheet" href="/css.php" type="text/css"/>
 <title>Bombermaaan game project</title>
 </head>
 

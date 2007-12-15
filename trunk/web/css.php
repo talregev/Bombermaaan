@@ -1,0 +1,94 @@
+<?php
+
+    header( "Content-Type: text/css" );
+
+?>
+
+body {
+	color: black;
+	background-color: #ff9;
+	margin: 0;
+	padding: 0.5em;
+	font-style: normal;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 85%;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th {
+	color: black;
+	background-color: #ccc;
+	border-bottom: 2px solid #444;
+	padding: 0.5em;
+}
+
+tr td {
+	border-bottom: 1px dashed gray;
+	padding: 0.5em;
+}
+
+tr {
+	color: black;
+	background-color: #ffa;
+}
+
+td.center {
+	text-align: right;
+}
+
+tr:hover {
+	color: black;
+	background-color: #ee6;
+}
+
+div#tail {
+	margin-top: 5em;
+	text-align: center;
+}
+
+div#content {
+	margin-left: 13em;
+}
+
+div#side {
+	width: 9em;
+	float: left;
+	padding: 0.3em;
+}
+
+div#logoimage {
+	margin-top: 1em;
+	text-align: center;
+}
+
+div#menu {
+	color: #000;
+	background-color: #fd9;
+	margin-top: 2em;
+	border: 2px solid #ec4;
+}
+
+div#menu div a {
+	display: block;
+	text-decoration: none;
+	padding: 2px;
+	padding-left: 5px;
+	border: 2px solid #fd9;
+}
+
+div#menu div a:hover {
+	background-color: #ec4;
+	border: 2px solid #db3;
+}
+
+h1 {
+	margin-left: 6em;
+	margin-bottom: 1.5em;
+}
+
+img {
+	border: 0px;
+}
