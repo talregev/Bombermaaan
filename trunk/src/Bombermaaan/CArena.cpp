@@ -46,15 +46,6 @@
 // How many chances to have a soft wall instead of a floor? (in %)
 #define CHANCE_SOFTWALL       80
 
-// Initial number of items when a new arena is built
-#define INITIAL_ITEMBOMB        11
-#define INITIAL_ITEMFLAME       8
-#define INITIAL_ITEMROLLER      7
-#define INITIAL_ITEMKICK        2
-#define INITIAL_ITEMSKULL       1
-#define INITIAL_ITEMTHROW       2
-#define INITIAL_ITEMPUNCH       2
-
 // Position of the up left corner of the arena from the game's view up left corner.
 #define ARENA_POSITION_X     0
 #define ARENA_POSITION_Y     26

@@ -27,6 +27,9 @@
 #include "COptions.h"
 #include "CInput.h"
 #include "CItem.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -44,6 +47,21 @@
 
 // Define the name of the Bombermaaan config file
 #define NAME_OF_BOMBERMAAAN_CFG "Bombermaaan.cfg"
+
+// Initial number of items when a new arena is built
+#define INITIAL_ITEMBOMB        11
+#define INITIAL_ITEMFLAME       8
+#define INITIAL_ITEMROLLER      7
+#define INITIAL_ITEMKICK        2
+#define INITIAL_ITEMSKULL       1
+#define INITIAL_ITEMTHROW       2
+#define INITIAL_ITEMPUNCH       2
+
+// Initial flame size
+#define INITIAL_FLAMESIZE       2
+
+// Initial number of bombs the bomber can drop
+#define INITIAL_BOMBS           1
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -449,127 +467,33 @@ bool COptions::LoadLevels (void)
                 break;
             }
 
-            StopReadingFile = false;
-
-            // For each line of characters to read
-            for (int y = 0 ; y < ARENA_HEIGHT ; y++)
-            {
-                // Buffer where we'll store one line of characters. We'll read the two EOL characters as well.
-                char Line[ARENA_WIDTH + 1];
+            string s;
+            ifstream in;
+            in.open(LevelFileName, ios_base::in);
+            getline( in, s );
+            int LevelVersion;
+            if ( sscanf( s.c_str(), "; Bombermaaan level file version=%d\n", &LevelVersion ) == 0 ) {
+                LevelVersion = 1;
+            }
+            // theLog.WriteLine( s.c_str() );
+            theLog.WriteLine( "Options         => Detected level version=%d", LevelVersion );
             
-                // Read one line of characters (including the EOL chars)
-                int ReadBytes = fread(Line, sizeof(char), (ARENA_WIDTH + 1), File);
+            switch ( LevelVersion ) {
 
-                // Check if all the characters were read and that the two last bytes are EOL characters
-                if (ReadBytes < ARENA_WIDTH + 1 || Line[ARENA_WIDTH] != 10)
-                {
-                    // Log there is a problem
-                    theLog.WriteLine ("Options         => !!! Level file %s is incorrect (%d, %d, %d).", LevelFileName, ReadBytes, Line[ARENA_WIDTH], Line[ARENA_WIDTH + 1]);
-                
-                    // Close the level file
-                    fclose(File);
+                case 1:
+                    StopReadingFile = LoadLevel_Version1( File, CurrentLevel );
+                    break;
 
-                    // Stop loading levels
+                case 2:
+                    StopReadingFile = LoadLevel_Version2( in, CurrentLevel );
+                    break;
+
+                default:
+                    theLog.WriteLine ("Options         => !!! Unsupported version of level file %s.", LevelFileName);
                     StopReadingFile = true;
                     break;
-                }
 
-                // For each character representing a block in this line
-                for (int x = 0 ; x < ARENA_WIDTH ; x++)
-                {
-                    // According to the character value, store the corresponding block type in the current position and level
-                    switch(Line[x])
-                    {
-                        case '*' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_HARDWALL;    break;
-                        case '-' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_RANDOM;      break;
-                        case ' ' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_FREE;        break;
-                        case '1' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_WHITEBOMBER; break;
-                        case '2' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLACKBOMBER; break;
-                        case '3' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_REDBOMBER;   break;
-                        case '4' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLUEBOMBER;  break;
-                        case '5' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_GREENBOMBER; break;
-                        default  : 
-                        {
-                            // Log there is a problem
-                            theLog.WriteLine ("Options         => !!! Level file %s is incorrect (unknown character %c).", LevelFileName, Line[x]);
-                        
-                            // Close the level file
-                            fclose(File);
-
-                            // Stop loading levels
-                            StopReadingFile = true;
-                            break;
-                        }
-                    }
-                }
-
-                // If there was a problem
-                if (StopReadingFile)
-                {
-                    // Stop reading this level file
-                    break;
-                }
             }
-
-			//// Read level configuration for items
-			if ( ( fscanf( File, "ItemsInWalls.Bombs=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] ) != 1 ) ||
-				 ( fscanf( File, "ItemsInWalls.Flames=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] ) != 1 ) ||
-				 ( fscanf( File, "ItemsInWalls.Kicks=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] ) != 1 ) ||
-				 ( fscanf( File, "ItemsInWalls.Rollers=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] ) != 1 ) ||
-				 ( fscanf( File, "ItemsInWalls.Skulls=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] ) != 1 ) ||
-				 ( fscanf( File, "ItemsInWalls.Throws=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] ) != 1 ) ||
-				 ( fscanf( File, "ItemsInWalls.Punches=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] ) != 1 ) ) {
-                // Log there is a problem
-                theLog.WriteLine ("Options         => !!! Level file %s is incorrect (Items in walls).", LevelFileName);
-
-                // Close the level file
-                fclose(File);
-
-                // Stop loading levels
-                StopReadingFile = true;
-                break;
-			}
-
-			theLog.WriteLine( "Options         => ItemsInWalls: Bombs=%d, Flames=%d, Kicks=%d, Rollers=%d, Skulls=%d, Throws=%d, Punches=%d",
-				m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB],
-				m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME],
-				m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK],
-				m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER],
-				m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL],
-				m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW],
-				m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] );
-
-
-			if ( ( fscanf( File, "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.MaxBombs=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.BombItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.FlameItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.RollerItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.KickItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.ThrowItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] ) != 1 ) ||
-				 ( fscanf( File, "BomberSkillsAtStart.PunchItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] ) != 1 ) ) {
-
-                // Log there is a problem
-                theLog.WriteLine ("Options         => !!! Level file %s is incorrect (Initial skill of bomber).", LevelFileName);
-
-                // Close the level file
-                fclose(File);
-
-                // Stop loading levels
-                StopReadingFile = true;
-                break;
-			}
-
-			theLog.WriteLine( "Options         => BomberSkills: Flame=%d, Bombs=%d, BombItems=%d, FlameItems=%d, RollerItems=%d, KickItems=%d, ThrowItems=%d, PunchItems=%d",
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAME],
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBS],
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBITEMS],
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAMEITEMS],
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_ROLLERITEMS],
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_KICKITEMS],
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_THROWITEMS],
-				m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_PUNCHITEMS]	);
-
 
 			// Close the level file
             fclose(File);
@@ -582,6 +506,7 @@ bool COptions::LoadLevels (void)
             // If there was a problem
             else
             {
+                theLog.WriteLine ("Options         => !!! Could not load level file %s.", LevelFileName);
                 // Stop loading levels
                 break;
             }
@@ -604,3 +529,222 @@ bool COptions::LoadLevels (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
+
+bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
+
+    bool StopReadingFile = false;
+
+    // For each line of characters to read
+    for (int y = 0 ; y < ARENA_HEIGHT ; y++)
+    {
+        // Buffer where we'll store one line of characters. We'll read the two EOL characters as well.
+        char Line[ARENA_WIDTH + 1];
+    
+        // Read one line of characters (including the EOL chars)
+        int ReadBytes = fread(Line, sizeof(char), (ARENA_WIDTH + 1), File);
+
+        // Check if all the characters were read and that the two last bytes are EOL characters
+        if (ReadBytes < ARENA_WIDTH + 1 || Line[ARENA_WIDTH] != 10)
+        {
+            // Log there is a problem
+            theLog.WriteLine ("Options         => !!! Level file is incorrect (%d, %d, %d).", ReadBytes, Line[ARENA_WIDTH], Line[ARENA_WIDTH + 1]);
+        
+            // Close the level file
+            fclose(File);
+
+            // Stop loading levels
+            StopReadingFile = true;
+            break;
+        }
+
+        // For each character representing a block in this line
+        for (int x = 0 ; x < ARENA_WIDTH ; x++)
+        {
+            // According to the character value, store the corresponding block type in the current position and level
+            switch(Line[x])
+            {
+                case '*' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_HARDWALL;    break;
+                case '-' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_RANDOM;      break;
+                case ' ' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_FREE;        break;
+                case '1' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_WHITEBOMBER; break;
+                case '2' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLACKBOMBER; break;
+                case '3' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_REDBOMBER;   break;
+                case '4' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLUEBOMBER;  break;
+                case '5' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_GREENBOMBER; break;
+                default  : 
+                {
+                    // Log there is a problem
+                    theLog.WriteLine ("Options         => !!! Level file is incorrect (unknown character %c).", Line[x]);
+                
+                    // Close the level file
+                    fclose(File);
+
+                    // Stop loading levels
+                    StopReadingFile = true;
+                    break;
+                }
+            }
+        }
+
+        // If there was a problem
+        if (StopReadingFile)
+        {
+            // Stop reading this level file
+            break;
+        }
+    }
+
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] = INITIAL_ITEMBOMB;
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] = INITIAL_ITEMFLAME;
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] = INITIAL_ITEMKICK;
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] = INITIAL_ITEMROLLER;
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] = INITIAL_ITEMSKULL;
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] = INITIAL_ITEMTHROW;
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] = INITIAL_ITEMPUNCH;
+
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] = INITIAL_FLAMESIZE;
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] = INITIAL_BOMBS;
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] = 0;
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] = 0;
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] = 0;
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] = 0;
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] = 0;
+    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] = 0;
+
+
+    return StopReadingFile;
+
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
+
+    string s;
+
+    // Read until the [Map] section is found
+    // TODO: Read the [General] section, too
+    do {
+        getline( file, s );
+    } while ( s.find( "[Map]" ) == -1 || file.eof() );
+
+    if ( file.eof() ) {
+        // TODO: Error
+    }
+
+    // For each line of characters to read
+    for (int y = 0 ; y < ARENA_HEIGHT ; y++)
+    {
+        getline( file, s );
+        int pos = s.find( "=" );
+        if ( pos == -1 || pos + ARENA_WIDTH + 1 != s.length() ) {
+            theLog.WriteLine ("Options         => !!! Level file is incorrect (%d, %d, %d).", pos, y, s.length() );
+            // TODO: Error
+        }
+
+        // pos points to the next character
+        pos++;
+
+        // For each character representing a block in this line
+        for (int x = 0 ; x < ARENA_WIDTH ; x++)
+        {
+            // According to the character value, store the corresponding block type in the current position and level
+            switch(s.at(pos+x))
+            {
+                case '*' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_HARDWALL;    break;
+                case '-' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_RANDOM;      break;
+                case ' ' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_FREE;        break;
+                case '1' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_WHITEBOMBER; break;
+                case '2' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLACKBOMBER; break;
+                case '3' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_REDBOMBER;   break;
+                case '4' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLUEBOMBER;  break;
+                case '5' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_GREENBOMBER; break;
+                default  : 
+                {
+                    // Log there is a problem
+                    theLog.WriteLine ("Options         => !!! Level file is incorrect (unknown character %c).", s.at(pos+x) );
+                
+                    // TODO: Error
+                }
+            }
+        }
+
+    }
+
+    // Next line should be the [Settings] section
+    getline( file, s );
+    if ( s != "[Settings]" ) {
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "ItemsInWalls.Bombs=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "ItemsInWalls.Flames=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "ItemsInWalls.Kicks=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "ItemsInWalls.Rollers=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "ItemsInWalls.Skulls=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "ItemsInWalls.Throws=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "ItemsInWalls.Punches=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] ) != 1 )  {
+        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+        // TODO: Error
+    }
+
+/***
+
+			if ( ( fscanf( File, "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.MaxBombs=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.BombItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.FlameItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.RollerItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.KickItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.ThrowItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] ) != 1 ) ||
+				 ( fscanf( File, "BomberSkillsAtStart.PunchItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] ) != 1 ) ) {
+
+                // Log there is a problem
+                theLog.WriteLine ("Options         => !!! Level file %s is incorrect (Initial skill of bomber).", LevelFileName);
+
+                // Close the level file
+                fclose(File);
+
+                // Stop loading levels
+                StopReadingFile = true;
+                break;
+			}
+
+            *****/
+
+    return false;
+
+}
