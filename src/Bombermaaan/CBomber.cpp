@@ -190,12 +190,6 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define BOMBERSPRITE_PUNCHING_UP_0       6
 #define BOMBERSPRITE_PUNCHING_UP_1       7
 
-// Initial flame size
-#define INITIAL_FLAMESIZE       2
-
-// Initial number of bombs the bomber can drop
-#define INITIAL_BOMBS           1
-
 // Flamesize when the bomber has the SMALLFLAME sickness
 #define FLAMESIZE_SMALLFLAME    1
 

@@ -121,6 +121,9 @@ private:
     bool                LoadLevels (void);              //!< Load game levels data and names from the level directory.
     bool                LoadConfiguration (void);       //!< Load the configuration file, create default if it does not exist.
     void                AllocateLevels (int NumberOfLevels); //!< Allocate data and names for the specified number of levels. Warning : does not allocate the names strings (just the array of string pointers).
+    bool                LoadLevel_Version1( FILE* File, int CurrentLevel ); //!< Load level file version 1
+    bool                LoadLevel_Version2( ifstream& file, int CurrentLevel ); //!< Load level file version 1
+
                         
 public:                 
                         
