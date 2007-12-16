@@ -707,6 +707,16 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
     for (int y = 0 ; y < ARENA_HEIGHT ; y++)
     {
         getline( file, s );
+
+        if ( sscanf( s.c_str(), "Line.%d=%*s\n", &value ) != 1 ) {
+            theLog.WriteLine ("Options         => !!! Map option is incorrect (%s).", s.c_str() );
+            return false;
+        }
+        if ( value != y ) {
+            theLog.WriteLine ("Options         => !!! Invalid line number %d found. Expected line number %d.", value, y );
+            return false;
+        }
+
         int pos = s.find( "=" );
         if ( pos == -1 || pos + ARENA_WIDTH + 1 != s.length() ) {
             theLog.WriteLine ("Options         => !!! Level file is incorrect (%d, %d, %d).", pos, y, s.length() );
