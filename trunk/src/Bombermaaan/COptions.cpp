@@ -629,6 +629,24 @@ bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
 bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
 
     string s;
+    int value;
+
+    // This line should be the [General] section
+    getline( file, s );
+    if ( s != "[General]" ) {
+        theLog.WriteLine ( "Options         => !!! General section not found in level file" );
+        return false;
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "Width=%d\n", &value ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
+        return false;
+    }
+    if ( value != ARENA_WIDTH ) {
+        theLog.WriteLine ("Options         => !!! Invalid arena width %d. Only %d allowed.", value, ARENA_WIDTH );
+        return false;
+    }
 
     // Read until the [Map] section is found
     // TODO: Read the [General] section, too
@@ -682,7 +700,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
     // Next line should be the [Settings] section
     getline( file, s );
     if ( s != "[Settings]" ) {
-        theLog.WriteLine ( "Options         => !!! Settings not found in level file" );
+        theLog.WriteLine ( "Options         => !!! Settings section not found in level file" );
         return false;
     }
 
