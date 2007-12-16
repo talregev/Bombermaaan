@@ -846,6 +846,18 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    //---------------------
+    // Read the ContaminationsNotUsed setting
+    //---------------------
+
+    // This setting controls which contamination should not be used in this level
+    // The only one value allowed is "None" at the moment
+    getline( file, s );
+    if ( s != "ContaminationsNotUsed=None" ) {
+        theLog.WriteLine ("Options         => !!! Line ContaminationsNotUsed is incorrect (%s).", s.c_str() );
+        return false;
+    }
+
     // Everything went right
     return true;
 
