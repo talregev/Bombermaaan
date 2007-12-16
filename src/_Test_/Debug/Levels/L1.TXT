@@ -3,7 +3,7 @@
 Width=15
 Height=13
 MaxPlayers=5
-MinPlayers=5
+MinPlayers=1
 Creator=
 [Map]
 Line.0=***************
