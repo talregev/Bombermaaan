@@ -638,6 +638,8 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    // Read the width of the map and check whether it is allowed
+    // At the moment the width is fix, but maybe in the future the width can be changed
     getline( file, s );
     if ( sscanf( s.c_str(), "Width=%d\n", &value ) != 1 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
@@ -648,6 +650,8 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    // Read the height of the map and check whether it is allowed
+    // At the moment the height is fix, but maybe in the future the height can be changed
     getline( file, s );
     if ( sscanf( s.c_str(), "Height=%d\n", &value ) != 1 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
@@ -658,6 +662,9 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    // Read the maximum number of players allowed with this level
+    // At the moment this must be set to 5
+    // Maybe this is changed in the future
     getline( file, s );
     if ( sscanf( s.c_str(), "MaxPlayers=%d\n", &value ) != 1 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
@@ -668,6 +675,9 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    // Read the maximum number of players allowed with this level
+    // Currently this must be set to 1, though a game with 1 player is not possible
+    // Maybe this is changed in the future
     getline( file, s );
     if ( sscanf( s.c_str(), "MinPlayers=%d\n", &value ) != 1 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
@@ -678,6 +688,8 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    // Check if there is a line with the creator
+    // The creator can be empty, it's not stored anywhere at the moment
     getline( file, s );
     if ( s.find( "Creator=" ) != 0 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
@@ -736,6 +748,10 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    //---------------------
+    // Read the ItemsInWalls values
+    //---------------------
+
     getline( file, s );
     if ( sscanf( s.c_str(), "ItemsInWalls.Bombs=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] ) != 1 ) {
         theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
@@ -777,6 +793,10 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
         return false;
     }
+
+    //---------------------
+    // Read the BomberSkillsAtStart values
+    //---------------------
 
     getline( file, s );
     if ( sscanf( s.c_str(), "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) {
