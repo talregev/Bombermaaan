@@ -634,7 +634,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
     // This line should be the [General] section
     getline( file, s );
     if ( s != "[General]" ) {
-        theLog.WriteLine ( "Options         => !!! General section not found in level file" );
+        theLog.WriteLine ( "Options         => !!! General section not found in level file." );
         return false;
     }
 
@@ -644,18 +644,50 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
     if ( value != ARENA_WIDTH ) {
-        theLog.WriteLine ("Options         => !!! Invalid arena width %d. Only %d allowed.", value, ARENA_WIDTH );
+        theLog.WriteLine ("Options         => !!! Invalid arena width %d. Only %d is allowed.", value, ARENA_WIDTH );
         return false;
     }
 
-    // Read until the [Map] section is found
-    // TODO: Read the [General] section, too
-    do {
-        getline( file, s );
-    } while ( s.find( "[Map]" ) == -1 || file.eof() );
+    getline( file, s );
+    if ( sscanf( s.c_str(), "Height=%d\n", &value ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
+        return false;
+    }
+    if ( value != ARENA_HEIGHT ) {
+        theLog.WriteLine ("Options         => !!! Invalid arena height %d. Only %d is allowed.", value, ARENA_HEIGHT );
+        return false;
+    }
 
-    if ( file.eof() ) {
-        theLog.WriteLine( "Options         => !!! Unexpected end of level file" );
+    getline( file, s );
+    if ( sscanf( s.c_str(), "MaxPlayers=%d\n", &value ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
+        return false;
+    }
+    if ( value != 5 ) {
+        theLog.WriteLine ("Options         => !!! Invalid maximum players %d. Only %d is allowed.", value, 5 );
+        return false;
+    }
+
+    getline( file, s );
+    if ( sscanf( s.c_str(), "MinPlayers=%d\n", &value ) != 1 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
+        return false;
+    }
+    if ( value != 1 ) {
+        theLog.WriteLine ("Options         => !!! Invalid minimum players %d. Only %d is allowed.", value, 1 );
+        return false;
+    }
+
+    getline( file, s );
+    if ( s.find( "Creator=" ) != 0 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
+        return false;
+    }
+
+    // Next line should be the [Map] section
+    getline( file, s );
+    if ( s != "[Map]" ) {
+        theLog.WriteLine ( "Options         => !!! Map section not found in level file" );
         return false;
     }
 
