@@ -476,7 +476,7 @@ bool COptions::LoadLevels (void)
                 LevelVersion = 1;
             }
             // theLog.WriteLine( s.c_str() );
-            theLog.WriteLine( "Options         => Detected level version=%d", LevelVersion );
+            theLog.WriteLine( "Options         => Level version %d detected.", LevelVersion );
             
             switch ( LevelVersion ) {
 
@@ -639,7 +639,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
     }
 
     // Read the width of the map and check whether it is allowed
-    // At the moment the width is fix, but maybe in the future the width can be changed
+    // At the moment the width is fix, but maybe the width can be changed in the future
     getline( file, s );
     if ( sscanf( s.c_str(), "Width=%d\n", &value ) != 1 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
@@ -651,7 +651,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
     }
 
     // Read the height of the map and check whether it is allowed
-    // At the moment the height is fix, but maybe in the future the height can be changed
+    // At the moment the height is fix, but maybe the height can be changed in the future
     getline( file, s );
     if ( sscanf( s.c_str(), "Height=%d\n", &value ) != 1 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
