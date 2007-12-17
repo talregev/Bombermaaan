@@ -517,6 +517,7 @@ trunk/src/_Test_/Release/Levels/L5.TXT -text
 trunk/src/_Test_/Release/Levels/L6.TXT -text
 trunk/web/css.php -text
 trunk/web/download.php -text
+trunk/web/faq.php -text
 trunk/web/images/title.png -text
 trunk/web/inc/webpage.php -text
 trunk/web/index.php -text

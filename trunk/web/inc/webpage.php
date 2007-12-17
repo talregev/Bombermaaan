@@ -92,6 +92,10 @@ class WebPage {
 <a href="todo.php">To-Do</a>
 </div>
 
+<div>
+<a href="faq.php">FAQ</a>
+</div>
+
 </div>
 
 </div>

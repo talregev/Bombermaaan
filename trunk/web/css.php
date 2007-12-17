@@ -92,3 +92,13 @@ h1 {
 img {
 	border: 0px;
 }
+
+div.qablock {
+    margin-bottom: 1.5em;
+}
+
+div.qablock div.question {
+}
+
+div.qablock div.answer {
+}
