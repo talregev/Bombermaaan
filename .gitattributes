@@ -378,6 +378,7 @@ branches/item_amount_per_level_1847047/Bombermaaan/WinMain.cpp -text
 branches/item_amount_per_level_1847047/RES/RES.dsp -text
 branches/item_amount_per_level_1847047/RES/RES.vcproj -text
 trunk/COPYING.txt -text
+trunk/docs/Level_File_Layout_Version2.html -text
 trunk/docs/Readme.html -text
 trunk/docs/how-to-compile.txt -text
 trunk/images/Convert_svg2png.cmd -text
