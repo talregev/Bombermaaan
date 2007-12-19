@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -104,6 +104,7 @@ public:
     void            CloseInput (void);                  //!< Release access to the input this object needs
     EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display the game screen
+    void            StopSong (void);
 };
 
 //******************************************************************************************************************************
