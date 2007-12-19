@@ -293,6 +293,9 @@ Hudson Soft's Super Bomberman graphics
 " );
 
 ?>
+
+</div>
+
 <?php
 
 $webpage->tail();
