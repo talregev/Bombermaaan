@@ -1,5 +1,6 @@
 * text=auto !eol
 /COPYING.txt -text
+docs/Level_File_Layout_Version2.html -text
 docs/Readme.html -text
 docs/how-to-compile.txt -text
 images/Convert_svg2png.cmd -text
