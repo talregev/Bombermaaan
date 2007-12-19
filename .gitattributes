@@ -137,6 +137,7 @@ src/_Test_/Release/Levels/L3.TXT -text
 src/_Test_/Release/Levels/L4.TXT -text
 src/_Test_/Release/Levels/L5.TXT -text
 src/_Test_/Release/Levels/L6.TXT -text
+web/changelog.php -text
 web/css.php -text
 web/download.php -text
 web/faq.php -text

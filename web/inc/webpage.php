@@ -96,6 +96,10 @@ class WebPage {
 <a href="faq.php">FAQ</a>
 </div>
 
+<div>
+<a href="changelog.php">Changelog</a>
+</div>
+
 </div>
 
 </div>
