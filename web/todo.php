@@ -29,8 +29,8 @@ This list shows the ideas we had and don't want to forget.
 
 <tr>
 <td>Adjustable items in walls and bomber skills on a per-level basis</td>
-<td>70 %</td>
-<td>In Progress</td>
+<td>100 %</td>
+<td>Completed</td>
 <td>The amount of items in walls and the initial bomber skills can set in each level file.<br />Tracker items 1847047 and 1847048.</td>
 <td>2007-12</td>
 <td>2007-12-18</td>
