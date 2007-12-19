@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -465,6 +465,19 @@ void CSound::PlaySample (ESample Sample)
             // Start playing this sample
             FSOUND_PlaySound (FSOUND_FREE, m_Samples[Sample]);
         }
+    }
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+void CSound::StopAllSamples()
+{    
+    // If the sound works
+    if (m_SoundOK)
+    {    
+        FSOUND_StopSound( FSOUND_ALL );
     }
 }
 

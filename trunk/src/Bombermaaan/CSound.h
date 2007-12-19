@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -127,6 +127,7 @@ public:
     void        PlaySong (ESong Song);                         //!< Start playing a song
     void        StopSong (ESong Song);                         //!< Stop playing a specific song
     void        PlaySample (ESample Sample);                   //!< Start playing a sample
+    void        StopAllSamples();                              //!< Stops all samples
     void        SetSampleVolume (int VolumePerCent);           //!< Set the volume for all samples
     void        SetSongVolume (ESong Song, int VolumePerCent); //!< Set the volume for a specific song
 };
