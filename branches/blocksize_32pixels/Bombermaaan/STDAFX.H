@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -80,11 +80,8 @@ using namespace std;
 #define MAX_DRAWGAME_SCORE              5       // Maximum score for draw games
 #define ARENA_WIDTH                     15      // Arena width in blocks
 #define ARENA_HEIGHT                    13      // Arena height in blocks
-//#define BLOCK_SIZE                      16      // Block size in pixels
 #define BLOCK_SIZE                      32      // Block size in pixels
 #define BLOCK_POSITION_SHIFT            8       // Shift number when translating position<->block : i.e. position >> 4
-//#define VIEW_WIDTH                      240     // Size of the game view (size of client area in windowed mode)
-//#define VIEW_HEIGHT                     234
 #define VIEW_WIDTH                      ARENA_WIDTH * BLOCK_SIZE     // Size of the game view (size of client area in windowed mode)
 #define VIEW_HEIGHT                     26 + ARENA_HEIGHT * BLOCK_SIZE
 
