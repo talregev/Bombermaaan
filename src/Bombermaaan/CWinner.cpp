@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -128,6 +128,7 @@
 
 #define COIN_ANIMATION_TIME 0.5f                //!< Animation time between each sprite
 #define COIN_ANIMATION_TURNS 2                  //!< Number of turns before the coin isn't animated any longer
+#define COIN_SPRITE_COUNT 16                    //!< Number of different coin sprites
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -341,8 +342,7 @@ EGameMode CWinner::Update (void)
         // Animate coin
         //-----------------------------
 
-        // TODO: 16 as #define value! sprite count
-        if ( m_CoinSpriteOffset % 16 == 0 && m_CoinSpriteOffset >= COIN_ANIMATION_TURNS * 16 ) {
+        if ( m_CoinSpriteOffset % COIN_SPRITE_COUNT == 0 && m_CoinSpriteOffset >= COIN_ANIMATION_TURNS * COIN_SPRITE_COUNT ) {
             // Don't animate coin any longer
         } else {
             m_CoinTime += m_pTimer->GetDeltaTime();
@@ -557,8 +557,7 @@ void CWinner::Display (void)
                     int currentCoinSprite = 0;
                     // Animate coin only if it is the last coin and this is the winning player
                     if ( Coin + 1 == m_pScores->GetPlayerScore( Player ) && m_pMatch->GetWinnerPlayer() == Player ) {
-                        // TODO: 16 as #define (as above)
-                        currentCoinSprite = m_CoinSpriteOffset % 16;
+                        currentCoinSprite = m_CoinSpriteOffset % COIN_SPRITE_COUNT;
                     }
                     // Draw the coin
                     m_pDisplay->DrawSprite (COINS_INITIAL_POSITION_X + Coin * COINS_SPACE_X, 
