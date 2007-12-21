@@ -41,6 +41,7 @@ You are informed of what was changed, fixed, added, and removed in each version.
 _L( "", "",
 "Almost unlimited number of levels. You can now add any number of levels. Plus, you don't have to call it L1 or L6 or whatever. Any filename like a.txt or coolbomberlevel.txt will be ok.
 Enhanced level file format. You can specify the amount of items waiting in walls and the initial bomber skills for every match.
+Animated coin for the winner of a match.
 " );
 
 _L( "1.02", "December 9, 2003",
