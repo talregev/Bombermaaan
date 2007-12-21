@@ -53,7 +53,7 @@
 #define WINNER_SPRITE_LAYER             0       //!< Sprite layer where to draw the winner screen sprites
 #define WINNER_LIGHTS_PRIORITY          1       //!< Priority-in-layer to use for light sprites
 #define WINNER_BOMBER_PRIORITY          1       //!< Priority-in-layer to use for bomber sprites
-#define WINNER_STATIC_COIN_PRIORITY     1       //!< Priority-in-layer to use for static (non moving) coins sprites
+#define WINNER_COIN_PRIORITY            1       //!< Priority-in-layer to use for static and animated coins sprites
 #define WINNER_SCOREBOARD_PRIORITY      1       //!< Priority-in-layer to use for scoreboard title sprite
 #define WINNER_CROSS_PRIORITY           1       //!< Priority-in-layer to use when drawing a cross sprite
 
@@ -108,6 +108,9 @@
 #define COINS_SPACE_X                   31      //!< Space in pixels between two coins X position
 #define COINS_SPACE_Y                   33      //!< Space in pixels between two coins Y position
 #define COINS_STATIC_SPRITE             0       //!< Sprite number for a static coin (non moving)
+#define COINS_ANIMATION_TIME 0.5f               //!< Animation time between each sprite
+#define COINS_ANIMATION_TURNS 2                 //!< Number of turns before the coin isn't animated any longer
+#define COINS_SPRITE_COUNT 16                   //!< Number of different coin sprites
 
 // Cross stuff
 #define CROSS_SPACE_X           1   //!< Space in pixels between a cross sprite position for one player
@@ -125,10 +128,6 @@
 #define MOSAIC_SPRITE_PRIORITY_IN_LAYER    0           //!< Priority to use in the sprite layer where to draw the mosaic tiles
 #define MOSAIC_SPEED_X              20.0f       //!< Speed of the scrolling background horizontally
 #define MOSAIC_SPEED_Y              -20.0f      //!< Speed of the scrolling background vertically
-
-#define COIN_ANIMATION_TIME 0.5f                //!< Animation time between each sprite
-#define COIN_ANIMATION_TURNS 2                  //!< Number of turns before the coin isn't animated any longer
-#define COIN_SPRITE_COUNT 16                    //!< Number of different coin sprites
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -342,13 +341,13 @@ EGameMode CWinner::Update (void)
         // Animate coin
         //-----------------------------
 
-        if ( m_CoinSpriteOffset % COIN_SPRITE_COUNT == 0 && m_CoinSpriteOffset >= COIN_ANIMATION_TURNS * COIN_SPRITE_COUNT ) {
+        if ( m_CoinSpriteOffset % COINS_SPRITE_COUNT == 0 && m_CoinSpriteOffset >= COINS_ANIMATION_TURNS * COINS_SPRITE_COUNT ) {
             // Don't animate coin any longer
         } else {
             m_CoinTime += m_pTimer->GetDeltaTime();
-            while ( m_CoinTime >= COIN_ANIMATION_TIME ) {
-                m_CoinTime -= COIN_ANIMATION_TIME;
-                if ( m_CoinSpriteOffset < COIN_ANIMATION_TURNS * 16 )
+            while ( m_CoinTime >= COINS_ANIMATION_TIME ) {
+                m_CoinTime -= COINS_ANIMATION_TIME;
+                if ( m_CoinSpriteOffset < COINS_ANIMATION_TURNS * 16 )
                     m_CoinSpriteOffset ++;
             }
         }
@@ -554,10 +553,10 @@ void CWinner::Display (void)
                 for (int Coin = 0 ; Coin < m_pScores->GetPlayerScore(Player) ; Coin++)
                 {
                     // Don't animate coin by default
-                    int currentCoinSprite = 0;
+                    int currentCoinSprite = COINS_STATIC_SPRITE;
                     // Animate coin only if it is the last coin and this is the winning player
                     if ( Coin + 1 == m_pScores->GetPlayerScore( Player ) && m_pMatch->GetWinnerPlayer() == Player ) {
-                        currentCoinSprite = m_CoinSpriteOffset % COIN_SPRITE_COUNT;
+                        currentCoinSprite = m_CoinSpriteOffset % COINS_SPRITE_COUNT;
                     }
                     // Draw the coin
                     m_pDisplay->DrawSprite (COINS_INITIAL_POSITION_X + Coin * COINS_SPACE_X, 
@@ -567,7 +566,7 @@ void CWinner::Display (void)
                                             WINNER_COIN_SPRITETABLE, 
                                             currentCoinSprite, ///COINS_STATIC_SPRITE,
                                             WINNER_SPRITE_LAYER, 
-                                            WINNER_STATIC_COIN_PRIORITY);
+                                            WINNER_COIN_PRIORITY);
                 }
             }
             // If the bomber does not play
