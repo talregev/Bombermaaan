@@ -341,14 +341,21 @@ EGameMode CWinner::Update (void)
         // Animate coin
         //-----------------------------
 
-        if ( m_CoinSpriteOffset % COINS_SPRITE_COUNT == 0 && m_CoinSpriteOffset >= COINS_ANIMATION_TURNS * COINS_SPRITE_COUNT ) {
+        if ( m_CoinSpriteOffset % COINS_SPRITE_COUNT == COINS_STATIC_SPRITE && 
+            m_CoinSpriteOffset >= COINS_ANIMATION_TURNS * COINS_SPRITE_COUNT ) {
             // Don't animate coin any longer
         } else {
+            // Animate
             m_CoinTime += m_pTimer->GetDeltaTime();
+            // Increase the sprite index
             while ( m_CoinTime >= COINS_ANIMATION_TIME ) {
                 m_CoinTime -= COINS_ANIMATION_TIME;
-                if ( m_CoinSpriteOffset < COINS_ANIMATION_TURNS * 16 )
+                // Don't increase the sprite index if the coin turns reached the limit and we
+                // already arrived at the static sprite's index
+                if ( m_CoinSpriteOffset % COINS_SPRITE_COUNT != COINS_STATIC_SPRITE ||
+                    m_CoinSpriteOffset < COINS_ANIMATION_TURNS * COINS_SPRITE_COUNT ) {
                     m_CoinSpriteOffset ++;
+                }
             }
         }
     }
@@ -552,10 +559,11 @@ void CWinner::Display (void)
                 // Draw as many coins as the player score
                 for (int Coin = 0 ; Coin < m_pScores->GetPlayerScore(Player) ; Coin++)
                 {
-                    // Don't animate coin by default
+                    // Don't animate coin by default (use the static sprite's index)
                     int currentCoinSprite = COINS_STATIC_SPRITE;
                     // Animate coin only if it is the last coin and this is the winning player
                     if ( Coin + 1 == m_pScores->GetPlayerScore( Player ) && m_pMatch->GetWinnerPlayer() == Player ) {
+                        // m_CoinSpriteOffset is always increased, so we use the modulo operator
                         currentCoinSprite = m_CoinSpriteOffset % COINS_SPRITE_COUNT;
                     }
                     // Draw the coin
@@ -564,7 +572,7 @@ void CWinner::Display (void)
                                             NULL,                            // Draw entire sprite
                                             NULL,                            // No need to clip
                                             WINNER_COIN_SPRITETABLE, 
-                                            currentCoinSprite, ///COINS_STATIC_SPRITE,
+                                            currentCoinSprite,
                                             WINNER_SPRITE_LAYER, 
                                             WINNER_COIN_PRIORITY);
                 }
