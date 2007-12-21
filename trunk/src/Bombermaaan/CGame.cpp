@@ -69,6 +69,9 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 // Define the name of the DLL (where sprites and sound samples are stored)
 #define NAME_OF_BOMBERMAN_DLL "Bombermaaan.dll"
 
+// This is the title of the main bombermaaan window
+#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan 2007-12-22"
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -81,6 +84,8 @@ CGame::CGame (HINSTANCE hInstance, const char* pCommandLine)
     m_GameMode = GAMEMODE_NONE;
     m_hModule = NULL;    
     m_hInstance = hInstance;
+
+    SetWindowText( m_hWnd, BOMBERMAAAN_WINDOW_TITLE );
 }
 
 //******************************************************************************************************************************
