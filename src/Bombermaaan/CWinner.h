@@ -61,6 +61,8 @@ private:
     CMosaic*        m_pMosaic;
     float           m_ModeTime;                 //!< Time (in seconds) that elapsed since the mode has started
     float           m_ExitModeTime;             //!< Mode time when we have to start the last black screen
+    float           m_CoinTime;                 //!< Time that elapsed for the current coin sprite
+    int             m_CoinSpriteOffset;         //!< Sprite offset of the coin
     EGameMode       m_ExitGameMode;             //!< Game mode to ask for when exiting
     bool            m_HaveToExit;               //!< Do we have to exit this mode?
     

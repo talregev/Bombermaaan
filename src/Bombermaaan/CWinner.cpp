@@ -126,6 +126,9 @@
 #define MOSAIC_SPEED_X              20.0f       //!< Speed of the scrolling background horizontally
 #define MOSAIC_SPEED_Y              -20.0f      //!< Speed of the scrolling background vertically
 
+#define COIN_ANIMATION_TIME 0.5f                //!< Animation time between each sprite
+#define COIN_ANIMATION_TURNS 2                  //!< Number of turns before the coin isn't animated any longer
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -168,6 +171,10 @@ void CWinner::Create (void)
 
     // Reset mode time (no time has been elapsed in this mode yet)
     m_ModeTime = 0.0f;
+
+    // Reset coin animations
+    m_CoinTime = 0.0f;
+    m_CoinSpriteOffset = 0;
 
     // Don't have to exit this mode yet
     m_HaveToExit = false;
@@ -329,6 +336,22 @@ EGameMode CWinner::Update (void)
 
         // Play animation
         m_SadBomberTimer += m_pTimer->GetDeltaTime();
+
+        //-----------------------------
+        // Animate coin
+        //-----------------------------
+
+        // TODO: 16 as #define value! sprite count
+        if ( m_CoinSpriteOffset % 16 == 0 && m_CoinSpriteOffset >= COIN_ANIMATION_TURNS * 16 ) {
+            // Don't animate coin any longer
+        } else {
+            m_CoinTime += m_pTimer->GetDeltaTime();
+            while ( m_CoinTime >= COIN_ANIMATION_TIME ) {
+                m_CoinTime -= COIN_ANIMATION_TIME;
+                if ( m_CoinSpriteOffset < COIN_ANIMATION_TURNS * 16 )
+                    m_CoinSpriteOffset ++;
+            }
+        }
     }
     // The minimum mode duration has elapsed AND we have to exit, 
     // so we have to make the last black screen
@@ -530,13 +553,20 @@ void CWinner::Display (void)
                 // Draw as many coins as the player score
                 for (int Coin = 0 ; Coin < m_pScores->GetPlayerScore(Player) ; Coin++)
                 {
-                    // Draw the static coin
+                    // Don't animate coin by default
+                    int currentCoinSprite = 0;
+                    // Animate coin only if it is the last coin and this is the winning player
+                    if ( Coin + 1 == m_pScores->GetPlayerScore( Player ) && m_pMatch->GetWinnerPlayer() == Player ) {
+                        // TODO: 16 as #define (as above)
+                        currentCoinSprite = m_CoinSpriteOffset % 16;
+                    }
+                    // Draw the coin
                     m_pDisplay->DrawSprite (COINS_INITIAL_POSITION_X + Coin * COINS_SPACE_X, 
                                             COINS_INITIAL_POSITION_Y + Player * COINS_SPACE_Y, 
                                             NULL,                            // Draw entire sprite
                                             NULL,                            // No need to clip
                                             WINNER_COIN_SPRITETABLE, 
-                                            COINS_STATIC_SPRITE,
+                                            currentCoinSprite, ///COINS_STATIC_SPRITE,
                                             WINNER_SPRITE_LAYER, 
                                             WINNER_STATIC_COIN_PRIORITY);
                 }
