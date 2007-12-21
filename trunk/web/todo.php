@@ -58,7 +58,7 @@ This list shows the ideas we had and don't want to forget.
 <td>More than two keyboard inputs</td>
 <td>0 %</td>
 <td>Noticed</td>
-<td>Since you can plug many USB keyboards, it could be possible to have five human players in the same game.</td>
+<td>Since you can plug many USB keyboards, it could be possible to have five human players in the same game. So allow Keyboard 3 to Keyboard 5 in the input selection screen.</td>
 <td>2007-12-10</td>
 <td>2007-12-10</td>
 </tr>
