@@ -381,6 +381,8 @@ trunk/COPYING.txt -text
 trunk/docs/Level_File_Layout_Version2.html -text
 trunk/docs/Readme.html -text
 trunk/docs/how-to-compile.txt -text
+trunk/images/Bombermaaan_Icon.png -text
+trunk/images/Bombermaaan_Icon.svg -text
 trunk/images/Convert_svg2png.cmd -text
 trunk/images/Title.svg -text
 trunk/installer/HeaderImage.bmp -text
