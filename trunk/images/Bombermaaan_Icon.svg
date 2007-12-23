@@ -16,7 +16,10 @@
    version="1.0"
    sodipodi:docbase="C:\Dokumente und Einstellungen\Bernd\Eigene Dateien\Bombermaaan\repository_trunk\images"
    sodipodi:docname="Bombermaaan_Icon.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="C:\Dokumente und Einstellungen\Bernd\Eigene Dateien\Bombermaaan\repository_trunk\images\Bombermaaan_Icon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -35,8 +38,8 @@
      height="32px"
      inkscape:window-width="801"
      inkscape:window-height="665"
-     inkscape:window-x="132"
-     inkscape:window-y="132" />
+     inkscape:window-x="63"
+     inkscape:window-y="156" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -54,12 +57,12 @@
      id="layer1">
     <path
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.02396941px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 3.2939703,27.444609 C 4.1894003,21.014909 8.9221105,19.812909 15.20819,19.802609 C 21.49327,19.792209 27.20386,20.675609 28.19266,27.444609"
+       d="M 3.2939703,27.444609 C 4.1894003,21.014909 8.922111,19.812909 15.20819,19.802609 C 21.49327,19.792209 27.20386,20.675609 28.19266,27.444609"
        id="path3152"
        sodipodi:nodetypes="czc" />
     <path
        style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.95392829;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="M 15.17934,4.8699093 C 22.11191,4.7502093 25.06941,7.5086093 25.04822,13.177409 C 25.02702,18.952409 23.99971,19.849309 14.97439,19.787309 C 6.0515405,19.725309 5.6900205,17.162409 5.6178605,12.646909 C 5.5457005,8.2376093 8.1443105,4.9897093 15.17934,4.8699093 z "
+       d="M 15.17934,4.8699093 C 22.329478,4.8952544 25.069407,6.4392086 25.04822,12.669751 C 25.027033,18.827771 22.447011,19.776786 15.191958,19.787309 C 8.0094267,19.797832 5.617498,18.903158 5.6178605,12.646909 C 5.618223,6.39066 8.0285776,4.844562 15.17934,4.8699093 z "
        id="rect2170"
        sodipodi:nodetypes="czzzz" />
     <path
@@ -74,7 +77,7 @@
        sodipodi:start="1.5707964"
        sodipodi:end="7.8539816"
        sodipodi:open="true"
-       transform="translate(-321.2253,-501.73503)" />
+       transform="translate(-321.44287,-501.73503)" />
     <path
        sodipodi:type="arc"
        style="opacity:1;color:#000000;fill:#ff2b9b;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -134,7 +137,7 @@
     </g>
     <g
        id="g3162"
-       transform="translate(-345.12233,-500.81197)">
+       transform="translate(-345.41242,-500.81197)">
       <path
          id="path3155"
          d="M 352.60937,528.06343 L 368.50653,528.06343"
