@@ -145,6 +145,7 @@ web/changelog.php -text
 web/css.php -text
 web/download.php -text
 web/faq.php -text
+web/images/bomber_a.png -text
 web/images/title.png -text
 web/inc/webpage.php -text
 web/index.php -text
