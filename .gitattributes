@@ -5,6 +5,7 @@ docs/Readme.html -text
 docs/how-to-compile.txt -text
 images/Bombermaaan_Icon.png -text
 images/Bombermaaan_Icon.svg -text
+images/Convert_all_svg2png.cmd -text
 images/Convert_svg2png.cmd -text
 images/Title.svg -text
 installer/HeaderImage.bmp -text
