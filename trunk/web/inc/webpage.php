@@ -102,6 +102,10 @@ class WebPage {
 
 </div>
 
+<div style="margin-top: 2em; text-align: center;">
+<img src="images/bomber_a.png" alt="A bomber" />
+</div>
+
 </div>
 		<?php
 
