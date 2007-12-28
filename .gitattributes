@@ -147,6 +147,7 @@ trunk/docs/Readme.html -text
 trunk/docs/how-to-compile.txt -text
 trunk/images/Bombermaaan_Icon.png -text
 trunk/images/Bombermaaan_Icon.svg -text
+trunk/images/Convert_all_svg2png.cmd -text
 trunk/images/Convert_svg2png.cmd -text
 trunk/images/Title.svg -text
 trunk/installer/HeaderImage.bmp -text
