@@ -1,6 +1,13 @@
 @echo off
 
-set imgpath=C:\Users\Bernd\Documents\Bombermaaan\subversion_trunk\images
+rem ****************************************
+rem *** This file is part of Bombermaaan ***
+rem *** Copyright (C) 2007 Bernd Arnold  ***
+rem ****************************************
+
+
+rem Get the current directory
+set imgpath=%CD%
 
 rem --export-area-drawing 
 rem --export-dpi=150
