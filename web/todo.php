@@ -90,6 +90,16 @@ This list shows the ideas we had and don't want to forget.
 <td>2007-12-13</td>
 </tr>
 
+<tr>
+<td>Wormhole</td>
+<td>0 %</td>
+<td>Noticed</td>
+<td>There could be blocks when a bomber gets on it, the bomber vanishes from there and about 
+half a second later it re-appears on another block.</td>
+<td>2007-12-28</td>
+<td>2007-12-28</td>
+</tr>
+
 </table>
 
 <p>
