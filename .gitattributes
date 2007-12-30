@@ -271,6 +271,8 @@ trunk/src/Bombermaaan/STDAFX.H -text
 trunk/src/Bombermaaan/WinMain.cpp -text
 trunk/src/RES/RES.dsp -text
 trunk/src/RES/RES.vcproj -text
+trunk/src/RES/StdAfx.cpp -text
+trunk/src/RES/StdAfx.h -text
 trunk/src/_Test_/Debug/Levels/L1.TXT -text
 trunk/src/_Test_/Debug/Levels/L2.TXT -text
 trunk/src/_Test_/Debug/Levels/L3.TXT -text
