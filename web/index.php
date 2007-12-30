@@ -21,7 +21,7 @@ could do as a game programmer, in order to be hired.
 </p>
 
 <p>
-As he was hired, he published the source code and created a project space on sourceforge.net on May 2003. Unfortunately, he doesn't have so much time for programming new features now. Therefore, Bernd Arnold is going to enhance Bombermaan and develop new features in his spare time. He joined the project in the end of 2007.
+As he was hired, he published the source code and created a project space on sourceforge.net on May 2003. Unfortunately, he doesn't have so much time for programming new features now. Therefore, Bernd Arnold is going to enhance Bombermaaan and develop new features in his spare time. He joined the project in the end of 2007.
 </p>
 
 <h2>Resources</h2>
