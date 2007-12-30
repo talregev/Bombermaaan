@@ -129,6 +129,8 @@ src/Bombermaaan/STDAFX.H -text
 src/Bombermaaan/WinMain.cpp -text
 src/RES/RES.dsp -text
 src/RES/RES.vcproj -text
+src/RES/StdAfx.cpp -text
+src/RES/StdAfx.h -text
 src/_Test_/Debug/Levels/L1.TXT -text
 src/_Test_/Debug/Levels/L2.TXT -text
 src/_Test_/Debug/Levels/L3.TXT -text
