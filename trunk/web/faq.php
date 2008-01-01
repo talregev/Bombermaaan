@@ -65,6 +65,9 @@ _Q( "I start Bombermaaan, but I don't get any windows. Additionally, I don't see
 _A( "This could happen when the needed DLLs are missing. This could also happen if the wrong DLLs are used. Please have a look into the Windows event viewer. The system section may report an application popup event (event id 26). If it is about FMOD.DLL, please ensure you are using the correct version of the FMOD.DLL file. (For developers: you will get a STATUS_DLL_NOT_FOUND exception, error code 0xc0000135 when entering debugging mode.)" );
 
 ?>
+
+</div>
+
 <?php
 
 $webpage->tail();
