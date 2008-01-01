@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="RES32"
-	ProjectGUID="{E8C3FF7A-C478-4173-970F-6B195606F77F}"
+	ProjectGUID="{C55A1706-1D17-4210-852B-FADC36A87ABA}"
 	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
