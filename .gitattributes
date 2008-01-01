@@ -115,8 +115,8 @@ branches/blocksize_32pixels/Bombermaaan/RESOURCE.H -text
 branches/blocksize_32pixels/Bombermaaan/STDAFX.CPP -text
 branches/blocksize_32pixels/Bombermaaan/STDAFX.H -text
 branches/blocksize_32pixels/Bombermaaan/WinMain.cpp -text
-branches/blocksize_32pixels/RES/RES.dsp -text
-branches/blocksize_32pixels/RES/RES.vcproj -text
+branches/blocksize_32pixels/RES32/RES.dsp -text
+branches/blocksize_32pixels/RES32/RES.vcproj -text
 branches/blocksize_32pixels/_images/Convert_svg2png2bmp.cmd -text
 branches/blocksize_32pixels/_images/_generated/background-title.bmp -text
 branches/blocksize_32pixels/_images/_generated/background-title.png -text
