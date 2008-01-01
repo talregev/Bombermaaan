@@ -67,7 +67,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #define START_UP_GAME_MODE GAMEMODE_TITLE
 
 // Define the name of the DLL (where sprites and sound samples are stored)
-#define NAME_OF_BOMBERMAN_DLL "Bombermaaan.dll"
+#define NAME_OF_BOMBERMAN_DLL "Bombermaaan_32.dll"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

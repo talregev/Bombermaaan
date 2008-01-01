@@ -67,7 +67,7 @@ using namespace std;
 #include "CConsole.h"
 #include "CDebug.h"
 #include "CTimer.h"
-#include "..\RES\resource.h"
+#include "..\RES32\resource.h"
 #include "resource.h"
 
 #define PLAYER_WHITE                    0       // Player number to get the right bomber
