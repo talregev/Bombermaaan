@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="RES"
+	Name="RES32"
 	ProjectGUID="{E8C3FF7A-C478-4173-970F-6B195606F77F}"
 	TargetFrameworkVersion="131072"
 	>
@@ -42,7 +42,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\_Test_\Debug/RES.tlb"
+				TypeLibraryName=".\..\_Test_\Debug/RES32.tlb"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -52,7 +52,7 @@
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Debug/RES.pch"
+				PrecompiledHeaderFile=".\Debug/RES32.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -77,14 +77,14 @@
 				IgnoreImportLibrary="true"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\_Test_\Debug/Bombermaaan.dll"
+				OutputFile="..\_Test_\Debug/Bombermaaan_32.dll"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\..\_Test_\Debug/Bombermaaan.pdb"
+				ProgramDatabaseFile=".\..\_Test_\Debug/Bombermaaan_32.pdb"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary=".\..\_Test_\Debug/Bombermaaan.lib"
+				ImportLibrary=".\..\_Test_\Debug/Bombermaaan_32.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -136,7 +136,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\..\_Test_\Release/RES.tlb"
+				TypeLibraryName=".\..\_Test_\Release/RES32.tlb"
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
@@ -147,7 +147,7 @@
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="stdafx.h"
-				PrecompiledHeaderFile=".\Release/RES.pch"
+				PrecompiledHeaderFile=".\Release/RES32.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -171,13 +171,13 @@
 				IgnoreImportLibrary="true"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\_Test_\Release/Bombermaaan.dll"
+				OutputFile="..\_Test_\Release/Bombermaaan_32.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				ProgramDatabaseFile=".\..\_Test_\Release/Bombermaaan.pdb"
+				ProgramDatabaseFile=".\..\_Test_\Release/Bombermaaan_32.pdb"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary=".\..\_Test_\Release/Bombermaaan.lib"
+				ImportLibrary=".\..\_Test_\Release/Bombermaaan_32.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
