@@ -58,8 +58,11 @@ _A( "This could happen if too many keys are pressed on the keyboard at the same 
 _Q( "I've found a bug. Are you interested?" );
 _A( "Yes, we are. Please report bugs to the bug tracker at sourceforge.net by submitting a new tracker item." );
 
-_Q( "I start Bombermaaan, but I don't get any windows. Additionally, I don't see a running Bombermaaan task in the task manager." );
-_A( "Maybe Bombermaaan encountered an error and quit. There should be a log file created by Bombermaaan where the Bombermaaan.exe file resides. You can check this by yourself and/or open a support request item at the sourceforge.net support tracker." );
+_Q( "I start Bombermaaan, but I don't get any windows. Additionally, I don't see a running Bombermaaan task in the task manager. The file log.txt exists and was changed just a few seconds ago." );
+_A( "Maybe Bombermaaan encountered an error and quit. The log file is created and updated by Bombermaaan. You will find the log.txt file in the same directory where the Bombermaaan.exe file resides. You can check this file by yourself and/or open a support request item at the sourceforge.net support tracker." );
+
+_Q( "I start Bombermaaan, but I don't get any windows. Additionally, I don't see a running Bombermaaan task in the task manager. There is no file called log.txt in the folder where Bombermaaan.exe resides." );
+_A( "This could happen when the needed DLLs are missing. This could also happen if the wrong DLLs are used. Please have a look into the Windows event viewer. The system section may report an application popup event (event id 26). If it is about FMOD.DLL, please ensure you are using the correct version of the FMOD.DLL file. (For developers: you will get a STATUS_DLL_NOT_FOUND exception, error code 0xc0000135 when entering debugging mode.)" );
 
 ?>
 <?php
