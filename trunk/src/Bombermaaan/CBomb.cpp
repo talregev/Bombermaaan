@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -1206,6 +1206,28 @@ void CBomb::CenterOnBlock (void)
     m_X = (float) m_iX;
     m_Y = (float) m_iY;
 }
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+#ifdef _DEBUG
+
+void CBomb::_Debug_WriteToLog() {
+
+	theLog.WriteLine( "Exist=%d", Exist() );
+	theLog.WriteLine( "Dead=%d", m_Dead );
+	theLog.WriteLine( "OnFloor=%d", IsOnFloor() );
+	theLog.WriteLine( "Checked=%d", m_Checked );
+	theLog.WriteLine( "BlockX=%d,BlockY=%d", m_BlockX, m_BlockY );
+    theLog.WriteLine( "OwnerPlayer=%d", m_OwnerPlayer );
+    theLog.WriteLine( "TimeLeft=%f", m_TimeLeft );
+    theLog.WriteLine( "BombFly=%d", m_BombFly );
+    theLog.WriteLine( "BeingHeld=%d,BeingLifted=%d,BeingPunched=%d", m_BeingHeld, m_BeingLifted, m_BeingPunched );
+
+}
+
+#endif
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

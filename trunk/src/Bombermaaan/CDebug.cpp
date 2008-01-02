@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -55,6 +55,7 @@ void CDebug::Create()
 {   
     ASSERT(m_pTimer != NULL);
     ASSERT(m_pGame != NULL);
+    ASSERT(m_pMatch != NULL);
 
     // Set initial game debug variables
     m_GameSpeed = 1.0f;
@@ -194,6 +195,13 @@ void CDebug::HandleKey (DWORD VirtualKeyCode)
                 
                 break;
             }
+
+#ifdef _DEBUG
+			case VK_F5:
+				theConsole.Write( "CDebug::HandleKey(...): Ctrl+F5 was pressed. Writing bombs to log...\n" );
+				m_pMatch->_Debug_WriteBombsToLog();
+				break;
+#endif
 
             case VK_NUMPAD0 : m_IsComputerConsoleActive[0] = !m_IsComputerConsoleActive[0]; break;
             case VK_NUMPAD1 : m_IsComputerConsoleActive[1] = !m_IsComputerConsoleActive[1]; break;

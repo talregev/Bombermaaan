@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -109,6 +109,11 @@ public:
     inline int      GetWinnerPlayer (void);             //!< Get the number of the player who won this match
     EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
+
+#ifdef _DEBUG
+    void            _Debug_WriteBombsToLog();           //!< Only used for debugging!
+#endif
+
 };
 
 //******************************************************************************************************************************

@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -29,6 +29,7 @@
 
 class CTimer;
 class CGame;
+class CMatch;
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -49,6 +50,7 @@ public:
     static CDebug&  GetInstance();
     inline void SetTimer (CTimer* pTimer);
     inline void SetGame (CGame* pGame);
+	inline void SetMatch(CMatch* pMatch);
     void Create();
     void Destroy();
     void HandleKey (DWORD VirtualKeyCode);
@@ -61,6 +63,7 @@ private:
     
     CTimer* m_pTimer;
     CGame* m_pGame;
+	CMatch* m_pMatch;
     float m_GameSpeed;
     bool m_CanBombersDie;
     bool m_CanBombersBeSick;
@@ -80,6 +83,11 @@ inline void CDebug::SetTimer (CTimer* pTimer)
 inline void CDebug::SetGame (CGame* pGame)
 {
     m_pGame = pGame;
+}
+
+inline void CDebug::SetMatch(CMatch* pMatch)
+{
+    m_pMatch = pMatch;
 }
 
 inline bool CDebug::CanBombersDie()
