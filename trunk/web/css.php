@@ -102,3 +102,7 @@ div.qablock div.question {
 
 div.qablock div.answer {
 }
+
+table.downloadbox a {
+	text-decoration: none;
+}
