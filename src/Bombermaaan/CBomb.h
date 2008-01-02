@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -157,6 +157,9 @@ public:
     inline float        GetTimeLeft (void);                     //!< Return the time left before the bomb will explode (unless the explosion is triggered earlier)
     inline int          GetFlameSize (void);                    //!< Return the size of the flames (in blocks) when the bomb will explode
     inline bool         IsOnFloor (void);                       //!< Return whether the bomb is on the floor (not in the air)
+
+    void                _Debug_WriteToLog();
+
 };
 
 //******************************************************************************************************************************

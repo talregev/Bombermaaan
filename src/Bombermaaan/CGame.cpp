@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -54,7 +54,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 //#define ENABLE_CONSOLE_REPEATED_MESSAGE_FILTERING
 
 // Define this if debug keys should be enabled
-//#define ENABLE_DEBUG_KEYS
+#define ENABLE_DEBUG_KEYS
 
 // Define this if the game should update normally even when the window does not have the focus
 // Note : when the window does not have the focus, you will not have the input focus.
@@ -129,6 +129,7 @@ bool CGame::Create (const char* pCommandLine)
 
     theDebug.SetGame(this);
     theDebug.SetTimer(&m_Timer);
+	theDebug.SetMatch(&m_Match);
     theDebug.Create();
 
     // If the resource file does not exist
