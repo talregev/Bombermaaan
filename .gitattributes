@@ -134,8 +134,13 @@ src/RES/StdAfx.cpp -text
 src/RES/StdAfx.h -text
 src/RES/resource.h -text
 src/RES/resource.rc -text
+src/RES32/RES.CPP -text
 src/RES32/RES32.dsp -text
 src/RES32/RES32.vcproj -text
+src/RES32/StdAfx.cpp -text
+src/RES32/StdAfx.h -text
+src/RES32/resource.h -text
+src/RES32/resource.rc -text
 src/_Test_/Debug/Levels/L1.TXT -text
 src/_Test_/Debug/Levels/L2.TXT -text
 src/_Test_/Debug/Levels/L3.TXT -text
