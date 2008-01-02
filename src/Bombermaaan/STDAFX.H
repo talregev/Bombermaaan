@@ -94,7 +94,7 @@ using namespace std;
 #define BLOCK_SIZE                      16      // Block size in pixels
 #define BLOCK_POSITION_SHIFT            4       // Shift number when translating position<->block : i.e. position >> 4
 #endif
-#define VIEW_WIDTH                      ARENA_WIDTH * BLOCK_SIZE     // Size of the game view (size of client area in windowed mode)
-#define VIEW_HEIGHT                     26 + ARENA_HEIGHT * BLOCK_SIZE
+#define VIEW_WIDTH                      (ARENA_WIDTH * BLOCK_SIZE)     // Size of the game view (size of client area in windowed mode)
+#define VIEW_HEIGHT                     (26 + ARENA_HEIGHT * BLOCK_SIZE)
 
 #endif
