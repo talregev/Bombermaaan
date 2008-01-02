@@ -74,7 +74,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #endif
 
 // This is the title of the main bombermaaan window
-#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan 2007-12-22"
+#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan 2008-01-02"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
