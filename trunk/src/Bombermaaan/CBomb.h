@@ -158,7 +158,9 @@ public:
     inline int          GetFlameSize (void);                    //!< Return the size of the flames (in blocks) when the bomb will explode
     inline bool         IsOnFloor (void);                       //!< Return whether the bomb is on the floor (not in the air)
 
+#ifdef _DEBUG_FLAG_1
     void                _Debug_WriteToLog();
+#endif
 
 };
 
