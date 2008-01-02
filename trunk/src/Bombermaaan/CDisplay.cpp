@@ -179,11 +179,6 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
         m_ViewOriginX = (Width - VIEW_WIDTH) / 2;
         m_ViewOriginY = (Height - VIEW_HEIGHT) / 2;
 
-#ifdef USE_32_PIXELS_PER_BLOCK
-		// Didn't work with the above calculation, so try with 0 (only tried in window mode so far)
-		m_ViewOriginX = m_ViewOriginY = 0;
-#endif
-
         m_DirectDraw.SetOrigin (m_ViewOriginX, m_ViewOriginY);
     }
 
