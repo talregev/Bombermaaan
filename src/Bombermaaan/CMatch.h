@@ -110,7 +110,7 @@ public:
     EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
 
-#ifdef _DEBUG
+#ifdef _DEBUG_FLAG_1
     void            _Debug_WriteBombsToLog();           //!< Only used for debugging!
 #endif
 

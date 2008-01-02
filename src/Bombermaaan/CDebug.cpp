@@ -196,7 +196,7 @@ void CDebug::HandleKey (DWORD VirtualKeyCode)
                 break;
             }
 
-#ifdef _DEBUG
+#ifdef _DEBUG_FLAG_1
 			case VK_F5:
 				theConsole.Write( "CDebug::HandleKey(...): Ctrl+F5 was pressed. Writing bombs to log...\n" );
 				m_pMatch->_Debug_WriteBombsToLog();
