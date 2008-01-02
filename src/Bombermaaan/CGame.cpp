@@ -599,6 +599,11 @@ void CGame::FinishGameMode (void)
 
 void CGame::OnActivateApp (WPARAM wParam, LPARAM lParam)
 {
+#ifdef ENABLE_SOUND
+	static bool  soundWasPausedWhenLosingFocus = false;
+#endif
+
+
     CWindow::OnActivateApp (wParam, lParam);
 
 #ifdef ENABLE_UPDATE_WHEN_WINDOW_IS_INACTIVE    
@@ -613,7 +618,10 @@ void CGame::OnActivateApp (WPARAM wParam, LPARAM lParam)
 
 #ifdef ENABLE_SOUND
         // Unpause the sound
-        m_Sound.SetPause (false);
+		if ( soundWasPausedWhenLosingFocus ) {
+            m_Sound.SetPause (false);
+			soundWasPausedWhenLosingFocus = false;
+		}
 #endif
         
         // Open the needed players inputs according to current game mode
@@ -628,8 +636,11 @@ void CGame::OnActivateApp (WPARAM wParam, LPARAM lParam)
         m_Timer.Pause ();
 
 #ifdef ENABLE_SOUND
-        // Pause the sound
-        m_Sound.SetPause (true);
+        // Pause the sound when it is not already paused (by a pause in a match for example)
+		if ( ! m_Sound.IsPaused() ) {
+            m_Sound.SetPause (true);
+			soundWasPausedWhenLosingFocus = true;
+		}
 #endif
 
         // Close the needed players inputs according to current game mode
