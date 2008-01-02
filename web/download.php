@@ -8,28 +8,42 @@ $webpage->head();
 
 $downloads = array(
 	"stable" => array(
-	array(
-	"Bombermaaan_1.02_Setup.exe",
-	"Installer for Win32",
-	"4a708baed1d671be6ff0ba14bcd851e2", // MD5
-	"d57361ee3c83f4cd03bee0d881f14a02b6a953ad"  // SHA1
-	),
-	array(
-	"Bombermaaan_1.02.zip",
-	"Zip file for Win32",
-	"08fd98b0bbe1d3a2020d7f36561869ac",  // MD5
-	"347e222c2dd411d6529a816acf987531103f8e04",  // SHA1
-	),
-	array(
-	"Bombermaaan_102_src.zip",
-	"Source",
-	),
+		array(
+		"Bombermaaan_1.02_Setup.exe",
+		"Installer for Win32",
+		"4a708baed1d671be6ff0ba14bcd851e2", // MD5
+		"d57361ee3c83f4cd03bee0d881f14a02b6a953ad"  // SHA1
+		),
+		array(
+		"Bombermaaan_1.02.zip",
+		"Zip file for Win32",
+		"08fd98b0bbe1d3a2020d7f36561869ac",  // MD5
+		"347e222c2dd411d6529a816acf987531103f8e04",  // SHA1
+		),
+		array(
+		"Bombermaaan_102_src.zip",
+		"Source",
+		),
 	),
 	"experimental" => array(
-	array(
-	"Bombermaaan_XXXX_Setup.exe",
-	"Zip file for Win32",
-	),
+		array(
+		"Bombermaaan_16pixels_rev153.zip",
+		"Zip file for Win32",
+		"1181367d3f2d981541ee83cb941a96cd",  // MD5
+		"2e09f99b46e2bdb8b99359f31f2ee9d5f6f53731",  // SHA1
+		),
+		array(
+		"Bombermaaan_32pixels_rev153.zip",
+		"Zip file for Win32",
+		"13c300843201b08bba3153122055e94e",  // MD5
+		"3c0d513e7cf240a0609bfb36476ab1345a7defde",  // SHA1
+		),
+		array(
+		"Bombermaaan_blocksize_32pixels_rev115.zip",
+		"Zip file for Win32",
+		"8719b863dae7e22e697354ba3c509a8f",  // MD5
+		"36cbd33e892c95135914cf7ffbd5d707e0dac7d9",  // SHA1
+		),
 	),
 );
 
@@ -78,6 +92,10 @@ foreach ( $downloads[ "stable" ] as $item ) {
 ?>
 
 </table>
+
+<p>
+You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net.
+</p>
 
 <h2>Notes</h2>
 
@@ -141,6 +159,10 @@ foreach ( $downloads[ "experimental" ] as $item ) {
 ?>
 
 </table>
+
+<p>
+You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net.
+</p>
 
 </div>
 
