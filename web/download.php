@@ -7,25 +7,6 @@ $webpage = new WebPage();
 $webpage->head();
 
 $downloads = array(
-	array(
-	"http://downloads.sourceforge.net/bombermaaan/Bombermaaan_1.02_Setup.exe?modtime=1197055380&big_mirror=0",
-	"Installer for Win32 - Version 1.02",
-	"4a708baed1d671be6ff0ba14bcd851e2", // MD5
-	"d57361ee3c83f4cd03bee0d881f14a02b6a953ad"  // SHA1
-	),
-	array(
-	"http://downloads.sourceforge.net/bombermaaan/Bombermaaan_1.02.zip?modtime=1197405778&big_mirror=0",
-	"Zip file for Win32 - Version 1.02",
-	"08fd98b0bbe1d3a2020d7f36561869ac",  // MD5
-	"347e222c2dd411d6529a816acf987531103f8e04",  // SHA1
-	),
-	array(
-	"http://downloads.sourceforge.net/bombermaaan/Bombermaaan_102_src.zip?modtime=1083110400&big_mirror=0",
-	"Source files - Version 1.02",
-	),
-);
-
-$downloads = array(
 	"stable" => array(
 	array(
 	"Bombermaaan_1.02_Setup.exe",
