@@ -276,8 +276,13 @@ trunk/src/RES/StdAfx.cpp -text
 trunk/src/RES/StdAfx.h -text
 trunk/src/RES/resource.h -text
 trunk/src/RES/resource.rc -text
+trunk/src/RES32/RES.CPP -text
 trunk/src/RES32/RES32.dsp -text
 trunk/src/RES32/RES32.vcproj -text
+trunk/src/RES32/StdAfx.cpp -text
+trunk/src/RES32/StdAfx.h -text
+trunk/src/RES32/resource.h -text
+trunk/src/RES32/resource.rc -text
 trunk/src/_Test_/Debug/Levels/L1.TXT -text
 trunk/src/_Test_/Debug/Levels/L2.TXT -text
 trunk/src/_Test_/Debug/Levels/L3.TXT -text
