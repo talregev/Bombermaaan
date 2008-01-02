@@ -67,7 +67,11 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #define START_UP_GAME_MODE GAMEMODE_TITLE
 
 // Define the name of the DLL (where sprites and sound samples are stored)
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define NAME_OF_BOMBERMAN_DLL "Bombermaaan_32.dll"
+#else
 #define NAME_OF_BOMBERMAN_DLL "Bombermaaan.dll"
+#endif
 
 // This is the title of the main bombermaaan window
 #define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan 2007-12-22"

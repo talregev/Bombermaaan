@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -51,6 +51,9 @@ using namespace std;
 #define ASSERT assert
 #endif
 
+// Define this if the 32-pixels-per-block version should be used (needs the RES32 directory, where the DLL is built) - default is 16 pixels per block
+//#define USE_32_PIXELS_PER_BLOCK
+
 #define MEMSET(_p,_value,_size)     memset (_p, _value, _size)
 #define MEMZERO(_p,_size)           memset (_p, 0, _size)
 #define MEMCOPY(_dst,_src,_size)    memcpy (_dst, _src, _size)
@@ -67,7 +70,11 @@ using namespace std;
 #include "CConsole.h"
 #include "CDebug.h"
 #include "CTimer.h"
+#ifdef USE_32_PIXELS_PER_BLOCK
+#include "..\RES32\resource.h"
+#else
 #include "..\RES\resource.h"
+#endif
 #include "resource.h"
 
 #define PLAYER_WHITE                    0       // Player number to get the right bomber
@@ -80,9 +87,14 @@ using namespace std;
 #define MAX_DRAWGAME_SCORE              5       // Maximum score for draw games
 #define ARENA_WIDTH                     15      // Arena width in blocks
 #define ARENA_HEIGHT                    13      // Arena height in blocks
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define BLOCK_SIZE                      32      // Block size in pixels
+#define BLOCK_POSITION_SHIFT            8       // Shift number when translating position<->block : i.e. position >> 4
+#else
 #define BLOCK_SIZE                      16      // Block size in pixels
 #define BLOCK_POSITION_SHIFT            4       // Shift number when translating position<->block : i.e. position >> 4
-#define VIEW_WIDTH                      240     // Size of the game view (size of client area in windowed mode)
-#define VIEW_HEIGHT                     234
+#endif
+#define VIEW_WIDTH                      ARENA_WIDTH * BLOCK_SIZE     // Size of the game view (size of client area in windowed mode)
+#define VIEW_HEIGHT                     26 + ARENA_HEIGHT * BLOCK_SIZE
 
 #endif
