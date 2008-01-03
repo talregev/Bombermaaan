@@ -96,6 +96,7 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (7,      1,      52,     54,     true,     BMP_ARENA_FIRE                ) ||
             !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_WALK_HOLD    ) ||
             !LoadSprites (4,      1,      32,     32,     true,     BMP_ARENA_FLY                 ) ||
+            !LoadSprites (1,      1,      480,    26,     false,    BMP_BOARD_BACKGROUND          ) ||
 #else
             !LoadSprites (2,      1,      16,     16,     false,    BMP_ARENA_FLOOR               ) ||
             !LoadSprites (7,      1,      16,     16,     true,     BMP_ARENA_WALL                ) ||
@@ -106,8 +107,8 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (7,      1,      26,     27,     true,     BMP_ARENA_FIRE                ) ||
             !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_WALK_HOLD    ) ||
             !LoadSprites (4,      1,      16,     16,     true,     BMP_ARENA_FLY                 ) ||
-#endif
             !LoadSprites (1,      1,      240,    26,     false,    BMP_BOARD_BACKGROUND          ) ||
+#endif
             !LoadSprites (12,     1,      7,      10,     true,     BMP_BOARD_TIME                ) || // 10
             !LoadSprites (2,      1,      15,     7,      true,     BMP_BOARD_CLOCK_TOP           ) ||
             !LoadSprites (8,      1,      15,     13,     true,     BMP_BOARD_CLOCK_BOTTOM        ) ||

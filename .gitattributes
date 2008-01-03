@@ -158,6 +158,7 @@ trunk/src/RES/StdAfx.cpp -text
 trunk/src/RES/StdAfx.h -text
 trunk/src/RES/resource.h -text
 trunk/src/RES/resource.rc -text
+trunk/src/RES32/IMAGE/board_background.bmp -text
 trunk/src/RES32/RES.CPP -text
 trunk/src/RES32/RES32.dsp -text
 trunk/src/RES32/RES32.vcproj -text
