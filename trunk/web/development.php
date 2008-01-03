@@ -35,6 +35,19 @@ This is true for the small sprites (16 pixels per block). You can delete the RES
 The RES32 project generates the DLL for the larger sprites (32 pixels per block).
 </p>
 
+<h2>Release steps</h2>
+
+<p>
+Compile instructions
+</p>
+
+<ul>
+<li>Update <code>BOMBERMAAAN_WINDOW_TITLE</code> string in CGame.cpp</li>
+<li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in CGame.cpp to comment</li>
+<li>Select configuration &quot;Release&quot; in the solution</li>
+<li>Rebuild the solution</li>
+</ul>
+
 </div>
 
 <?php
