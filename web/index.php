@@ -24,12 +24,15 @@ could do as a game programmer, in order to be hired.
 As he was hired, he published the source code and created a project space on sourceforge.net on May 2003. Unfortunately, he doesn't have so much time for programming new features now. Therefore, Bernd Arnold is going to enhance Bombermaaan and develop new features in his spare time. He joined the project in the end of 2007.
 </p>
 
+<p>
+<a href="http://fury94.free.fr/">Thibaut's original project page</a> is still available if you want to have a look at it.
+</p>
+
 <h2>Resources</h2>
 
 You may want to view ...
 
 <ul>
-<li><a href="http://fury94.free.fr/">Thibaut's original project page</a></li>
 <li>the <a href="https://sourceforge.net/projects/bombermaaan/">project page on sourceforge.net</a></li>
 <li>the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download section on sourceforge.net</a></li>
 <li>the <a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/">subversion repository</a> on sourceforge.net</li>
