@@ -33,7 +33,6 @@ You may want to view ...
 <li>the <a href="https://sourceforge.net/projects/bombermaaan/">project page on sourceforge.net</a></li>
 <li>the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download section on sourceforge.net</a></li>
 <li>the <a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/">subversion repository</a> on sourceforge.net</li>
-<li>the <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/Readme.html?revision=5&amp;pathrev=5">README file</a> (very latest version out of the subversion repository)</li>
 </ul>
 
 <h2>Stay informed</h2>
