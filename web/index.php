@@ -28,16 +28,6 @@ As he was hired, he published the source code and created a project space on sou
 <a href="http://fury94.free.fr/">Thibaut's original project page</a> is still available if you want to have a look at it.
 </p>
 
-<h2>Resources</h2>
-
-You may want to view ...
-
-<ul>
-<li>the <a href="https://sourceforge.net/projects/bombermaaan/">project page on sourceforge.net</a></li>
-<li>the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download section on sourceforge.net</a></li>
-<li>the <a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/">subversion repository</a> on sourceforge.net</li>
-</ul>
-
 <h2>Stay informed</h2>
 
 <p>

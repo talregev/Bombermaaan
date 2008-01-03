@@ -180,6 +180,7 @@ src/_Test_/Release/Levels/L6.TXT -text
 web/changelog.php -text
 web/contact.php -text
 web/css.php -text
+web/development.php -text
 web/download.php -text
 web/faq.php -text
 web/images/bomber_a.png -text
