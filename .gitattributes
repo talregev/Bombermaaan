@@ -180,6 +180,7 @@ trunk/src/_Test_/Release/Levels/L6.TXT -text
 trunk/web/changelog.php -text
 trunk/web/contact.php -text
 trunk/web/css.php -text
+trunk/web/development.php -text
 trunk/web/download.php -text
 trunk/web/faq.php -text
 trunk/web/images/bomber_a.png -text
