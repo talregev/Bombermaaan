@@ -8,11 +8,11 @@ $webpage->head();
 
 ?>
 
-<h1>Contact</h1>
+<h1>Development</h1>
 
 <div id="content">
 
-<h2>Development</h2>
+<h2>General</h2>
 
 <p>
 Bombermaaan is written in C++ and hosted on SourceForge.net. Bombermaaan should run on all 32-bit MS Windows operating systems.
