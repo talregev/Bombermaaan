@@ -47,6 +47,12 @@ You may want to view ...
 You can also view the full <a href="https://sourceforge.net/export/rss2_project.php?group_id=81520">list of RSS feeds</a>.
 </p>
 
+<p>
+SourceForge.net provides <strong>monitoring</strong> of discussion forums, tracker items and file releases.
+If you would like to monitor new file releases of Bombermaaan, just go to the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download page</a> and click on the <i>Monitor this package</i> icon.
+You can read further informations and view your current monitored items on <a href="https://sourceforge.net/my/monitor.php">your SourceForge.net page</a>.
+</p>
+
 </div>
 
 <?php
