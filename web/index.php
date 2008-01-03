@@ -39,8 +39,8 @@ You may want to view ...
 <h2>Stay informed</h2>
 
 <p>
-<a href="http://sourceforge.net/export/rss2_projnews.php?group_id=81520">News releases</a><br />
-<a href="http://sourceforge.net/export/rss2_projfiles.php?group_id=81520">File releases</a><br />
+<a href="http://sourceforge.net/export/rss2_projnews.php?group_id=81520" class="feed">News releases</a><br />
+<a href="http://sourceforge.net/export/rss2_projfiles.php?group_id=81520" class="feed">File releases</a><br />
 </p>
 
 <p>
