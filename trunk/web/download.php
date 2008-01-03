@@ -97,6 +97,10 @@ foreach ( $downloads[ "stable" ] as $item ) {
 You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net.
 </p>
 
+<p>
+There is also a <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/Readme.html?revision=5&amp;pathrev=5">README file</a> available (very latest version out of the subversion repository).
+</p>
+
 <h2>Notes</h2>
 
 <p>
