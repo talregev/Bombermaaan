@@ -94,7 +94,7 @@ foreach ( $downloads[ "stable" ] as $item ) {
 </table>
 
 <p>
-You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net.
+You can view the <a href="https://sourceforge.net/project/shownotes.php?group_id=81520&release_id=234468">release notes</a> on the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download page</a> on SourceForge.net.
 </p>
 
 <p>
@@ -165,7 +165,7 @@ foreach ( $downloads[ "experimental" ] as $item ) {
 </table>
 
 <p>
-You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net.
+You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net by clicking on the <i>Release Notes</i> icon near a package.
 </p>
 
 </div>
