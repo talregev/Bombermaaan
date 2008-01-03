@@ -136,7 +136,11 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (5,      5,      14,     15,     true,     BMP_VICTORY_CONFETTIS_LARGE   ) ||
             !LoadSprites (5,      5,      13,     14,     true,     BMP_VICTORY_CONFETTIS_MEDIUM  ) ||
             !LoadSprites (5,      5,      10,     10,     true,     BMP_VICTORY_CONFETTIS_SMALL   ) ||
+#ifdef USE_32_PIXELS_PER_BLOCK
+            !LoadSprites (1,      1,     202,     48,     true,     BMP_PAUSE                     ) ||
+#else
             !LoadSprites (1,      1,      69,     16,     true,     BMP_PAUSE                     ) ||
+#endif
             !LoadSprites (1,      1,     105,     16,     true,     BMP_HURRY                     ) ||
             !LoadSprites (1,      1,     154,     93,     true,     BMP_MENU_FRAME_2              ) ||
             !LoadSprites (3,      4,      16,     16,     true,     BMP_ARENA_FUMES               ) || // 40
