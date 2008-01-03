@@ -36,14 +36,16 @@ You may want to view ...
 <li>the <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/Readme.html?revision=5&amp;pathrev=5">README file</a> (very latest version out of the subversion repository)</li>
 </ul>
 
-Pages on sourceforge.net ...
+<h2>Stay informed</h2>
 
-<ul>
-<li><a href="http://sourceforge.net/tracker/?atid=563210&amp;group_id=81520&amp;func=browse">bug reporting</a></li>
-<li><a href="http://sourceforge.net/tracker/?atid=563213&amp;group_id=81520&amp;func=browse">feature requests</a></li>
-<li><a href="http://sourceforge.net/forum/?group_id=81520">forums</a></li>
-<li><a href="http://sourceforge.net/export/rss2_project.php?group_id=81520">list of RSS feeds</a></li>
-</ul>
+<p>
+<a href="http://sourceforge.net/export/rss2_projnews.php?group_id=81520">News releases</a><br />
+<a href="http://sourceforge.net/export/rss2_projfiles.php?group_id=81520">File releases</a><br />
+</p>
+
+<p>
+You can also view the full <a href="https://sourceforge.net/export/rss2_project.php?group_id=81520">list of RSS feeds</a>.
+</p>
 
 </div>
 
