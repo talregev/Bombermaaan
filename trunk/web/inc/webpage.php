@@ -100,6 +100,10 @@ class WebPage {
 <a href="changelog.php">Changelog</a>
 </div>
 
+<div>
+<a href="contact.php">Contact</a>
+</div>
+
 </div>
 
 <div style="margin-top: 2em; text-align: center;">
