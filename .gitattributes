@@ -158,6 +158,7 @@ src/RES/StdAfx.cpp -text
 src/RES/StdAfx.h -text
 src/RES/resource.h -text
 src/RES/resource.rc -text
+src/RES32/IMAGE/board_background.bmp -text
 src/RES32/RES.CPP -text
 src/RES32/RES32.dsp -text
 src/RES32/RES32.vcproj -text
