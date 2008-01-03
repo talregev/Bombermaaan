@@ -27,11 +27,11 @@ This requires that you are loggend in with your SourceForge.net account.
 <h2>Trackers</h2>
 
 <p>
-<a href="https://sourceforge.net/tracker/?atid=563210&group_id=81520&func=browse">Bug tracker</a>: Report and view bugs.
+<a href="https://sourceforge.net/tracker/?atid=563210&amp;group_id=81520&amp;func=browse">Bug tracker</a>: Report and view bugs.
 </p>
 
 <p>
-<a href="https://sourceforge.net/tracker/?atid=563213&group_id=81520&func=browse">Feature requests</a>: List feature requests for Bombermaaan or submit your own.
+<a href="https://sourceforge.net/tracker/?atid=563213&amp;group_id=81520&amp;func=browse">Feature requests</a>: List feature requests for Bombermaaan or submit your own.
 </p>
 
 <h2>Forums</h2>
