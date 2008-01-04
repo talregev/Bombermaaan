@@ -158,6 +158,8 @@ trunk/src/RES/StdAfx.cpp -text
 trunk/src/RES/StdAfx.h -text
 trunk/src/RES/resource.h -text
 trunk/src/RES/resource.rc -text
+trunk/src/RES32/IMAGE/arena_hurry.bmp -text
+trunk/src/RES32/IMAGE/arena_hurry.xcf -text
 trunk/src/RES32/IMAGE/arena_pause.bmp -text
 trunk/src/RES32/IMAGE/arena_pause.xcf -text
 trunk/src/RES32/IMAGE/board_background.bmp -text
