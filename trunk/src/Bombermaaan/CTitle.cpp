@@ -63,8 +63,8 @@
 #define NUMBER_OF_MENU_ITEMS                    5
 #define FIRST_MENU_ITEM                         0
 #define LAST_MENU_ITEM                          (NUMBER_OF_MENU_ITEMS - 1)
-#define FIRST_MENU_ITEM_POSITION_Y              93
-#define ALL_MENU_ITEMS_POSITION_X               126
+#define FIRST_MENU_ITEM_POSITION_Y              ((VIEW_HEIGHT - 100) / 2)
+#define ALL_MENU_ITEMS_POSITION_X               ((VIEW_WIDTH - 50) / 2)
 #define MENU_ITEM_SPRITE_TABLE                  45
 #define MENU_ITEM_SPRITE_LAYER                  0
 #define MENU_ITEM_SPRITE_PRIORITY_IN_LAYER      2
