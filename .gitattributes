@@ -163,6 +163,7 @@ src/RES32/IMAGE/arena_hurry.xcf -text
 src/RES32/IMAGE/arena_pause.bmp -text
 src/RES32/IMAGE/arena_pause.xcf -text
 src/RES32/IMAGE/board_background.bmp -text
+src/RES32/IMAGE/title_background.bmp -text
 src/RES32/RES.CPP -text
 src/RES32/RES32.dsp -text
 src/RES32/RES32.vcproj -text
