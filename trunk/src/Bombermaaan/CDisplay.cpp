@@ -270,7 +270,7 @@ bool CDisplay::LoadSprites (int SpriteTableWidth,
     if (hBitmap == NULL)
     {
         // Log failure
-        theLog.WriteLine ("Display         => !!! Could not load resource image and create handle to bitmap.");
+        theLog.WriteLine ("Display         => !!! Could not load resource image (%d) and create handle to bitmap.", BMP_ID);
         theLog.LogLastError ();
 
         // Get out
