@@ -26,8 +26,10 @@ rem "%ProgramFiles%\Inkscape\inkscape.exe" "%imgpath%\Title.svg" --export-png="%
 
 for %%i in (*.svg) do (
 	set newname=%%i
-	set newname=!newname:~0,-4!.png
-	echo Converting to !newname!
-	"%ProgramFiles%\Inkscape\inkscape.exe" "%imgpath%\%%i" --export-png="%imgpath%\!newname!"
+	set newnamePNG=!newname:~0,-4!.png
+	set newnameBMP=!newname:~0,-4!.bmp
+	echo Converting to !newnamePNG!
+	"%ProgramFiles%\Inkscape\inkscape.exe" "%imgpath%\%%i" --export-png="%imgpath%\!newnamePNG!"
+	convert "%imgpath%\!newnamePNG!" "%imgpath%\!newnameBMP!"
 )
 
