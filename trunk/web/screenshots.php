@@ -12,12 +12,12 @@ $webpage->head();
 
 <div id="content">
 
-<p>
+<h2>Version 1.02</h2>
 
+<p>
 <img style="padding: 2em;" src="screenshots/screen1.png" alt="Screenshot #1" />
 <img style="padding: 2em;" src="screenshots/screen7.png" alt="Screenshot #2" />
 <img style="padding: 2em;" src="screenshots/screen8.png" alt="Screenshot #3" />
-
 </p>
 
 </div>
