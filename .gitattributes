@@ -166,6 +166,7 @@ trunk/src/RES32/IMAGE/arena_pause.bmp -text
 trunk/src/RES32/IMAGE/arena_pause.xcf -text
 trunk/src/RES32/IMAGE/board_background.bmp -text
 trunk/src/RES32/IMAGE/title_background.bmp -text
+trunk/src/RES32/IMAGE/title_title.bmp -text
 trunk/src/RES32/RES.CPP -text
 trunk/src/RES32/RES32.dsp -text
 trunk/src/RES32/RES32.vcproj -text
