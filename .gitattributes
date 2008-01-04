@@ -8,6 +8,7 @@ images/Bombermaaan_Icon.svg -text
 images/Convert_all_svg2png.cmd -text
 images/Convert_svg2png.cmd -text
 images/Title.bmp -text
+images/Title.png -text
 images/Title.svg -text
 images/blocksize_32/Convert_svg2png2bmp.cmd -text
 images/blocksize_32/_generated/background-title.bmp -text
