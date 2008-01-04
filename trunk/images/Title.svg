@@ -16,7 +16,7 @@
    inkscape:version="0.45.1"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    sodipodi:docname="Title.svg"
-   sodipodi:docbase="C:\Dokumente und Einstellungen\Bernd\Desktop\BOMBERMAAAN TRUNK\images"
+   sodipodi:docbase="C:\Dokumente und Einstellungen\Bernd\Eigene Dateien\Bombermaaan\repository_trunk\images"
    version="1.0">
   <defs
      id="defs4">
@@ -68,10 +68,10 @@
      inkscape:cx="175.00262"
      inkscape:cy="94.443287"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      inkscape:window-width="1276"
      inkscape:window-height="749"
-     inkscape:window-x="1291"
+     inkscape:window-x="1284"
      inkscape:window-y="88"
      width="698.09px"
      height="1052.3622px" />
@@ -86,18 +86,6 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Transparency">
-    <rect
-       style="opacity:1;color:#000000;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="rect2180"
-       width="358.5"
-       height="171.5"
-       x="-6"
-       y="-5.6993103" />
-  </g>
   <g
      inkscape:label="Title"
      inkscape:groupmode="layer"
