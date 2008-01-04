@@ -12,6 +12,6 @@ set imgpath=%CD%
 rem --export-area-drawing 
 rem --export-dpi=150
 "%ProgramFiles%\Inkscape\inkscape.exe" "%imgpath%\backgrounds\background-title.svg" --export-png="%imgpath%\_generated\background-title.png"
-convert PNG:"%imgpath%\_generated\background-title.png" PPM:- | convert PPM:- BMP:"%imgpath%\_generated\background-title.bmp"
+convert -antialias -fill #00ff00 -opaque transparent PNG:"%imgpath%\_generated\background-title.png" PPM:- | convert PPM:- BMP:"%imgpath%\_generated\background-title.bmp"
 
 
