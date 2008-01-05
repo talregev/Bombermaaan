@@ -213,8 +213,13 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define RETURNITEMS_WAIT        0.8f
 
 // Offset when drawing the bomber sprite
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define BOMBER_OFFSETX  (-6)
+#define BOMBER_OFFSETY  (-12)
+#else
 #define BOMBER_OFFSETX  (-3)
 #define BOMBER_OFFSETY  (-6)
+#endif
 
 // Used for contamination to determine if a bomber can be considered to be NEAR another bomber.
 // A bomber is near another if abs(x2-x1) + abs(y2-y1) <= CONTAMINATION_NEAR. 
