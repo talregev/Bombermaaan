@@ -30,7 +30,7 @@ for %%i in (*.svg) do (
 	set newnameBMP=!newname:~0,-4!.bmp
 	echo Converting to !newnamePNG!
 	"%ProgramFiles%\Inkscape\inkscape.exe" "%imgpath%\%%i" --export-png="%imgpath%\!newnamePNG!"
-	convert -antialias -fill #00ff00 -opaque transparent "%imgpath%\!newnamePNG!" PPM:- | convert PPM:- "%imgpath%\!newnameBMP!"
+	convert -antialias -fill #00ff00 -opaque transparent "%imgpath%\!newnamePNG!" PPM:- | convert -border 1x1 -bordercolor "#00baba" PPM:- "%imgpath%\!newnameBMP!"
 
 )
 
