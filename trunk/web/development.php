@@ -44,6 +44,7 @@ Compile instructions
 <ul>
 <li>Update <code>BOMBERMAAAN_WINDOW_TITLE</code> string in CGame.cpp</li>
 <li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in CGame.cpp to comment</li>
+<li>Disable the console window (<code>#define ENABLE_CONSOLE</code> in CGame.cpp)</li>
 <li>Select configuration &quot;Release&quot; in the solution</li>
 <li>Rebuild the solution</li>
 </ul>
