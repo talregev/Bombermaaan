@@ -162,6 +162,7 @@ trunk/src/RES/resource.h -text
 trunk/src/RES/resource.rc -text
 trunk/src/RES32/IMAGE/arena_fire.bmp -text
 trunk/src/RES32/IMAGE/arena_floor.bmp -text
+trunk/src/RES32/IMAGE/arena_fly.bmp -text
 trunk/src/RES32/IMAGE/arena_hurry.bmp -text
 trunk/src/RES32/IMAGE/arena_hurry.xcf -text
 trunk/src/RES32/IMAGE/arena_pause.bmp -text
