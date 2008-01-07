@@ -127,6 +127,6 @@ div#featurelist div.group {
 
 div#featurelist div.group div.more {
 	margin-left: 1.5em;
-	padding-left: 0.3em;
-	border-left: 2px solid black;
+	padding-left: 0.7em;
+	border-left: 1px solid #777;
 }
