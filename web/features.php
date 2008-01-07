@@ -115,7 +115,7 @@ _add( "Various contaminations after skull item is taken", "The skull item influe
 ?>
 
 <p>
-More items may follow. A list of planned features can be seen on the <a href="./todo.php">To-Do list</a>.
+More items may follow. A list of planned features can be seen in the <a href="./todo.php">To-Do list</a>.
 </p>
 
 </div>
