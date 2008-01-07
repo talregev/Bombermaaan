@@ -65,41 +65,34 @@ function _add( $headline, $additionaltext ) {
 Bombermaaan already provides these features:
 </p>
 
-<ul>
-<li>Classic Bomberman game</li>
-<li>Original gameplay and fun with minor adjustments</li>
-<li>Up to 5 players on the same computer</li>
-<li>Various levels of computer AI</li>
-<li>Kick-Punch-Throw items mania</li>
-<li>Customizable arena levels with a level editor</li>
-<li>Keyboard and joystick support</li>
-<li>Full screen and windowed display modes</li>
-<li>Item amount in walls as well as bomber skills on startup can be set on a per-level basis</li>
-<li>Various power-ups</li>
-<li>Various contaminations after skull item is taken</li>
-</ul>
-
 <div id="featurelist">
 
 <?php
 
-_add( "A sdklfs dlfk slkdfj slkfjsdlkfjsdkf", "skfjdofisjoifjwoijf" );
-_add( "222 A sdklfs dlfk slkdfj slkfjsdlkfjsdkf", "skfjdofisjoifjwoijf" );
+_add( "Classic Bomberman game", "Bombermaaan is a classic Bomberman game. There's a similar game called Dynablaster." );
+
+_add( "Original gameplay and fun with minor adjustments", "If you're familiar with other Bomberman games, you already know how to play Bombermaaan." );
+
+_add( "Up to 5 players on the same computer", "You can play against four human players if you are using joysticks." );
+
+_add( "Various levels of computer AI", "No additional text available." );
+
+_add( "Kick-Punch-Throw items mania", "Your bomber can kick bombs (bomb is moving through the arena), punch bombs (bomb flies three blocks far), or throw bombs (pick up a bomb and throw it in the direction your bomber is currently looking)." );
+
+_add( "Customizable arena levels with a level editor", "No additional text available." );
+
+_add( "Keyboard and joystick support", "No additional text available." );
+
+_add( "Full screen and windowed display modes", "No additional text available." );
+
+_add( "Item amount in walls as well as bomber skills on startup can be set on a per-level basis", "No additional text available." );
+
+_add( "Various power-ups", "No additional text available." );
+
+_add( "Various contaminations after skull item is taken", "No additional text available." );
+
 
 ?>
-
-<div class="group">
-
-	<div class="head" onclick="document.getElementById('aaa').style.display='';">Headline...</div>
-	<div id="aaa" class="more" style="display: none;">
-	Bla bla bla
-	<br />
-	sldkfj
-	<br />
-	qewrt
-	</div>
-
-</div>
 
 </div>
 
