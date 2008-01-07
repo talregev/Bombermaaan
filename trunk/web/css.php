@@ -120,3 +120,13 @@ table.downloadbox a {
 	padding: 0 0 0 19px;
 	background: url("/images/feed-icon-14x14.png") no-repeat 0 50%;
 }
+
+div#featurelist div.group {
+	margin-bottom: 0.7em;
+}
+
+div#featurelist div.group div.more {
+	margin-left: 1.5em;
+	padding-left: 0.3em;
+	border-left: 2px solid black;
+}

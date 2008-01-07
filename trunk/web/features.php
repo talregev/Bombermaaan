@@ -38,14 +38,14 @@ function _add( $headline, $additionaltext ) {
 	$item_number ++;
 	
 ?>
-<div class="group" style="margin-bottom: 0.7em;">
+<div class="group">
 
 <div class="head" onclick="toggleFeatureItem( <?php echo $item_number; ?> );">
 <?php // IE7 removes the space between the sign and the text if split to more than one line ?>
 <code><span id="feature-sign-<?php echo $item_number; ?>">+</span>&nbsp;</code><?php echo $headline; ?>
 </div>
 
-<div id="feature-more-<?php echo $item_number; ?>" class="more" style="display: none; margin-left: 1.5em; padding-left: 0.3em; border-left: 2px solid black;">
+<div id="feature-more-<?php echo $item_number; ?>" class="more" style="display: none;">
 <?php echo $additionaltext; ?>
 </div>
 
