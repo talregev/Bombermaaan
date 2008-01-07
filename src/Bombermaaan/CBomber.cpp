@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -417,6 +417,7 @@ void CBomber::Command (EBomberMove BomberMove, EBomberAction BomberAction)
         case SICK_SHORTBOMB :
         case SICK_INVERTION :
         case SICK_INERTIA :
+		case SICK_INVISIBILITY :
         {
             m_BomberAction = BomberAction; 
             break;
@@ -715,6 +716,9 @@ void CBomber::Animate (float DeltaTime)
 {
     // Bomber state to set before exiting this method
     EBomberState NewBomberState = m_BomberState;
+
+	// By default, the bomber can be seen in the arena
+	m_MakeInvisible = false;
 
     // If the bomber is alive (not dead and not dying)
     if (m_Dead == DEAD_ALIVE)
@@ -1039,8 +1043,13 @@ void CBomber::Animate (float DeltaTime)
         }
         else if (m_SickTimer < ANIMSICK_TIME2)
         {
-            // Player color
-            m_Sprite += m_Player * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+			// Player color
+			m_Sprite += m_Player * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+
+			// If it is the invisibility contamination, make the bomber invisible during this time
+			if ( m_Sickness == SICK_INVISIBILITY ) {
+				m_MakeInvisible = true;
+			}
         }
         else
         {
@@ -1162,8 +1171,8 @@ void CBomber::Contamination ()
 
 void CBomber::Display (void)
 {
-    // If bomber is not dead
-    if (m_Dead != DEAD_DEAD) 
+    // If bomber is not dead and the bomber is not invisible
+    if (m_Dead != DEAD_DEAD && m_MakeInvisible == false) 
     {
         // Add the sprite in the layer. Priority in bomber sprite layer depends on m_iY.
         m_pDisplay->DrawSprite (m_BomberMove.GetX() + BOMBER_OFFSETX, 
