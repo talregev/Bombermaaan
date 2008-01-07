@@ -9,16 +9,19 @@ $webpage->head();
 ?>
 <script type="text/javascript">
 <!--
-function toggleFeatureItem( name ) {
+function toggleFeatureItem( nr ) {
 
-    e = document.getElementById( name );
+    e = document.getElementById( "feature-more-" + nr );
+    sign = document.getElementById( "feature-sign-" + nr );
 	
-	if ( e == null ) return;
+	if ( e == null || sign == null ) return;
 	
 	if ( e.style.display == 'none' ) {
 		e.style.display = '';
+		sign.firstChild.data = "-";
 	} else {
 		e.style.display = 'none';
+		sign.firstChild.data = "+";
 	}
 
 }
@@ -35,13 +38,14 @@ function _add( $headline, $additionaltext ) {
 	$item_number ++;
 	
 ?>
-<div class="group" style="margin-bottom: 0.5em;">
+<div class="group" style="margin-bottom: 0.7em;">
 
-<div class="head" onclick="toggleFeatureItem('feature-more-<?php echo $item_number; ?>');">
-<?php echo $headline; ?>
+<div class="head" onclick="toggleFeatureItem( <?php echo $item_number; ?> );">
+<?php // IE7 removes the space between the sign and the text if split to more than one line ?>
+<code><span id="feature-sign-<?php echo $item_number; ?>">+</span>&nbsp;</code><?php echo $headline; ?>
 </div>
 
-<div id="feature-more-<?php echo $item_number; ?>" class="more" style="display: none; padding-left: 0.3em; border-left: 2px solid black;">
+<div id="feature-more-<?php echo $item_number; ?>" class="more" style="display: none; margin-left: 1.5em; padding-left: 0.3em; border-left: 2px solid black;">
 <?php echo $additionaltext; ?>
 </div>
 
