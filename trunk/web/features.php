@@ -30,6 +30,23 @@ Bombermaaan already provides these features:
 <li>Various contaminations after skull item is taken</li>
 </ul>
 
+<div id="featurelist">
+
+<div class="group">
+
+	<div class="head" onclick="document.getElementById('aaa').style.display='';">Headline...</div>
+	<div id="aaa" class="more" style="display: none;">
+	Bla bla bla
+	<br />
+	sldkfj
+	<br />
+	qewrt
+	</div>
+
+</div>
+
+</div>
+
 <?php
     /*** Thibaut's list on his website:
 		    *  Classic Bomberman game
