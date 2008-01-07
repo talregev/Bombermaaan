@@ -127,6 +127,9 @@ bool CGame::Create (const char* pCommandLine)
 
 #endif
 
+	// Log date and time of compile
+	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ );
+
     theDebug.SetGame(this);
     theDebug.SetTimer(&m_Timer);
 	theDebug.SetMatch(&m_Match);
