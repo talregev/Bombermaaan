@@ -63,11 +63,11 @@ _add( "Keyboard and joystick support", "No additional text available." );
 
 _add( "Full screen and windowed display modes", "<kbd>F1</kbd>, <kbd>F2</kbd> and <kbd>F3</kbd> are full screen modes. <kbd>F4</kbd> returns to windowed mode." );
 
-_add( "Various power-ups", "Initially your bomber can drop only one bomb with a flame size of two blocks. This can be changed during the game by collecting the power-up icons. These icons are hidden in the soft walls. Destroy the soft walls to look for the power-ups. These items can improve your bomber skills: additional bomb, increase flame size, ability to kick bombs, increase speed, ability to throw bombs, ability to punch bombs." );
+_add( "Various power-ups", "At the beginning of a match your bomber can drop only one bomb with a flame size of two blocks. This can be changed during the game by collecting power-up icons. These icons are hidden in the soft walls. Destroy the soft walls to look for the power-ups. These items can improve your bomber skills: additional bomb, increase flame size, ability to kick bombs, increase speed, ability to throw bombs, ability to punch bombs." );
 
 _add( "Various contaminations after skull item is taken", "The skull item influences the health of your bomber. It can result to: inverted controls, bombs with small flames, have no bombs to place, always dropping bombs, slow speed, fast speed, always move, bombs ticking shorter, and bombs ticking longer than usual. <i>Next version: </i>invisibility of a bomber." );
 
-_add( "<i>Next version: </i>Item amount in walls as well as bomber skills on startup can be set on a per-level basis", "No additional text available." );
+_add( "<i>Next version: </i>Item amount in walls as well as bomber skills on startup can be set on a per-level basis", "For this a new layout for level files has been designed to configure the amount of items and the skills at the start of a match." );
 
 ?>
 
