@@ -7,6 +7,51 @@ $webpage = new WebPage();
 $webpage->head();
 
 ?>
+<script type="text/javascript">
+<!--
+function toggleFeatureItem( name ) {
+
+    e = document.getElementById( name );
+	
+	if ( e == null ) return;
+	
+	if ( e.style.display == 'none' ) {
+		e.style.display = '';
+	} else {
+		e.style.display = 'none';
+	}
+
+}
+//-->
+</script>
+<?php
+
+$item_number = 0;
+
+function _add( $headline, $additionaltext ) {
+
+	global $item_number;
+	
+	$item_number ++;
+	
+?>
+<div class="group" style="margin-bottom: 0.5em;">
+
+<div class="head" onclick="toggleFeatureItem('feature-more-<?php echo $item_number; ?>');">
+<?php echo $headline; ?>
+</div>
+
+<div id="feature-more-<?php echo $item_number; ?>" class="more" style="display: none; padding-left: 0.3em; border-left: 2px solid black;">
+<?php echo $additionaltext; ?>
+</div>
+
+</div>
+
+<?php
+
+}
+
+?>
 
 <h1>Features</h1>
 
@@ -31,6 +76,13 @@ Bombermaaan already provides these features:
 </ul>
 
 <div id="featurelist">
+
+<?php
+
+_add( "A sdklfs dlfk slkdfj slkfjsdlkfjsdkf", "skfjdofisjoifjwoijf" );
+_add( "222 A sdklfs dlfk slkdfj slkfjsdlkfjsdkf", "skfjdofisjoifjwoijf" );
+
+?>
 
 <div class="group">
 
