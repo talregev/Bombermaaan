@@ -26,6 +26,8 @@ Bombermaaan already provides these features:
 <li>Keyboard and joystick support</li>
 <li>Full screen and windowed display modes</li>
 <li>Item amount in walls as well as bomber skills on startup can be set on a per-level basis</li>
+<li>Various power-ups</li>
+<li>Various contaminations after skull item is taken</li>
 </ul>
 
 <?php
