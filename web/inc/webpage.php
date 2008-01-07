@@ -2,6 +2,15 @@
 
 class WebPage {
 
+	var $option_addFeatureJavascript;
+	
+	function WebPage() {
+	
+		// By default, do not include the javascript script (only used by the feature list so far)
+		$this->option_addFeatureJavascript = 0;
+		
+	}
+	
 	function head() {
 	
 		#header( "Vary: Accept" );
@@ -27,6 +36,13 @@ class WebPage {
 <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
 <link rel="stylesheet" href="/css.php" type="text/css" />
 <title>Bombermaaan game project</title>
+		<?php
+		
+		if ( $this->option_addFeatureJavascript == 1 ) {
+			$this->javascript_FeatureList();
+		}
+		
+		?>
 </head>
 
 <body>
@@ -124,6 +140,39 @@ class WebPage {
 </div>
 		<?php
 
+	}
+	
+	function javascript_FeatureList() {
+	
+		?>
+<script type="text/javascript">
+<!--
+function toggleFeatureItem( nr ) {
+
+    e = document.getElementById( "feature-more-" + nr );
+    sign = document.getElementById( "feature-sign-" + nr );
+	
+	if ( e == null || sign == null ) return;
+	
+	if ( e.style.display == 'none' ) {
+		e.style.display = '';
+		sign.firstChild.data = "-";
+	} else {
+		e.style.display = 'none';
+		sign.firstChild.data = "+";
+	}
+
+}
+//-->
+</script>
+		<?php
+		
+	}
+	
+	function setOption_AddFeatureJavascript() {
+	
+		$this->option_addFeatureJavascript = 1;
+	
 	}
 	
 }

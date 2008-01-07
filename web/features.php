@@ -4,30 +4,8 @@ include_once( "inc/webpage.php" );
 
 
 $webpage = new WebPage();
+$webpage->setOption_AddFeatureJavascript();
 $webpage->head();
-
-?>
-<script type="text/javascript">
-<!--
-function toggleFeatureItem( nr ) {
-
-    e = document.getElementById( "feature-more-" + nr );
-    sign = document.getElementById( "feature-sign-" + nr );
-	
-	if ( e == null || sign == null ) return;
-	
-	if ( e.style.display == 'none' ) {
-		e.style.display = '';
-		sign.firstChild.data = "-";
-	} else {
-		e.style.display = 'none';
-		sign.firstChild.data = "+";
-	}
-
-}
-//-->
-</script>
-<?php
 
 $item_number = 0;
 
