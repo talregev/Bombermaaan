@@ -91,6 +91,10 @@ class WebPage {
 <hr />
   
 <div>
+<a href="features.php">Features</a>
+</div>
+
+<div>
 <a href="todo.php">To-Do</a>
 </div>
 
