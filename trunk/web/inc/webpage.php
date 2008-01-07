@@ -88,6 +88,8 @@ class WebPage {
 <a href="screenshots.php">Screenshots</a>
 </div>
 
+<hr />
+  
 <div>
 <a href="todo.php">To-Do</a>
 </div>
@@ -99,6 +101,8 @@ class WebPage {
 <div>
 <a href="changelog.php">Changelog</a>
 </div>
+
+<hr />
 
 <div>
 <a href="development.php">Development</a>
