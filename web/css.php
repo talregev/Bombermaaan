@@ -84,6 +84,14 @@ div#menu div a:hover {
 	border: 2px solid #db3;
 }
 
+div#menu hr {
+	width: 80%;
+	height: 1px;
+	color: #dbb;
+	background-color: #dbb;
+	border: none;
+}
+
 h1 {
 	margin-left: 6em;
 	margin-bottom: 1.5em;
