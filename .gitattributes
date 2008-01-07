@@ -14,6 +14,7 @@ images/blocksize_32/Convert_svg2png2bmp.cmd -text
 images/blocksize_32/_generated/background-title.bmp -text
 images/blocksize_32/_generated/background-title.png -text
 images/blocksize_32/backgrounds/background-title.svg -text
+images/blocksize_32/bombers/arena_bomber_death_sprite0.xcf -text
 images/blocksize_32/items/Item_Bomb.svg -text
 images/blocksize_32/items/Item_Flame.svg -text
 images/blocksize_32/items/Item_Kick.svg -text
