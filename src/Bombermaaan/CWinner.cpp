@@ -108,7 +108,7 @@
 #define COINS_SPACE_X                   31      //!< Space in pixels between two coins X position
 #define COINS_SPACE_Y                   33      //!< Space in pixels between two coins Y position
 #define COINS_STATIC_SPRITE             0       //!< Sprite number for a static coin (non moving)
-#define COINS_ANIMATION_TIME 0.5f               //!< Animation time between each sprite
+#define COINS_ANIMATION_TIME 0.2f               //!< Animation time between each sprite
 #define COINS_ANIMATION_TURNS 2                 //!< Number of turns before the coin isn't animated any longer
 #define COINS_SPRITE_COUNT 16                   //!< Number of different coin sprites
 
