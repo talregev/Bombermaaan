@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -125,6 +125,7 @@ void CBomberMove::Command (EBomberMove BomberMove)
             case SICK_SHORTBOMB :
             case SICK_CONSTIPATED :
             case SICK_COLIC :
+			case SICK_INVISIBILITY :
             {
                 m_BomberMove = BomberMove; 
                 break;

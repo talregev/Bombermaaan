@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -111,6 +111,7 @@ enum ESick
     SICK_INERTIA,               //!< Always move
     SICK_LONGBOMB,              //!< Bombs tick twice longer
     SICK_SHORTBOMB,             //!< Bombs tick twice shorter
+	SICK_INVISIBILITY,			//!< Bomber is invisible
     NUMBER_SICKNESSES           //!< Number of sicknesses
 };
 
@@ -155,6 +156,7 @@ private:
     EBomberState    m_BomberState;                  //!< State of the bomber, describes what he is currenly doing.
     int             m_BombIndex;                    //!< Index of the bomb the bomber is either holding, lifting or punching (when the bomber is throwing, this index is -1).
     static SBomberSpriteTable m_BomberSpriteTables[MAX_NUMBER_OF_STATES]; //!< Information about the sprite table to use for each bomber state.
+	bool			m_MakeInvisible;				//!< If true, the bomber isn't visible in the arena (used for contamination)
     
     void            Animate (float DeltaTime);      //!< Update the bomber's sprite table and sprite to display.
     void            ReturnItems (float DeltaTime);  //!< Manage the return of the items this bomber owns if he is dead
