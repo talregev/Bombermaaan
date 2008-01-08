@@ -19,6 +19,12 @@
 ;
 ;************************************************************************************/
 
+; This file sets the different colors for the bombers
+; and generates a file for each color
+
+; Usage: (for example)
+; gimp-2.4.exe -f -i -b '(bm-color-bombers "arena_bomber_death_sprite0.xcf" "1")' -b '(gimp-quit 1)'
+
 
 (define (bm-color-bombers filename)
 
