@@ -114,8 +114,12 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (8,      1,      15,     13,     true,     BMP_BOARD_CLOCK_BOTTOM        ) ||
             !LoadSprites (6,      1,      6,      8,      true,     BMP_BOARD_SCORE               ) ||
             !LoadSprites (5,      2,      14,     14,     true,     BMP_BOARD_HEADS               ) ||
-            !LoadSprites (1,      1,      240,    234,    false,    BMP_DRAWGAME_MAIN             ) ||
-            !LoadSprites (2,      1,      34,     48,     false,    BMP_DRAWGAME_FLAG             ) ||
+#ifdef USE_32_PIXELS_PER_BLOCK
+            !LoadSprites (1,      1,      480,    442,    false,    BMP_DRAWGAME_MAIN             ) ||
+#else
+			!LoadSprites (1,      1,      240,    234,    false,    BMP_DRAWGAME_MAIN             ) ||
+#endif
+			!LoadSprites (2,      1,      34,     48,     false,    BMP_DRAWGAME_FLAG             ) ||
             !LoadSprites (4,      1,      10,     31,     true,     BMP_DRAWGAME_FUMES            ) ||
             !LoadSprites (4,      5,      24,     32,     true,     BMP_WINNER_BOMBER             ) ||
             !LoadSprites (1,      1,      64,     32,     false,    BMP_WINNER_BACKGROUND_1       ) ||
@@ -130,7 +134,11 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (46,     6,      10,     10,     true,     BMP_GLOBAL_FONT               ) ||
             !LoadSprites (1,      1,      64,     32,     false,    BMP_MENU_BACKGROUND_1         ) ||
             !LoadSprites (5,      2,      21,     19,     true,     BMP_MENU_BOMBER               ) || // 30
+#ifdef USE_32_PIXELS_PER_BLOCK
+            !LoadSprites (1,      1,      420,    362,    true,     BMP_MENU_FRAME_1              ) ||
+#else
             !LoadSprites (1,      1,      210,    181,    true,     BMP_MENU_FRAME_1              ) ||
+#endif
             !LoadSprites (2,      1,      15,     16,     true,     BMP_MENU_HAND                 ) ||
             !LoadSprites (5,      1,      23,     23,     true,     BMP_WINNER_CROSS              ) ||
             !LoadSprites (5,      5,      14,     15,     true,     BMP_VICTORY_CONFETTIS_LARGE   ) ||
