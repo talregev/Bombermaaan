@@ -112,6 +112,7 @@ enum ESick
     SICK_LONGBOMB,              //!< Bombs tick twice longer
     SICK_SHORTBOMB,             //!< Bombs tick twice shorter
 	SICK_INVISIBILITY,			//!< Bomber is invisible
+	SICK_FLAMEPROOF,			//!< Bomber cannot burn
     NUMBER_SICKNESSES           //!< Number of sicknesses
 };
 
