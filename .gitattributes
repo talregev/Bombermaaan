@@ -35,6 +35,7 @@ images/blocksize_32/patterns/stunt-front-32.png -text
 images/blocksize_32/patterns/stunt-side-32.png -text
 images/blocksize_32/patterns/transform_png-color-32.php -text
 images/blocksize_32/patterns/transform_stunt-32.php -text
+images/gimp-scripts/bm-color-bombers.scm -text
 installer/HeaderImage.bmp -text
 installer/HeaderImage.xcf -text
 installer/InstallScript.nsi -text
