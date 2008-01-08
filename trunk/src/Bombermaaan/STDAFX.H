@@ -52,7 +52,7 @@ using namespace std;
 #endif
 
 // Define this if the 32-pixels-per-block version should be used (needs the RES32 directory, where the DLL is built) - default is 16 pixels per block
-//#define USE_32_PIXELS_PER_BLOCK
+#define USE_32_PIXELS_PER_BLOCK
 
 // Define this if the Ctrl+F5 key should output all bombs to the log file for debugging purposes
 #define _DEBUG_FLAG_1
