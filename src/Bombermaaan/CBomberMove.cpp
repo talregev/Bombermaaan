@@ -126,6 +126,7 @@ void CBomberMove::Command (EBomberMove BomberMove)
             case SICK_CONSTIPATED :
             case SICK_COLIC :
 			case SICK_INVISIBILITY :
+			case SICK_FLAMEPROOF :
             {
                 m_BomberMove = BomberMove; 
                 break;

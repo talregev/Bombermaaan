@@ -366,7 +366,10 @@ void CBomber::Die (void)
 
 void CBomber::Burn ()
 {
-    Die ();
+	// The bomber cannot die by flames if he/she has the flameproof contamination
+	if ( m_Sickness != SICK_FLAMEPROOF ) {
+	    Die ();
+	}
 }
 
 //******************************************************************************************************************************
