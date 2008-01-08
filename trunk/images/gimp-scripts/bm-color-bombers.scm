@@ -32,14 +32,18 @@
 			dummy
           )
 		  
-	(bm-change-color-in-file filename "2" '(255 0 0))
+	(bm-change-color-in-file filename "0" '(255 255 255) '(11 11 255))
+	(bm-change-color-in-file filename "1" '(11 11 11) '(11 11 11))
+	(bm-change-color-in-file filename "2" '(255 11 11) '(255 11 11))
+	(bm-change-color-in-file filename "3" '(11 11 255) '(11 11 255))
+	(bm-change-color-in-file filename "4" '(11 255 11) '(11 255 11))
 	
 	)
 	
 )
 
 
-(define (bm-change-color-in-file filename bnr color)
+(define (bm-change-color-in-file filename bnr color1 color2)
 
    (let* (
 			(image (car (gimp-file-load RUN-NONINTERACTIVE filename filename)))
@@ -47,8 +51,9 @@
 			(outfilename "")
           )
 		
-		(bm-fill-layer-with-color image "Helmet" color)
-		(bm-fill-layer-with-color image "Anzug_DE" color)
+		(bm-fill-layer-with-color image "Helmet" color1)
+		(bm-fill-layer-with-color image "Anzug_DE" color1)
+		(bm-fill-layer-with-color image "Bauch_DE" color2)
 		
 		(set! outfilename (string-append "../_generated/_" (unbreakupstr (butlast (strbreakup filename ".")) ".") "_bomber-" bnr ".png"))
 	
