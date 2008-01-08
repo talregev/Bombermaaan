@@ -23,7 +23,7 @@
 (define (bm-color-bombers filename)
 
    (let* (
-   x
+			dummy
           )
 		  
 	(bm-change-color-in-file filename "2" '(255 0 0))
