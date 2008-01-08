@@ -20,16 +20,32 @@
 ;************************************************************************************/
 
 
-(define (bm-color-bombers filename outfilename)
+(define (bm-color-bombers filename)
+
+   (let* (
+   x
+          )
+		  
+	(bm-change-color-in-file filename "2" '(255 0 0))
+	
+	)
+	
+)
+
+
+(define (bm-change-color-in-file filename bnr color)
 
    (let* (
 			(image (car (gimp-file-load RUN-NONINTERACTIVE filename filename)))
 			(drawable (car (gimp-image-get-active-layer image)))
+			(outfilename "")
           )
-		  
-		(bm-fill-layer-with-color image "Helmet" '(0 110 255))
-		(bm-fill-layer-with-color image "Anzug_DE" '(0 110 255))
 		
+		(bm-fill-layer-with-color image "Helmet" color)
+		(bm-fill-layer-with-color image "Anzug_DE" color)
+		
+		(set! outfilename (string-append "../_generated/_" (unbreakupstr (butlast (strbreakup filename ".")) ".") "_bomber-" bnr ".png"))
+	
 		(gimp-image-merge-visible-layers image CLIP-TO-BOTTOM-LAYER)
 		(gimp-file-save RUN-NONINTERACTIVE image (car (gimp-image-get-active-drawable image)) outfilename outfilename)
 		(gimp-image-delete image)
