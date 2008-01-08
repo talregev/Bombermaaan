@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -63,8 +63,13 @@
 #define NUMBER_OF_MENU_ITEMS                    5
 #define FIRST_MENU_ITEM                         0
 #define LAST_MENU_ITEM                          (NUMBER_OF_MENU_ITEMS - 1)
+#ifdef USE_32_PIXELS_PER_BLOCK
 #define FIRST_MENU_ITEM_POSITION_Y              ((VIEW_HEIGHT - 100) / 2)
 #define ALL_MENU_ITEMS_POSITION_X               ((VIEW_WIDTH - 50) / 2)
+#else
+#define FIRST_MENU_ITEM_POSITION_Y              93
+#define ALL_MENU_ITEMS_POSITION_X               126
+#endif
 #define MENU_ITEM_SPRITE_TABLE                  45
 #define MENU_ITEM_SPRITE_LAYER                  0
 #define MENU_ITEM_SPRITE_PRIORITY_IN_LAYER      2
