@@ -48,13 +48,13 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #define ENABLE_LOG
 
 // Define this if the console window should be enabled
-#define ENABLE_CONSOLE
+//#define ENABLE_CONSOLE
 
 // Define this if you want the console to filter repeated message
 //#define ENABLE_CONSOLE_REPEATED_MESSAGE_FILTERING
 
 // Define this if debug keys should be enabled
-#define ENABLE_DEBUG_KEYS
+//#define ENABLE_DEBUG_KEYS
 
 // Define this if the game should update normally even when the window does not have the focus
 // Note : when the window does not have the focus, you will not have the input focus.
@@ -74,7 +74,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #endif
 
 // This is the title of the main bombermaaan window
-#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan 2008-01-02"
+#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan (Rev. 247, 2008-01-08)"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
