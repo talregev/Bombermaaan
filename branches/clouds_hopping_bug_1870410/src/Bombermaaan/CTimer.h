@@ -112,7 +112,7 @@ public:
     // value of the timer.
     void Update ()
     {
-        theLog.WriteLine("CTimer::Update IN: %f", GetTickCount() );
+        Sleep(50);
         // The timer must not be paused
         ASSERT (!m_Pause);
 
@@ -131,7 +131,6 @@ public:
             m_Time = Time;
             m_DeltaTime = 0.0f;
         }
-        theLog.WriteLine("CTimer::Update OUT: %f", GetTickCount() );
     }
 
     // Pauses the timer, so that the delta time value is 
