@@ -96,6 +96,8 @@ void CCloudManager::Update (float DeltaTime)
 
 void CCloudManager::Display (void)
 {
+	theLog.WriteLine("--- CCloudManager::Display IN: X=%d", m_Clouds[0].GetPositionX() );
+
     RECT Clip;
 
     // Display the clouds
