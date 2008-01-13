@@ -96,12 +96,6 @@ void CCloudManager::Update (float DeltaTime)
 
 void CCloudManager::Display (void)
 {
-    static int oldX = 0;
-    if (oldX + 1 < m_Clouds[0].GetPositionX())
-        theLog.WriteLine("                     Cloud changed more than 1 pixel (current: %d) ********************************", oldX);
-    oldX = m_Clouds[0].GetPositionX();
-	//theLog.WriteLine("--- CCloudManager::Display IN: X=%d", oldX );
-
     RECT Clip;
 
     // Display the clouds
