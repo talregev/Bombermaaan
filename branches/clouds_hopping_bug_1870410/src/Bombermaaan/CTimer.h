@@ -112,11 +112,14 @@ public:
     // value of the timer.
     void Update ()
     {
+        theLog.WriteLine("CTimer::Update IN: %f", m_Time );
         // The timer must not be paused
         ASSERT (!m_Pause);
 
+        theLog.WriteLine("CTimer::Update 0: %f", m_Time );
         // Get the current time value
         double Time = GetCurrentTime ();
+        theLog.WriteLine("CTimer::Update 1: %f", m_Time );
 
         // If timer has already been updated
         if (m_Time)
@@ -130,6 +133,7 @@ public:
             m_Time = Time;
             m_DeltaTime = 0.0f;
         }
+        theLog.WriteLine("CTimer::Update OUT: %f", m_Time );
     }
 
     // Pauses the timer, so that the delta time value is 
