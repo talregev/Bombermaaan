@@ -171,6 +171,7 @@ EGameMode CTitle::Update (void)
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();
     
+	theLog.WriteLine("Update 0: %f", m_ModeTime );
     // If we have to make the first black screen
     if (m_ModeTime <= BLACKSCREEN_DURATION)
     {
@@ -188,9 +189,11 @@ EGameMode CTitle::Update (void)
             // We started playing the song
             m_SongStarted = true;
         }
+    theLog.WriteLine("Update 1: %f", m_ModeTime );
 
         // Update the clouds in the sky
         m_CloudManager.Update (m_pTimer->GetDeltaTime());
+    theLog.WriteLine("Update 2: %f", m_ModeTime );
     
         // If the NEXT control is pressed
         if (m_pInput->GetMainInput().TestNext())
@@ -258,6 +261,7 @@ EGameMode CTitle::Update (void)
                 m_Cursor = FIRST_MENU_ITEM;
             }
         }
+    theLog.WriteLine("Update 3: %f", m_ModeTime );
     }
     // If we have to make the last black screen
     else if (m_ModeTime <= m_ExitModeTime + BLACKSCREEN_DURATION)
