@@ -124,8 +124,11 @@ public:
         // If timer has already been updated
         if (m_Time)
         {
+        theLog.WriteLine("CTimer::Update 2: %f", m_Time );
             m_DeltaTime = (float)(Time - m_Time);
+        theLog.WriteLine("CTimer::Update 3: %f", m_Time );
             m_Time = Time;
+        theLog.WriteLine("CTimer::Update 4: %f", m_Time );
         }
         // If timer has never been updated
         else
