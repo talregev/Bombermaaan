@@ -316,6 +316,8 @@ trunk/web/development.php -text
 trunk/web/download.php -text
 trunk/web/faq.php -text
 trunk/web/features.php -text
+trunk/web/images/arena_item_0-bomb.png -text
+trunk/web/images/arena_item_missing.png -text
 trunk/web/images/bomber_a.png -text
 trunk/web/images/feed-icon-14x14.png -text
 trunk/web/images/title.png -text
