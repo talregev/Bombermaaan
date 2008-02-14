@@ -170,6 +170,7 @@ src/RES32/IMAGE/arena_fly.bmp -text
 src/RES32/IMAGE/arena_hurry.bmp -text
 src/RES32/IMAGE/arena_hurry.xcf -text
 src/RES32/IMAGE/arena_item_0-bomb.xcf -text
+src/RES32/IMAGE/arena_item_template.xcf -text
 src/RES32/IMAGE/arena_pause.bmp -text
 src/RES32/IMAGE/arena_pause.xcf -text
 src/RES32/IMAGE/board_background.bmp -text
