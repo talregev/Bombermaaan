@@ -61,7 +61,7 @@ _add( "Customizable arena levels with a level editor", "No additional text avail
 
 _add( "Keyboard and joystick support", "No additional text available." );
 
-_add( "Full screen and windowed display modes", "<kbd>F1</kbd>, <kbd>F2</kbd> and <kbd>F3</kbd> are full screen modes. <kbd>F4</kbd> returns to windowed mode." );
+_add( "Full screen and windowed display modes", "<kbd>F1</kbd>: full screen mode, 320x240 pixels<br /><kbd>F2</kbd>: full screen mode, 512x384 pixels<br /><kbd>F3</kbd>: full screen mode, 640x480 pixels<br /><kbd>F4</kbd>: windowed mode, 240x234 pixels (480x442 pixels only available in the experimental release yet using 32 pixels per block)." );
 
 _add( "Various power-ups", "At the beginning of a match your bomber can drop only one bomb with a flame size of two blocks. This can be changed during the game by collecting power-up icons. These icons are hidden in the soft walls. Destroy the soft walls to look for the power-ups. These items can improve your bomber skills: additional bomb, increase flame size, ability to kick bombs, increase speed, ability to throw bombs, ability to punch bombs.", "<img src=\"images/arena_item_0-bomb.png\" alt=\"Bomb item\" /> Additional bomb: you can put one more bomb<br />
 <img src=\"images/arena_item_1-flame.png\" alt=\"Flame item\" /> Increase flame size: the flame of your bombs grows one block each time you pick up this item<br />
