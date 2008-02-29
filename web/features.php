@@ -57,7 +57,7 @@ _add( "Various levels of computer AI", "No additional text available." );
 
 _add( "Kick-Punch-Throw items mania", "Your bomber can kick bombs (bomb is moving through the arena), punch bombs (bomb flies three blocks far), or throw bombs (pick up a bomb and throw it in the direction your bomber is currently looking)." );
 
-_add( "Customizable arena levels with a level editor", "No additional text available." );
+_add( "Customizable arena levels with a level editor", "Rommel Santor's <a href=\"http://downloads.sourceforge.net/bombermaaan/LevelEditor_1.02.zip\">level editor</a> can be downloaded as a separate package from the <a href=\"https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=83430&amp;release_id=234468\">download section on SourceForge.net</a>." );
 
 _add( "Keyboard and joystick support", "No additional text available." );
 
