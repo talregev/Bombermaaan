@@ -64,9 +64,12 @@ _add( "Keyboard and joystick support", "No additional text available." );
 _add( "Full screen and windowed display modes", "<kbd>F1</kbd>, <kbd>F2</kbd> and <kbd>F3</kbd> are full screen modes. <kbd>F4</kbd> returns to windowed mode." );
 
 _add( "Various power-ups", "At the beginning of a match your bomber can drop only one bomb with a flame size of two blocks. This can be changed during the game by collecting power-up icons. These icons are hidden in the soft walls. Destroy the soft walls to look for the power-ups. These items can improve your bomber skills: additional bomb, increase flame size, ability to kick bombs, increase speed, ability to throw bombs, ability to punch bombs.", "<img src=\"images/arena_item_0-bomb.png\" alt=\"Bomb item\" /> Additional bomb: you can put one more bomb<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image\" /> Increase flame size: the flame of your bombs grows one block each time you pick up this item (<i>Image not available yet.</i>).<br />
+<img src=\"images/arena_item_1-flame.png\" alt=\"Flame item\" /> Increase flame size: the flame of your bombs grows one block each time you pick up this item (<i>Image not available yet.</i>).<br />
 <img src=\"images/arena_item_missing.png\" alt=\"Missing image\" /> Increase speed: you can walk a little faster each time you pick up this item (<i>Image not available yet.</i>).<br />
-<p><i>Not all items of the game are listed here. The other items will follow.</i></p>" );
+<img src=\"images/arena_item_missing.png\" alt=\"Missing image\" /> Kick bombs: bombs start moving away when you walk towards them (<i>Image not available yet.</i>).<br />
+<img src=\"images/arena_item_missing.png\" alt=\"Missing image\" /> Contaminations: see the contaminations section below (<i>Image not available yet.</i>).<br />
+<img src=\"images/arena_item_missing.png\" alt=\"Missing image\" /> Throw bombs: pick up bombs, carry them and throw them away (<i>Image not available yet.</i>).<br />
+<img src=\"images/arena_item_missing.png\" alt=\"Missing image\" /> Punch bombs: punch a bomb that is lying in front of you (<i>Image not available yet.</i>).<br />" );
 
 _add( "Various contaminations after skull item is taken", "The skull item influences the health of your bomber. It can result to: inverted controls, bombs with small flames, have no bombs to place, always dropping bombs, slow speed, fast speed, always move, bombs ticking shorter, and bombs ticking longer than usual. <i>Next version: </i>invisibility of a bomber, bomber is flameproof." );
 
