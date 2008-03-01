@@ -112,6 +112,9 @@ public:
     // value of the timer.
     void Update ()
     {
+        // Without the sleep, the clouds hopped and the mouse pointer froze (tracker item #1870410)
+        Sleep( 1 );
+
         // The timer must not be paused
         ASSERT (!m_Pause);
 
