@@ -45,10 +45,10 @@
 #endif
                                                     
 #ifdef USE_32_PIXELS_PER_BLOCK
-#define INITIAL_TEXT_POSITION_X     162             //!< Initial position of the text "BOMBER"
+#define INITIAL_TEXT_POSITION_X     162             //!< Initial position of the text "BATTLE"
 #define INITIAL_TEXT_POSITION_Y     (77+90)
 #else
-#define INITIAL_TEXT_POSITION_X     62              //!< Initial position of the text "BOMBER"
+#define INITIAL_TEXT_POSITION_X     62              //!< Initial position of the text "BATTLE"
 #define INITIAL_TEXT_POSITION_Y     77              
 #endif
 #define TYPE_TEXT_SPACE_X           75              //!< X Space in pixels between the "BOMBER" text X position and the type's text X position
