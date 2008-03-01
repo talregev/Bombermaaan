@@ -47,8 +47,12 @@
                                                 
 // Display origin                               
 #define WINNER_DISPLAY_ORIGIN_X       0       //!< Display origin of the winner screen
-#define WINNER_DISPLAY_ORIGIN_Y       0       
-                                                
+#define WINNER_DISPLAY_ORIGIN_Y       0
+
+// Deltas for 16 and 32 pixel versions
+#define WINNER_SPRITES_OFFSET_X         ((VIEW_WIDTH - 240) / 2)
+#define WINNER_SPRITES_OFFSET_Y         ((VIEW_HEIGHT - 234) / 2)
+
 // Sprite layer & priority                  
 #define WINNER_SPRITE_LAYER             0       //!< Sprite layer where to draw the winner screen sprites
 #define WINNER_LIGHTS_PRIORITY          1       //!< Priority-in-layer to use for light sprites
@@ -400,7 +404,7 @@ void CWinner::Display (void)
     else if (m_ModeTime <= WINNER_MINIMUM_DURATION || !m_HaveToExit)
     {
         //---------------------------
-        // Prepare displaying
+        // Prepare displaying for the background
         //---------------------------
 
         // Set the position from which to display sprites
@@ -416,6 +420,13 @@ void CWinner::Display (void)
         int Column;     // Used more than once in For loops
         int Row;        // Used more than once in For loops
         int Light;      // Light number used to browse through the light colors
+
+        //---------------------------
+        // Prepare displaying for all other elements
+        //---------------------------
+
+        // Set the position from which to display sprites
+        m_pDisplay->SetOrigin (WINNER_DISPLAY_ORIGIN_X + WINNER_SPRITES_OFFSET_X, WINNER_DISPLAY_ORIGIN_Y + WINNER_SPRITES_OFFSET_Y);
 
         //--------------------------
         // Display SCOREBOARD title

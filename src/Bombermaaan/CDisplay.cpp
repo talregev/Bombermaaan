@@ -116,10 +116,11 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (5,      2,      14,     14,     true,     BMP_BOARD_HEADS               ) ||
 #ifdef USE_32_PIXELS_PER_BLOCK
             !LoadSprites (1,      1,      480,    442,    false,    BMP_DRAWGAME_MAIN             ) ||
+			!LoadSprites (2,      1,      68,     96,     false,    BMP_DRAWGAME_FLAG             ) ||
 #else
 			!LoadSprites (1,      1,      240,    234,    false,    BMP_DRAWGAME_MAIN             ) ||
-#endif
 			!LoadSprites (2,      1,      34,     48,     false,    BMP_DRAWGAME_FLAG             ) ||
+#endif
             !LoadSprites (4,      1,      10,     31,     true,     BMP_DRAWGAME_FUMES            ) ||
             !LoadSprites (4,      5,      24,     32,     true,     BMP_WINNER_BOMBER             ) ||
             !LoadSprites (1,      1,      64,     32,     false,    BMP_WINNER_BACKGROUND_1       ) ||

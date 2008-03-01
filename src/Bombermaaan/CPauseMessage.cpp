@@ -54,7 +54,11 @@ CPauseMessage::CPauseMessage (CDisplay* pDisplay, CSound* pSound)
     m_HaveToGetOut = false;
 
     // Create the scroller object that will be used to move and display the pause message sprite
-    m_Scroller.Create ((VIEW_WIDTH - 69) / 2, -16, 69, 16, 0.0f, 300.0f, -1.0f);
+#ifdef USE_32_PIXELS_PER_BLOCK
+    m_Scroller.Create ((VIEW_WIDTH - 202) / 2, -16, 69, 16, 0.0f, 300.0f, -1.0f);   // 202 is X size of pause message sprite
+#else
+    m_Scroller.Create ((VIEW_WIDTH - 69) / 2, -16, 69, 16, 0.0f, 300.0f, -1.0f);    // 69 is X size of pause message sprite
+#endif
 }
 
 //******************************************************************************************************************************
