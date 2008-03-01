@@ -265,7 +265,7 @@ bool CGame::Create (const char* pCommandLine)
     m_Controls.SetTimer (&m_Timer);
     m_Controls.SetSound (&m_Sound);
 
-    // Set the objects the victory object has to communicate with
+    // Set the objects the yes/no menu object has to communicate with
     m_MenuYesNo.SetDisplay (&m_Display);
     m_MenuYesNo.SetInput (&m_Input);
     m_MenuYesNo.SetTimer (&m_Timer);
