@@ -97,7 +97,7 @@ That file TortoiseProc.cpp Copyright (C) 2003-2007 - TortoiseSVN
 ****/
 
 // This is the title of the main bombermaaan window
-#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan (Rev. 247, 2008-01-08)"
+#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan (Rev. 264, 2008-02-11)"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
