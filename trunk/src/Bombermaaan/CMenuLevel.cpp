@@ -38,10 +38,19 @@
 
 #define MENUMATCH_SPRITELAYER       1               //!< Sprite layer where to draw sprites
                                                     
-#define TITLE_TEXT_POSITION_Y       45              //!< Position Y of the title text that is centered on the X axis                                                                                                        
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define TITLE_TEXT_POSITION_Y       90              //!< Position Y of the title text that is centered on the X axis
+#else
+#define TITLE_TEXT_POSITION_Y       45              //!< Position Y of the title text that is centered on the X axis
+#endif
 
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define MINI_ARENA_POSITION_X   180
+#define MINI_ARENA_POSITION_Y   (73+90)
+#else
 #define MINI_ARENA_POSITION_X   59
 #define MINI_ARENA_POSITION_Y   73
+#endif
 
 #define TILE_POSITION_TO_BOMBER_POSITION    -2
 
