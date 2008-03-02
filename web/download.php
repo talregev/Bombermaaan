@@ -109,7 +109,7 @@ $downloads = array(
 </ul>
 </div>
 
-<a id="stable"><h2>The current stable version is 1.02</h2></a>
+<h2><a id="stable">The current stable version is 1.02</a></h2>
 
 <table class="downloadbox">
 
@@ -170,12 +170,12 @@ The uninstaller was tested on Win XP with ServicePack 2 and Win Vista.
 If you don't want to use the installer, you can also download the Zip file and unzip the folder somewhere and run Bombermaaan.exe from there. Please ensure to unzip the whole directory, not only Bombermaaan.exe.
 </p>
 
-<a id="sourcecode"><h2>Sourcecode</h2></a>
+<h2><a id="sourcecode">Sourcecode</a></h2>
 
 The sourcecode is hosted in the Subversion repository on SourceForge.net. 
 If you have TortoiseSVN installed, you can check out the <a href="tsvn:https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk">whole sourcecode</a> by clicking on the weblink.
 
-<a  id="experimental"><h2>Experimental releases</h2></a>
+<h2><a id="experimental">Experimental releases</a></h2>
 
 <p>
 These packages have more features and bug fixes, but may also be unstable.
