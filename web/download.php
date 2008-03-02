@@ -27,6 +27,21 @@ $downloads = array(
 	),
 	"experimental" => array(
 		array(
+		"Bombermaaan_16pixels_rev294.zip",
+		"Zip file for Win32",
+		"6f2d56729cf0706e93dcc67f26ee5309",  // MD5
+		"afab1b347282354c275510a3368b4b3a954182a6",  // SHA1
+		"2008-03-02",
+		),
+		array(
+		"Bombermaaan_32pixels_rev294.zip",
+		"Zip file for Win32",
+		"7da430500c0e0fc7d4287a6344c38e4b",  // MD5
+		"176d070d4bec92cafe61593eb49e8b9c29e201c5",  // SHA1
+		"2008-03-02",
+		),
+/***
+		array(
 		"Bombermaaan_16pixels_rev264_2.zip",
 		"Zip file for Win32",
 		"7d76897f720618c0d07f738a55e5acf7",  // MD5
@@ -75,6 +90,7 @@ $downloads = array(
 		"36cbd33e892c95135914cf7ffbd5d707e0dac7d9",  // SHA1
 		"2007-12-19",
 		),
+***/
 	),
 );
 
