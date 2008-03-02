@@ -64,8 +64,8 @@
 #define FIRST_MENU_ITEM                         0
 #define LAST_MENU_ITEM                          (NUMBER_OF_MENU_ITEMS - 1)
 #ifdef USE_32_PIXELS_PER_BLOCK
-#define FIRST_MENU_ITEM_POSITION_Y              ((VIEW_HEIGHT - 100) / 2)
-#define ALL_MENU_ITEMS_POSITION_X               ((VIEW_WIDTH - 50) / 2)
+#define FIRST_MENU_ITEM_POSITION_Y              180
+#define ALL_MENU_ITEMS_POSITION_X               195
 #else
 #define FIRST_MENU_ITEM_POSITION_Y              93
 #define ALL_MENU_ITEMS_POSITION_X               126
@@ -78,7 +78,11 @@
 #define CURSOR_HAND_SPRITE                      0
 #define CURSOR_HAND_SPRITE_LAYER                0
 #define CURSOR_HAND_SPRITE_PRIORITY_IN_LAYER    2
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define SPACE_Y_BETWEEN_MENU_ITEMS              30
+#else
 #define SPACE_Y_BETWEEN_MENU_ITEMS              15
+#endif
 
 #define MENU_ITEM_GAME                          0
 #define MENU_ITEM_DEMO                          1

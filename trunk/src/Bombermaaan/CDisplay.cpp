@@ -163,11 +163,12 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
 #ifdef USE_32_PIXELS_PER_BLOCK
             !LoadSprites (1,      1,     480,    126,     true,     BMP_TITLE_BOMBERS             ) ||
             !LoadSprites (1,      1,     298,    139,     true,     BMP_TITLE_TITLE               ) ||
+            !LoadSprites (2,      5,     128,     26,     true,     BMP_TITLE_MENU_ITEMS          ) ||
 #else
             !LoadSprites (1,      1,     240,    126,     true,     BMP_TITLE_BOMBERS             ) ||
             !LoadSprites (1,      1,     168,     77,     true,     BMP_TITLE_TITLE               ) ||
-#endif
             !LoadSprites (2,      5,      64,     13,     true,     BMP_TITLE_MENU_ITEMS          ) ||
+#endif
             !LoadSprites (1,      1,      64,     32,     false,    BMP_CONTROLS_BACKGROUND_1     ) ||
             !LoadSprites (1,      1,      82,     41,     false,    BMP_CONTROLS_BACKGROUND_2     ) ||
             !LoadSprites (1,      1,      82,     41,     false,    BMP_CONTROLS_BACKGROUND_3     ) ||
