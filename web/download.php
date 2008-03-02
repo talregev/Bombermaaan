@@ -100,7 +100,7 @@ $downloads = array(
 
 <div id="content">
 
-<h2>The current version is 1.02</h2>
+<h2>The current stable version is 1.02</h2>
 
 <table class="downloadbox">
 
