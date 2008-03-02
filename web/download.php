@@ -227,6 +227,10 @@ foreach ( $downloads[ "experimental" ] as $item ) {
 You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net by clicking on the <i>Release Notes</i> icon near a package.
 </p>
 
+<p>
+This list shows the most recent/important file releases. You are looking for <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331">older experimental releases</a>?
+</p>
+
 </div>
 
 <?php
