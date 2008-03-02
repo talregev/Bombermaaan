@@ -53,6 +53,13 @@ div#content {
 	margin-left: 13em;
 }
 
+div#quicklinks {
+	margin-bottom: 3em;
+	background-color: #ee6;
+	color: black;
+	padding: 0.3em;
+}
+	
 div#side {
 	width: 9em;
 	float: left;
