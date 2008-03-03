@@ -590,6 +590,8 @@ void CArena::UpdateView (void)
                 // Record the item in the view according to its type
                 switch (GetItem(Index).GetType())
                 {
+                    // TODO: Check whether BLOCKHAS_ITEMPUNCH and BLOCKHAS_ITEMTHROW is not listed here (wopfel)
+                    // TODO: Check which functions depend on these BLOCKHAS_xxx values
                     case ITEM_BOMB   : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMBOMB);   break;
                     case ITEM_FLAME  : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMFLAME);  break;
                     case ITEM_ROLLER : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMROLLER); break;
