@@ -114,7 +114,7 @@ void CArena::Create (void)
         for (Y = 0 ; Y < ARENA_HEIGHT ; Y++)
         {
             // Anyway, there is a floor
-            NewFloor (X, Y);
+            NewFloor (X, Y, m_pOptions->GetBlockType(X, Y));
 
             // According to the type of this block
             switch (m_pOptions->GetBlockType(X, Y))
@@ -563,6 +563,10 @@ void CArena::UpdateView (void)
         {
             // Record the floor in the view
             SetBlockHas (GetFloor(Index).GetBlockX(), GetFloor(Index).GetBlockY(), BLOCKHAS_FLOOR);
+
+            if (GetFloor(Index).HasAction()) {
+                SetBlockHas( GetFloor(Index).GetBlockX(), GetFloor(Index).GetBlockY(), BLOCKHAS_FLOORWITHMOVEEFFECT );
+            }
         }
     }
 
@@ -743,14 +747,23 @@ void CArena::ReadSnapshot (CArenaSnapshot& Snapshot)
 //******************************************************************************************************************************
 //****************************************************************************************************************************
 
-void CArena::NewFloor (int BlockX, int BlockY)
+void CArena::NewFloor (int BlockX, int BlockY, EBlockType BlockType)
 {
     ASSERT (!m_Prediction);
     
     // Check coordinates
     ASSERT (BlockX >= 0 && BlockX < ARENA_WIDTH);
     ASSERT (BlockY >= 0 && BlockY < ARENA_HEIGHT);
-        
+    
+    EFloorAction action = FLOORACTION_NONE;
+
+    switch( BlockType ) {
+        case BLOCKTYPE_MOVEBOMB_RIGHT:  action = FLOORACTION_MOVEBOMB_RIGHT;    break;
+        case BLOCKTYPE_MOVEBOMB_DOWN:   action = FLOORACTION_MOVEBOMB_DOWN;     break;
+        case BLOCKTYPE_MOVEBOMB_LEFT:   action = FLOORACTION_MOVEBOMB_LEFT;     break;
+        case BLOCKTYPE_MOVEBOMB_UP:     action = FLOORACTION_MOVEBOMB_UP;       break;
+    }
+
     // Scan the floors
     for (int Index = 0 ; Index < MaxFloors() ; Index++)
     {
@@ -761,7 +774,7 @@ void CArena::NewFloor (int BlockX, int BlockY)
             m_Floors[Index].SetArena (this);
             m_Floors[Index].SetDisplay (m_pDisplay);
             m_Floors[Index].SetSound (m_pSound);
-            m_Floors[Index].Create (BlockX, BlockY);
+            m_Floors[Index].Create (BlockX, BlockY, action);
             return;
         }
     }
