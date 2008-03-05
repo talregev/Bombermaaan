@@ -55,7 +55,11 @@ enum EBlockType
     BLOCKTYPE_BLACKBOMBER,  //!< The black bomber must start here
     BLOCKTYPE_REDBOMBER,    //!< The red bomber must start here
     BLOCKTYPE_BLUEBOMBER,   //!< The blue bomber must start here
-    BLOCKTYPE_GREENBOMBER   //!< The green bomber must start here
+    BLOCKTYPE_GREENBOMBER,  //!< The green bomber must start here
+    BLOCKTYPE_MOVEBOMB_RIGHT,   //!< A bomb starts moving right if placed here
+    BLOCKTYPE_MOVEBOMB_DOWN,    //!< A bomb starts moving down if placed here
+    BLOCKTYPE_MOVEBOMB_LEFT,    //!< A bomb starts moving left if placed here
+    BLOCKTYPE_MOVEBOMB_UP       //!< A bomb starts moving up if placed here
 };
 
 //******************************************************************************************************************************
