@@ -33,8 +33,9 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Floor sprite layer
+// Floor sprite layers
 #define FLOOR_SPRITELAYER       0
+#define ACTION_SPRITELAYER      1
 
 // Floor sprites
 #define FLOORSPRITE_NOSHADOW    0       // Floor with no shadow
@@ -168,7 +169,7 @@ void CFloor::Display (void)
                                 NULL,                            // No need to clip
                                 ARENA_FLOOR_ARROW_SPRITETABLE,
                                 Sprite,
-                                FLOOR_SPRITELAYER,
+                                ACTION_SPRITELAYER,
                                 PRIORITY_UNUSED);
         }
     }
