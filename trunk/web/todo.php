@@ -38,9 +38,9 @@ This list shows the ideas we had and don't want to forget.
 
 <tr>
 <td>Blocks where bombs start moving/change direction</td>
-<td>0 %</td>
-<td>Noticed</td>
-<td>There are certain blocks in the arena. When a bomber puts a bomb there or when a moving bomb arrives there, the bomb begins moving or changes the direction.</td>
+<td>1 %</td>
+<td>In Progress</td>
+<td>There are certain blocks in the arena. When a bomber puts a bomb there or when a moving bomb arrives there, the bomb begins moving or changes the direction. Tracker item <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1908105&amp;group_id=81520&amp;atid=563213">1908105</a>.</td>
 <td>2007-12-10</td>
 <td>2007-12-10</td>
 </tr>
