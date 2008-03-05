@@ -122,6 +122,8 @@ branches/bombs_start_moving_1908105/src/RES/StdAfx.cpp -text
 branches/bombs_start_moving_1908105/src/RES/StdAfx.h -text
 branches/bombs_start_moving_1908105/src/RES/resource.h -text
 branches/bombs_start_moving_1908105/src/RES/resource.rc -text
+branches/bombs_start_moving_1908105/src/RES32/IMAGE/arena_arrows.bmp -text
+branches/bombs_start_moving_1908105/src/RES32/IMAGE/arena_arrows.xcf -text
 branches/bombs_start_moving_1908105/src/RES32/IMAGE/arena_fire.bmp -text
 branches/bombs_start_moving_1908105/src/RES32/IMAGE/arena_floor.bmp -text
 branches/bombs_start_moving_1908105/src/RES32/IMAGE/arena_fly.bmp -text
