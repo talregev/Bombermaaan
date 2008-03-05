@@ -133,6 +133,9 @@ int CBomb::m_BounceMoveY[NUMBER_OF_BOMBFLY_DIRECTIONS][3] =
 #define BOUNCE_BASE_FRAME_TIME      0.030f // When bomb is bouncing on a bomber or on a wall
 #define PUNCH_BASE_FRAME_TIME       0.030f // When bomb was punched
 
+// Moving of bombs by special blocks
+#define TIME_BEFORE_MOVING_BOMB     0.9f // This time must elapse before the bomb starts moving
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -173,6 +176,7 @@ void CBomb::Create (int BlockX, int BlockY, int FlameSize, float TimeLeft, int O
     m_Sprite = ANIMBOMB_SPRITE2;
     m_BombKick = BOMBKICK_NONE;
     m_BombFly = BOMBFLY_NONE;
+    m_ElapsedTime = 0.0f;
     m_Timer = 0.0f;
     m_Dead = false;
     m_HasToStopMoving = false;
@@ -552,6 +556,9 @@ bool CBomb::TryMove (float fPixels)
 
 bool CBomb::Update (float DeltaTime)
 {
+    // Update the elapsed time
+    m_ElapsedTime += DeltaTime;
+    
     // If the bomb is not dead
     if (!m_Dead)
     {    
@@ -572,6 +579,16 @@ bool CBomb::Update (float DeltaTime)
             }
         }
         
+        // Kick this bomb by special blocks
+        // Don't start the move if bomb exploded in the meanwhile (m_Dead)
+        // TODO: m_pArena->IsActionMove(m_BlockX,m_BlockY)
+        if ( m_BlockX == 13 && m_BlockY == 11 && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTim >= TIME_BEFORE_MOVING_BOMB ) {
+            // TODO: Remove Write(..)
+            theConsole.Write( "Bomb started moving...\n" );
+            // TODO: m_pArena->GetKickDirection(m_BlockX, m_BlockY)   ASSERT(IsActionMove(...)==TRUE) return BOMBKICK_LEFT, BOMBKICK_RIGHT, ...
+            StartMoving( BOMBKICK_LEFT, -1 ); // -1 is not a bomber started the move
+        }
+
         // Make the bomb move or fly if needed
         ManageMove(DeltaTime);
         ManageFlight(DeltaTime);
