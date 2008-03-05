@@ -586,7 +586,7 @@ bool CBomb::Update (float DeltaTime)
             // TODO: Remove Write(..)
             theConsole.Write( "Bomb started moving...\n" );
             // TODO: m_pArena->GetKickDirection(m_BlockX, m_BlockY)   ASSERT(IsActionMove(...)==TRUE) return BOMBKICK_LEFT, BOMBKICK_RIGHT, ...
-            StartMoving( BOMBKICK_LEFT, -1 ); // -1 is not a bomber started the move
+            StartMoving( BOMBKICK_LEFT, -1 ); // -1 is: not a bomber started the move
         }
 
         // Make the bomb move or fly if needed
