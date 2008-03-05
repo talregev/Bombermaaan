@@ -582,7 +582,7 @@ bool CBomb::Update (float DeltaTime)
         // Kick this bomb by special blocks
         // Don't start the move if bomb exploded in the meanwhile (m_Dead)
         // TODO: m_pArena->IsActionMove(m_BlockX,m_BlockY)
-        if ( m_BlockX == 13 && m_BlockY == 11 && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTim >= TIME_BEFORE_MOVING_BOMB ) {
+        if ( m_BlockX == 13 && m_BlockY == 11 && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
             // TODO: Remove Write(..)
             theConsole.Write( "Bomb started moving...\n" );
             // TODO: m_pArena->GetKickDirection(m_BlockX, m_BlockY)   ASSERT(IsActionMove(...)==TRUE) return BOMBKICK_LEFT, BOMBKICK_RIGHT, ...
