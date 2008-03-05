@@ -186,14 +186,15 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_LIFT         ) || 
             !LoadSprites (20,     6,      42,     44,     true,     BMP_ARENA_BOMBER_THROW        ) || // 60
             !LoadSprites (8,      6,      42,     44,     true,     BMP_ARENA_BOMBER_PUNCH        ) ||
-            !LoadSprites (4,      6,      42,     44,     true,     BMP_ARENA_BOMBER_STUNT        )
+            !LoadSprites (4,      6,      42,     44,     true,     BMP_ARENA_BOMBER_STUNT        ) ||
 #else
             !LoadSprites (7,      5,      21,     22,     true,     BMP_ARENA_BOMBER_DEATH        ) ||
             !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_LIFT         ) || 
             !LoadSprites (20,     6,      21,     22,     true,     BMP_ARENA_BOMBER_THROW        ) || // 60
             !LoadSprites (8,      6,      21,     22,     true,     BMP_ARENA_BOMBER_PUNCH        ) ||
-            !LoadSprites (4,      6,      21,     22,     true,     BMP_ARENA_BOMBER_STUNT        )
+            !LoadSprites (4,      6,      21,     22,     true,     BMP_ARENA_BOMBER_STUNT        ) ||
 #endif
+            !LoadSprites (4,      1,      32,     32,     true,     BMP_ARENA_ARROWS              )    // 63
            )
         {
             // Failure, get out (error is logged by the LoadSprites() method)
