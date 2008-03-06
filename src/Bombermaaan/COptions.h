@@ -145,8 +145,8 @@ public:
     inline void         SetBattleCount (int BattleCount); //!< Set how many battles to win in order to be victorious
     inline int          GetPlayerInput (int Player);    //!< Get the player input to use for the specified player
     inline void         SetPlayerInput (int Player, int PlayerInput); //!< Set the player input to use for the specified player
-    inline void         SetDisplayMode (EDisplayMode DisplayMode); //!< Get the display mode to use in the CDisplay object
-    inline EDisplayMode GetDisplayMode (void);          //!< Set the display mode to use in the CDisplay object
+    inline void         SetDisplayMode (EDisplayMode DisplayMode); //!< Set the display mode to use in the CDisplay object
+    inline EDisplayMode GetDisplayMode (void);          //!< Get the display mode to use in the CDisplay object
     inline int          GetControl (int PlayerInput, int Control);
     inline void         SetControl (int PlayerInput, int Control, int Value);
     inline EBlockType   GetBlockType (int X, int Y);
