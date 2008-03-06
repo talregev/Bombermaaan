@@ -485,11 +485,9 @@ inline bool CArena::IsFloor (int BlockX, int BlockY)
 
 inline bool CArena::IsFloorWithMoveEffect (int BlockX, int BlockY)
 { 
-    if ( IsFloor( BlockX, BlockY ) ) {
-        return GetBlockHas( BlockX, BlockY, BLOCKHAS_FLOORWITHMOVEEFFECT );
-    } else {
-        return false;
-    }
+    ASSERT( IsFloor( BlockX, BlockY ) );
+    
+    return GetBlockHas( BlockX, BlockY, BLOCKHAS_FLOORWITHMOVEEFFECT );
 }
 
 //******************************************************************************************************************************
