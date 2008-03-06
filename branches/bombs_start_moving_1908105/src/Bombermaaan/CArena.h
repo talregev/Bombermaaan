@@ -165,6 +165,8 @@ public:
     void                    NewExplosion    (int BlockX, int BlockY, int FlameSize);
     void                    NewBomber       (int BlockX, int BlockY, int Player);
     
+    EFloorAction            GetFloorAction  ( int BlockX, int BlockY );
+    
     inline int              ToBlock (int Position);
     inline int              ToPosition (int Block);
     

@@ -585,7 +585,19 @@ bool CBomb::Update (float DeltaTime)
             // TODO: Remove Write(..)
             theConsole.Write( "Bomb started moving...\n" );
             // TODO: m_pArena->GetKickDirection(m_BlockX, m_BlockY)   ASSERT(IsActionMove(...)==TRUE) return BOMBKICK_LEFT, BOMBKICK_RIGHT, ...
-            StartMoving( BOMBKICK_LEFT, -1 ); // -1 is: not a bomber started the move
+            EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
+            
+            EBombKick kickDirection = BOMBKICK_NONE;
+            
+            switch( EFloorAction ) {
+                FLOORACTION_MOVEBOMB_RIGHT: kickDirection = BOMBKICK_RIGHT; break;
+                //TODO:
+                ...
+            }
+            
+            ASSERT( kickDirection != BOMBKICK_NONE );
+            
+            StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
         }
 
         // Make the bomb move or fly if needed

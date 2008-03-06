@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -924,6 +924,32 @@ void CArena::NewBomber (int BlockX, int BlockY, int Player)
     m_Bombers[Player].SetDisplay (m_pDisplay);
     m_Bombers[Player].SetSound (m_pSound);
     m_Bombers[Player].Create (BlockX, BlockY, Player, m_pOptions);
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//****************************************************************************************************************************
+
+EFloorAction CArena::GetFloorAction( int BlockX, int BlockY )
+{
+    ASSERT( BlockX >= 0 && BlockX < ARENA_WIDTH );
+    ASSERT( BlockY >= 0 && BlockY < ARENA_HEIGHT );
+    
+    CFloor* floor;
+    
+    for ( int i = 0; i < MaxFloors(); i++ ) {
+    
+        floor = GetFloor( i );
+        
+        ASSERT( floor );
+        
+        if ( floor->GetBlockX() == BlockX && floor->GetBlockY() == BlockY ) {
+            return floor->GetAction();
+        }
+        
+    }
+    
+    ASSERT( false );
 }
 
 //******************************************************************************************************************************
