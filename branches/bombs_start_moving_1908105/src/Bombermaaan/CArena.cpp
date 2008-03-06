@@ -939,12 +939,12 @@ EFloorAction CArena::GetFloorAction( int BlockX, int BlockY )
     
     for ( int i = 0; i < MaxFloors(); i++ ) {
     
-        floor = GetFloor( i );
+        floor = & (GetFloor( i ));
         
         ASSERT( floor );
         
         if ( floor->GetBlockX() == BlockX && floor->GetBlockY() == BlockY ) {
-            return floor->GetAction();
+            return floor->GetFloorAction();
         }
         
     }

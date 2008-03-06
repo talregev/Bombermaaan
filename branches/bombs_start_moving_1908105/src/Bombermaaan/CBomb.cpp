@@ -589,10 +589,11 @@ bool CBomb::Update (float DeltaTime)
             
             EBombKick kickDirection = BOMBKICK_NONE;
             
-            switch( EFloorAction ) {
-                FLOORACTION_MOVEBOMB_RIGHT: kickDirection = BOMBKICK_RIGHT; break;
-                //TODO:
-                ...
+            switch( action ) {
+                case FLOORACTION_MOVEBOMB_RIGHT:    kickDirection = BOMBKICK_RIGHT; break;
+                case FLOORACTION_MOVEBOMB_DOWN:     kickDirection = BOMBKICK_DOWN;  break;
+                case FLOORACTION_MOVEBOMB_LEFT:     kickDirection = BOMBKICK_LEFT;  break;
+                case FLOORACTION_MOVEBOMB_UP:       kickDirection = BOMBKICK_UP;    break;
             }
             
             ASSERT( kickDirection != BOMBKICK_NONE );
