@@ -115,6 +115,8 @@ branches/bombs_start_moving_1908105/src/Bombermaaan/RESOURCE.H -text
 branches/bombs_start_moving_1908105/src/Bombermaaan/STDAFX.CPP -text
 branches/bombs_start_moving_1908105/src/Bombermaaan/STDAFX.H -text
 branches/bombs_start_moving_1908105/src/Bombermaaan/WinMain.cpp -text
+branches/bombs_start_moving_1908105/src/RES/IMAGE/arena_arrows.bmp -text
+branches/bombs_start_moving_1908105/src/RES/IMAGE/arena_arrows.xcf -text
 branches/bombs_start_moving_1908105/src/RES/RES.CPP -text
 branches/bombs_start_moving_1908105/src/RES/RES.dsp -text
 branches/bombs_start_moving_1908105/src/RES/RES.vcproj -text
