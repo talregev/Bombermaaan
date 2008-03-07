@@ -130,6 +130,9 @@ class WebPage {
 <div>
 <a href="contact.php">Contact</a>
 </div>
+<div>
+<a href="feedback.php">Feedback <sup>New!</sup></a>
+</div>
 
 </div>
 
