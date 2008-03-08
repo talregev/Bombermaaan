@@ -137,3 +137,9 @@ div#featurelist div.group div.more {
 	padding-left: 0.7em;
 	border-left: 1px solid #777;
 }
+
+div.feedback_block {
+    margin-top: 2em;
+    border-top: 1px dashed grey;
+    max-width: 600px;
+}
