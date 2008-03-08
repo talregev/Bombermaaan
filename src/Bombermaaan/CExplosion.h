@@ -96,7 +96,7 @@ style, the result does not depend on the explosion duration.
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! An element in the arena which represents a explosion. 
+//! An element in the arena which represents an explosion. 
 
 class CExplosion : public CElement
 {

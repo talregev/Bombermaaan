@@ -84,7 +84,7 @@ enum EItemFlying
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! An element in the arena which represents a item.
+//! An element in the arena which represents an item.
 class CItem : public CElement
 {
 private:
