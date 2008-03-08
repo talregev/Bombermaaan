@@ -163,6 +163,10 @@ trunk/COPYING.txt -text
 trunk/docs/Level_File_Layout_Version2.html -text
 trunk/docs/Readme.html -text
 trunk/docs/how-to-compile.txt -text
+trunk/doxygen/Doxyfile.txt -text
+trunk/doxygen/HTML[!!-~]footer.txt -text
+trunk/doxygen/HTML[!!-~]header.txt -text
+trunk/doxygen/_generate.cmd -text
 trunk/images/Bombermaaan_Icon.png -text
 trunk/images/Bombermaaan_Icon.svg -text
 trunk/images/Convert_all_svg2png.cmd -text
