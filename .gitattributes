@@ -3,6 +3,10 @@
 docs/Level_File_Layout_Version2.html -text
 docs/Readme.html -text
 docs/how-to-compile.txt -text
+doxygen/Doxyfile.txt -text
+doxygen/HTML[!!-~]footer.txt -text
+doxygen/HTML[!!-~]header.txt -text
+doxygen/_generate.cmd -text
 images/Bombermaaan_Icon.png -text
 images/Bombermaaan_Icon.svg -text
 images/Convert_all_svg2png.cmd -text
