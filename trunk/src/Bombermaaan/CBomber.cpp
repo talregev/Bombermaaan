@@ -715,6 +715,16 @@ void CBomber::UsedBombs ()
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/** 
+ *  Updates the sprite table, stunt move and bomb states.
+ *
+ *  Updates the sprite to display. It doesn't display sprites, it prepares the
+ *  sprite table. Bringing the sprites to screen is done by Display().
+ *  Handles the punch/throw/kick animation of bombs.
+ *
+ *  \sa EBomberState, MakeBombFly()
+ */
+
 void CBomber::Animate (float DeltaTime)
 {
     // Bomber state to set before exiting this method
@@ -1074,6 +1084,13 @@ void CBomber::Animate (float DeltaTime)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ *  Makes the bomber's bomb fly now.
+ *
+ *  Tells the bomber's bomb that it should fly now.
+ *  Resets #m_BombIndex so the bomber has no bomb from this time.
+ */
+
 void CBomber::MakeBombFly (EBombFlightType FlightType)
 {
     // There must be a bomb 
@@ -1170,7 +1187,11 @@ void CBomber::Contamination ()
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Draw the bomber sprite in the right layer
+/**
+ *  Draw the bomber sprite in the right layer.
+ *
+ *  The sprite table is prepared by Animate().
+ */
 
 void CBomber::Display (void)
 {

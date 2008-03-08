@@ -159,7 +159,7 @@ private:
     static SBomberSpriteTable m_BomberSpriteTables[MAX_NUMBER_OF_STATES]; //!< Information about the sprite table to use for each bomber state.
 	bool			m_MakeInvisible;				//!< If true, the bomber isn't visible in the arena (used for contamination)
     
-    void            Animate (float DeltaTime);      //!< Update the bomber's sprite table and sprite to display.
+    void            Animate (float DeltaTime);
     void            ReturnItems (float DeltaTime);  //!< Manage the return of the items this bomber owns if he is dead
     void            Action (void);                  //!< Make the bomber perform the bomber action he was ordered.
     void            Contamination (void);           //!< Manage sickness contamination (contaminate if sick), update contamination members.
@@ -187,7 +187,7 @@ public:
     void            Create (int BlockX, int BlockY, int Player, COptions* options); //!< Initialize the bomber
     void            Destroy (void);                 //!< Uninitialize the bomber
     bool            Update (float DeltaTime);       //!< Update the bomber. Return whether the element should be deleted by the arena.
-    void            Display (void);                 //!< Display the bomber
+    void            Display (void);
     void            OnWriteSnapshot (CArenaSnapshot& Snapshot);
     void            OnReadSnapshot (CArenaSnapshot& Snapshot);
     void            Command (EBomberMove BomberMove, EBomberAction BomberAction); //!< Give a move and action order to the bomber for next update.
