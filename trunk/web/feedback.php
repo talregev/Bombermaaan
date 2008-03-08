@@ -50,7 +50,7 @@ function showForm() {
 <h2>Please...</h2>
 
 <p>
-... let us know what <strong>you</strong> think about Bombermaaaan. You don't have to fill every block. Just give us the informations you'd like to.
+... let us know what <strong>you</strong> think about Bombermaaaan. You don't have to fill every block. Just give us the informations you'd like to. You can also just leave a short message for us - see <a href="#message">input box 5</a>.
 </p>
 
 <p>
@@ -97,9 +97,19 @@ function showForm() {
 
 <div class="feedback_block">
 <div>
-5. Your message for us
+<a id="message">5. Your message for us</a>
 </div>
 <textarea name="message" cols="50" rows="8"></textarea>
+</div>
+
+<div class="feedback_block">
+For verification, please type in the <strong>last four characters</strong> of this string:<br />
+<?php
+$verification = floor( time() / 1000 );
+echo $verification;
+?>
+&nbsp;&nbsp;&nbsp;
+<input type="text" name="verification" />
 </div>
 
 <p>
@@ -148,6 +158,7 @@ Please visit this page soon again!
 
 function processSubmit( $outputfilename ) {
 
+//TODO: Look if magic quotes are enabled!
 $logentry = "<tr>";
 $logentry .= "<td>" . date( "Y-m-d" ) . "</td>";
 $logentry .= "<td><!--01_likeit-->" . htmlentities( $_POST[ "likeit" ] ) . "</td>";
@@ -155,6 +166,8 @@ $logentry .= "<td><!--02_playit-->" . htmlentities( $_POST[ "playit" ] ) . "</td
 $logentry .= "<td><!--03_likewhat-->" . htmlentities( $_POST[ "likewhat" ] ) . "</td>";
 $logentry .= "<td><!--04_dontlikewhat-->" . htmlentities( $_POST[ "dontlikewhat" ] ) . "</td>";
 $logentry .= "<td><!--05_message-->" . htmlentities( $_POST[ "message" ] ) . "</td>";
+$logentry .= "<td><!--formtimestamp-->" . htmlentities( $_POST[ "feedback_timestamp" ] ) . "</td>";
+$logentry .= "<td><!--verification-->" . htmlentities( $_POST[ "verification" ] ) . "</td>";
 $logentry .= "</tr>";
 $logentry .= "\n";
 
