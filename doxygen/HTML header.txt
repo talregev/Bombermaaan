@@ -12,6 +12,6 @@
 <link rel="shortcut icon" href="/favicon.ico" type="image/ico" />
 <link rel="stylesheet" href="doxygen.css" type="text/css" />
 <link rel="stylesheet" href="tabs.css" type="text/css" />
-<title>Bombermaaan game project</title>
+<title>Bombermaaan source code documentation</title>
 </head>
 <body>
