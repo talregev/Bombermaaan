@@ -47,6 +47,7 @@ New feature: Invisibility as contamination (tracker item #1864528).
 Bug fix: Music starts in pause when losing focus (tracker item #1856135).
 Bug fix: Victory sound doesn't end after Escape (#1851347).
 Bug fix: F12 ends program (#1848194).
+Bug fix: Bomb doesn't explode during lift when bomber dies (#1861692).
 " );
 
 _L( "1.02", "December 9, 2003",

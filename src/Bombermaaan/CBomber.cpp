@@ -338,6 +338,13 @@ void CBomber::Die (void)
                 // If the bomber was doing something with a bomb
                 if (m_BombIndex != -1)
                 {
+                    // If the bomber is just lifting this bomb
+                    if (m_BomberState == BOMBERSTATE_LIFT ) {
+                        // End the lifting and make the bomber hold the bomb
+                        m_pArena->GetBomb(m_BombIndex).SetBeingHeld();
+                        m_BomberState = BOMBERSTATE_WALK_HOLD;
+                    }
+
                     // If the bomber died while holding or throwing a bomb
                     if (m_BomberState == BOMBERSTATE_WALK_HOLD ||
                         m_BomberState == BOMBERSTATE_THROW)
