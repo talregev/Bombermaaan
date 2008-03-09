@@ -716,7 +716,7 @@ void CBomber::UsedBombs ()
 //******************************************************************************************************************************
 
 /** 
- *  Updates the sprite table, stunt move and bomb states.
+ *  \brief Updates the sprite table, stunt move and bomb states.
  *
  *  Updates the sprite to display. It doesn't display sprites, it prepares the
  *  sprite table. Bringing the sprites to screen is done by Display().
@@ -1188,7 +1188,7 @@ void CBomber::Contamination ()
 //******************************************************************************************************************************
 
 /**
- *  Draw the bomber sprite in the right layer.
+ *  \brief Draw the bomber sprite in the right layer.
  *
  *  The sprite table is prepared by Animate().
  */
