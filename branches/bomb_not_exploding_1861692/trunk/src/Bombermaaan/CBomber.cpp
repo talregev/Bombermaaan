@@ -116,7 +116,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define ANIMDYING_TIME7     ANIMDYING_TIME1 * 7
 
 // Bomb lifting animation times (in seconds)
-#define ANIMBOMBLIFTING_TIME1     3.060f
+#define ANIMBOMBLIFTING_TIME1     0.060f
 #define ANIMBOMBLIFTING_TIME2     ANIMBOMBLIFTING_TIME1 * 2
 #define ANIMBOMBLIFTING_TIME3     ANIMBOMBLIFTING_TIME1 * 3
 
