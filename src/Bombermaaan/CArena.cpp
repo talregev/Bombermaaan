@@ -198,6 +198,7 @@ void CArena::Create (void)
     UpdateView ();
 
     // Create some items under soft walls
+    //! @see CItem::CreateItems()
     CItem::CreateItems (this,
                         ITEMPLACE_SOFTWALLS, 
                         m_pOptions->GetNumberOfItemsInWalls (ITEM_BOMB),

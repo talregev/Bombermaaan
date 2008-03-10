@@ -638,10 +638,14 @@ void CItem::OnReadSnapshot (CArenaSnapshot& Snapshot)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Creates a bunch of items in the arena, according to the place where items should be (on the floor, under
-// walls...), and how many items of each type to create. This is used by the arena when building a new arena,
-// and by bombers that return the items they pick when they die.
-// Returns whether at least one item was created.
+/**
+ * Creates a bunch of items in the arena, according to the place where items should be (on the floor, under
+ * walls...), and how many items of each type to create. This is used by the arena when building a new arena,
+ * and by bombers that return the items they pick when they die.
+ * Returns whether at least one item was created.
+ *
+ * @see CArena::Create()
+ */
 
 bool CItem::CreateItems (CArena *pArena, 
                          EItemPlace ItemPlace, 
