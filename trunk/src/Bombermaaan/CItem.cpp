@@ -141,6 +141,14 @@ CItem::~CItem (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ * @param BlockX the x coordinate in the arena where the item should be created
+ * @param BlockY the y coordinate in the arena where the item should be created
+ * @param Type the item type
+ * @param Fumes fumes (??) TODO!
+ * @param FlyingRandom is true, if the item should fly
+ */
+
 void CItem::Create (int BlockX, int BlockY, EItemType Type, bool Fumes, bool FlyingRandom)
 {
     // The item type must be valid
@@ -163,7 +171,7 @@ void CItem::Create (int BlockX, int BlockY, EItemType Type, bool Fumes, bool Fly
     
     if (FlyingRandom)
     {
-        // There cannot be fumes if the item must fly
+        //! There cannot be fumes if the item must fly.
         ASSERT(!Fumes);
 
         m_Flying = (EItemFlying) RANDOM(4);
