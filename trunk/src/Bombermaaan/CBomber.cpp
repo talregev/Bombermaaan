@@ -1368,11 +1368,11 @@ bool CBomber::Update (float DeltaTime)
     m_BomberMove.Update(DeltaTime);
 
     //! Update sub-components
-    UsedBombs();                //! - Update the number of used bombs.
-    Action();                   //! - Drop a bomb or stop a bomb he kicked if needed.
-    Contamination();            //! - Manage contaminations.
-    Animate(DeltaTime);         //! - Animation (update sprite and sprite table).
-    ReturnItems(DeltaTime);     //! - Return the items the bomber picked up if he's dead.
+    UsedBombs();                //! - Update the number of used bombs by calling UsedBombs().
+    Action();                   //! - Drop a bomb or stop a bomb he kicked if needed by calling Action().
+    Contamination();            //! - Manage contaminations by calling Contamination().
+    Animate(DeltaTime);         //! - Animation (update sprite and sprite table) by calling Animate().
+    ReturnItems(DeltaTime);     //! - Return the items the bomber picked up if he's dead by calling ReturnItems().
 
     /**
      * The bomber can only be deleted by the arena:
