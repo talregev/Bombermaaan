@@ -97,7 +97,11 @@ enum EDead
 //******************************************************************************************************************************
 //******************************************************************************************************************************
                                         
-//! Describes a sickness
+/**
+ *  \brief Describes a sickness
+ *
+ *  \sa CBomber::ItemEffect()
+ */
 
 enum ESick
 {
@@ -168,7 +172,7 @@ private:
     bool            TryMove (float fPixels);        //!< Make the bomber move in the current direction (bomber move) and return if he could move.
     void            Die (void);                     //!< Make the bomber start dying.
     float           GetBombTime (void);             //!< Get the current bomb time, i.e. the time left before a bomb this bomber drops will explode. It depends on current sickness.
-    void            MakeBombFly (EBombFlightType FlightType);
+    void            MakeBombFly (EBombFlightType FlightType);       //!< Makes the bomber's bomb fly now.
 
 protected:
 
@@ -187,7 +191,7 @@ public:
     void            Create (int BlockX, int BlockY, int Player, COptions* options); //!< Initialize the bomber
     void            Destroy (void);                 //!< Uninitialize the bomber
     bool            Update (float DeltaTime);       //!< Update the bomber. Return whether the element should be deleted by the arena.
-    void            Display (void);
+    void            Display (void);                 //!< Draw the bomber sprite in the right layer.
     void            OnWriteSnapshot (CArenaSnapshot& Snapshot);
     void            OnReadSnapshot (CArenaSnapshot& Snapshot);
     void            Command (EBomberMove BomberMove, EBomberAction BomberAction); //!< Give a move and action order to the bomber for next update.

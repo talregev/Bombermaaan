@@ -403,10 +403,12 @@ void CBomber::Victorious (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Give orders to the bomber.
-// The bomber stores these orders as is if he's not sick. However, a 
-// sickness makes him not understand the orders correctly, so they are 
-// modified then stored.
+/**
+ * Give orders to the bomber.
+ * The bomber stores these orders as is if he's not sick. However, a 
+ * sickness makes him not understand the orders correctly, so they are 
+ * modified then stored.
+ */
 
 void CBomber::Command (EBomberMove BomberMove, EBomberAction BomberAction)
 {   
@@ -455,8 +457,12 @@ void CBomber::Command (EBomberMove BomberMove, EBomberAction BomberAction)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Make the bomber not sick anymore and reset 
-// the sick timer.
+/**
+ * Make the bomber not sick anymore and reset 
+ * the sick timer.
+ *
+ * \sa m_Sickness, m_SickTimer
+ */
 
 void CBomber::Heal ()
 {
@@ -723,13 +729,11 @@ void CBomber::UsedBombs ()
 //******************************************************************************************************************************
 
 /** 
- *  \brief Updates the sprite table, stunt move and bomb states.
+ *  Updates the sprite to display. This function prepares the
+ *  sprite table, updates stunt times,
+ *  handles the punch/throw/kick animations and updates the bomber state.
  *
- *  Updates the sprite to display. It doesn't display sprites, it prepares the
- *  sprite table. Bringing the sprites to screen is done by Display().
- *  Handles the punch/throw/kick animation of bombs.
- *
- *  \sa EBomberState, MakeBombFly()
+ *  \sa m_BomberState, MakeBombFly(), Display()
  */
 
 void CBomber::Animate (float DeltaTime)
@@ -1092,9 +1096,8 @@ void CBomber::Animate (float DeltaTime)
 //******************************************************************************************************************************
 
 /**
- *  Makes the bomber's bomb fly now.
- *
- *  Tells the bomber's bomb that it should fly now.
+ *  Tells the bomber's bomb that it should fly now. The bomb is forced to
+ *  fly to the direction the bomber is looking into (in which direction he last moved).
  *  Resets #m_BombIndex so the bomber has no bomb from this time.
  */
 
@@ -1195,8 +1198,6 @@ void CBomber::Contamination ()
 //******************************************************************************************************************************
 
 /**
- *  \brief Draw the bomber sprite in the right layer.
- *
  *  The sprite table is prepared by Animate().
  */
 
@@ -1386,21 +1387,21 @@ bool CBomber::Update (float DeltaTime)
 // Make the bomber have the effects of an item he picked up
 void CBomber::ItemEffect (EItemType Type)
 {
-    // If the bomber is sick
+    //! If the bomber is sick and picks up an item, he will now be healthy again,
+    //! and the bad, bad skull item escapes from within the bomber to fly somewhere else.
     if (m_Sickness != SICK_NOTSICK)
     {
-        // The bomber is sick and picks up an item, and hence he will now be healthy again,
-        // and the bad, bad skull item escapes from within the bomber to fly somewhere else.
         m_pArena->NewItem (m_BomberMove.GetBlockX(), m_BomberMove.GetBlockY(), ITEM_SKULL, false, true);
     }
     
-    // If the bomber has picked up a skull item
+    //! If the bomber has picked up a skull item he gets sick.
     if (Type == ITEM_SKULL)
     {
         // If bombers can be sick
         if (theDebug.CanBombersBeSick())
         {
             // The bomber is now sick (random sickness)
+            //! \sa m_Sickness
             m_Sickness = ESick (RANDOM(NUMBER_SICKNESSES));
 
             // Play a random skull item sound
