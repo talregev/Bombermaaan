@@ -1360,23 +1360,26 @@ void CBomber::ReturnItems (float DeltaTime)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Update the bomber according to the last frametime
+//! Update the bomber according to the last frametime
 
 bool CBomber::Update (float DeltaTime)
 {
-    // Manage the bomber's movement
+    //! Manage the bomber's movement by calling CBomberMove::Update()
     m_BomberMove.Update(DeltaTime);
 
-    UsedBombs();                // Update the number used bombs
-    Action();                   // Drop a bomb or stop a bomb he kicked if needed
-    Contamination();            // Manage contaminations
-    Animate(DeltaTime);         // Animation (update sprite and sprite table)
-    ReturnItems(DeltaTime);     // Return the items the bomber picked up if dead
+    //! Update sub-components
+    UsedBombs();                //! - Update the number of used bombs.
+    Action();                   //! - Drop a bomb or stop a bomb he kicked if needed.
+    Contamination();            //! - Manage contaminations.
+    Animate(DeltaTime);         //! - Animation (update sprite and sprite table).
+    ReturnItems(DeltaTime);     //! - Return the items the bomber picked up if he's dead.
 
-    // The bomber can only be deleted by the arena :
-    // - if he's dead and
-    // - if he has returned the items he has picked up and
-    // - if all of his bombs exploded
+    /**
+     * The bomber can only be deleted by the arena:
+     * - if he's dead and
+     * - if he has returned the items he has picked up and
+     * - if all of his bombs exploded
+     */
     return (m_Dead == DEAD_DEAD && m_ReturnedItems && m_UsedBombs == 0);
 }
 
