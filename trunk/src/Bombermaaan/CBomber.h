@@ -158,7 +158,7 @@ private:
     float           m_ThrowingTimeElapsed;          //!< How many seconds have elapsed since we started throwing a bomb?
     float           m_PunchingTimeElapsed;          //!< How many seconds have elapsed since we started punching a bomb?
     float           m_StuntTimeElapsed;             //!< How many seconds have elapsed since we got stunt?
-    EBomberState    m_BomberState;                  //!< State of the bomber, describes what he is currenly doing.
+    EBomberState    m_BomberState;                  //!< State of the bomber, describes what he is currently doing.
     int             m_BombIndex;                    //!< Index of the bomb the bomber is either holding, lifting or punching (when the bomber is throwing, this index is -1).
     static SBomberSpriteTable m_BomberSpriteTables[MAX_NUMBER_OF_STATES]; //!< Information about the sprite table to use for each bomber state.
 	bool			m_MakeInvisible;				//!< If true, the bomber isn't visible in the arena (used for contamination)
