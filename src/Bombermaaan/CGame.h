@@ -78,11 +78,15 @@ extern SOCKET          ClientSocket;
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// The CGame class is a window. It initializes itself
-// using an application instance, then initializes
-// the timer, the input, the display, the game screens
-// objects, etc. It's the core of the game and manages 
-// switches between game modes (see EGameMode enum above).
+/**
+ *  \brief The main window class of Bombermaaan
+ *
+ * The CGame class is a window. It initializes itself
+ * using an application instance, then initializes
+ * the timer, the input, the display, the game screens
+ * objects, etc. It's the core of the game and manages 
+ * switches between game modes (see EGameMode).
+ */
 
 class CGame : public CWindow
 {
