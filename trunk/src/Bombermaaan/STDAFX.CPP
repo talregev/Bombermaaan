@@ -20,8 +20,14 @@
 ************************************************************************************/
 
 
+/**
+ *  \file stdafx.cpp
+ *  \brief Pre-compiled file
+ */
+
 #include "stdafx.h"
 
+// TODO: Check if they are still used. I think they are replaced by CDebug class methods
 float g_Debug_GameSpeed;
 bool  g_Debug_CanBombersDie;
 bool  g_Debug_CanBombersBeSick;
