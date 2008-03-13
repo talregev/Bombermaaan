@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -31,15 +31,20 @@
 
 #include "stdafx.h"
 
-//-------------------------------------------------------
-// The CTimer class provides an accurate timer
-// using the Windows API. It can return the current
-// time since the construction of the timer, and
-// the deltatime (time between last call to get
-// deltatime and the next call). It also handles
-// pauses during the execution so that the deltatime
-// when resuming is not huge but normal.
-//-------------------------------------------------------
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+/**
+ *  \brief The CTimer class provides an accurate timer using the Windows API.
+ *
+ *  It can return the current
+ *  time since the construction of the timer, and
+ *  the deltatime (time between last call to get
+ *  deltatime and the next call). It also handles
+ *  pauses during the execution so that the deltatime
+ *  when resuming is not huge but normal.
+ */
 
 class CTimer
 {
