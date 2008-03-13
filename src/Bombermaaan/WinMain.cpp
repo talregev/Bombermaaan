@@ -38,11 +38,16 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ *  \brief This is the main function of the executable file.
+ */
+
 int APIENTRY WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdline, int nCmdShow)
 {
-    // Create the CGame instance    
+    //! Create the CGame instance    
     CGame Game (hInstance, lpCmdline);
 
+    //! Create the game (CGame::Create())
     // If creating the game failed
     if (!Game.Create(lpCmdline))
     {
@@ -50,13 +55,13 @@ int APIENTRY WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdl
         return false;
     }
 
-    // Show the game window
+    //! Show the game window (CGame::ShowWindow())
     Game.ShowWindow ();
 
-    // Update the game
+    // Update the game (CGame::MesagePump())
     Game.MessagePump ();
 
-    // Destroy everything
+    // Destroy everything (CGame::Destroy())
     Game.Destroy ();
 
     // Everything went right
