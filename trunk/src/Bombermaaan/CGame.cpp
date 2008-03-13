@@ -128,8 +128,13 @@ CGame::~CGame ()
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ *  \brief Creates the main parts of the game and establishes relationships to members
+ **/
+
 bool CGame::Create (const char* pCommandLine)
 {
+    //! @see ENABLE_CONSOLE
 #ifdef ENABLE_CONSOLE
 
     // Open the console window
@@ -143,6 +148,7 @@ bool CGame::Create (const char* pCommandLine)
 
 #endif
 
+    //! @see ENABLE_LOG
 #ifdef ENABLE_LOG
 
     // Open the log file
@@ -169,7 +175,7 @@ bool CGame::Create (const char* pCommandLine)
         return false;
     }
     
-    // Establish connection to the DLL
+    //! Establish connection to the DLL
     m_hModule = LoadLibrary ( NAME_OF_BOMBERMAN_DLL );
     
     // If it failed
@@ -288,6 +294,7 @@ bool CGame::Create (const char* pCommandLine)
         return false;
     }
 
+    //! @see ENABLE_SOUND
 #ifdef ENABLE_SOUND
 
     // If creating the sound failed
@@ -769,12 +776,15 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
 //******************************************************************************************************************************
 
 
-// If the window has to be repainted, the display
-// must be updated to redraw the game screen.
+/**
+ *  If the window has to be repainted, the display
+ *  must be updated to redraw the game screen.
+ */
 
 void CGame::OnPaint (WPARAM wParam, LPARAM lParam)
 {
     // Create the display manage this repainting
+    //! @see CDisplay::OnPaint()
     m_Display.OnPaint ();
 }
 
@@ -782,7 +792,11 @@ void CGame::OnPaint (WPARAM wParam, LPARAM lParam)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// SCREEN SAVER DISABLING DOES NOT WORK
+/**
+ *  \brief Handles system commands
+ *
+ *  TODO: SCREEN SAVER DISABLING DOES NOT WORK
+ **/
 
 bool CGame::OnSysCommand (WPARAM wParam, LPARAM lParam)
 {
