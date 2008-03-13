@@ -110,6 +110,7 @@ inline void CDisplay::OnWindowMove (void)
 
 inline void CDisplay::OnPaint (void)
 {
+    //! @see CDirectDraw::UpdateScreen()
     m_DirectDraw.UpdateScreen ();
 }
 
