@@ -58,11 +58,14 @@ struct SDisplayMode
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-
-// Drawing requests are stored in a CSpriteManager
-// instance. They describe a sprite to draw, and
-// where to draw it, and when to draw to it (using
-// sprites layers and PriorityInLayer-inside-layer.
+/**
+ *  \brief Describes a drawing request
+ *
+ *  Drawing requests are stored in a CSpriteManager
+ *  instance. They describe a sprite to draw, and
+ *  where to draw it, and when to draw to it (using
+ *  sprites layers and PriorityInLayer-inside-layer.
+ */
 
 struct SDrawingRequest
 {
@@ -113,6 +116,7 @@ struct SSurface
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+//! CDirectDraw manages the DirectDraw stuff
 class CDirectDraw
 {
 private:
@@ -178,10 +182,22 @@ inline bool CDirectDraw::IsModeSet (int Width, int Height, int Depth, bool FullS
            m_FullScreen == FullScreen;
 }
 
+/**
+ *  \brief Update the screen
+ *
+ *  \sa UpdateScreen()
+ */
+
 inline void CDirectDraw::OnPaint (void)
 {
     UpdateScreen ();
 }
+
+/**
+ *  \brief Set the origin of the top left position
+ *
+ *  Draw requests are relative to this position
+ */
 
 inline void CDirectDraw::SetOrigin (int OriginX, int OriginY)
 {

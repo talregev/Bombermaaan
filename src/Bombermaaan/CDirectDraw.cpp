@@ -85,7 +85,7 @@ static HRESULT WINAPI AddDisplayMode (LPDDSURFACEDESC2 lpDDSurfaceDesc, LPVOID l
 
 bool CDirectDraw::Create (int Width, int Height, int Depth, bool FullScreen)
 {
-    // Set the display properties
+    //! Set the display properties
     m_Width = Width;
     m_Height = Height;
     m_Depth = Depth;
@@ -99,7 +99,7 @@ bool CDirectDraw::Create (int Width, int Height, int Depth, bool FullScreen)
     HRESULT hRet;
     DDSURFACEDESC2 ddsd;
 
-    // Create directdraw object
+    //! Create directdraw object
     hRet = DirectDrawCreateEx (NULL, (LPVOID *)&m_pDD, IID_IDirectDraw7, NULL);
     
     // If it failed
@@ -119,7 +119,7 @@ bool CDirectDraw::Create (int Width, int Height, int Depth, bool FullScreen)
         theLog.WriteLine ("DirectDraw      => DirectDraw object was created.");
     }
 
-    // Enumerate all display modes (without taking refresh rates into account)
+    //! Enumerate all display modes (without taking refresh rates into account)
     m_pDD->EnumDisplayModes(0, NULL, (LPVOID *)&m_AvailableDisplayModes, AddDisplayMode);
 
     // If desired mode is windowed mode
@@ -355,7 +355,7 @@ bool CDirectDraw::Create (int Width, int Height, int Depth, bool FullScreen)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Destroys the directdraw interface
+//! Destroys the directdraw interface
 
 void CDirectDraw::Destroy (void)
 {
@@ -427,8 +427,7 @@ void CDirectDraw::Destroy (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Updates the display by blitting the back buffer
-// surface on the primary surface.
+//! Updates the display by blitting the back buffer surface on the primary surface.
 
 void CDirectDraw::UpdateScreen (void)
 {
@@ -478,6 +477,7 @@ void CDirectDraw::UpdateScreen (void)
         }
 
         // If the primary surface is too busy
+        //! TODO: Check if this should be an equal compare instead of not equal
         if (hRet != DDERR_WASSTILLDRAWING)
         {
             // Log the primary surface is too busy
@@ -493,8 +493,7 @@ void CDirectDraw::UpdateScreen (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Updates the object : this updates the drawing zones
-// in case the window moves.
+//! Update the drawing zones in case the window moves.
 
 void CDirectDraw::OnWindowMove ()
 {
@@ -508,6 +507,15 @@ void CDirectDraw::OnWindowMove ()
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
+
+/**
+ *  \brief Store a sprite in the drawing requests list
+ *
+ *  @param PositionX the x coordinate where the upper left corner should be placed (relative to origin)
+ *  @param PositionY the y coordinate where the upper left corner should be placed (relative to origin)
+ *
+ *  @see SetOrigin()
+ */
 
 void CDirectDraw::DrawSprite (int PositionX, 
                               int PositionY, 
@@ -624,6 +632,7 @@ void CDirectDraw::DrawSprite (int PositionX,
     DrawingRequest.PriorityInLayer = PriorityInLayer;
     
     // Store it (automatic sort)
+    //! @see m_DrawingRequests
     m_DrawingRequests.push(DrawingRequest);
 }
 
@@ -631,7 +640,7 @@ void CDirectDraw::DrawSprite (int PositionX,
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Makes the display black.
+//! Makes the display black.
 
 void CDirectDraw::Clear ()
 {
@@ -954,6 +963,14 @@ void CDirectDraw::FreeSprites (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
+
+/**
+ *  \brief Processes all drawing requests and calls UpdateScreen
+ *
+ *  Blit every sprite from the drawing request list to the back buffer surface.
+ *
+ *  @see UpdateScreen()
+ */
 
 void CDirectDraw::UpdateAll (void)
 {
