@@ -584,7 +584,7 @@ bool CBomb::Update (float DeltaTime)
         
         // Kick this bomb by special blocks
         // Don't start the move if bomb exploded in the meanwhile (m_Dead)
-        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && ( BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED || m_BombKick == BOMBKICK_NONE ) && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
+        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
             EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
             
             EBombKick kickDirection = BOMBKICK_NONE;
@@ -598,28 +598,7 @@ bool CBomb::Update (float DeltaTime)
             
             ASSERT( kickDirection != BOMBKICK_NONE );
             
-            // Prevents that the bomb changes the direction before it is centered on the block
-            bool changeAllowed = false;
-            switch( m_BombKick ) {
-                case BOMBKICK_RIGHT:    changeAllowed = (m_iX >= m_BlockX * BLOCK_SIZE); break;
-                case BOMBKICK_LEFT:     changeAllowed = (m_iX <= m_BlockX * BLOCK_SIZE); break;
-                case BOMBKICK_UP:       changeAllowed = (m_iY <= m_BlockY * BLOCK_SIZE); break;
-                case BOMBKICK_DOWN:     changeAllowed = (m_iY >= m_BlockY * BLOCK_SIZE); break;
-                default: ASSERT( 0 );
-            }
-
-            // If the bomb isn't kicked already the direction change is always allowed
-            if ( m_BombKick == BOMBKICK_NONE )
-                changeAllowed = true;
-
-            // Start the move if the new direction is different from the old direction and the change is allowed
-            if ( ( m_BombKick != kickDirection ) && changeAllowed ) {
-                // TODO: Remove Write(..)
-                theConsole.Write( "Bomb started moving...\n" );
-                theConsole.Write( ">> X=%d, Y=%d, pixelX=%d, pixelY=%d\n", m_BlockX, m_BlockY, m_iX, m_iY );
-
-                StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
-            }
+            StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
         }
 
         // Make the bomb move or fly if needed
