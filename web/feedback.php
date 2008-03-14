@@ -14,7 +14,7 @@ $webpage->head();
 
 <?php
 
-$outputfilename = "feedback_output.html";
+$outputfilename = "./external/feedback_output.html";
 
 // Check for file size
 // Function filesize prints warning if used without @ and file does not exist
