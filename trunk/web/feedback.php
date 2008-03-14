@@ -158,7 +158,13 @@ Please visit this page soon again!
 
 function processSubmit( $outputfilename ) {
 
-//TODO: Look if magic quotes are enabled!
+if ( get_magic_quotes_gpc() ) {
+	// Strip slashes if magic quotes are enabled
+	foreach( $_POST as $key => $value ) {
+		$_POST[ $key ] = stripslashes( $value );
+	}
+}
+
 $logentry = "<tr>";
 $logentry .= "<td>" . date( "Y-m-d" ) . "</td>";
 $logentry .= "<td><!--01_likeit-->" . htmlentities( $_POST[ "likeit" ] ) . "</td>";
