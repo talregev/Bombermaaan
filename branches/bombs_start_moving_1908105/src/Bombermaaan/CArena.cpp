@@ -937,6 +937,7 @@ EFloorAction CArena::GetFloorAction( int BlockX, int BlockY )
     
     CFloor* floor;
     
+    // Search the floor given by x and y
     for ( int i = 0; i < MaxFloors(); i++ ) {
     
         floor = & (GetFloor( i ));

@@ -584,7 +584,7 @@ bool CBomb::Update (float DeltaTime)
         if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
             // TODO: Remove Write(..)
             theConsole.Write( "Bomb started moving...\n" );
-            // TODO: m_pArena->GetKickDirection(m_BlockX, m_BlockY)   ASSERT(IsActionMove(...)==TRUE) return BOMBKICK_LEFT, BOMBKICK_RIGHT, ...
+
             EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
             
             EBombKick kickDirection = BOMBKICK_NONE;
