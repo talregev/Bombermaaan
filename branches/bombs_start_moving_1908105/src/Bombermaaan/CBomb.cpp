@@ -136,6 +136,9 @@ int CBomb::m_BounceMoveY[NUMBER_OF_BOMBFLY_DIRECTIONS][3] =
 // Moving of bombs by special blocks
 #define TIME_BEFORE_MOVING_BOMB     0.9f // This time must elapse before the bomb starts moving
 
+// Bombs can change direction (can be re-kicked) when passing special blocks
+#define BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED   true
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -581,7 +584,7 @@ bool CBomb::Update (float DeltaTime)
         
         // Kick this bomb by special blocks
         // Don't start the move if bomb exploded in the meanwhile (m_Dead)
-        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
+        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && ( BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED || m_BombKick == BOMBKICK_NONE ) && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
             // TODO: Remove Write(..)
             theConsole.Write( "Bomb started moving...\n" );
 
