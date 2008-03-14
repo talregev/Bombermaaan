@@ -17,7 +17,7 @@ $webpage->head();
 $outputfilename = "feedback_output.html";
 
 // Check for file size
-// Function filesize outputs warning if used without @ and file does not exist
+// Function filesize prints warning if used without @ and file does not exist
 if ( @filesize( $outputfilename ) < 500000 ) {
     if ( isset( $_POST[ "feedback_timestamp" ] ) ) {
         processSubmit( $outputfilename );
