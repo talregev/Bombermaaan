@@ -55,7 +55,7 @@ function showForm() {
 
 <p>
 
-<form action="feedback.php" method="post">
+<form action="feedback.php" method="post" accept-charset="utf-8">
 
 <h2>Please choose...</h2>
 
