@@ -207,7 +207,6 @@ web/development.php -text
 web/download.php -text
 web/faq.php -text
 web/features.php -text
-web/feedback.php -text
 web/images/arena_item_0-bomb.png -text
 web/images/arena_item_1-flame.png -text
 web/images/arena_item_missing.png -text
