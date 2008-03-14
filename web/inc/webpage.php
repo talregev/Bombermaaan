@@ -24,6 +24,7 @@ class WebPage {
 		?>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="Title" content="Bombermaaan game project" />
 <meta name="Author" content="Thibaut Tollemer, Bernd Arnold" />
 <meta name="Revisit" content="After 15 days" />
