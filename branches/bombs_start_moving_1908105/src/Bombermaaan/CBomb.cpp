@@ -585,9 +585,6 @@ bool CBomb::Update (float DeltaTime)
         // Kick this bomb by special blocks
         // Don't start the move if bomb exploded in the meanwhile (m_Dead)
         if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && ( BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED || m_BombKick == BOMBKICK_NONE ) && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
-            // TODO: Remove Write(..)
-            theConsole.Write( "Bomb started moving...\n" );
-
             EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
             
             EBombKick kickDirection = BOMBKICK_NONE;
@@ -601,7 +598,14 @@ bool CBomb::Update (float DeltaTime)
             
             ASSERT( kickDirection != BOMBKICK_NONE );
             
-            StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
+            // Should prevent that the bomb changes the direction before it is centered on the block
+            // Only x and move right checked until now
+            if ( ( m_BombKick != kickDirection ) && ( m_iX >= m_BlockX * BLOCK_SIZE ) ) {
+                // TODO: Remove Write(..)
+                theConsole.Write( "Bomb started moving...\n" );
+
+                StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
+            }
         }
 
         // Make the bomb move or fly if needed
