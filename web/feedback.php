@@ -165,13 +165,15 @@ if ( get_magic_quotes_gpc() ) {
 	}
 }
 
+$replace_newlines = array( "\r\n", "\n", "\r" );
+
 $logentry = "<tr>";
 $logentry .= "<td>" . date( "Y-m-d" ) . "</td>";
 $logentry .= "<td><!--01_likeit-->" . htmlentities( $_POST[ "likeit" ], ENT_COMPAT, "UTF-8" ) . "</td>";
 $logentry .= "<td><!--02_playit-->" . htmlentities( $_POST[ "playit" ], ENT_COMPAT, "UTF-8" ) . "</td>";
-$logentry .= "<td><!--03_likewhat-->" . htmlentities( $_POST[ "likewhat" ], ENT_COMPAT, "UTF-8" ) . "</td>";
-$logentry .= "<td><!--04_dontlikewhat-->" . htmlentities( $_POST[ "dontlikewhat" ], ENT_COMPAT, "UTF-8" ) . "</td>";
-$logentry .= "<td><!--05_message-->" . htmlentities( $_POST[ "message" ], ENT_COMPAT, "UTF-8" ) . "</td>";
+$logentry .= "<td><!--03_likewhat-->" . str_replace( $replace_newlines, "<br />", htmlentities( $_POST[ "likewhat" ], ENT_COMPAT, "UTF-8" ) ) . "</td>";
+$logentry .= "<td><!--04_dontlikewhat-->" . str_replace( $replace_newlines, "<br />", htmlentities( $_POST[ "dontlikewhat" ], ENT_COMPAT, "UTF-8" ) ) . "</td>";
+$logentry .= "<td><!--05_message-->" . str_replace( $replace_newlines, "<br />", htmlentities( $_POST[ "message" ], ENT_COMPAT, "UTF-8" ) ) . "</td>";
 $logentry .= "<td><!--formtimestamp-->" . htmlentities( $_POST[ "feedback_timestamp" ], ENT_COMPAT, "UTF-8" ) . "</td>";
 $logentry .= "<td><!--verification-->" . htmlentities( $_POST[ "verification" ], ENT_COMPAT, "UTF-8" ) . "</td>";
 $logentry .= "<td><!--difference_verification-->" . htmlentities( substr( $_POST[ "feedback_timestamp" ], -7, 4 ) * 1 - $_POST[ "verification" ] * 1, ENT_COMPAT, "UTF-8" ) . "</td>";
