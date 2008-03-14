@@ -174,6 +174,7 @@ $logentry .= "<td><!--04_dontlikewhat-->" . htmlentities( $_POST[ "dontlikewhat"
 $logentry .= "<td><!--05_message-->" . htmlentities( $_POST[ "message" ], ENT_COMPAT, "UTF-8" ) . "</td>";
 $logentry .= "<td><!--formtimestamp-->" . htmlentities( $_POST[ "feedback_timestamp" ], ENT_COMPAT, "UTF-8" ) . "</td>";
 $logentry .= "<td><!--verification-->" . htmlentities( $_POST[ "verification" ], ENT_COMPAT, "UTF-8" ) . "</td>";
+$logentry .= "<td><!--difference_verification-->" . htmlentities( substr( $_POST[ "feedback_timestamp" ], -7, 4 ) * 1 - $_POST[ "verification" ] * 1, ENT_COMPAT, "UTF-8" ) . "</td>";
 $logentry .= "</tr>";
 $logentry .= "\n";
 
