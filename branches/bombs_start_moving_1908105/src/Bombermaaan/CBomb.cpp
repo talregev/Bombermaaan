@@ -598,11 +598,25 @@ bool CBomb::Update (float DeltaTime)
             
             ASSERT( kickDirection != BOMBKICK_NONE );
             
-            // Should prevent that the bomb changes the direction before it is centered on the block
-            // Only x and move right checked until now
-            if ( ( m_BombKick != kickDirection ) && ( m_iX >= m_BlockX * BLOCK_SIZE ) ) {
+            // Prevents that the bomb changes the direction before it is centered on the block
+            bool changeAllowed = false;
+            switch( m_BombKick ) {
+                case BOMBKICK_RIGHT:    changeAllowed = (m_iX >= m_BlockX * BLOCK_SIZE); break;
+                case BOMBKICK_LEFT:     changeAllowed = (m_iX <= m_BlockX * BLOCK_SIZE); break;
+                case BOMBKICK_UP:       changeAllowed = (m_iY <= m_BlockY * BLOCK_SIZE); break;
+                case BOMBKICK_DOWN:     changeAllowed = (m_iY >= m_BlockY * BLOCK_SIZE); break;
+                default: ASSERT( 0 );
+            }
+
+            // If the bomb isn't kicked already the direction change is always allowed
+            if ( m_BombKick == BOMBKICK_NONE )
+                changeAllowed = true;
+
+            // Start the move if the new direction is different from the old direction and the change is allowed
+            if ( ( m_BombKick != kickDirection ) && changeAllowed ) {
                 // TODO: Remove Write(..)
                 theConsole.Write( "Bomb started moving...\n" );
+                theConsole.Write( ">> X=%d, Y=%d, pixelX=%d, pixelY=%d\n", m_BlockX, m_BlockY, m_iX, m_iY );
 
                 StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
             }
