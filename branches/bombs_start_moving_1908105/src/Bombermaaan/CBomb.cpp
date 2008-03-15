@@ -607,7 +607,10 @@ bool CBomb::Update (float DeltaTime)
         
         // Kick this bomb by special blocks
         // Don't start the move if bomb exploded in the meanwhile (m_Dead)
-        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB ) {
+        // Also don't start the move if the bomb is already in action (lifted, held, punched or flying)
+        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB &&
+             !m_BeingLifted && !m_BeingHeld && !m_BeingPunched && m_BombFly == BOMBFLY_NONE
+           ) {
             EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
             
             EBombKick kickDirection = BOMBKICK_NONE;
