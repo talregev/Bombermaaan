@@ -43,10 +43,10 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-#define BLACKSCREEN_DURATION    0.750f  // Duration (in seconds) of each of the two black screens
-#define PAUSE_BEGIN             1.0f    // Duration (in seconds) of the pause at the beginning of a match
-#define PAUSE_DRAWGAME          2.5f    // Duration (in seconds) of the pause at match end when there is a draw game
-#define PAUSE_WINNER            2.5f    // Duration (in seconds) of the pause at match end when there is a winner
+#define BLACKSCREEN_DURATION    0.750f  //!< Duration (in seconds) of each of the two black screens
+#define PAUSE_BEGIN             1.0f    //!< Duration (in seconds) of the pause at the beginning of a match
+#define PAUSE_DRAWGAME          2.5f    //!< Duration (in seconds) of the pause at match end when there is a draw game
+#define PAUSE_WINNER            2.5f    //!< Duration (in seconds) of the pause at match end when there is a winner
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -228,7 +228,12 @@ void CMatch::StopSong (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// The player inputs have to be opened before reading them
+/**
+ *  Open the player inputs for each human playing player.
+ *  The player inputs have to be opened before reading them.
+ *
+ *  @see CloseInput()
+ */
 
 void CMatch::OpenInput (void)
 {   
@@ -248,7 +253,12 @@ void CMatch::OpenInput (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// The player inputs should be closed when they are not needed anymore
+/**
+ *  Close the player inputs for each human playing player.
+ *  The player inputs should be closed when they are not needed anymore.
+ *
+ *  @see OpenInput()
+ */
 
 void CMatch::CloseInput (void)
 {
@@ -268,9 +278,9 @@ void CMatch::CloseInput (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//----------------------------------------------------
-// Start playing the match song if it hasn't started)
-//----------------------------------------------------
+/**
+ *  \brief Start playing the match song if it hasn't started.
+ */
 
 void CMatch::PlaySong (void)
 {
@@ -292,9 +302,9 @@ void CMatch::PlaySong (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//-------------------------
-// Receive player commands
-//-------------------------
+/**
+ *  \brief Receive player commands.
+ */
 
 void CMatch::ProcessPlayerCommands (void)
 {        
@@ -325,6 +335,7 @@ void CMatch::ProcessPlayerCommands (void)
                         m_pInput->GetPlayerInput(PlayerInput).Update();
 
                         // Save the player's controls state
+                        //! @see CInput, CPlayerInput::GetPlayerInput()
                         bool Up      = m_pInput->GetPlayerInput(PlayerInput).TestUp();
                         bool Down    = m_pInput->GetPlayerInput(PlayerInput).TestDown();
                         bool Left    = m_pInput->GetPlayerInput(PlayerInput).TestLeft();
@@ -589,12 +600,12 @@ void CMatch::UpdateMatch (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ *  \brief Manage the hurry up message
+ */
+    
 void CMatch::ManageHurryUpMessage (void)
 {
-    //-------------------------------
-    // Manage the hurry up message
-    //-------------------------------
-    
     // If the match is not paused and the hurry up is enabled
     if (m_pPauseMessage == NULL && (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0))
     {
@@ -797,12 +808,12 @@ EGameMode CMatch::Update (void)
     // If match is currently playing and it's not over
     else if (!m_MatchOver)
     {   
-        PlaySong ();
-        ProcessPlayerCommands ();
-        ManagePauseMessage ();
-        UpdateMatch ();
-        ManageHurryUpMessage ();
-        ManageMatchOver ();
+        PlaySong ();                        //!< @see PlaySong()
+        ProcessPlayerCommands ();           //!< @see ProcessPlayerCommands()
+        ManagePauseMessage ();              //!< @see ManagePauseMessage()
+        UpdateMatch ();                     //!< @see UpdateMatch()
+        ManageHurryUpMessage ();            //!< @see ManageHurryUpMessage()
+        ManageMatchOver ();                 //!< @see ManageMatchOver()
     }
     // If the match is over and we have make a pause before the last black screen
     else if (m_ModeTime <= m_ExitModeTime)
