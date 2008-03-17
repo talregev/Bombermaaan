@@ -64,9 +64,15 @@ CHurryMessage::~CHurryMessage (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ *  \return true, if the scroller is out of the screen
+ *
+ *  @see SCroller::Update()
+ */
+
 bool CHurryMessage::Update (float DeltaTime)
 {
-    // Update the scroller (move)
+    //! Update the scroller (move)
     m_Scroller.Update (DeltaTime);
 
     // Return whether the hurry message is over,
