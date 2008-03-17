@@ -523,7 +523,9 @@ CModeScreen* CGame::GetGameModeObject (EGameMode GameMode)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// This method is called when the window is active
+/**
+ *  This method is called when the window is active.
+ */
 
 void CGame::OnWindowActive (void)
 {
@@ -533,42 +535,42 @@ void CGame::OnWindowActive (void)
     m_Timer.Update();
     m_Input.GetMainInput().Update();
     
-    // If the menu yes/no is not active
+    //! If the menu yes/no is not active
     if (!m_MenuYesNo.IsActive())
     {
-        // Update the object corresponding to the current game mode
+        //! - Update the object corresponding to the current game mode and let it tell the next game mode
         if (GetGameModeObject(m_GameMode) != NULL)
             NextGameMode = GetGameModeObject(m_GameMode)->Update ();
     }
 
-    // If the mode screen object corresponding to the current game mode
-    // is not asking for changing the game mode 
+    //! If the mode screen object corresponding to the current game mode
+    //! is not asking for changing the game mode 
     if (NextGameMode == m_GameMode)
     {
-        // Then let the menu yes/no ask for changing the game mode if needed.
-        // Manage the menu yes/no and get the appropriate game mode to set
+        //! - Then let the menu yes/no ask for changing the game mode if needed.
+        //! - Manage the menu yes/no and get the appropriate game mode to set
         NextGameMode = m_MenuYesNo.Update (m_GameMode);
     }
 
-    // Make the display black
+    //! Make the display black
     m_Display.Clear ();
     
-    // Display the object corresponding to the current game mode
+    //! Display the object corresponding to the current game mode
     if (GetGameModeObject(m_GameMode) != NULL)
         GetGameModeObject(m_GameMode)->Display ();
 
-    // Display the menu yes/no if needed    
+    //! Display the menu yes/no if needed    
     m_MenuYesNo.Display();
 
-    // Display everything
+    //! Display everything (CDisplay::Update())
     m_Display.Update ();
 
-    // If the next game mode is different from the current game mode
+    //! If the next game mode is different from the current game mode
     if (NextGameMode != m_GameMode)
     {
-        // Change the game mode
-        FinishGameMode ();
-        StartGameMode (NextGameMode);
+        //! - Change the game mode
+        FinishGameMode ();                      //!< @see FinishGameMode()
+        StartGameMode (NextGameMode);           //!< @see StartGameMode()
     }
 }
 
@@ -576,8 +578,9 @@ void CGame::OnWindowActive (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Set a new game mode. Creates the object 
-// corresponding to the new game mode.
+/**
+ *  Set a new game mode. Creates the object corresponding to the new game mode.
+ */
 
 void CGame::StartGameMode (EGameMode GameMode)
 {
@@ -609,16 +612,17 @@ void CGame::StartGameMode (EGameMode GameMode)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Set no game mode. Destroys the object 
-// corresponding to the current game mode.
+/**
+ *  Finish the current game mode
+ */
 
 void CGame::FinishGameMode (void)
 {
-    // Destroy the object corresponding to the new game mode
+    //! Destroy the object corresponding to the new game mode
     if (GetGameModeObject(m_GameMode) != NULL)
         GetGameModeObject(m_GameMode)->Destroy ();
 
-    // Set no game mode
+    //! Set no game mode
     m_GameMode = GAMEMODE_NONE;
 }
 
@@ -737,7 +741,7 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
         // Assume we have to change the display mode
         bool SetDisplayMode = true;
 
-        // Change display mode if this is a F1-F4 key
+        //! Change display mode if this is a F1-F4 key
         switch (wParam)
         {
             case VK_F1 : DisplayMode = DISPLAYMODE_FULL1; break;
@@ -760,7 +764,7 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
 
 	} else {
 
-        // Quickly exit the game with CTRL + F12
+        //! Quickly exit the game with CTRL + F12
         if (wParam == VK_F12)
         {
             FinishGameMode();
