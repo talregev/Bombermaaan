@@ -455,7 +455,7 @@ bool COptions::LoadLevels (void)
             m_LevelsName[CurrentLevel] = new char [strlen(FindData.name) + 1];
             strcpy(m_LevelsName[CurrentLevel], FindData.name);
 
-            theLog.WriteLine ("Options         => Loading level file %s...", LevelFileName);
+            // theLog.WriteLine ("Options         => Loading level file %s...", LevelFileName);
 
             // Open the existing level file for reading
             File = fopen(LevelFileName, "rt");
@@ -475,8 +475,6 @@ bool COptions::LoadLevels (void)
             if ( sscanf( s.c_str(), "; Bombermaaan level file version=%d\n", &LevelVersion ) == 0 ) {
                 LevelVersion = 1;
             }
-            // theLog.WriteLine( s.c_str() );
-            theLog.WriteLine( "Options         => Level version %d detected.", LevelVersion );
             
             switch ( LevelVersion ) {
 
@@ -505,12 +503,12 @@ bool COptions::LoadLevels (void)
             // If there wasn't any problem
             if (!ErrorOccurred)
             {
-                theLog.WriteLine ("Options         => Level file %s was successfully loaded.", LevelFileName);
+                theLog.WriteLine ("Options         => Level file %s was successfully loaded (version %d).", LevelFileName, LevelVersion);
             }
             // If there was a problem
             else
             {
-                theLog.WriteLine ("Options         => !!! Could not load level file %s.", LevelFileName);
+                theLog.WriteLine ("Options         => !!! Could not load level file %s (version %d).", LevelFileName, LevelVersion);
                 // Stop loading levels
                 break;
             }
