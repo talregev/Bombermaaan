@@ -134,7 +134,7 @@ int CBomb::m_BounceMoveY[NUMBER_OF_BOMBFLY_DIRECTIONS][3] =
 #define PUNCH_BASE_FRAME_TIME       0.030f // When bomb was punched
 
 // Moving of bombs by special blocks
-#define TIME_BEFORE_MOVING_BOMB     0.42f // This time must elapse before the bomb starts moving
+#define TIME_BEFORE_MOVING_BOMB     0.3f // This time must elapse before the bomb starts moving
 
 // Bombs can change direction (can be re-kicked) when passing special blocks
 #define BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED   true
