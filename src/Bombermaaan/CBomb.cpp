@@ -250,6 +250,9 @@ void CBomb::Explode (void)
     
     // The bomb is dead now
     m_Dead = true;
+
+    // The bomb isn't kicked any longer now
+    m_BombKick = BOMBKICK_NONE;
 }
 
 
@@ -326,8 +329,8 @@ void CBomb::StopMoving ()
 
 void CBomb::ManageMove (float DeltaTime)
 {
-    // If the bomb has to move
-    if (m_BombKick != BOMBKICK_NONE)
+    // If the bomb has to move and it isn't already dead
+    if (m_BombKick != BOMBKICK_NONE && !m_Dead)
     {
         // Compute the move length
         float fPixels = SPEED_BOMBMOVE * DeltaTime;
