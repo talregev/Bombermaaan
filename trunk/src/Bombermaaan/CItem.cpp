@@ -494,9 +494,14 @@ void CItem::Display (void)
                 // If the fumes animation is playing
                 if (m_Fumes)
                 {
+                    #ifdef USE_32_PIXELS_PER_BLOCK
+                        int fumesOffset = 16;
+                    #else
+                        int fumesOffset = 8;
+                    #endif
                     // Draw the upper left part of the fumes
-                    m_pDisplay->DrawSprite (m_iX - 8,
-                                            m_iY - 8,
+                    m_pDisplay->DrawSprite (m_iX - fumesOffset,
+                                            m_iY - fumesOffset,
                                             NULL,
                                             NULL,
                                             40,
@@ -505,8 +510,8 @@ void CItem::Display (void)
                                             m_iY - 4);
                 
                     // Draw the upper right part of the fumes
-                    m_pDisplay->DrawSprite (m_iX + 8,
-                                            m_iY - 8,
+                    m_pDisplay->DrawSprite (m_iX + fumesOffset,
+                                            m_iY - fumesOffset,
                                             NULL,
                                             NULL,
                                             40,
@@ -515,8 +520,8 @@ void CItem::Display (void)
                                             m_iY - 4);
 
                     // Draw the lower right part of the fumes
-                    m_pDisplay->DrawSprite (m_iX + 8,
-                                            m_iY + 8,
+                    m_pDisplay->DrawSprite (m_iX + fumesOffset,
+                                            m_iY + fumesOffset,
                                             NULL,
                                             NULL,
                                             40,
@@ -525,8 +530,8 @@ void CItem::Display (void)
                                             m_iY + 4);
 
                     // Draw the lower left part of the fumes
-                    m_pDisplay->DrawSprite (m_iX - 8,
-                                            m_iY + 8,
+                    m_pDisplay->DrawSprite (m_iX - fumesOffset,
+                                            m_iY + fumesOffset,
                                             NULL,
                                             NULL,
                                             40,
