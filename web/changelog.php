@@ -44,6 +44,7 @@ New feature: Enhanced level file format. You can specify the amount of items wai
 New feature: Animated coin for the winner of a match.
 New feature: Larger window/larger sprites available.
 New feature: Invisibility as contamination (tracker item #1864528).
+New feature: Bombs start moving on special blocks (#1908105).
 Bug fix: Music starts in pause when losing focus (tracker item #1856135).
 Bug fix: Victory sound doesn't end after Escape (#1851347).
 Bug fix: F12 ends program (#1848194).

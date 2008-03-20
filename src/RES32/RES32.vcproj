@@ -256,6 +256,10 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
 			<File
+				RelativePath=".\IMAGE\arena_arrows.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\Image\arena_bomber_death.bmp"
 				>
 			</File>

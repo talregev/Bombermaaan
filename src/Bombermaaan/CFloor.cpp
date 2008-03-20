@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -33,14 +33,24 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Floor sprite layer
+// Floor sprite layers
 #define FLOOR_SPRITELAYER       0
+#define ACTION_SPRITELAYER      1
 
 // Floor sprites
 #define FLOORSPRITE_NOSHADOW    0       // Floor with no shadow
 #define FLOORSPRITE_SHADOW      1       // Floor with shadow
 
 #define ARENA_FLOOR_SPRITETABLE             0
+
+// Arrow sprites
+#define ARENA_FLOOR_ARROW_RIGHT     0
+#define ARENA_FLOOR_ARROW_DOWN      1
+#define ARENA_FLOOR_ARROW_LEFT      2
+#define ARENA_FLOOR_ARROW_UP        3
+
+#define ARENA_FLOOR_ARROW_SPRITETABLE       63
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -63,7 +73,7 @@ CFloor::~CFloor (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CFloor::Create (int BlockX, int BlockY)
+void CFloor::Create (int BlockX, int BlockY, EFloorAction floorAction)
 {
     CElement::Create();
 
@@ -72,6 +82,7 @@ void CFloor::Create (int BlockX, int BlockY)
     m_BlockX = BlockX;
     m_BlockY = BlockY;
     m_Dead = false;
+    m_FloorAction = floorAction;
 }
 
 
@@ -141,6 +152,26 @@ void CFloor::Display (void)
                                 Sprite, 
                                 FLOOR_SPRITELAYER,
                                 PRIORITY_UNUSED);
+
+        Sprite = -1;
+
+        switch ( m_FloorAction ) {
+            case FLOORACTION_MOVEBOMB_RIGHT:    Sprite = ARENA_FLOOR_ARROW_RIGHT;   break;
+            case FLOORACTION_MOVEBOMB_DOWN:     Sprite = ARENA_FLOOR_ARROW_DOWN;    break;
+            case FLOORACTION_MOVEBOMB_LEFT:     Sprite = ARENA_FLOOR_ARROW_LEFT;    break;
+            case FLOORACTION_MOVEBOMB_UP:       Sprite = ARENA_FLOOR_ARROW_UP;      break;
+        }
+
+        if ( Sprite != -1 ) {
+                    m_pDisplay->DrawSprite (m_iX, 
+                                m_iY, 
+                                NULL,                            // Draw entire sprite
+                                NULL,                            // No need to clip
+                                ARENA_FLOOR_ARROW_SPRITETABLE,
+                                Sprite,
+                                ACTION_SPRITELAYER,
+                                PRIORITY_UNUSED);
+        }
     }
 }
 

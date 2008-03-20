@@ -1,6 +1,6 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -73,6 +73,7 @@ typedef int TBlockHas;
 #define BLOCKHAS_BOMBER        (1 << 17) //!< The block has at least one bomber
 #define BLOCKHAS_BOMBERALIVE   (1 << 18) //!< The block has at least one alive bomber
 #define BLOCKHAS_BOMBERDYING   (1 << 19) //!< The block has at least one dying bomber
+#define BLOCKHAS_FLOORWITHMOVEEFFECT    (1 << 20)   //!< The block makes a bomb move
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -157,12 +158,14 @@ public:
     inline int              MaxExplosions  (void);
     inline int              MaxBombers     (void);
     
-    void                    NewFloor        (int BlockX, int BlockY);
+    void                    NewFloor        (int BlockX, int BlockY, EBlockType BlockType);
     void                    NewWall         (int BlockX, int BlockY, EWallType Type);
     void                    NewBomb         (int BlockX, int BlockY, int FlameSize, float TimeLeft, int OwnerPlayer);
     void                    NewItem         (int BlockX, int BlockY, EItemType Type, bool Fumes, bool FlyingRandom);
     void                    NewExplosion    (int BlockX, int BlockY, int FlameSize);
     void                    NewBomber       (int BlockX, int BlockY, int Player);
+    
+    EFloorAction            GetFloorAction  ( int BlockX, int BlockY );
     
     inline int              ToBlock (int Position);
     inline int              ToPosition (int Block);
@@ -186,6 +189,7 @@ public:
     inline bool             IsAliveBomber   (int BlockX, int BlockY);
     inline bool             IsDyingBomber   (int BlockX, int BlockY);
     inline bool             IsFloor         (int BlockX, int BlockY);
+    inline bool             IsFloorWithMoveEffect( int BlockX, int BlockY );
 };
 
 //******************************************************************************************************************************
@@ -479,6 +483,13 @@ inline bool CArena::IsDyingBomber (int BlockX, int BlockY)
 inline bool CArena::IsFloor (int BlockX, int BlockY) 
 { 
     return GetBlockHas(BlockX, BlockY, BLOCKHAS_FLOOR); 
+}
+
+inline bool CArena::IsFloorWithMoveEffect (int BlockX, int BlockY)
+{ 
+    ASSERT( IsFloor( BlockX, BlockY ) );
+    
+    return GetBlockHas( BlockX, BlockY, BLOCKHAS_FLOORWITHMOVEEFFECT );
 }
 
 //******************************************************************************************************************************

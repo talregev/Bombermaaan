@@ -137,6 +137,12 @@ int CBomb::m_BounceMoveY[NUMBER_OF_BOMBFLY_DIRECTIONS][3] =
 #define BOUNCE_BASE_FRAME_TIME      0.030f // When bomb is bouncing on a bomber or on a wall
 #define PUNCH_BASE_FRAME_TIME       0.030f // When bomb was punched
 
+// Moving of bombs by special blocks
+#define TIME_BEFORE_MOVING_BOMB     0.3f // This time must elapse before the bomb starts moving
+
+// Bombs can change direction (can be re-kicked) when passing special blocks
+#define BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED   true
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -177,6 +183,7 @@ void CBomb::Create (int BlockX, int BlockY, int FlameSize, float TimeLeft, int O
     m_Sprite = ANIMBOMB_SPRITE2;
     m_BombKick = BOMBKICK_NONE;
     m_BombFly = BOMBFLY_NONE;
+    m_ElapsedTime = 0.0f;
     m_Timer = 0.0f;
     m_Dead = false;
     m_HasToStopMoving = false;
@@ -344,6 +351,29 @@ void CBomb::ManageMove (float DeltaTime)
         
         while (true)
         {
+            // Check if the bomb has to change its direction (initiated by a block) and whether it is centered
+            if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED &&
+                 (!(m_iX & (BLOCK_SIZE - 1)) && !(m_iY & (BLOCK_SIZE - 1))) && // Taken from below
+                 m_BombKick != BOMBKICK_NONE  // Bomb is still moving (could be reset by TryMove()
+               )
+            {
+                EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
+
+                EBombKick kickDirection = BOMBKICK_NONE;
+
+                switch( action ) {
+                    case FLOORACTION_MOVEBOMB_RIGHT:    kickDirection = BOMBKICK_RIGHT; break;
+                    case FLOORACTION_MOVEBOMB_DOWN:     kickDirection = BOMBKICK_DOWN;  break;
+                    case FLOORACTION_MOVEBOMB_LEFT:     kickDirection = BOMBKICK_LEFT;  break;
+                    case FLOORACTION_MOVEBOMB_UP:       kickDirection = BOMBKICK_UP;    break;
+                }
+
+                ASSERT( kickDirection != BOMBKICK_NONE );
+
+                // Set the new direction
+                m_BombKick = kickDirection;
+            }
+
             if (fPixels >= 1.0f)
             {
                 // If the bomb can't move by one pixel 
@@ -559,6 +589,9 @@ bool CBomb::TryMove (float fPixels)
 
 bool CBomb::Update (float DeltaTime)
 {
+    // Update the elapsed time
+    m_ElapsedTime += DeltaTime;
+    
     // If the bomb is not dead
     if (!m_Dead)
     {    
@@ -579,6 +612,28 @@ bool CBomb::Update (float DeltaTime)
             }
         }
         
+        // Kick this bomb by special blocks
+        // Don't start the move if bomb exploded in the meanwhile (m_Dead)
+        // Also don't start the move if the bomb is already in action (lifted, held, punched or flying)
+        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB &&
+             !m_BeingLifted && !m_BeingHeld && !m_BeingPunched && m_BombFly == BOMBFLY_NONE
+           ) {
+            EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
+            
+            EBombKick kickDirection = BOMBKICK_NONE;
+            
+            switch( action ) {
+                case FLOORACTION_MOVEBOMB_RIGHT:    kickDirection = BOMBKICK_RIGHT; break;
+                case FLOORACTION_MOVEBOMB_DOWN:     kickDirection = BOMBKICK_DOWN;  break;
+                case FLOORACTION_MOVEBOMB_LEFT:     kickDirection = BOMBKICK_LEFT;  break;
+                case FLOORACTION_MOVEBOMB_UP:       kickDirection = BOMBKICK_UP;    break;
+            }
+            
+            ASSERT( kickDirection != BOMBKICK_NONE );
+            
+            StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
+        }
+
         // Make the bomb move or fly if needed
         ManageMove(DeltaTime);
         ManageFlight(DeltaTime);

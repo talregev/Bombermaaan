@@ -100,6 +100,7 @@ private:
     bool                m_Checked;                  //!< Was the dead bomb noticed by the owner bomber?
     bool                m_Dead;                     //!< Is the bomb dead?
     int                 m_FlameSize;                //!< Size of the flames (in blocks) when exploding
+    float               m_ElapsedTime;              //!< Total elapsed time since bomb was created
     float               m_TimeLeft;                 //!< Time left (in seconds) before the bomb explodes
     float               m_AnimationTimes[4];        //!< Animation times of the bomb, depending on the time left before the bomb explodes that is specified on bomb's creation
     bool                m_BeingHeld;                //!< Is a bomber holding the bomb?

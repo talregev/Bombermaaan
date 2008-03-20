@@ -575,6 +575,10 @@ bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
                 case '3' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_REDBOMBER;   break;
                 case '4' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLUEBOMBER;  break;
                 case '5' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_GREENBOMBER; break;
+                case 'R' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_RIGHT; break;
+                case 'D' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_DOWN;  break;
+                case 'L' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_LEFT;  break;
+                case 'U' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_UP;    break;
                 default  : 
                 {
                     // Log there is a problem
@@ -738,6 +742,10 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
                 case '3' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_REDBOMBER;   break;
                 case '4' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLUEBOMBER;  break;
                 case '5' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_GREENBOMBER; break;
+                case 'R' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_RIGHT; break;
+                case 'D' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_DOWN;  break;
+                case 'L' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_LEFT;  break;
+                case 'U' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_UP;    break;
                 default  : 
                 {
                     // Log there is a problem

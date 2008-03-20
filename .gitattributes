@@ -161,6 +161,8 @@ src/Bombermaaan/RESOURCE.H -text
 src/Bombermaaan/STDAFX.CPP -text
 src/Bombermaaan/STDAFX.H -text
 src/Bombermaaan/WinMain.cpp -text
+src/RES/IMAGE/arena_arrows.bmp -text
+src/RES/IMAGE/arena_arrows.xcf -text
 src/RES/RES.CPP -text
 src/RES/RES.dsp -text
 src/RES/RES.vcproj -text
@@ -168,6 +170,8 @@ src/RES/StdAfx.cpp -text
 src/RES/StdAfx.h -text
 src/RES/resource.h -text
 src/RES/resource.rc -text
+src/RES32/IMAGE/arena_arrows.bmp -text
+src/RES32/IMAGE/arena_arrows.xcf -text
 src/RES32/IMAGE/arena_fire.bmp -text
 src/RES32/IMAGE/arena_floor.bmp -text
 src/RES32/IMAGE/arena_fly.bmp -text
@@ -200,6 +204,8 @@ src/_Test_/Release/Levels/L3.TXT -text
 src/_Test_/Release/Levels/L4.TXT -text
 src/_Test_/Release/Levels/L5.TXT -text
 src/_Test_/Release/Levels/L6.TXT -text
+src/_Test_/Release/Levels/L7.TXT -text
+src/_Test_/Release/Levels/L8.TXT -text
 web/changelog.php -text
 web/contact.php -text
 web/css.php -text
