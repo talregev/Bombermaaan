@@ -58,7 +58,7 @@ Zip package
 </p>
 
 <ul>
-<li>Create a new folder <code>Bombermaaan_<i>VERSION</i>.zip</code></li>
+<li>Create a new folder <span title="For example, Bombermaaan_rev378"><code>Bombermaaan_<i>VERSION</i></code></span>.</li>
 <li>Place the files <code>Bombermaaan.exe</code>, <code>Bombermaaan.dll</code> and <code>FMOD.dll</code> in this directory</li>
 <li>Add the readme file <code>Readme.html</code></li>
 <li>Add the license file <code>COPYING.txt</code></li>
