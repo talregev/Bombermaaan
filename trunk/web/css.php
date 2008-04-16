@@ -140,6 +140,6 @@ div#featurelist div.group div.more {
 
 div.feedback_block {
     margin-top: 2em;
-    border-top: 1px dashed grey;
+    border-top: 1px dashed gray;
     max-width: 600px;
 }
