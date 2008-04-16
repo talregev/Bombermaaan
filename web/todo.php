@@ -67,9 +67,9 @@ This list shows the ideas we had and don't want to forget.
 <td>Team mode</td>
 <td>0 %</td>
 <td>Noticed</td>
-<td>Players can be assigned to teams. The match is finished if there is only one team alive. In addition, there could be an option if item effects are shared in a team.</td>
+<td>Players can be assigned to teams. The match is finished if there is only one team alive. In addition, there could be an option if item effects are shared in a team.<br />The disease could be shared, too. (by Hugues, see tracker item <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1941534&amp;group_id=81520&amp;atid=563213">1941534</a>)</td>
 <td>2007-12-11</td>
-<td>2007-12-11</td>
+<td>2008-04-16</td>
 </tr>
 
 <tr>
@@ -98,6 +98,15 @@ This list shows the ideas we had and don't want to forget.
 half a second later it re-appears on another block.</td>
 <td>2007-12-28</td>
 <td>2007-12-28</td>
+</tr>
+
+<tr>
+<td>Share maps</td>
+<td>0 %</td>
+<td>Noticed</td>
+<td>A common place where maps can be shared. (by Hugues, see tracker item <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1941534&amp;group_id=81520&amp;atid=563213">1941534</a>)</td>
+<td>2008-04-16</td>
+<td>2008-04-16</td>
 </tr>
 
 </table>
