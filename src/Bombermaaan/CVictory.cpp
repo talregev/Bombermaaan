@@ -1,6 +1,7 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -43,13 +44,21 @@
                                                 
 // Background
 #define VICTORYWALL_TILE_SPRITE         0       //!< Wall tile sprite number
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define VICTORYWALL_TILES_COUNT         16      //!< How many wall tiles to draw?
+#else
 #define VICTORYWALL_TILES_COUNT         8       //!< How many wall tiles to draw?
+#endif
 #define VICTORYWALL_TILES_INITIAL_X     -9      //!< Position where to draw the first wall tile
 #define VICTORYWALL_TILES_INITIAL_Y     100
 #define VICTORYWALL_TILE_SPACE_X        32      //!< Space (in pixels) between two wall tile X positions
 
 // Crowd
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define CROWD_TILES_COUNT_X         46                          //!< How many crowd tiles to draw in a row
+#else
 #define CROWD_TILES_COUNT_X         23                          //!< How many crowd tiles to draw in a row
+#endif
 #define CROWD_TILES_COUNT_Y         8                           //!< How many crowd tiles to draw in a column
 #define CROWD_STATES_COUNT          2                           //!< How many states can the crowd have
 #define CROWD_OFFSET_GETUP          -1                          //!< Y position offset to use for bombers that get up
@@ -122,7 +131,11 @@
 
 // VICTORY! Title
 #define VICTORY_TITLE_SPRITE            0       //!< Sprite number of the title
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define VICTORY_TITLE_POSITION_X        150      //!< Position where to draw the title sprite
+#else
 #define VICTORY_TITLE_POSITION_X        25      //!< Position where to draw the title sprite
+#endif
 #define VICTORY_TITLE_POSITION_Y        11
 
 // Sprite layer & priority                  
