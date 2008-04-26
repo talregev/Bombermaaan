@@ -678,8 +678,8 @@ void CVictory::Display (void)
             ASSERT (ConfettiSpriteTable != -1);
             
             // Draw the confetti sprite
-            m_pDisplay->DrawSprite (m_Confettis[Confetti].PositionX,
-                                    m_Confettis[Confetti].PositionY,
+            m_pDisplay->DrawSprite ((int) m_Confettis[Confetti].PositionX,
+                                    (int) m_Confettis[Confetti].PositionY,
                                     NULL,                            // Draw entire sprite
                                     &Clip,                           // Clip to game view
                                     ConfettiSpriteTable,
