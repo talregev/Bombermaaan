@@ -73,8 +73,12 @@
 #define MENU_ITEM_SPRITE_TABLE                  45
 #define MENU_ITEM_SPRITE_LAYER                  0
 #define MENU_ITEM_SPRITE_PRIORITY_IN_LAYER      2
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define SPACE_X_FROM_MENU_ITEM_TO_CURSOR_HAND   -40
+#else
 #define SPACE_X_FROM_MENU_ITEM_TO_CURSOR_HAND   -20
-#define CURSOR_HAND_SPRITE_TABLE                32
+#endif
+#define CURSOR_HAND_SPRITE_TABLE                64
 #define CURSOR_HAND_SPRITE                      0
 #define CURSOR_HAND_SPRITE_LAYER                0
 #define CURSOR_HAND_SPRITE_PRIORITY_IN_LAYER    2
