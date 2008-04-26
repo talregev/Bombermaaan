@@ -206,6 +206,7 @@ src/_Test_/Release/Levels/L5.TXT -text
 src/_Test_/Release/Levels/L6.TXT -text
 src/_Test_/Release/Levels/L7.TXT -text
 src/_Test_/Release/Levels/L8.TXT -text
+web/CHANGELOG.txt -text
 web/changelog.php -text
 web/contact.php -text
 web/css.php -text
