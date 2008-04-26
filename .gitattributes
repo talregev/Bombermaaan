@@ -161,6 +161,7 @@ src/Bombermaaan/RESOURCE.H -text
 src/Bombermaaan/STDAFX.CPP -text
 src/Bombermaaan/STDAFX.H -text
 src/Bombermaaan/WinMain.cpp -text
+src/CHANGELOG.txt -text
 src/RES/IMAGE/arena_arrows.bmp -text
 src/RES/IMAGE/arena_arrows.xcf -text
 src/RES/RES.CPP -text
@@ -206,7 +207,6 @@ src/_Test_/Release/Levels/L5.TXT -text
 src/_Test_/Release/Levels/L6.TXT -text
 src/_Test_/Release/Levels/L7.TXT -text
 src/_Test_/Release/Levels/L8.TXT -text
-web/CHANGELOG.txt -text
 web/changelog.php -text
 web/contact.php -text
 web/css.php -text
