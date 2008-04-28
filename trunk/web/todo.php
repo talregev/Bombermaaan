@@ -91,11 +91,14 @@ This list shows the ideas we had and don't want to forget.
 </tr>
 
 <tr>
-<td>Wormhole</td>
+<td>Wormhole / Teleport square</td>
 <td>0 %</td>
 <td>Noticed</td>
-<td>There could be blocks when a bomber gets on it, the bomber vanishes from there and about 
-half a second later it re-appears on another block.</td>
+<td>Wormhole: There could be blocks when a bomber gets on it, the bomber vanishes from there and about 
+half a second later it re-appears on another block.<br />
+Teleport square: When bomb / users on this special square it teleports/transport the bomb/users to 
+another square (random or otherwise).
+(by Di, see tracker item <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1949707&amp;group_id=81520&amp;atid=563213">1949707</a>)</td>
 <td>2007-12-28</td>
 <td>2007-12-28</td>
 </tr>
