@@ -480,6 +480,14 @@ void CVictory::Display (void)
         // Sprite number determining the color of the bomber in the crow tile.
         int Color = 0;
 
+                //TODO: Better code! >>>>>>>> BEGIN
+                static int lastX = 0;
+                static int counter=0;
+                counter++;
+                if(counter>60){                 lastX++; counter=0;}
+                if (lastX>CROWD_TILES_COUNT_X) lastX=0;
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<< END
+
         // For each crowd tiles row to draw
         for (TileX = 0 ; TileX < CROWD_TILES_COUNT_X ; TileX++)
         {
@@ -509,6 +517,19 @@ void CVictory::Display (void)
                     // Set the Y offset (inversed meaning of the flag value)
                     OffsetY = (m_CrowdFlag ? CROWD_OFFSET_SITDOWN : CROWD_OFFSET_GETUP);
                 }
+                //TODO: Better code! >>>>>>>> BEGIN
+                if (lastX==TileX) {
+                    OffsetY = CROWD_OFFSET_GETUP;
+                } else {
+                    OffsetY = CROWD_OFFSET_SITDOWN;
+                }
+                if (TileX==lastX-1) {
+                    OffsetY = 0;
+                }
+                if (TileX==lastX+1) {
+                    OffsetY = 0;
+                }
+                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< END
 
                 // Draw the crowd tile
                 m_pDisplay->DrawSprite (CROWD_INITIAL_TILE_X + TileX * CROWD_TILES_SPACE_X, 
