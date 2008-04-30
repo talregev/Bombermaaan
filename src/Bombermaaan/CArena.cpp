@@ -952,6 +952,9 @@ EFloorAction CArena::GetFloorAction( int BlockX, int BlockY )
     }
     
     ASSERT( false );
+
+    // Never reached, but prevents compiler message "warning C4715: 'CArena::GetFloorAction' : not all control paths return a value"
+    return FLOORACTION_NONE;
 }
 
 //******************************************************************************************************************************
