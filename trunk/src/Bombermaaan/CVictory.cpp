@@ -193,6 +193,9 @@ void CVictory::Create (void)
     m_MexicanWaveTimer = 0.0f;
     m_MexicanWavePosition = -1;
 
+    // Choose a random wave for the crowd
+    m_CrowdWaveMode = ECrowdWave( RANDOM( NUMBER_CROWDWAVES ) );
+
     // Don't have to exit this mode yet
     m_HaveToExit = false;
     m_ExitModeTime = 0.0f;
@@ -326,40 +329,48 @@ EGameMode CVictory::Update (void)
         }
         
         //---------------------------
-        // Animate the crowd
+        // Animate the crowd (classic style)
         //---------------------------
 
-        // Set the crowd state
-             if (m_CrowdTimer < CROWD_ANIMATION_TIME_0)   m_CrowdFlag = true;
-        else if (m_CrowdTimer < CROWD_ANIMATION_TIME_1)   m_CrowdFlag = false;
-        else
-        {
-            // Make a loop
-            m_CrowdTimer = 0.0f;
-            m_CrowdFlag = true;
-        }
+        if ( m_CrowdWaveMode == CROWDWAVE_CLASSIC ) {
 
-        // Play animation
-        m_CrowdTimer += m_pTimer->GetDeltaTime();
+            // Set the crowd state
+                 if (m_CrowdTimer < CROWD_ANIMATION_TIME_0)   m_CrowdFlag = true;
+            else if (m_CrowdTimer < CROWD_ANIMATION_TIME_1)   m_CrowdFlag = false;
+            else
+            {
+                // Make a loop
+                m_CrowdTimer = 0.0f;
+                m_CrowdFlag = true;
+            }
+
+            // Play animation
+            m_CrowdTimer += m_pTimer->GetDeltaTime();
+
+        }
 
         //---------------------------
         // Animate the crowd (Mexican wave)
         //---------------------------
 
-        if ( m_MexicanWaveTimer > 0.07f ) {
-            // The next row should be the center of the wave
-            m_MexicanWavePosition ++;
-            // The end reached?
-            if ( m_MexicanWavePosition > CROWD_TILES_COUNT_X ) {
-                // Start the wave again from the left
-                // The lower set (negative values allowed) the later starts the wave again
-                m_MexicanWavePosition = -5;
-            }
-            m_MexicanWaveTimer = 0.0f;
-        }
+        else if ( m_CrowdWaveMode == CROWDWAVE_MEXICAN ) {
 
-        // Play animation
-        m_MexicanWaveTimer += m_pTimer->GetDeltaTime();
+            if ( m_MexicanWaveTimer > 0.07f ) {
+                // The next row should be the center of the wave
+                m_MexicanWavePosition ++;
+                // The end reached?
+                if ( m_MexicanWavePosition > CROWD_TILES_COUNT_X ) {
+                    // Start the wave again from the left
+                    // The lower set (negative values allowed) the later starts the wave again
+                    m_MexicanWavePosition = -5;
+                }
+                m_MexicanWaveTimer = 0.0f;
+            }
+
+            // Play animation
+            m_MexicanWaveTimer += m_pTimer->GetDeltaTime();
+
+        }
 
         //-----------------------------------
         // Animate the victorious bomber
@@ -511,37 +522,49 @@ void CVictory::Display (void)
                 // get a bomber that gets up or sits down.
                 int OffsetY;
             
-                // The trick to determine the state is to make the modulo
-                // of the sum of column number + row number. We then get
-                // something like this :
-                // 0101010
-                // 1010101
-                // 0101010
-            
-                // If this bomber is in the first crowd state
-                if (((TileX + TileY) % CROWD_STATES_COUNT) == 0)
-                {
-                    // Set the Y offset
-                    OffsetY = (m_CrowdFlag ? CROWD_OFFSET_GETUP : CROWD_OFFSET_SITDOWN);
-                }
-                // If this bomber is in the second crowd state
-                else
-                {
-                    // Set the Y offset (inversed meaning of the flag value)
-                    OffsetY = (m_CrowdFlag ? CROWD_OFFSET_SITDOWN : CROWD_OFFSET_GETUP);
-                }
-                //TODO: Better code! >>>>>>>> BEGIN
-                if (m_MexicanWavePosition==TileX) {
-                    OffsetY = CROWD_OFFSET_GETUP;
+                if ( m_CrowdWaveMode == CROWDWAVE_CLASSIC ) {
+
+                    // The trick to determine the state is to make the modulo
+                    // of the sum of column number + row number. We then get
+                    // something like this :
+                    // 0101010
+                    // 1010101
+                    // 0101010
+                
+                    // If this bomber is in the first crowd state
+                    if (((TileX + TileY) % CROWD_STATES_COUNT) == 0)
+                    {
+                        // Set the Y offset
+                        OffsetY = (m_CrowdFlag ? CROWD_OFFSET_GETUP : CROWD_OFFSET_SITDOWN);
+                    }
+                    // If this bomber is in the second crowd state
+                    else
+                    {
+                        // Set the Y offset (inversed meaning of the flag value)
+                        OffsetY = (m_CrowdFlag ? CROWD_OFFSET_SITDOWN : CROWD_OFFSET_GETUP);
+                    }
+
+                } else if ( m_CrowdWaveMode == CROWDWAVE_MEXICAN ) {
+
+                    //TODO: Better code! >>>>>>>> BEGIN
+                    if (m_MexicanWavePosition==TileX) {
+                        OffsetY = CROWD_OFFSET_GETUP;
+                    } else {
+                        OffsetY = CROWD_OFFSET_SITDOWN;
+                    }
+                    if (TileX==m_MexicanWavePosition-1) {
+                        OffsetY = 0;
+                    }
+                    if (TileX==m_MexicanWavePosition+1) {
+                        OffsetY = 0;
+                    }
+
                 } else {
-                    OffsetY = CROWD_OFFSET_SITDOWN;
-                }
-                if (TileX==m_MexicanWavePosition-1) {
+
                     OffsetY = 0;
+
                 }
-                if (TileX==m_MexicanWavePosition+1) {
-                    OffsetY = 0;
-                }
+
                 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< END
 
                 // Draw the crowd tile

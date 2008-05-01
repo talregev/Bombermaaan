@@ -69,6 +69,15 @@ struct SConfetti
     int Sprite;             //!< Sprite offset number (to add to confetti color offset number)
 };
 
+//! Describes the different modes of the crowd's wave
+enum ECrowdWave
+{
+    CROWDWAVE_NONE,         //!< A lazy crowd
+    CROWDWAVE_CLASSIC,      //!< The wave as it was up to version 1.02
+    CROWDWAVE_MEXICAN,      //!< The mexican wave
+    NUMBER_CROWDWAVES       //!< The number of different crowd waves
+};
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -93,6 +102,7 @@ private:
     int             m_LoserBomberSprite;            //!< This is the sprite offset to use to get the current loser sprite. This sprite offset must be added to the sprite offset determining the color of the bomber.
     float           m_MexicanWaveTimer;
     int             m_MexicanWavePosition;
+    ECrowdWave      m_CrowdWaveMode;
 
     void            ResetConfetti (SConfetti* pConfetti); //!< Make a new confetti, make it start at the top of the game view (out of the game view)
 
