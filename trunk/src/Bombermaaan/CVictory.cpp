@@ -74,6 +74,7 @@
 #define CROWD_ANIMATION_TIME_0      0.300f                      //!< Crowd animation times
 #define CROWD_ANIMATION_TIME_1      CROWD_ANIMATION_TIME_0 * 2
 #define CROWD_COLORS_COUNT          9                           //!< How many bomber colors can we have
+#define MEXICAN_WAVE_ANIMATION_TIME 0.07f
        
 // Bombers
 #define WINNER_BOMBER_ANIMATION_TIME_0      2.000f      //!< Victorious bomber animation times
@@ -356,7 +357,7 @@ EGameMode CVictory::Update (void)
 
         else if ( m_CrowdWaveMode == CROWDWAVE_MEXICAN ) {
 
-            if ( m_MexicanWaveTimer > 0.07f ) {
+            if ( m_MexicanWaveTimer > MEXICAN_WAVE_ANIMATION_TIME ) {
                 // The next row should be the center of the wave
                 m_MexicanWavePosition ++;
                 // The end reached?
