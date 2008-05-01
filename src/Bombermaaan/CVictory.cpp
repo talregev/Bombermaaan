@@ -190,6 +190,8 @@ void CVictory::Create (void)
     m_CrowdTimer = 0.0f;
     m_WinnerBomberTimer = 0.0f;
     m_LoserBomberTimer = 0.0f;
+    m_MexicanWaveTimer = 0.0f;
+    m_MexicanWavePosition = -1;
 
     // Don't have to exit this mode yet
     m_HaveToExit = false;
@@ -340,6 +342,25 @@ EGameMode CVictory::Update (void)
         // Play animation
         m_CrowdTimer += m_pTimer->GetDeltaTime();
 
+        //---------------------------
+        // Animate the crowd (Mexican wave)
+        //---------------------------
+
+        if ( m_MexicanWaveTimer > 0.07f ) {
+            // The next row should be the center of the wave
+            m_MexicanWavePosition ++;
+            // The end reached?
+            if ( m_MexicanWavePosition > CROWD_TILES_COUNT_X ) {
+                // Start the wave again from the left
+                // The lower set (negative values allowed) the later starts the wave again
+                m_MexicanWavePosition = -5;
+            }
+            m_MexicanWaveTimer = 0.0f;
+        }
+
+        // Play animation
+        m_MexicanWaveTimer += m_pTimer->GetDeltaTime();
+
         //-----------------------------------
         // Animate the victorious bomber
         //-----------------------------------
@@ -480,14 +501,6 @@ void CVictory::Display (void)
         // Sprite number determining the color of the bomber in the crow tile.
         int Color = 0;
 
-                //TODO: Better code! >>>>>>>> BEGIN
-                static int lastX = 0;
-                static int counter=0;
-                counter++;
-                if(counter>60){                 lastX++; counter=0;}
-                if (lastX>CROWD_TILES_COUNT_X) lastX=0;
-                //<<<<<<<<<<<<<<<<<<<<<<<<<<<< END
-
         // For each crowd tiles row to draw
         for (TileX = 0 ; TileX < CROWD_TILES_COUNT_X ; TileX++)
         {
@@ -518,15 +531,15 @@ void CVictory::Display (void)
                     OffsetY = (m_CrowdFlag ? CROWD_OFFSET_SITDOWN : CROWD_OFFSET_GETUP);
                 }
                 //TODO: Better code! >>>>>>>> BEGIN
-                if (lastX==TileX) {
+                if (m_MexicanWavePosition==TileX) {
                     OffsetY = CROWD_OFFSET_GETUP;
                 } else {
                     OffsetY = CROWD_OFFSET_SITDOWN;
                 }
-                if (TileX==lastX-1) {
+                if (TileX==m_MexicanWavePosition-1) {
                     OffsetY = 0;
                 }
-                if (TileX==lastX+1) {
+                if (TileX==m_MexicanWavePosition+1) {
                     OffsetY = 0;
                 }
                 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< END

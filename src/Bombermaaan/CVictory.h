@@ -1,6 +1,7 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -90,6 +91,8 @@ private:
     bool            m_CrowdFlag;                    //!< This flag allows to make the crowd switch between two states. Some bombers in the crowd get up and other bombers sit down.
     int             m_WinnerBomberSprite;           //!< This is the sprite offset to use to get the current victorious bomber sprite. This sprite offset must be added to the sprite offset determining the color of the bomber.
     int             m_LoserBomberSprite;            //!< This is the sprite offset to use to get the current loser sprite. This sprite offset must be added to the sprite offset determining the color of the bomber.
+    float           m_MexicanWaveTimer;
+    int             m_MexicanWavePosition;
 
     void            ResetConfetti (SConfetti* pConfetti); //!< Make a new confetti, make it start at the top of the game view (out of the game view)
 
