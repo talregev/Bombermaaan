@@ -6,6 +6,7 @@ New feature: Animated coin for the winner of a match.
 New feature: Larger window/larger sprites available.
 New feature: Invisibility as contamination (tracker item #1864528).
 New feature: Bombs start moving on special blocks (#1908105).
+New feature: Mexican wave of the crowd in the victory screen (but the crowd may also be lazy...)
 Bug fix: Music started in pause when losing focus (tracker item #1856135).
 Bug fix: Victory sound didn't end after Escape (#1851347).
 Bug fix: F12 ended program (#1848194).

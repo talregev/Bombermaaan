@@ -100,9 +100,9 @@ private:
     bool            m_CrowdFlag;                    //!< This flag allows to make the crowd switch between two states. Some bombers in the crowd get up and other bombers sit down.
     int             m_WinnerBomberSprite;           //!< This is the sprite offset to use to get the current victorious bomber sprite. This sprite offset must be added to the sprite offset determining the color of the bomber.
     int             m_LoserBomberSprite;            //!< This is the sprite offset to use to get the current loser sprite. This sprite offset must be added to the sprite offset determining the color of the bomber.
-    float           m_MexicanWaveTimer;
-    int             m_MexicanWavePosition;
-    ECrowdWave      m_CrowdWaveMode;
+    float           m_MexicanWaveTimer;             //!< Timer of the crowd's Mexican wave animation
+    int             m_MexicanWavePosition;          //!< The current position of the Mexican wave (which row is standing up)
+    ECrowdWave      m_CrowdWaveMode;                //!< Which wave the crowd is doing
 
     void            ResetConfetti (SConfetti* pConfetti); //!< Make a new confetti, make it start at the top of the game view (out of the game view)
 
