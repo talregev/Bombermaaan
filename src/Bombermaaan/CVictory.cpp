@@ -554,14 +554,10 @@ void CVictory::Display (void)
 
                     if ( m_MexicanWavePosition == TileX ) {
                         OffsetY = CROWD_OFFSET_GETUP;
+                    } else if ( TileX == m_MexicanWavePosition - 1 || TileX == m_MexicanWavePosition + 1 ) {
+                        OffsetY = CROWD_OFFSET_MOVING;
                     } else {
                         OffsetY = CROWD_OFFSET_SITDOWN;
-                    }
-                    if ( TileX == m_MexicanWavePosition - 1 ) {
-                        OffsetY = CROWD_OFFSET_MOVING;
-                    }
-                    if ( TileX == m_MexicanWavePosition + 1 ) {
-                        OffsetY = CROWD_OFFSET_MOVING;
                     }
 
                 } else if ( m_CrowdWaveMode == CROWDWAVE_NONE ) {
