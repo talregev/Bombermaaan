@@ -64,6 +64,7 @@
 #define CROWD_STATES_COUNT          2                           //!< How many states can the crowd have
 #define CROWD_OFFSET_GETUP          -1                          //!< Y position offset to use for bombers that get up
 #define CROWD_OFFSET_SITDOWN        1                           //!< Y position offset to use for bombers that sit down
+#define CROWD_OFFSET_MOVING         0                           //!< Y position offset to use for bombers that change position (getting up or sitting down)
 #define CROWD_INITIAL_TILE_X        -4                          //!< Position of the first crowd tile (up left corner)
 #define CROWD_INITIAL_TILE_Y        0                           
 #define CROWD_TILE_SIZE_X           14                          //!< Size (in pixels) of one crowd tile
@@ -546,26 +547,34 @@ void CVictory::Display (void)
 
                 } else if ( m_CrowdWaveMode == CROWDWAVE_MEXICAN ) {
 
-                    //TODO: Better code! >>>>>>>> BEGIN
-                    if (m_MexicanWavePosition==TileX) {
+                    // The Mexican wave:
+                    // The bombers of the current position are standing (CROWD_OFFSET_GETUP), while the next
+                    // and previous bombers are changing their position (CROWD_OFFSET_MOVING).
+                    // The other bombers are sitting (CROWD_OFFSET_SITDOWN)
+
+                    if ( m_MexicanWavePosition == TileX ) {
                         OffsetY = CROWD_OFFSET_GETUP;
                     } else {
                         OffsetY = CROWD_OFFSET_SITDOWN;
                     }
-                    if (TileX==m_MexicanWavePosition-1) {
-                        OffsetY = 0;
+                    if ( TileX == m_MexicanWavePosition - 1 ) {
+                        OffsetY = CROWD_OFFSET_MOVING;
                     }
-                    if (TileX==m_MexicanWavePosition+1) {
-                        OffsetY = 0;
+                    if ( TileX == m_MexicanWavePosition + 1 ) {
+                        OffsetY = CROWD_OFFSET_MOVING;
                     }
+
+                } else if ( m_CrowdWaveMode == CROWDWAVE_NONE ) {
+
+                    // The crowd doesn't move at all
+                    OffsetY = CROWD_OFFSET_SITDOWN;
 
                 } else {
 
-                    OffsetY = 0;
+                    // Should never happen
+                    ASSERT( false );
 
                 }
-
-                //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< END
 
                 // Draw the crowd tile
                 m_pDisplay->DrawSprite (CROWD_INITIAL_TILE_X + TileX * CROWD_TILES_SPACE_X, 
