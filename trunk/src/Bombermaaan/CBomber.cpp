@@ -1,6 +1,7 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -1063,7 +1064,12 @@ void CBomber::Animate (float DeltaTime)
         if (m_SickTimer < ANIMSICK_TIME1)
         {
             // Sick color
-            m_Sprite += MAX_PLAYERS * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+            if ( m_BomberState == BOMBERSTATE_WALK && m_Sickness == SICK_INVISIBILITY ) {
+                // The bomber-walk sprites have an additional series if the bomber is invisible (only the bomber's border can be seen)
+                m_Sprite += ( 1 + MAX_PLAYERS ) * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+            } else {
+                m_Sprite += MAX_PLAYERS * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+            }
         }
         else if (m_SickTimer < ANIMSICK_TIME2)
         {
@@ -1080,7 +1086,12 @@ void CBomber::Animate (float DeltaTime)
             // Reset timer
             m_SickTimer = 0.0f;
             // Sick color
-            m_Sprite += MAX_PLAYERS * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+            if ( m_BomberState == BOMBERSTATE_WALK && m_Sickness == SICK_INVISIBILITY ) {
+                // The bomber-walk sprites have an additional series if the bomber is invisible (only the bomber's border can be seen)
+                m_Sprite += ( 1 + MAX_PLAYERS ) * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+            } else {
+                m_Sprite += MAX_PLAYERS * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+            }
         }
 
         // Play sick animation

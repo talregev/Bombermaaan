@@ -1,6 +1,7 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -92,7 +93,7 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (28,     1,      32,     32,     true,     BMP_ARENA_FLAME               ) ||
             !LoadSprites (14,     1,      32,     32,     false,    BMP_ARENA_ITEM                ) ||
             !LoadSprites (3,      1,      32,     32,     true,     BMP_ARENA_BOMB                ) ||
-            !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_WALK         ) ||
+            !LoadSprites (12,     7,      42,     44,     true,     BMP_ARENA_BOMBER_WALK         ) ||
             !LoadSprites (7,      1,      52,     54,     true,     BMP_ARENA_FIRE                ) ||
             !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_WALK_HOLD    ) ||
             !LoadSprites (4,      1,      32,     32,     true,     BMP_ARENA_FLY                 ) ||
@@ -103,7 +104,7 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (28,     1,      16,     16,     true,     BMP_ARENA_FLAME               ) ||
             !LoadSprites (14,     1,      16,     16,     false,    BMP_ARENA_ITEM                ) ||
             !LoadSprites (3,      1,      16,     16,     true,     BMP_ARENA_BOMB                ) ||
-            !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_WALK         ) ||
+            !LoadSprites (12,     7,      21,     22,     true,     BMP_ARENA_BOMBER_WALK         ) ||
             !LoadSprites (7,      1,      26,     27,     true,     BMP_ARENA_FIRE                ) ||
             !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_WALK_HOLD    ) ||
             !LoadSprites (4,      1,      16,     16,     true,     BMP_ARENA_FLY                 ) ||
