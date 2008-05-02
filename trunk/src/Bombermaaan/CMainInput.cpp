@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -65,8 +66,10 @@ void CMainInput::Create (void)
     m_MenuControls[MENU_DOWN].Key     = KEYBOARD_DOWN;
     m_MenuControls[MENU_LEFT].Key     = KEYBOARD_LEFT;
     m_MenuControls[MENU_RIGHT].Key    = KEYBOARD_RIGHT;
-    m_MenuControls[MENU_NEXT].Key     = KEYBOARD_RETURN;
     m_MenuControls[MENU_PREVIOUS].Key = KEYBOARD_BACK;
+    m_MenuControls[MENU_NEXT1].Key    = KEYBOARD_RETURN;
+    m_MenuControls[MENU_NEXT2].Key    = KEYBOARD_NUMPADENTER;
+    m_MenuControls[MENU_NEXT3].Key    = KEYBOARD_SPACE;
 
     int Control;
 

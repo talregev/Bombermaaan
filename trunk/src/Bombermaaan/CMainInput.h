@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -32,7 +33,7 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-#define NUMBER_OF_MENU_CONTROLS               6       //!< Number of menu controls
+#define NUMBER_OF_MENU_CONTROLS               8       //!< Number of menu controls
 
 #define MAX_PLAYER_INPUT_NAME_LENGTH    16      //!< Maximum length of a string containing a player input name
 
@@ -41,7 +42,9 @@
 #define MENU_LEFT       2       //!< Index of the menu "left" control in the menu controls array
 #define MENU_RIGHT      3       //!< Index of the menu "right" control in the menu controls array
 #define MENU_PREVIOUS   4       //!< Index of the menu "previous" control in the menu controls array
-#define MENU_NEXT       5       //!< Index of the menu "next" control in the menu controls array
+#define MENU_NEXT1      5       //!< Index of the menu "next" control in the menu controls array
+#define MENU_NEXT2      6       //!< Index of another menu "next" control in the menu controls array
+#define MENU_NEXT3      7       //!< Index of another menu "next" control in the menu controls array
 
 #define NUMBER_OF_SYSTEM_CONTROLS         2
 
@@ -147,7 +150,7 @@ inline bool CMainInput::TestPrevious (void)
 
 inline bool CMainInput::TestNext (void)
 {   
-    return m_MenuControls[MENU_NEXT].Active;
+    return m_MenuControls[MENU_NEXT1].Active || m_MenuControls[MENU_NEXT2].Active || m_MenuControls[MENU_NEXT3].Active;
 }
 
 inline bool CMainInput::TestPause (void)
