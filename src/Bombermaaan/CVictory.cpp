@@ -105,12 +105,12 @@
 #define LOSER_BOMBER_SPRITE_0               11          //!< Sprite number for the bombers that lost
 #define LOSER_BOMBER_SPRITE_1               12          //!< (you have to add the color offset to get the
 #define LOSER_BOMBER_SPRITE_2               13          //!<  desired bomber color)
-#define LOSER_BOMBER_SPACE_X            30          //!< Space (in pixels) between two losers X positions
-#define WINNER_BOMBER_SPACE_X           30          //!< Space (in pixels) between two winners X positions
-#define LOSER_BOMBER_SPACE_EDGE         10          //!< Space (in pixels) between the right edge and the loser to the right
-#define WINNER_BOMBER_POSITION_Y        120         //!< Y Position where to draw winner sprites
-#define LOSER_BOMBER_POSITION_Y         140         //!< Y Position where to draw loser sprites
-#define BOMBER_SPRITES_COUNT_PER_COLOR  14          //!< How many bomber sprites per color?
+#define LOSER_BOMBER_SPACE_X                30          //!< Space (in pixels) between two losers X positions
+#define WINNER_BOMBER_SPACE_X               30          //!< Space (in pixels) between two winners X positions
+#define LOSER_BOMBER_SPACE_EDGE             10          //!< Space (in pixels) between the right edge and the loser to the right
+#define WINNER_BOMBER_POSITION_Y            120         //!< Y Position where to draw winner sprites
+#define LOSER_BOMBER_POSITION_Y             140         //!< Y Position where to draw loser sprites
+#define BOMBER_SPRITES_COUNT_PER_COLOR      14          //!< How many bomber sprites per color?
 
 // Confettis
 #define CONFETTI_LIMIT_LEFT     -20.0f
