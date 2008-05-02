@@ -230,6 +230,9 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 // Bomber sprite layer
 #define BOMBER_SPRITELAYER  50
 
+#define SICK_SPRITE_ROW_FULL        MAX_PLAYERS             //!< The row with the full black bomber sprites (this is the number of maximum players)
+#define SICK_SPRITE_ROW_SHADOW      (MAX_PLAYERS + 1)       //!< The row with the black shadow bomber sprites (one row below SICK_SPRITE_ROW_FULL)
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -1066,9 +1069,9 @@ void CBomber::Animate (float DeltaTime)
             // Sick color
             if ( m_BomberState == BOMBERSTATE_WALK && m_Sickness == SICK_INVISIBILITY ) {
                 // The bomber-walk sprites have an additional series if the bomber is invisible (only the bomber's border can be seen)
-                m_Sprite += ( 1 + MAX_PLAYERS ) * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+                m_Sprite += SICK_SPRITE_ROW_SHADOW * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
             } else {
-                m_Sprite += MAX_PLAYERS * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+                m_Sprite += SICK_SPRITE_ROW_FULL * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
             }
         }
         else if (m_SickTimer < ANIMSICK_TIME2)
@@ -1088,9 +1091,9 @@ void CBomber::Animate (float DeltaTime)
             // Sick color
             if ( m_BomberState == BOMBERSTATE_WALK && m_Sickness == SICK_INVISIBILITY ) {
                 // The bomber-walk sprites have an additional series if the bomber is invisible (only the bomber's border can be seen)
-                m_Sprite += ( 1 + MAX_PLAYERS ) * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+                m_Sprite += SICK_SPRITE_ROW_SHADOW * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
             } else {
-                m_Sprite += MAX_PLAYERS * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+                m_Sprite += SICK_SPRITE_ROW_FULL * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
             }
         }
 
