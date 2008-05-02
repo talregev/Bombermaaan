@@ -1,6 +1,7 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -88,6 +89,14 @@
 #define SPACE_Y_BETWEEN_MENU_ITEMS              15
 #endif
 
+#define MOVING_HAND_TIMEPERIOD                  0.06f   //!< Time period for calculating the moving hand position
+#define MOVING_HAND_DISTANCE_1                  (-20)
+#define MOVING_HAND_DISTANCE_2                  (-18)
+#define MOVING_HAND_DISTANCE_3                  (-13)
+#define MOVING_HAND_DISTANCE_4                  (-6)
+#define MOVING_HAND_DISTANCE_5                  (-2)
+#define MOVING_HAND_DISTANCE_6                  (0)
+
 #define MENU_ITEM_GAME                          0
 #define MENU_ITEM_DEMO                          1
 #define MENU_ITEM_OPTIONS                       2
@@ -129,6 +138,10 @@ void CTitle::Create (void)
 
     // Don't have to exit this mode yet
     m_HaveToExit = false;
+
+    // Initialize the moving hand
+    m_MovingHandDistance = 0;
+    m_MovingHandTimer = 0.0f;
 
     // Don't initialize the cursor to the first item.
     // This allows keeping the last cursor position
@@ -199,6 +212,33 @@ EGameMode CTitle::Update (void)
         // Update the clouds in the sky
         m_CloudManager.Update (m_pTimer->GetDeltaTime());
     
+        // Update the moving hand
+        m_MovingHandTimer += m_pTimer->GetDeltaTime();
+               if ( m_MovingHandTimer < MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_1;
+        } else if ( m_MovingHandTimer < 2 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_2;
+        } else if ( m_MovingHandTimer < 3 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_3;
+        } else if ( m_MovingHandTimer < 4 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_4;
+        } else if ( m_MovingHandTimer < 5 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_5;
+        } else if ( m_MovingHandTimer < 6 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_6;
+        } else if ( m_MovingHandTimer < 7 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_5;
+        } else if ( m_MovingHandTimer < 8 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_4;
+        } else if ( m_MovingHandTimer < 9 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_3;
+        } else if ( m_MovingHandTimer < 10 * MOVING_HAND_TIMEPERIOD ) {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_2;
+        } else {
+            m_MovingHandDistance = MOVING_HAND_DISTANCE_1;
+            m_MovingHandTimer = 0.0f;
+        }
+
         // If the NEXT control is pressed
         if (m_pInput->GetMainInput().TestNext())
         {
@@ -351,7 +391,7 @@ void CTitle::Display (void)
             if (m_Cursor == MenuItemIndex)
             {
                 // Display the cursor hand
-                m_pDisplay->DrawSprite (ALL_MENU_ITEMS_POSITION_X + SPACE_X_FROM_MENU_ITEM_TO_CURSOR_HAND,
+                m_pDisplay->DrawSprite (ALL_MENU_ITEMS_POSITION_X + SPACE_X_FROM_MENU_ITEM_TO_CURSOR_HAND + m_MovingHandDistance,
                                         MenuItemPositionY,
                                         NULL,
                                         NULL,

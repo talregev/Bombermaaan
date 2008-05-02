@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -46,6 +47,8 @@ private:
     float           m_ExitModeTime;                 //!< Mode time when we have to start the last black screen
     EGameMode       m_ExitGameMode;                 //!< Game mode to ask for when exiting
     bool            m_HaveToExit;                   //!< Do we have to exit this mode?
+    int             m_MovingHandDistance;           //!< Extra distance between hand and menu
+    float           m_MovingHandTimer;              //!< Timer used for the moving hand
     
 public:
 
