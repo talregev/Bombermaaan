@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -71,11 +72,20 @@
                                                 
 #define FIRST_PLAYER_INPUT                      0
                                                 
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define SCREEN_TITLE_POSITION_Y                 (20+80)
+#else
 #define SCREEN_TITLE_POSITION_Y                 20
+#endif
                                                 
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define FIRST_MENU_ITEM_POSITION_Y              (60+95)
+#define ALL_MENU_ITEMS_POSITION_X               (33+110)
+#else
 #define FIRST_MENU_ITEM_POSITION_Y              60
-#define SPACE_Y_BETWEEN_MENU_ITEMS              21
 #define ALL_MENU_ITEMS_POSITION_X               33
+#endif
+#define SPACE_Y_BETWEEN_MENU_ITEMS              21
 #define SPACE_X_FROM_MENU_ITEM_TO_VALUE         90
 #define SPACE_X_FROM_MENU_ITEM_TO_CURSOR_HAND   -25
 #define SPACE_Y_FROM_MENU_ITEM_TO_CURSOR_HAND   -2
