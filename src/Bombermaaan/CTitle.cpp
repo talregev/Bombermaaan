@@ -89,13 +89,23 @@
 #define SPACE_Y_BETWEEN_MENU_ITEMS              15
 #endif
 
+// Definitions for the animated hand
 #define MOVING_HAND_TIMEPERIOD                  0.06f   //!< Time period for calculating the moving hand position
+#ifdef USE_32_PIXELS_PER_BLOCK
 #define MOVING_HAND_DISTANCE_1                  (-20)
 #define MOVING_HAND_DISTANCE_2                  (-18)
 #define MOVING_HAND_DISTANCE_3                  (-13)
 #define MOVING_HAND_DISTANCE_4                  (-6)
 #define MOVING_HAND_DISTANCE_5                  (-2)
 #define MOVING_HAND_DISTANCE_6                  (0)
+#else
+#define MOVING_HAND_DISTANCE_1                  (-10)
+#define MOVING_HAND_DISTANCE_2                  (-9)
+#define MOVING_HAND_DISTANCE_3                  (-6)
+#define MOVING_HAND_DISTANCE_4                  (-3)
+#define MOVING_HAND_DISTANCE_5                  (-1)
+#define MOVING_HAND_DISTANCE_6                  (0)
+#endif
 
 #define MENU_ITEM_GAME                          0
 #define MENU_ITEM_DEMO                          1
