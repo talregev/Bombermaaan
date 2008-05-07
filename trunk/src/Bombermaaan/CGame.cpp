@@ -1,6 +1,7 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -96,8 +97,18 @@ That file TortoiseProc.cpp Copyright (C) 2003-2007 - TortoiseSVN
               + (__DATE__ [5] - '0'))
 ****/
 
-// This is the title of the main bombermaaan window
-#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan (Rev. 378, 2008-03-15)"
+// Bombermaaan version
+#define BOMBERMAAAN_VERSION_STRING      "1.3"
+#define BOMBERMAAAN_BUILD_STRING        "423"
+#define BOMBERMAAAN_RELEASEDATE_STRING  "2008-05-07"
+
+// This is the title of the main bombermaaan window (32-pixels-version title is longer due to bigger window size)
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING ", " BOMBERMAAAN_RELEASEDATE_STRING   // For stable release
+#else
+#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING   // For stable release
+#endif
+//#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan - (Rev. " BOMBERMAAAN_BUILD_STRING ", " BOMBERMAAAN_RELEASEDATE_STRING ")"   // For experimental version
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -157,6 +168,7 @@ bool CGame::Create (const char* pCommandLine)
 #endif
 
 	// Log date and time of compile
+    theLog.WriteLine( "Game            => " BOMBERMAAAN_WINDOW_TITLE );
 	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ );
 
     theDebug.SetGame(this);
