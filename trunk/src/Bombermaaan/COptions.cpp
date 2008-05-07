@@ -1,6 +1,7 @@
 /************************************************************************************
 
-    Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+    Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -695,6 +696,30 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
     getline( file, s );
     if ( s.find( "Creator=" ) != 0 ) {
         theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
+        return false;
+    }
+
+    // Priority line following
+    // The priority setting is not used currently
+    // For future use:
+    // - The levels are first sorted by priority and then by the file name
+    getline( file, s );
+    if ( s.find( "Priority=0" ) != 0 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s) - priority expected.", s.c_str() );
+        return false;
+    }
+
+    // Comment line following (not used currently)
+    getline( file, s );
+    if ( s.find( "Comment=" ) != 0 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s) - comment expected.", s.c_str() );
+        return false;
+    }
+
+    // Description line following (not used currently)
+    getline( file, s );
+    if ( s.find( "Description=" ) != 0 ) {
+        theLog.WriteLine ("Options         => !!! General option is incorrect (%s) - description expected.", s.c_str() );
         return false;
     }
 

@@ -5,6 +5,9 @@ Height=13
 MaxPlayers=5
 MinPlayers=1
 Creator=
+Priority=0
+Comment=
+Description=
 [Map]
 Line.0=***************
 Line.1=*1 --------- 3*
