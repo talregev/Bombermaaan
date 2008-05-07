@@ -172,7 +172,7 @@ You can view the <a href="https://sourceforge.net/project/shownotes.php?release_
 </p>
 
 <p>
-There is also a <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/Readme.html?revision=5&amp;pathrev=5">README file</a> available (very latest version out of the subversion repository).
+There is also a <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/Readme.html">README file</a> available (very latest version out of the subversion repository).
 </p>
 
 <h2>Notes</h2>
