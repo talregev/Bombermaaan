@@ -8,22 +8,26 @@ $webpage->head();
 
 $downloads = array(
 	"stable" => array(
+		/** not available yet
 		array(
 		"Bombermaaan_1.02_Setup.exe",
 		"Installer for Win32",
 		"4a708baed1d671be6ff0ba14bcd851e2", // MD5
 		"d57361ee3c83f4cd03bee0d881f14a02b6a953ad"  // SHA1
 		),
+		**/
 		array(
-		"Bombermaaan_1.02.zip",
+		"Bombermaaan_1.3_2008-05-07.zip",
 		"Zip file for Win32",
-		"08fd98b0bbe1d3a2020d7f36561869ac",  // MD5
-		"347e222c2dd411d6529a816acf987531103f8e04",  // SHA1
+		"8bde419fd4ae4c3596360db9110b1f2b",  // MD5
+		"f55960e4c14d091e098f9dcdaaae32064286ea9b",  // SHA1
 		),
+		/** not available yet
 		array(
 		"Bombermaaan_102_src.zip",
 		"Source",
 		),
+		**/
 	),
 	"experimental" => array(
 		array(
@@ -123,7 +127,7 @@ $downloads = array(
 </ul>
 </div>
 
-<h2><a id="stable">The current stable version is 1.02</a></h2>
+<h2><a id="stable">The current stable version is 1.3</a></h2>
 
 <table class="downloadbox">
 
@@ -164,7 +168,7 @@ foreach ( $downloads[ "stable" ] as $item ) {
 </table>
 
 <p>
-You can view the <a href="https://sourceforge.net/project/shownotes.php?group_id=81520&amp;release_id=234468">release notes</a> on the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download page</a> on SourceForge.net.
+You can view the <a href="https://sourceforge.net/project/shownotes.php?release_id=597845&amp;group_id=81520">release notes</a> on the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download page</a> on SourceForge.net.
 </p>
 
 <p>
@@ -173,6 +177,11 @@ There is also a <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout
 
 <h2>Notes</h2>
 
+<p>
+The installer file is not available yet. Please use the zip file instead.
+</p>
+
+<!--
 <p>
 The installer was tested on Win XP with ServicePack 2 and Win Vista. Please note, if you install Bombermaaan on Vista to the default program files directory, the configuration and log file cannot be created. However, you can play the game. But the settings weren't remembered when you start the game the next time. To avoid this, you can install Bombermaaan to a different directory, for example &quot;C:\Bombermaaan&quot;.<br />
 You need administrative rights for installing Bombermaaan. This is considered to be changed in the future.
@@ -183,13 +192,14 @@ The uninstaller was tested on Win XP with ServicePack 2 and Win Vista.
 <p>
 If you don't want to use the installer, you can also download the Zip file and unzip the folder somewhere and run Bombermaaan.exe from there. Please ensure to unzip the whole directory, not only Bombermaaan.exe.
 </p>
+-->
 
 <h2><a id="sourcecode">Sourcecode</a></h2>
 
 The sourcecode is hosted in the Subversion repository on SourceForge.net. 
 If you have TortoiseSVN installed, you can check out the <a href="tsvn:https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk">whole sourcecode</a> by clicking on the weblink.
 
-<h2><a id="experimental">Experimental releases</a></h2>
+<h2><a id="experimental">Experimental releases (older than stable version 1.3)</a></h2>
 
 <p>
 These packages have more features and bug fixes, but may also be unstable.
