@@ -1,4 +1,6 @@
-Next version
+Version 1.3
+
+Released on May 7, 2008
 
 New feature: Almost unlimited number of levels. You can now add any number of levels. Plus, you don't have to call it L1 or L6 or whatever. Any filename like a.txt or coolbomberlevel.txt will be ok.
 New feature: Enhanced level file format. You can specify the amount of items waiting in walls (tracker item #1847047) and the initial bomber skills for every match (tracker item #1847048).
