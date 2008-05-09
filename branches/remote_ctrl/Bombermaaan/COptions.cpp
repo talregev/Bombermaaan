@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -57,6 +58,7 @@
 #define INITIAL_ITEMSKULL       1
 #define INITIAL_ITEMTHROW       2
 #define INITIAL_ITEMPUNCH       2
+#define INITIAL_ITEMREMOTE      2
 
 // Initial flame size
 #define INITIAL_FLAMESIZE       2
@@ -610,6 +612,7 @@ bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
     m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] = INITIAL_ITEMSKULL;
     m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] = INITIAL_ITEMTHROW;
     m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] = INITIAL_ITEMPUNCH;
+	m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = INITIAL_ITEMREMOTE;
 
     m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] = INITIAL_FLAMESIZE;
     m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] = INITIAL_BOMBS;
@@ -619,6 +622,7 @@ bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
     m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] = 0;
     m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] = 0;
     m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] = 0;
+	m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] = 0;
 
 
     return !StopReadingFile;

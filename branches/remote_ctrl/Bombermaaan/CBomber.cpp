@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -295,6 +296,7 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
 	m_NumberOfKickItems = options->GetInitialBomberSkills( BOMBERSKILL_KICKITEMS );
     m_NumberOfThrowItems = options->GetInitialBomberSkills( BOMBERSKILL_THROWITEMS );
     m_NumberOfPunchItems = options->GetInitialBomberSkills( BOMBERSKILL_PUNCHITEMS );
+	m_NumberOfRemoteItems = options->GetInitialBomberSkills( BOMBERSKILL_REMOTEITEMS );
 
     m_ReturnedItems = false;
 
@@ -652,6 +654,37 @@ void CBomber::Action ()
                         }
                     }
                 }
+
+				
+				// If the bomber can remote fuse bombs
+                if (CanRemoteFuseBombs())
+                {
+					int bomb_to_fuse = 0;
+
+                    // Find the first bomb to fuse.
+                    for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
+                    {
+						float fuse_timer = 0.0f;
+
+                        // Test existence and kicker player number
+                        if (m_pArena->GetBomb(Index).Exist() && m_pArena->GetBomb(Index).IsRemote() &&
+                            m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
+                        {
+							if (fuse_timer>m_pArena->GetBomb(Index).GetTimeLeft() )
+							{
+								bomb_to_fuse = Index+1;
+								fuse_timer = m_pArena->GetBomb(Index).GetTimeLeft();
+							}
+                        }
+                    }
+
+					if (bomb_to_fuse)
+					{
+						m_pArena->GetBomb(bomb_to_fuse-1).Burn();
+					}
+                }
+
+
             }
         }
 
@@ -1263,6 +1296,7 @@ void CBomber::OnWriteSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.WriteInteger(m_NumberOfKickItems);
     Snapshot.WriteInteger(m_NumberOfThrowItems);
     Snapshot.WriteInteger(m_NumberOfPunchItems);
+	Snapshot.WriteInteger(m_NumberOfRemoteItems);
     Snapshot.WriteBoolean(m_ReturnedItems);
     Snapshot.WriteInteger(m_Player);
     Snapshot.WriteInteger(m_Dead);
@@ -1311,6 +1345,7 @@ void CBomber::OnReadSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.ReadInteger(&m_NumberOfKickItems);
     Snapshot.ReadInteger(&m_NumberOfThrowItems);
     Snapshot.ReadInteger(&m_NumberOfPunchItems);
+	Snapshot.ReadInteger(&m_NumberOfRemoteItems);
     Snapshot.ReadBoolean(&m_ReturnedItems);
     Snapshot.ReadInteger(&m_Player);
     Snapshot.ReadInteger((int*)&m_Dead);
@@ -1358,7 +1393,8 @@ void CBomber::ReturnItems (float DeltaTime)
                                     m_NumberOfKickItems, 
                                     0,
                                     m_NumberOfThrowItems,
-                                    m_NumberOfPunchItems))
+                                    m_NumberOfPunchItems,
+									m_NumberOfRemoteItems))
             {
                 // Play the item fumes sound
                 m_pSound->PlaySample (SAMPLE_ITEM_FUMES);
@@ -1491,6 +1527,14 @@ void CBomber::ItemEffect (EItemType Type)
                 break;
             }
 
+			case ITEM_REMOTE :
+            {
+                // One more picked up remote controler item
+                m_NumberOfRemoteItems++;
+
+                break;
+            }
+
             default :
             {
                 assert(0);
@@ -1615,6 +1659,11 @@ void CBomber::Stunt (void)
     {   
         m_NumberOfRollerItems--;
         ItemType = ITEM_ROLLER;
+    }
+	else if (m_NumberOfRemoteItems > 0)
+    {   
+        m_NumberOfRemoteItems--;
+        ItemType = ITEM_REMOTE;
     }
 
     if (ItemType != ITEM_NONE)

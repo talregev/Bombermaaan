@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -91,8 +92,8 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (2,      1,      32,     32,     false,    BMP_ARENA_FLOOR               ) ||
             !LoadSprites (7,      1,      32,     32,     true,     BMP_ARENA_WALL                ) ||
             !LoadSprites (28,     1,      32,     32,     true,     BMP_ARENA_FLAME               ) ||
-            !LoadSprites (14,     1,      32,     32,     false,    BMP_ARENA_ITEM                ) ||
-            !LoadSprites (3,      1,      32,     32,     true,     BMP_ARENA_BOMB                ) ||
+            !LoadSprites (16,     1,      32,     32,     false,    BMP_ARENA_ITEM                ) ||
+            !LoadSprites (3,      1,      32,     32,     true,     BMP_ARENA_BOMB                ) ||			
             !LoadSprites (12,     7,      42,     44,     true,     BMP_ARENA_BOMBER_WALK         ) ||
             !LoadSprites (7,      1,      52,     54,     true,     BMP_ARENA_FIRE                ) ||
             !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_WALK_HOLD    ) ||
@@ -102,7 +103,7 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (2,      1,      16,     16,     false,    BMP_ARENA_FLOOR               ) ||
             !LoadSprites (7,      1,      16,     16,     true,     BMP_ARENA_WALL                ) ||
             !LoadSprites (28,     1,      16,     16,     true,     BMP_ARENA_FLAME               ) ||
-            !LoadSprites (14,     1,      16,     16,     false,    BMP_ARENA_ITEM                ) ||
+            !LoadSprites (16,     1,      16,     16,     false,    BMP_ARENA_ITEM                ) ||
             !LoadSprites (3,      1,      16,     16,     true,     BMP_ARENA_BOMB                ) ||
             !LoadSprites (12,     7,      21,     22,     true,     BMP_ARENA_BOMBER_WALK         ) ||
             !LoadSprites (7,      1,      26,     27,     true,     BMP_ARENA_FIRE                ) ||
@@ -194,7 +195,8 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (8,      6,      42,     44,     true,     BMP_ARENA_BOMBER_PUNCH        ) ||
             !LoadSprites (4,      6,      42,     44,     true,     BMP_ARENA_BOMBER_STUNT        ) ||
             !LoadSprites (4,      1,      32,     32,     true,     BMP_ARENA_ARROWS              ) || // 63
-            !LoadSprites (1,      1,      30,     32,     true,     BMP_MENU_HAND_TITLE           )
+            !LoadSprites (1,      1,      30,     32,     true,     BMP_MENU_HAND_TITLE           ) ||
+			!LoadSprites (3,      1,      32,     32,     true,     BMP_ARENA_REMOTE_BOMB         ) 
 #else
             !LoadSprites (7,      5,      21,     22,     true,     BMP_ARENA_BOMBER_DEATH        ) ||
             !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_LIFT         ) || 
@@ -202,7 +204,8 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (8,      6,      21,     22,     true,     BMP_ARENA_BOMBER_PUNCH        ) ||
             !LoadSprites (4,      6,      21,     22,     true,     BMP_ARENA_BOMBER_STUNT        ) ||
             !LoadSprites (4,      1,      16,     16,     true,     BMP_ARENA_ARROWS              ) || // 63
-            !LoadSprites (1,      1,      15,     16,     true,     BMP_MENU_HAND_TITLE           )
+            !LoadSprites (1,      1,      15,     16,     true,     BMP_MENU_HAND_TITLE           ) ||
+			!LoadSprites (3,      1,      16,     16,     true,     BMP_ARENA_REMOTE_BOMB         ) 
 #endif
            )
         {
