@@ -8,9 +8,9 @@
 
 
 
-!define VER_NUMBER "1.02"
+!define VER_NUMBER "1.3"
 !define PRODUCT_NAME "Bombermaaan"
-!define PRODUCT_VERSION "1.02"
+!define PRODUCT_VERSION "1.3"
 !define PRODUCT_PUBLISHER "The Bombermaaan team"
 
 SetCompressor lzma
@@ -30,8 +30,8 @@ SetCompressor lzma
 ;General
 
   ;Name and file
-  Name "Bombermaaan 1.02"
-  OutFile "Bombermaaan_1.02-Setup.exe"
+  Name "Bombermaaan 1.3"
+  OutFile ".\exe-files\Bombermaaan_1.3_setup.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\Bombermaaan"
@@ -48,9 +48,9 @@ SetCompressor lzma
 ;--------------------------------
 ;Version Information
 
-  VIProductVersion "1.0.2.0"
+  VIProductVersion "1.3.0.0"
   VIAddVersionKey "ProductName" "Bombermaaan"
-  VIAddVersionKey "ProductVersion" "1.0.2.0"
+  VIAddVersionKey "ProductVersion" "1.3.0.0"
   VIAddVersionKey "Comments" \
     "Bombermaaan is free software: you can redistribute it and/or modify \
     it under the terms of the GNU General Public License as published by \
@@ -64,7 +64,7 @@ SetCompressor lzma
     along with this program.  If not, see <http://www.gnu.org/licenses/>."
   VIAddVersionKey "Website" "http://bombermaaan.sourceforge.net/"
 ;  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" "..."
-  VIAddVersionKey "LegalCopyright" "© Thibaut Tollemer"
+  VIAddVersionKey "LegalCopyright" "© Thibaut Tollemer, Bernd Arnold"
   VIAddVersionKey "FileDescription" "Installer for Bombermaaan"
   VIAddVersionKey "FileVersion" "2"
 
@@ -122,7 +122,7 @@ SetCompressor lzma
 
   !insertmacro MUI_PAGE_INSTFILES
   
-  !define MUI_FINISHPAGE_RUN Bomberman.exe
+  !define MUI_FINISHPAGE_RUN Bombermaaan_32.exe
   !define MUI_FINISHPAGE_RUN_NOTCHECKED
   !define MUI_FINISHPAGE_SHOWREADME Readme.html
   !define MUI_FINISHPAGE_SHOWREADME_CHECKED
@@ -143,6 +143,34 @@ SetCompressor lzma
 
 
 ;--------------------------------
+;onInit
+ 
+Function .onInit
+  ReadRegStr $R0 HKLM "SOFTWARE\Bombermaaan" "Start Menu Folder"
+  StrCmp $R0 "" done
+ 
+  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+    "Bombermaaan has already been installed. $\nClick OK to remove the previous version or Cancel to cancel this installation." IDOK uninstall
+  MessageBox MB_OK "The previous version is kept. Nothing was changed. Installer will exit now."
+  Abort
+
+  ;Run the uninstaller
+  uninstall:
+    ClearErrors
+    ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
+    IfErrors uninstall_error uninstall_success
+  uninstall_error:
+    MessageBox MB_OK "An error occurred during uninstall. Exiting installation."
+    Abort
+  uninstall_success:
+    MessageBox MB_OK "Uninstall was successful. Running installer now."
+  done: 
+FunctionEnd
+
+
+
+
+;--------------------------------
 ;Installer Sections
 
 Section "Common files (required)" SecCommonReq
@@ -150,25 +178,35 @@ Section "Common files (required)" SecCommonReq
   SectionIn RO
 
   SetOutPath "$INSTDIR"
-  File ..\..\Bomberman\Bomberman.dat
-  File ..\..\Bomberman\Bomberman.exe
-  File ..\..\Bomberman\FMOD.DLL
-  File ..\docs\Readme.html
-  File ..\COPYING.txt
+  DetailPrint "Writing program files"
+  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan.dll
+  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_16.exe
+  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_32.dll
+  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_32.exe
+  File .\packages\Bombermaaan_1.3_2008-05-07\FMOD.DLL
+  File .\packages\Bombermaaan_1.3_2008-05-07\Readme.html
+  File .\packages\Bombermaaan_1.3_2008-05-07\COPYING.txt
+  File .\packages\Bombermaaan_1.3_2008-05-07\CHANGELOG.txt
 
   SetOutPath "$INSTDIR\Levels"
-  File ..\..\Bomberman\Levels\L1.TXT
-  File ..\..\Bomberman\Levels\L2.TXT
-  File ..\..\Bomberman\Levels\L3.TXT
-  File ..\..\Bomberman\Levels\L4.TXT
-  File ..\..\Bomberman\Levels\L5.TXT
-  File ..\..\Bomberman\Levels\L6.TXT
+  DetailPrint "Writing level files"
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L1.TXT
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L2.TXT
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L3.TXT
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L4.TXT
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L5.TXT
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L6.TXT
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L7.TXT
+  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L8.TXT
 
   ;Needed for working dir of shortcut
   SetOutPath "$INSTDIR"
   
   ;Store installation folder
   WriteRegStr HKLM "Software\Bombermaaan" "" $INSTDIR
+  
+  ;Store installed version
+  WriteRegStr HKLM "Software\Bombermaaan" "InstalledVersion" "1.3.0.0"
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -177,8 +215,10 @@ Section "Common files (required)" SecCommonReq
     
     ;Create shortcuts
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bomberman.lnk" "$INSTDIR\Bomberman.exe"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (classic).lnk" "$INSTDIR\Bombermaaan_16.exe"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (large size).lnk" "$INSTDIR\Bombermaaan_32.exe"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Readme.lnk" "$INSTDIR\Readme.html"
+    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\License (GPL).lnk" "$INSTDIR\COPYING.txt"
     CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   
   !insertmacro MUI_STARTMENU_WRITE_END
@@ -207,19 +247,28 @@ SectionEnd
 
 Section "Uninstall"
 
-  Delete "$INSTDIR\Bomberman.exe"
-  Delete "$INSTDIR\Bomberman.dat"
+  ; Fixed program files
+  Delete "$INSTDIR\Bombermaaan.dll"
+  Delete "$INSTDIR\Bombermaaan_16.exe"
+  Delete "$INSTDIR\Bombermaaan_32.dll"
+  Delete "$INSTDIR\Bombermaaan_32.exe"
   Delete "$INSTDIR\FMOD.DLL"
   Delete "$INSTDIR\Readme.html"
   Delete "$INSTDIR\COPYING.txt"
+  Delete "$INSTDIR\CHANGELOG.txt"
+
+  ; Fixed level files
   Delete "$INSTDIR\Levels\L1.TXT"
   Delete "$INSTDIR\Levels\L2.TXT"
   Delete "$INSTDIR\Levels\L3.TXT"
   Delete "$INSTDIR\Levels\L4.TXT"
   Delete "$INSTDIR\Levels\L5.TXT"
   Delete "$INSTDIR\Levels\L6.TXT"
+  Delete "$INSTDIR\Levels\L7.TXT"
+  Delete "$INSTDIR\Levels\L8.TXT"
 
-  Delete "$INSTDIR\Bomberman.cfg"
+  ; Dynamically created files
+  Delete "$INSTDIR\Bombermaaan.cfg"
   Delete "$INSTDIR\log.txt"
 
   Delete "$INSTDIR\Uninstall.exe"
@@ -229,8 +278,10 @@ Section "Uninstall"
 
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
     
-  Delete "$SMPROGRAMS\$MUI_TEMP\Bomberman.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Bombermaaan (classic).lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\Bombermaaan (large size).lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\Readme.lnk"
+  Delete "$SMPROGRAMS\$MUI_TEMP\License (GPL).lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\Uninstall.lnk"
   
   RMDir "$SMPROGRAMS\$MUI_TEMP"
