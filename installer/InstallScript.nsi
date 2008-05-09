@@ -8,10 +8,11 @@
 
 
 
-!define VER_NUMBER "1.3"
-!define PRODUCT_NAME "Bombermaaan"
-!define PRODUCT_VERSION "1.3"
-!define PRODUCT_PUBLISHER "The Bombermaaan team"
+!define BM_BUILD                "423"
+!define BM_VERSION              "1.3.0.${BM_BUILD}"
+!define PRODUCT_NAME            "Bombermaaan"
+!define PRODUCT_VERSION         "${BM_VERSION}"
+!define PRODUCT_PUBLISHER       "The Bombermaaan team"
 
 SetCompressor lzma
 
@@ -31,7 +32,7 @@ SetCompressor lzma
 
   ;Name and file
   Name "Bombermaaan 1.3"
-  OutFile ".\output\Bombermaaan_1.3_setup.exe"
+  OutFile ".\output\Bombermaaan_${BM_VERSION}_setup.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\Bombermaaan"
@@ -48,9 +49,9 @@ SetCompressor lzma
 ;--------------------------------
 ;Version Information
 
-  VIProductVersion "1.3.0.0"
+  VIProductVersion "${BM_VERSION}"
   VIAddVersionKey "ProductName" "Bombermaaan"
-  VIAddVersionKey "ProductVersion" "1.3.0.0"
+  VIAddVersionKey "ProductVersion" "${BM_VERSION}"
   VIAddVersionKey "Comments" \
     "Bombermaaan is free software: you can redistribute it and/or modify \
     it under the terms of the GNU General Public License as published by \
@@ -66,7 +67,7 @@ SetCompressor lzma
 ;  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" "..."
   VIAddVersionKey "LegalCopyright" "© Thibaut Tollemer, Bernd Arnold"
   VIAddVersionKey "FileDescription" "Installer for Bombermaaan"
-  VIAddVersionKey "FileVersion" "2"
+  VIAddVersionKey "FileVersion" "${BM_VERSION}"
 
 ;ProductName
 ;Comments
@@ -210,7 +211,7 @@ Section "Common files (required)" SecCommonReq
   WriteRegStr HKLM "Software\Bombermaaan" "" $INSTDIR
   
   ;Store installed version
-  WriteRegStr HKLM "Software\Bombermaaan" "InstalledVersion" "1.3.0.0"
+  WriteRegStr HKLM "Software\Bombermaaan" "InstalledVersion" "${BM_VERSION}"
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
