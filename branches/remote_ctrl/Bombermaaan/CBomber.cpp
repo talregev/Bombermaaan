@@ -659,31 +659,17 @@ void CBomber::Action ()
 				// If the bomber can remote fuse bombs
                 if (CanRemoteFuseBombs())
                 {
-					int bomb_to_fuse = 0;
-
                     // Find the first bomb to fuse.
                     for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
-                    {
-						float fuse_timer = 0.0f;
-
+                    {						
                         // Test existence and kicker player number
                         if (m_pArena->GetBomb(Index).Exist() && m_pArena->GetBomb(Index).IsRemote() &&
                             m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
                         {
-							if (fuse_timer>m_pArena->GetBomb(Index).GetTimeLeft() )
-							{
-								bomb_to_fuse = Index+1;
-								fuse_timer = m_pArena->GetBomb(Index).GetTimeLeft();
-							}
+							m_pArena->GetBomb(Index).Burn();
                         }
                     }
-
-					if (bomb_to_fuse)
-					{
-						m_pArena->GetBomb(bomb_to_fuse-1).Burn();
-					}
                 }
-
 
             }
         }
