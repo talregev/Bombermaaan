@@ -138,6 +138,8 @@ SetCompressor lzma
 ;Languages
  
   !insertmacro MUI_LANGUAGE "English"
+  ;!insertmacro MUI_LANGUAGE "French"
+  ;!insertmacro MUI_LANGUAGE "German"
 
 
 
@@ -146,6 +148,8 @@ SetCompressor lzma
 ;onInit
  
 Function .onInit
+  ;!insertmacro MUI_LANGDLL_DISPLAY
+
   ReadRegStr $R0 HKLM "SOFTWARE\Bombermaaan" "Start Menu Folder"
   StrCmp $R0 "" done
  
@@ -233,7 +237,8 @@ SectionEnd
 
   ;Language strings
   LangString DESC_SecCommonReq ${LANG_ENGLISH} "Common files for Bombermaaan."
-
+  ;LangString DESC_SecCommonReq ${LANG_GERMAN} "Gemeinsame Dateien für Bombermaaan."
+  
   ;Assign language strings to sections
   !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
     !insertmacro MUI_DESCRIPTION_TEXT ${SecCommonReq} $(DESC_SecCommonReq)
@@ -289,3 +294,15 @@ Section "Uninstall"
   DeleteRegKey /ifempty HKLM "Software\Bombermaaan"
 
 SectionEnd
+
+
+
+;--------------------------------
+;Uninstaller Functions
+
+;Function un.onInit
+
+;  !insertmacro MUI_UNGETLANGUAGE
+  
+;FunctionEnd
+
