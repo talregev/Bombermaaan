@@ -65,7 +65,7 @@ SetCompressor lzma
     along with this program.  If not, see <http://www.gnu.org/licenses/>."
   VIAddVersionKey "Website" "http://bombermaaan.sourceforge.net/"
 ;  VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" "..."
-  VIAddVersionKey "LegalCopyright" "© Thibaut Tollemer, Bernd Arnold"
+  VIAddVersionKey "LegalCopyright" "Copyright (C) Thibaut Tollemer, Bernd Arnold"
   VIAddVersionKey "FileDescription" "Installer for Bombermaaan"
   VIAddVersionKey "FileVersion" "${BM_VERSION}"
 
@@ -99,7 +99,7 @@ SetCompressor lzma
 ;Interface Configuration
 
   !define MUI_HEADERIMAGE
-  !define MUI_HEADERIMAGE_BITMAP "HeaderImage.bmp" ; optional
+  !define MUI_HEADERIMAGE_BITMAP "HeaderImage.bmp"
   !define MUI_ABORTWARNING
 
 
@@ -151,6 +151,7 @@ SetCompressor lzma
 Function .onInit
   ;!insertmacro MUI_LANGDLL_DISPLAY
 
+  ; Was set by installer of version 1.02:
   ReadRegStr $R0 HKLM "SOFTWARE\Bombermaaan" "Start Menu Folder"
   StrCmp $R0 "" done
  
@@ -218,13 +219,22 @@ Section "Common files (required)" SecCommonReq
 
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
-    ;Create shortcuts
+    ; Try creating shortcuts for all users
+    SetShellVarContext all
     CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (classic).lnk" "$INSTDIR\Bombermaaan_16.exe"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (large size).lnk" "$INSTDIR\Bombermaaan_32.exe"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Readme.lnk" "$INSTDIR\Readme.html"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\License (GPL).lnk" "$INSTDIR\COPYING.txt"
-    CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
+    ; ... if it failed (directory doesn't exist), do it for current user
+    IfFileExists "$SMPROGRAMS\$STARTMENU_FOLDER" createShortcuts
+      SetShellVarContext current
+      CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+ 
+    createShortcuts:
+      ;Create shortcuts
+      CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
+      CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (classic).lnk" "$INSTDIR\Bombermaaan_16.exe"
+      CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (large size).lnk" "$INSTDIR\Bombermaaan_32.exe"
+      CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Readme.lnk" "$INSTDIR\Readme.html"
+      CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\License (GPL).lnk" "$INSTDIR\COPYING.txt"
+      CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
   
   !insertmacro MUI_STARTMENU_WRITE_END
 
@@ -283,7 +293,13 @@ Section "Uninstall"
   RMDir "$INSTDIR"
 
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
-    
+  
+  ; Folder exists for all users -> delete start menu entries/folder for all users
+  SetShellVarContext all
+  IfFileExists "$SMPROGRAMS\$MUI_TEMP" deleteShortcuts
+    ; Delete start menu entries/folder for current user
+    SetShellVarContext current
+  deleteShortcuts:
   Delete "$SMPROGRAMS\$MUI_TEMP\Bombermaaan (classic).lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\Bombermaaan (large size).lnk"
   Delete "$SMPROGRAMS\$MUI_TEMP\Readme.lnk"
