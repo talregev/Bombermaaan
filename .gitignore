@@ -5,6 +5,8 @@ branches/remote_ctrl/RES/Release
 branches/remote_ctrl/RES32/Debug
 branches/remote_ctrl/RES32/Release
 trunk/doxygen/output/html
+trunk/installer/output
+trunk/installer/packages
 trunk/src/Bombermaaan/Debug
 trunk/src/Bombermaaan/Release
 trunk/src/RES/Debug

@@ -31,7 +31,7 @@ SetCompressor lzma
 
   ;Name and file
   Name "Bombermaaan 1.3"
-  OutFile ".\exe-files\Bombermaaan_1.3_setup.exe"
+  OutFile ".\output\Bombermaaan_1.3_setup.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\Bombermaaan"
