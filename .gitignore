@@ -1,4 +1,6 @@
 doxygen/output/html
+installer/output
+installer/packages
 src/Bombermaaan/Debug
 src/Bombermaaan/Release
 src/RES/Debug
