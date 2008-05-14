@@ -163,6 +163,7 @@ private:
     int             m_BombIndex;                    //!< Index of the bomb the bomber is either holding, lifting or punching (when the bomber is throwing, this index is -1).
     static SBomberSpriteTable m_BomberSpriteTables[MAX_NUMBER_OF_STATES]; //!< Information about the sprite table to use for each bomber state.
 	bool			m_MakeInvisible;				//!< If true, the bomber isn't visible in the arena (used for contamination)
+    COptions*       p_Options;                      //!< Pointer to the COptions object
     
     void            Animate (float DeltaTime);
     void            ReturnItems (float DeltaTime);  //!< Manage the return of the items this bomber owns if he is dead
@@ -223,6 +224,7 @@ public:
     inline int      GetTotalBombs (void);           //!< Return how many bombs the bomber can currently drop
     inline EBomberState GetState (void);            //!< Return the state of the bomber
     inline int      GetBombIndex (void);            //!< Return the index of the bomb the bomber is possibly holding, lifting, or punching (if the bomber is throwing, this index is -1).
+    inline EBomberType GetBomberType (void);        //!< Return the bomber type (@see EBomberType)
 };
 
 //******************************************************************************************************************************
@@ -341,6 +343,12 @@ inline int CBomber::GetBombIndex (void)
     ASSERT(m_BombIndex != -1);
     return m_BombIndex;
 }
+
+inline EBomberType CBomber::GetBomberType (void)
+{
+    return p_Options->GetBomberType( m_Player );
+}
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

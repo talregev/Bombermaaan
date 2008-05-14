@@ -239,7 +239,8 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 
 CBomber::CBomber (void) : CElement()
 {
-    
+    // Initialize pointer
+    p_Options = NULL;
 }
 
 //******************************************************************************************************************************
@@ -258,6 +259,8 @@ CBomber::~CBomber (void)
 void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
 {
     CElement::Create();
+
+    p_Options = options;
 
     m_BomberMove.Create (BlockX, BlockY, Player);
     
