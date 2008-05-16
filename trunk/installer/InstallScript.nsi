@@ -249,7 +249,6 @@ Section "Common files (required)" SecCommonReq
  
     createShortcuts:
       ;Create shortcuts
-      CreateDirectory "$SMPROGRAMS\$STARTMENU_FOLDER"
       CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (classic).lnk" "$INSTDIR\Bombermaaan_16.exe"
       CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Bombermaaan (large size).lnk" "$INSTDIR\Bombermaaan_32.exe"
       CreateShortCut "$SMPROGRAMS\$STARTMENU_FOLDER\Readme.lnk" "$INSTDIR\Readme.html"
