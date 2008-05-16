@@ -13,6 +13,7 @@
 !define PRODUCT_NAME            "Bombermaaan"
 !define PRODUCT_VERSION         "${BM_VERSION}"
 !define PRODUCT_PUBLISHER       "The Bombermaaan team"
+!define BM_SRCDIR               ".\packages\Bombermaaan_1.3_2008-05-07"
 
 SetCompressor lzma
 
@@ -187,30 +188,30 @@ Section "Common files (required)" SecCommonReq
   SectionIn RO
 
   SetOutPath "$INSTDIR"
-  DetailPrint "Writing program files"
-  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan.dll
-  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_16.exe
-  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_32.dll
-  File .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_32.exe
-  File .\packages\Bombermaaan_1.3_2008-05-07\FMOD.DLL
-  File .\packages\Bombermaaan_1.3_2008-05-07\Readme.html
-  File .\packages\Bombermaaan_1.3_2008-05-07\COPYING.txt
-  File .\packages\Bombermaaan_1.3_2008-05-07\CHANGELOG.txt
+  DetailPrint "Writing program files..."
+  File "${BM_SRCDIR}\Bombermaaan.dll"
+  File "${BM_SRCDIR}\Bombermaaan_16.exe"
+  File "${BM_SRCDIR}\Bombermaaan_32.dll"
+  File "${BM_SRCDIR}\Bombermaaan_32.exe"
+  File "${BM_SRCDIR}\FMOD.DLL"
+  File "${BM_SRCDIR}\Readme.html"
+  File "${BM_SRCDIR}\COPYING.txt"
+  File "${BM_SRCDIR}\CHANGELOG.txt"
 
   SetOutPath "$INSTDIR\Levels"
-  DetailPrint "Writing level files"
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L1.TXT
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L2.TXT
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L3.TXT
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L4.TXT
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L5.TXT
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L6.TXT
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L7.TXT
-  File .\packages\Bombermaaan_1.3_2008-05-07\Levels\L8.TXT
+  DetailPrint "Writing level files..."
+  File "${BM_SRCDIR}\Levels\L1.TXT"
+  File "${BM_SRCDIR}\Levels\L2.TXT"
+  File "${BM_SRCDIR}\Levels\L3.TXT"
+  File "${BM_SRCDIR}\Levels\L4.TXT"
+  File "${BM_SRCDIR}\Levels\L5.TXT"
+  File "${BM_SRCDIR}\Levels\L6.TXT"
+  File "${BM_SRCDIR}\Levels\L7.TXT"
+  File "${BM_SRCDIR}\Levels\L8.TXT"
 
-  ;Needed for working dir of shortcut
-  SetOutPath "$INSTDIR"
   
+  DetailPrint "Writing registry keys..."
+
   ;Store installation folder
   WriteRegStr HKLM "Software\Bombermaaan" "" $INSTDIR
   
@@ -227,8 +228,14 @@ Section "Common files (required)" SecCommonReq
   WriteRegDWORD     HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "NoModify" "1"
   WriteRegDWORD     HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "NoRepair" "1"
   
+  ;Needed for working dir of shortcut
+  SetOutPath "$INSTDIR"
+  
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
+
+  
+  DetailPrint "Creating shortcuts..."
 
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
@@ -277,6 +284,7 @@ SectionEnd
 Section "Uninstall"
 
   ; Fixed program files
+  DetailPrint "Deleting program files..."
   Delete "$INSTDIR\Bombermaaan.dll"
   Delete "$INSTDIR\Bombermaaan_16.exe"
   Delete "$INSTDIR\Bombermaaan_32.dll"
@@ -287,6 +295,7 @@ Section "Uninstall"
   Delete "$INSTDIR\CHANGELOG.txt"
 
   ; Fixed level files
+  DetailPrint "Deleting level files..."
   Delete "$INSTDIR\Levels\L1.TXT"
   Delete "$INSTDIR\Levels\L2.TXT"
   Delete "$INSTDIR\Levels\L3.TXT"
@@ -307,6 +316,8 @@ Section "Uninstall"
 
   !insertmacro MUI_STARTMENU_GETFOLDER Application $MUI_TEMP
   
+  DetailPrint "Removing shortcuts..."
+  
   ; Folder exists for all users -> delete start menu entries/folder for all users
   SetShellVarContext all
   IfFileExists "$SMPROGRAMS\$MUI_TEMP" deleteShortcuts
@@ -321,6 +332,9 @@ Section "Uninstall"
   
   RMDir "$SMPROGRAMS\$MUI_TEMP"
 
+  
+  DetailPrint "Removing registry keys..."
+  
   DeleteRegKey /ifempty HKLM "Software\Bombermaaan"
 
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan"
