@@ -22,7 +22,7 @@ SetCompressor lzma
 ;--------------------------------
 ;Include Modern UI
 
-  !include "MUI.nsh"
+  !include "MUI2.nsh"
 
 
 
@@ -110,7 +110,9 @@ SetCompressor lzma
 ;Pages
 
   !insertmacro MUI_PAGE_WELCOME
+  !define MUI_LICENSEPAGE_RADIOBUTTONS
   !insertmacro MUI_PAGE_LICENSE "..\COPYING.txt"
+  !define MUI_COMPONENTSPAGE_SMALLDESC
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
 
@@ -127,6 +129,7 @@ SetCompressor lzma
   !define MUI_FINISHPAGE_RUN_NOTCHECKED
   !define MUI_FINISHPAGE_SHOWREADME Readme.html
   !define MUI_FINISHPAGE_SHOWREADME_CHECKED
+  !define MUI_FINISHPAGE_NOAUTOCLOSE
   !insertmacro MUI_PAGE_FINISH
   
   !insertmacro MUI_UNPAGE_CONFIRM
