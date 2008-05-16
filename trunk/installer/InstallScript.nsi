@@ -212,7 +212,17 @@ Section "Common files (required)" SecCommonReq
   WriteRegStr HKLM "Software\Bombermaaan" "" $INSTDIR
   
   ;Store installed version
-  WriteRegStr HKLM "Software\Bombermaaan" "InstalledVersion" "${BM_VERSION}"
+  WriteRegStr HKLM "Software\Bombermaaan" "Version" "${BM_VERSION}"
+  WriteRegStr HKLM "Software\Bombermaaan" "Build" "${BM_BUILD}"
+  
+  
+  WriteRegExpandStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "UninstallString" "$INSTDIR\uninstall.exe"
+  WriteRegExpandStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "InstallLocation" "$INSTDIR"
+  WriteRegStr       HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "DisplayName" "${PRODUCT_NAME} ${BM_VERSION}"
+  WriteRegStr       HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "DisplayIcon" "$INSTDIR\Bombermaaan.exe"
+  WriteRegStr       HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "DisplayVersion" "${BM_VERSION}"
+  WriteRegDWORD     HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "NoModify" "1"
+  WriteRegDWORD     HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan" "NoRepair" "1"
   
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
@@ -309,6 +319,8 @@ Section "Uninstall"
   RMDir "$SMPROGRAMS\$MUI_TEMP"
 
   DeleteRegKey /ifempty HKLM "Software\Bombermaaan"
+
+  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Bombermaaan"
 
 SectionEnd
 
