@@ -101,6 +101,9 @@ void CMatch::Create (void)
     // Don't have to exit this mode yet
     m_HaveToExit = false;
 
+    // Don't force a draw game at the beginning of the match
+    m_ForceDrawGame = false;
+
     if (NetworkMode != NETWORKMODE_LOCAL)
     {
         m_pOptions->SetTimeStart(2, 0);
@@ -556,6 +559,33 @@ void CMatch::UpdateMatch (void)
     // If the match is not paused
     if (m_pPauseMessage == NULL)
     {
+        int AliveCount_Human = 0;   // Number of alive human bombers
+        int AliveCount_AI    = 0;   // Number of alive computer controlled bombers
+
+        // Count human and AI bombers
+        for (int Player = 0 ; Player < m_Arena.MaxBombers() ; Player++)
+        {
+            // If this bomber exists
+            if (m_Arena.GetBomber(Player).Exist())
+            {
+                // If this bomber is alive
+                if (m_Arena.GetBomber(Player).IsAlive())        
+                {
+                    // Count number of human and AI alive bombers
+                    switch ( m_Arena.GetBomber(Player).GetBomberType() ) {
+                        case BOMBERTYPE_MAN:
+                        case BOMBERTYPE_NET:    AliveCount_Human++; break;
+                        case BOMBERTYPE_COM:    AliveCount_AI++;    break;
+                    }
+
+                }
+            }
+        }
+
+        if ( AliveCount_Human == 0 && AliveCount_AI > 1 && m_pOptions->GetOption_ActionWhenOnlyAIPlayersLeft() == ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME ) {
+            m_ForceDrawGame = true;
+        }
+
         // If the hurry up is enabled
         if (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0)
         {
@@ -656,9 +686,6 @@ void CMatch::ManageMatchOver (void)
         int AliveCount = 0;     // Number of alive bombers
         int DyingCount = 0;     // Number of dying bombers
 
-        int AliveCount_Human = 0;   // Number of alive human bombers
-        int AliveCount_AI    = 0;   // Number of alive computer controlled bombers
-
         // Count alive bombers and dying bombers
         for (int Player = 0 ; Player < m_Arena.MaxBombers() ; Player++)
         {
@@ -670,14 +697,6 @@ void CMatch::ManageMatchOver (void)
                 {
                     // Add one alive bomber
                     AliveCount++;
-
-                    // Count number of human and AI alive bombers
-                    switch ( m_Arena.GetBomber(Player).GetBomberType() ) {
-                        case BOMBERTYPE_MAN:
-                        case BOMBERTYPE_NET:    AliveCount_Human++; break;
-                        case BOMBERTYPE_COM:    AliveCount_AI++;    break;
-                    }
-
                 }
                 // If this bomber is dying
                 else if (m_Arena.GetBomber(Player).IsDying())
@@ -713,7 +732,7 @@ void CMatch::ManageMatchOver (void)
             m_ExitModeTime = m_ModeTime + PAUSE_DRAWGAME;
         }
         // If only AI bombers are alive then this is also a draw game
-        else if ( AliveCount_Human == 0 && AliveCount_AI > 1 && m_pOptions->GetOption_ActionWhenOnlyAIPlayersLeft() == ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME )
+        else if ( m_ForceDrawGame )
         {
             // Stop the match song which was playing
             m_pSound->StopSong (m_CurrentSong);
