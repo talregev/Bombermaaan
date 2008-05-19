@@ -582,12 +582,26 @@ void CMatch::UpdateMatch (void)
             }
         }
 
-        if ( AliveCount_Human == 0 && AliveCount_AI > 1 && m_pOptions->GetOption_ActionWhenOnlyAIPlayersLeft() == ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME ) {
-            m_ForceDrawGame = true;
+        bool ForceArenaClosing = false;
+
+        if ( AliveCount_Human == 0 && AliveCount_AI > 1 ) {
+
+            switch ( m_pOptions->GetOption_ActionWhenOnlyAIPlayersLeft() ) {
+                case ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME: m_ForceDrawGame = true; break;
+                case ACTIONONLYAIPLAYERSALIVE_STARTCLOSING: ForceArenaClosing = true; break;
+                case ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME: break;
+                default: ASSERT( false );
+            }
+
+            if ( ForceArenaClosing ) {
+                // Stop the match music song (the normal one)
+                m_pSound->StopSong( SONG_MATCH_MUSIC_1_NORMAL );
+            }
+
         }
 
         // If the hurry up is enabled
-        if (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0)
+        if (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0 || ForceArenaClosing )
         {
             //------------------------------------
             // Check if arena should close
@@ -600,7 +614,9 @@ void CMatch::UpdateMatch (void)
                 if (m_Clock.GetMinutes() < m_pOptions->GetTimeUpMinutes() 
                     ||
                     (m_Clock.GetMinutes() == m_pOptions->GetTimeUpMinutes() && 
-                     m_Clock.GetSeconds() <= m_pOptions->GetTimeUpSeconds()))
+                     m_Clock.GetSeconds() <= m_pOptions->GetTimeUpSeconds())
+                    ||
+                    ForceArenaClosing )
                 {
                     // Make the arena start closing
                     m_Arena.GetArenaCloser().Start ();
