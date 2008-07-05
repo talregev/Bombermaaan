@@ -368,6 +368,7 @@ trunk/images/blocksize_32/patterns/transform_stunt-32.php -text
 trunk/images/gimp-scripts/bm-color-bombers.scm -text
 trunk/installer/HeaderImage.bmp -text
 trunk/installer/HeaderImage.xcf -text
+trunk/installer/InstallScript.iss -text
 trunk/installer/InstallScript.nsi -text
 trunk/src/Bombermaaan.dsw -text
 trunk/src/Bombermaaan.sln -text
