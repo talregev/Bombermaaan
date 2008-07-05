@@ -92,6 +92,7 @@ SetCompressor lzma
 
   Var MUI_TEMP
   Var STARTMENU_FOLDER
+  Var UNINSTALL_UNINSTALLBUTTON
 
 
 
@@ -113,6 +114,9 @@ SetCompressor lzma
   !insertmacro MUI_PAGE_WELCOME
   !define MUI_LICENSEPAGE_RADIOBUTTONS
   !insertmacro MUI_PAGE_LICENSE "..\COPYING.txt"
+  
+  Page custom PageUninstallOldVersion PageLeaveUninstallOldVersion
+  
   !define MUI_COMPONENTSPAGE_SMALLDESC
   !insertmacro MUI_PAGE_COMPONENTS
   !insertmacro MUI_PAGE_DIRECTORY
@@ -150,32 +154,73 @@ SetCompressor lzma
 
 
 ;--------------------------------
-;onInit
- 
-Function .onInit
-  ;!insertmacro MUI_LANGDLL_DISPLAY
+;Uninstall old version page
 
-  ; Was set by installer of version 1.02:
+Function PageUninstallOldVersion
+
+  ; This was set by installer of version 1.02:
   ReadRegStr $R0 HKLM "SOFTWARE\Bombermaaan" "Start Menu Folder"
   StrCmp $R0 "" done
  
-  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-    "Bombermaaan has already been installed. $\nClick OK to remove the previous version or Cancel to cancel this installation." IDOK uninstall
-  MessageBox MB_OK "The previous version is kept. Nothing was changed. Installer will exit now."
-  Abort
+  nsDialogs::Create /NOUNLOAD 1018
+  Pop $0
 
-  ;Run the uninstaller
-  uninstall:
-    ClearErrors
-    ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
-    IfErrors uninstall_error uninstall_success
-  uninstall_error:
-    MessageBox MB_OK "An error occurred during uninstall. Exiting installation."
-    Abort
-  uninstall_success:
-    MessageBox MB_OK "Uninstall was successful. Running installer now."
+  !insertmacro MUI_HEADER_TEXT "Already Installed" "Choose how you want to install Bombermaaan."
+  nsDialogs::CreateItem /NOUNLOAD STATIC ${WS_VISIBLE}|${WS_CHILD}|${WS_CLIPSIBLINGS} 0 0 0 100% 40 "Bombermaaan has already been installed. It's recommended that you uninstall the current version before installing. Select the operation you want to perform and click Next to continue."
+  Pop $R0
+  nsDialogs::CreateItem /NOUNLOAD BUTTON ${BS_AUTORADIOBUTTON}|${BS_VCENTER}|${BS_MULTILINE}|${WS_VISIBLE}|${WS_CHILD}|${WS_CLIPSIBLINGS}|${WS_GROUP}|${WS_TABSTOP} 0 10 55 100% 30 "Uninstall before installing"
+  Pop $UNINSTALL_UNINSTALLBUTTON
+  nsDialogs::CreateItem /NOUNLOAD BUTTON ${BS_AUTORADIOBUTTON}|${BS_TOP}|${BS_MULTILINE}|${WS_VISIBLE}|${WS_CHILD}|${WS_CLIPSIBLINGS} 0 10 85 100% 50 "Do not uninstall"
+  Pop $R0
+
+  SendMessage $UNINSTALL_UNINSTALLBUTTON ${BM_SETCHECK} 1 0
+
+  nsDialogs::Show
+
   done: 
+
 FunctionEnd
+
+
+
+Function PageLeaveUninstallOldVersion
+
+  SendMessage $UNINSTALL_UNINSTALLBUTTON ${BM_GETCHECK} 0 0 $R0
+  StrCmp $R0 "1" uninstall skipuninstall
+  
+  uninstall:
+  Call RunUninstaller
+  goto end
+  
+  skipuninstall:
+  ; Nothing to do
+  
+  end:
+
+FunctionEnd
+
+
+
+Function RunUninstaller
+
+  HideWindow
+  
+  ClearErrors
+  ExecWait '"$INSTDIR\uninstall.exe" /S _?=$INSTDIR'
+  IfErrors end
+  
+  ; Remove uninstaller and installation folder
+  Delete "$INSTDIR\uninstall.exe"
+  RMDir $INSTDIR
+  
+  end:
+
+  ; Show window again
+  BringToFront
+  
+FunctionEnd
+
+
 
 
 
