@@ -42,6 +42,7 @@ images/blocksize_32/patterns/stunt-side-32.png -text
 images/blocksize_32/patterns/transform_png-color-32.php -text
 images/blocksize_32/patterns/transform_stunt-32.php -text
 images/gimp-scripts/bm-color-bombers.scm -text
+installer/Bombermaaan_1.3.0.423_setup_Vista_notes.txt -text
 installer/HeaderImage.bmp -text
 installer/HeaderImage.xcf -text
 installer/InstallScript.iss -text
