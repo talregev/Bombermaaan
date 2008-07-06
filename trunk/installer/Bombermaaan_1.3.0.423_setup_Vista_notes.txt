@@ -1,0 +1,36 @@
+Bombermaaan 1.3.0.423 - Installation notes for Vista
+====================================================
+
+When user access control (UAC) is turned on in Vista,
+the Bombermaaan game may fail and cannot be played.
+
+After starting the game (either the large window or
+classic) by the shortcut in the start menu (or by directly
+executing the program files, it doesn't matter), there
+seems nothing to happen. No window opens.
+
+Bombermaaan creates a log and a configuration file on
+the first startup in its directory. With UAC enabled,
+Vista doesn't allow this. Bombermaaan checks if the files
+were created successfully. Since they aren't, Bombermaaan
+exits without further notice.
+
+To avoid this, you can install Bombermaaan in another directory,
+not the %ProgramFiles% directory.
+So try to install Bombermaaan in the "C:\Software\Bombermaaan 1.3\"
+directory, for example. This folder is not protected by UAC,
+so the files can be created successfully.
+
+Of course this is on the roadmap to be changed in the future.
+
+If you don't like installers, you are probably not touched by
+this problem if download the zip package and unzip the file 
+contents to your desktop or My Files folder.
+
+Enjoy playing Bombermaaan!
+
+
+Regards
+Bernd
+
+2008-07-06
