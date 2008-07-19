@@ -177,6 +177,8 @@ src/RES32/IMAGE/arena_arrows.bmp -text
 src/RES32/IMAGE/arena_arrows.xcf -text
 src/RES32/IMAGE/arena_fire.bmp -text
 src/RES32/IMAGE/arena_fire.xcf -text
+src/RES32/IMAGE/arena_flame.bmp -text
+src/RES32/IMAGE/arena_flame.xcf -text
 src/RES32/IMAGE/arena_floor.bmp -text
 src/RES32/IMAGE/arena_fly.bmp -text
 src/RES32/IMAGE/arena_hurry.bmp -text
