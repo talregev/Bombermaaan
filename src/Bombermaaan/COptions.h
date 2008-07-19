@@ -120,6 +120,7 @@ private:
     int                 m_NumberOfLevels;
 	int**				m_NumberOfItemsInWalls;
 	int**				m_InitialBomberSkills;
+    std::string         configFileName;                 //!< Full name of the config file (including path)
 
     void                ReadData (FILE* pConfigFile);   //!< Read the options from the configuration file
     void                WriteData (FILE* pConfigFile);  //!< Write the options to the configuration file
@@ -135,7 +136,7 @@ public:
                         COptions (void);                //!< Constructor.
                         ~COptions (void);               //!< Destructor. Do nothing.
     COptions&           operator = (COptions& Copy);    //!< Operator = used to copy an option object.
-    bool                Create (void);                  //!< Load the options. Create the configuration file if it doesn't exist.
+    bool                Create( std::string appDataFolder );  //!< Load the options. Create the configuration file if it doesn't exist.
     void                Destroy (void);                 //!< Free allocated memory.
     void                SaveBeforeExit (void);          //!< Write the options to the configuration file
     inline int          GetTimeStartMinutes (void);     //!< Get how many minutes in the time when a battle starts

@@ -192,6 +192,24 @@ bool CGame::Create (const char* pCommandLine)
     theLog.WriteLine( "Game            => Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING );
 	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ );
 
+    // Check for the bombermaaan directory in the appdata folder
+    const char *appDataPath = getenv( "APPDATA" );
+    if ( ! appDataPath ) {
+        theLog.WriteLine( "Game            => !!! Could not get the user application folder." );
+        return false;
+    }
+
+    appDataFolder.append( appDataPath );
+    appDataFolder.append( "\\Bombermaaan\\" );
+
+    if ( ! CreateDirectory( appDataFolder.c_str(), NULL ) ) {
+        if ( GetLastError() != ERROR_ALREADY_EXISTS ) {
+            theLog.WriteLine( "Game            => !!! Could not create folder '%s'.", appDataFolder.c_str() );
+            return false;
+        }
+    }
+
+
     theDebug.SetGame(this);
     theDebug.SetTimer(&m_Timer);
 	theDebug.SetMatch(&m_Match);
@@ -222,7 +240,7 @@ bool CGame::Create (const char* pCommandLine)
         return false;
     }
 
-    if (!m_Options.Create ())
+    if ( ! m_Options.Create( appDataFolder ) )
     {
         // Get out
         return false;
