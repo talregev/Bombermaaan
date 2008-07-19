@@ -193,6 +193,8 @@ src/RES32/IMAGE/title_background.bmp -text
 src/RES32/IMAGE/title_cloud_1.bmp -text
 src/RES32/IMAGE/title_cloud_1.xcf -text
 src/RES32/IMAGE/title_title.bmp -text
+src/RES32/IMAGE/victory_title.bmp -text
+src/RES32/IMAGE/victory_title.xcf -text
 src/RES32/RES.CPP -text
 src/RES32/RES32.dsp -text
 src/RES32/RES32.vcproj -text
