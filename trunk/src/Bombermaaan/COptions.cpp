@@ -31,6 +31,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <shlobj.h>                     // Needed for SHGetFolderPath(...)
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -45,9 +47,6 @@
 #define CONFIGURATION_KEYBOARD_1      0
 #define CONFIGURATION_KEYBOARD_2      1
 #define CONFIGURATION_JOYSTICK_1      2
-
-// Define the name of the Bombermaaan config file
-#define NAME_OF_BOMBERMAAAN_CFG "Bombermaaan.cfg"
 
 // Initial number of items when a new arena is built
 #define INITIAL_ITEMBOMB        11
@@ -143,8 +142,13 @@ COptions& COptions::operator = (COptions& Copy)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::Create (void)
+bool COptions::Create( std::string appDataFolder )
 {
+    // Set the file name of the configuration file including full path
+    configFileName = appDataFolder.c_str();
+    configFileName.append( "config.dat" );
+    theLog.WriteLine( "Options         => Name of config file: '%s'.", configFileName.c_str() );
+    
     // Load configuration file
     if (!LoadConfiguration())
         return false;
@@ -153,6 +157,7 @@ bool COptions::Create (void)
     if (!LoadLevels())
         return false;
     
+
     // Everything went ok.
     return true;
 }
@@ -212,7 +217,7 @@ void COptions::Destroy (void)
 void COptions::SaveBeforeExit (void)
 {
    // Try to open the configuration file
-    FILE* pConfigFile = fopen(NAME_OF_BOMBERMAAAN_CFG, "wb");
+    FILE* pConfigFile = fopen( configFileName.c_str(), "wb");
     
     // Write configuration to file
     if (pConfigFile != NULL)
@@ -229,7 +234,7 @@ void COptions::SaveBeforeExit (void)
 bool COptions::LoadConfiguration (void)
 {
     // Try to open the configuration file
-    FILE* pConfigFile = fopen(NAME_OF_BOMBERMAAAN_CFG, "rb");
+    FILE* pConfigFile = fopen( configFileName.c_str(), "rb" );
     
     // If the configuration file doesn't exist
     if (pConfigFile == NULL)
@@ -284,13 +289,13 @@ bool COptions::LoadConfiguration (void)
         m_Level = 0;
 
         // Create the configuration file
-        pConfigFile = fopen(NAME_OF_BOMBERMAAAN_CFG, "wb");
+        pConfigFile = fopen( configFileName.c_str(), "wb" );
         
         // If creation failed
         if (pConfigFile == NULL)
         {
             // Log failure
-            theLog.WriteLine ("Options         => !!! Could not create " NAME_OF_BOMBERMAAAN_CFG ".");
+            theLog.WriteLine ("Options         => !!! Could not create config file '%s'.", configFileName.c_str() );
 
             return false;
         }
