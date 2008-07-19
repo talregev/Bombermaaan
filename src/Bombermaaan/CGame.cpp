@@ -74,41 +74,9 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #define NAME_OF_BOMBERMAN_DLL "Bombermaaan.dll"
 #endif
 
-// TODO: Implement this - so we don't have to change the date manually
-/****
-
-I've found this in the file TortoiseProc.cpp from TortoiseSVN
-That file TortoiseProc.cpp Copyright (C) 2003-2007 - TortoiseSVN
-
-#define YEAR ((((__DATE__ [7] - '0') * 10 + (__DATE__ [8] - '0')) * 10  \
-              + (__DATE__ [9] - '0')) * 10 + (__DATE__ [10] - '0'))
-
-#define MONTH (__DATE__ [2] == 'n' ? (__DATE__ [1] == 'a' ? 1 : 6)      \
-                : __DATE__ [2] == 'b' ? 2                               \
-                : __DATE__ [2] == 'r' ? (__DATE__ [0] == 'M' ? 3 : 4)   \
-                : __DATE__ [2] == 'y' ? 5								\
-                : __DATE__ [2] == 'l' ? 7                               \
-                : __DATE__ [2] == 'g' ? 8                               \
-                : __DATE__ [2] == 'p' ? 9                               \
-                : __DATE__ [2] == 't' ? 10                               \
-                : __DATE__ [2] == 'v' ? 11 : 12)
-
- #define DAY ((__DATE__ [4] == ' ' ? 0 : __DATE__ [4] - '0') * 10       \
-              + (__DATE__ [5] - '0'))
-****/
-
 // Bombermaaan version
 #define BOMBERMAAAN_VERSION_STRING      "1.3"
 #define BOMBERMAAAN_BUILD_STRING        "423"
-#define BOMBERMAAAN_RELEASEDATE_STRING  "2008-05-07"
-
-// This is the title of the main bombermaaan window (32-pixels-version title is longer due to bigger window size)
-#ifdef USE_32_PIXELS_PER_BLOCK
-#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING ", " BOMBERMAAAN_RELEASEDATE_STRING   // For stable release
-#else
-#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING   // For stable release
-#endif
-//#define BOMBERMAAAN_WINDOW_TITLE "Bombermaaan - (Rev. " BOMBERMAAAN_BUILD_STRING ", " BOMBERMAAAN_RELEASEDATE_STRING ")"   // For experimental version
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -123,7 +91,58 @@ CGame::CGame (HINSTANCE hInstance, const char* pCommandLine)
     m_hModule = NULL;    
     m_hInstance = hInstance;
 
-    SetWindowText( m_hWnd, BOMBERMAAAN_WINDOW_TITLE );
+    //
+    // Set the window title
+    //
+
+    std::string windowTitle = "Bombermaaan ";
+
+    windowTitle.append( BOMBERMAAAN_VERSION_STRING );
+    windowTitle.append( " - Build " );
+    windowTitle.append( BOMBERMAAAN_BUILD_STRING );
+
+    // The compile date is only added in the 32-pixels-version since the window title bar in the 16-pixels-version is too small
+#ifdef USE_32_PIXELS_PER_BLOCK
+    windowTitle.append( " - Compiled " );
+
+    // Year
+    windowTitle.append( __DATE__ + 7 );
+    windowTitle.append( "-" );
+
+    // Month: Jan/Jun/Jul, Feb, Mar/May, Apr/Aug, Sep, Oct, Nov, Dec
+    // Inspired by the file TortoiseProc.cpp from TortoiseSVN
+    if ( __DATE__[ 0 ] == 'J' ) {
+        if ( __DATE__[ 1 ] == 'a' )      { windowTitle.append( "01" ); }
+        else if ( __DATE__[ 2 ] == 'n' ) { windowTitle.append( "06" ); } 
+        else                             { windowTitle.append( "07" ); }
+    } else if ( __DATE__[ 0 ] == 'F' ) {
+                                           windowTitle.append( "02" );
+    } else if ( __DATE__[ 0 ] == 'M' ) {
+        if ( __DATE__[ 2 ] == 'r' )      { windowTitle.append( "03" ); }
+        else                             { windowTitle.append( "05" ); }
+    } else if ( __DATE__[ 0 ] == 'A' ) {
+        if ( __DATE__[ 1 ] == 'p' )      { windowTitle.append( "04" ); }
+        else                             { windowTitle.append( "08" ); }
+    } else if ( __DATE__[ 0 ] == 'S' ) {
+                                           windowTitle.append( "09" );
+    } else if ( __DATE__[ 0 ] == 'O' ) {
+                                           windowTitle.append( "10" );
+    } else if ( __DATE__[ 0 ] == 'N' ) {
+                                           windowTitle.append( "11" );
+    } else if ( __DATE__[ 0 ] == 'D' ) {
+                                           windowTitle.append( "12" );
+    } else {
+        // Should never be reached
+        ASSERT( 0 );
+    }
+    windowTitle.append( "-" );
+
+    // Day
+    windowTitle.append( __DATE__ + 4, 2);
+#endif
+
+    SetWindowText( m_hWnd, windowTitle.c_str() );
+
 }
 
 //******************************************************************************************************************************
@@ -168,7 +187,7 @@ bool CGame::Create (const char* pCommandLine)
 #endif
 
 	// Log date and time of compile
-    theLog.WriteLine( "Game            => " BOMBERMAAAN_WINDOW_TITLE );
+    theLog.WriteLine( "Game            => Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING );
 	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ );
 
     theDebug.SetGame(this);
