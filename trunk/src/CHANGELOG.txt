@@ -1,3 +1,12 @@
+Next version
+
+Changed: Bombermaaan can be called from any directory now - no more DLL not found message (revision 464).
+Changed: Log file and configuration file is placed in %APPDATA%\Bombermaaan directory (#1847811, revision 462, revision 463).
+
+
+----------------------------
+
+
 Version 1.3
 
 Released on May 7, 2008
