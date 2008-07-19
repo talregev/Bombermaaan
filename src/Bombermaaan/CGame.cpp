@@ -224,18 +224,27 @@ bool CGame::Create (const char* pCommandLine)
 	// Log date and time of compile
     theLog.WriteLine( "Game            => Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING );
 	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ );
+    theLog.WriteLine( "Game            => Program name: '%s'.", __argv[0] );
 
     theDebug.SetGame(this);
     theDebug.SetTimer(&m_Timer);
 	theDebug.SetMatch(&m_Match);
     theDebug.Create();
 
+    // Set the current directory to the directory where the Bombermaaan exe file resides
+    // __argv[0] is the full path including the exe file name
+    // If we append a \.. to the full path, we get the location where the dll and exe file(s) are placed
+    std::string pgmDirectory;
+    pgmDirectory.append( __argv[ 0 ] );
+    pgmDirectory.append( "\\.." );
+    SetCurrentDirectory( pgmDirectory.c_str() );
+
     // If the resource file does not exist
     if (GetFileAttributes( NAME_OF_BOMBERMAN_DLL ) == -1)
     {
         // Failure
-        theLog.WriteLine ("Game            => !!! Could not find " NAME_OF_BOMBERMAN_DLL ".");
-        MessageBox(m_hWnd, "Could not find " NAME_OF_BOMBERMAN_DLL "!", "Error", MB_OK);
+        theLog.WriteLine( "Game            => !!! Could not find " NAME_OF_BOMBERMAN_DLL "." );
+        MessageBox( m_hWnd, "Could not find " NAME_OF_BOMBERMAN_DLL "!", "Error", MB_OK | MB_ICONERROR );
         
         // Get out
         return false;
@@ -248,7 +257,7 @@ bool CGame::Create (const char* pCommandLine)
     if (m_hModule == NULL)
     {
         // Log error
-        theLog.WriteLine ("Game            => !!! Could not load " NAME_OF_BOMBERMAN_DLL );
+        theLog.WriteLine( "Game            => !!! Could not load " NAME_OF_BOMBERMAN_DLL "." );
         theLog.LogLastError();
         
         // Get out
