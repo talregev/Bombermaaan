@@ -517,6 +517,8 @@ trunk/src/RES32/IMAGE/title_background.bmp -text
 trunk/src/RES32/IMAGE/title_cloud_1.bmp -text
 trunk/src/RES32/IMAGE/title_cloud_1.xcf -text
 trunk/src/RES32/IMAGE/title_title.bmp -text
+trunk/src/RES32/IMAGE/victory_title.bmp -text
+trunk/src/RES32/IMAGE/victory_title.xcf -text
 trunk/src/RES32/RES.CPP -text
 trunk/src/RES32/RES32.dsp -text
 trunk/src/RES32/RES32.vcproj -text
