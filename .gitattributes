@@ -501,6 +501,8 @@ trunk/src/RES32/IMAGE/arena_arrows.bmp -text
 trunk/src/RES32/IMAGE/arena_arrows.xcf -text
 trunk/src/RES32/IMAGE/arena_fire.bmp -text
 trunk/src/RES32/IMAGE/arena_fire.xcf -text
+trunk/src/RES32/IMAGE/arena_flame.bmp -text
+trunk/src/RES32/IMAGE/arena_flame.xcf -text
 trunk/src/RES32/IMAGE/arena_floor.bmp -text
 trunk/src/RES32/IMAGE/arena_fly.bmp -text
 trunk/src/RES32/IMAGE/arena_hurry.bmp -text
