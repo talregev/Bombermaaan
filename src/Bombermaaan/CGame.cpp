@@ -180,35 +180,50 @@ bool CGame::Create (const char* pCommandLine)
 
 #endif
 
+
+    // Check for the bombermaaan directory in the appdata folder
+    const char *appDataPath = getenv( "APPDATA" );
+    if ( ! appDataPath ) {
+        MessageBox( m_hWnd, 
+                    "Could not get the user application folder (%APPDATA%).\nBombermaaan terminates.", 
+                    "Error", MB_OK | MB_ICONERROR );
+        return false;
+    }
+
+    // Store the Bombermaaan folder name
+    appDataFolder.append( appDataPath );
+    appDataFolder.append( "\\Bombermaaan\\" );
+
+    // Create the Bombermaaan directory
+    if ( ! CreateDirectory( appDataFolder.c_str(), NULL ) ) {
+        // Exit the game if the folder cannot be created and it doesn't exist already
+        if ( GetLastError() != ERROR_ALREADY_EXISTS ) {
+            std::string errorMsg = "Could not create folder '";
+            errorMsg.append( appDataFolder );
+            errorMsg.append( "'.\nBombermaaan cannot run without this folder." );
+            MessageBox( m_hWnd, 
+                        errorMsg.c_str(), 
+                        "Error", MB_OK | MB_ICONERROR );
+            return false;
+        }
+    }
+
+
     //! @see ENABLE_LOG
 #ifdef ENABLE_LOG
 
+    std::string logFileName;
+    logFileName.append( appDataFolder );
+    logFileName.append( "log.txt" );
+
     // Open the log file
-    theLog.Open ("log.txt");
+    theLog.Open( logFileName.c_str() );
 
 #endif
 
 	// Log date and time of compile
     theLog.WriteLine( "Game            => Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING );
 	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ );
-
-    // Check for the bombermaaan directory in the appdata folder
-    const char *appDataPath = getenv( "APPDATA" );
-    if ( ! appDataPath ) {
-        theLog.WriteLine( "Game            => !!! Could not get the user application folder." );
-        return false;
-    }
-
-    appDataFolder.append( appDataPath );
-    appDataFolder.append( "\\Bombermaaan\\" );
-
-    if ( ! CreateDirectory( appDataFolder.c_str(), NULL ) ) {
-        if ( GetLastError() != ERROR_ALREADY_EXISTS ) {
-            theLog.WriteLine( "Game            => !!! Could not create folder '%s'.", appDataFolder.c_str() );
-            return false;
-        }
-    }
-
 
     theDebug.SetGame(this);
     theDebug.SetTimer(&m_Timer);
