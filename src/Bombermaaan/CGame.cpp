@@ -105,6 +105,8 @@ CGame::CGame (HINSTANCE hInstance, const char* pCommandLine)
 #ifdef USE_32_PIXELS_PER_BLOCK
     windowTitle.append( " - Compiled " );
 
+    // At the end, the windowTitle is "... - Compiled YYYY-MM-DD"
+
     // Year
     windowTitle.append( __DATE__ + 7 );
     windowTitle.append( "-" );
