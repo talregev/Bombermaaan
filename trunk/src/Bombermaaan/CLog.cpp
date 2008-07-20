@@ -265,16 +265,13 @@ long CLog::WriteLine( const char *pMessage, ... )
             // Store the time string
             char Time [64];
             sprintf ( Time,                 // String where to write
-                      "%02d:%02d:%02d",     // Format (don't forget '\n' character!)
+                      "%02d:%02d:%02d  ",   // Format
                       LocalTime.wHour,      // Time numbers to use
                       LocalTime.wMinute, 
                       LocalTime.wSecond);
             
             // Write the time string
             m_theLog.write( Time, strlen( Time ) );
-
-            // Write the space between time and message
-            m_theLog.write( "  ", strlen( "  " ) );
 
             // Write the message
             m_theLog.write( Message, strlen( Message ) );
