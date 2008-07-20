@@ -513,6 +513,7 @@ trunk/src/RES32/IMAGE/arena_item_template.xcf -text
 trunk/src/RES32/IMAGE/arena_pause.bmp -text
 trunk/src/RES32/IMAGE/arena_pause.xcf -text
 trunk/src/RES32/IMAGE/board_background.bmp -text
+trunk/src/RES32/IMAGE/drawgame_main.xcf -text
 trunk/src/RES32/IMAGE/title_background.bmp -text
 trunk/src/RES32/IMAGE/title_cloud_1.bmp -text
 trunk/src/RES32/IMAGE/title_cloud_1.xcf -text
