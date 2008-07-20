@@ -181,7 +181,7 @@ bool CGame::Create (const char* pCommandLine)
 #endif
 
 
-    // Check for the bombermaaan directory in the appdata folder
+    // Check for the Bombermaaan directory in the appdata folder
     const char *appDataPath = getenv( "APPDATA" );
     if ( ! appDataPath ) {
         MessageBox( m_hWnd, 
@@ -191,7 +191,7 @@ bool CGame::Create (const char* pCommandLine)
     }
 
     // Store the Bombermaaan folder name
-    appDataFolder.append( appDataPath );
+    appDataFolder = appDataPath;
     appDataFolder.append( "\\Bombermaaan\\" );
 
     // Create the Bombermaaan directory
@@ -221,9 +221,9 @@ bool CGame::Create (const char* pCommandLine)
 
 #endif
 
-	// Log date and time of compile
-    theLog.WriteLine( "Game            => Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING );
-	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ );
+	// Log date and time of compile and the full path to the exe file
+    theLog.WriteLine( "Game            => Bombermaaan " BOMBERMAAAN_VERSION_STRING " - Build " BOMBERMAAAN_BUILD_STRING "." );
+	theLog.WriteLine( "Game            => Built at " __TIME__ " on " __DATE__ "." );
     theLog.WriteLine( "Game            => Program name: '%s'.", __argv[0] );
 
     theDebug.SetGame(this);
@@ -233,7 +233,7 @@ bool CGame::Create (const char* pCommandLine)
 
     // Set the current directory to the directory where the Bombermaaan exe file resides
     // __argv[0] is the full path including the exe file name
-    // If we append a \.. to the full path, we get the location where the dll and exe file(s) are placed
+    // If we append a "\.." to the full path, we get the location where the dll and exe file(s) are placed
     std::string pgmDirectory;
     pgmDirectory.append( __argv[ 0 ] );
     pgmDirectory.append( "\\.." );

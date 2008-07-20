@@ -31,7 +31,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <shlobj.h>                     // Needed for SHGetFolderPath(...)
 
 
 //******************************************************************************************************************************
