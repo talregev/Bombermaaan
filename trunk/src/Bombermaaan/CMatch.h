@@ -66,6 +66,7 @@ private:
     CClock          m_Clock;                    //!< Clock object
     CArena          m_Arena;                    //!< Arena object
     CAiManager      m_AiManager;                //!< Computer brain
+    //! @TODO: Check why m_NoComputer is there (didn't find references)
     bool            m_NoComputer;               //!< True if no computer is playing in this match
     bool            m_MatchOver;                //!< Is match over? (ie. there is a result : winner or draw game)
     int             m_WinnerPlayer;             //!< Number of the player who won if there is a winner
@@ -78,6 +79,7 @@ private:
     float           m_ExitModeTime;             //!< Mode time when we have to start the last black screen
     EGameMode       m_ExitGameMode;             //!< Game mode to ask for when exiting
     bool            m_HaveToExit;               //!< Do we have to exit this mode?
+    bool            computerPlayersPresent;     //!< True, when there are AI players
     
     void            CreateMainComponents (void);
     void            DestroyHurryUpMessage (void);
