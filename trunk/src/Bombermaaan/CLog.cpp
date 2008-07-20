@@ -157,7 +157,7 @@ bool CLog::Close()
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Log the last error, which can be found by calling GetLastError.
+//! Log the last error, which can be found by calling the WINAPI function GetLastError().
 void CLog::LogLastError()
 {
     // Declare variables
