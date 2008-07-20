@@ -132,8 +132,18 @@ void CMatch::Create (void)
     }
 
     CreateMainComponents ();
+
+    // Set computerPlayersPresent to true when there are AI players in this match
+    computerPlayersPresent = false;
+    for ( int i = 0; i < MAX_BOMBERS; i++ ) {
+        if ( m_pOptions->GetBomberType( i ) == BOMBERTYPE_COM ) {
+            computerPlayersPresent = true;
+        }
+    }
     
-    m_AiManager.Create(m_pOptions);
+    if ( computerPlayersPresent ) {
+        m_AiManager.Create(m_pOptions);
+    }
 }
 
 //******************************************************************************************************************************
@@ -163,7 +173,9 @@ void CMatch::Destroy (void)
 {
     CModeScreen::Destroy();
 
-    m_AiManager.Destroy();
+    if ( computerPlayersPresent ) {
+        m_AiManager.Destroy();
+    }
 
     DestroyHurryUpMessage();
     DestroyPauseMessage();
@@ -312,7 +324,10 @@ void CMatch::ProcessPlayerCommands (void)
     // If the match is not paused
     if (m_pPauseMessage == NULL)
     {
-        m_AiManager.Update(m_pTimer->GetDeltaTime());
+        // Do the AI stuff only when there are AI players
+        if ( computerPlayersPresent ) {
+            m_AiManager.Update(m_pTimer->GetDeltaTime());
+        }
 
         // Scan the players
         for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
