@@ -69,7 +69,6 @@
 COptions::COptions (void)
 {
     m_LevelsData = NULL;
-    m_LevelsName = NULL;
 	m_NumberOfItemsInWalls = NULL;
 	m_InitialBomberSkills = NULL;
 }
@@ -117,8 +116,8 @@ COptions& COptions::operator = (COptions& Copy)
 
     for (i = 0 ; i < m_NumberOfLevels ; i++)
     {
-        m_LevelsName[i] = new char [strlen(Copy.m_LevelsName[i]) + 1];
-        strcpy(m_LevelsName[i], Copy.m_LevelsName[i]);
+        levelFileNames_short = Copy.levelFileNames_short;
+        levelFileNames_full  = Copy.levelFileNames_full;
 
         for (j = 0 ; j < ARENA_WIDTH ; j++)
             for (k = 0 ; k < ARENA_HEIGHT ; k++)
@@ -141,7 +140,7 @@ COptions& COptions::operator = (COptions& Copy)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::Create( std::string appDataFolder )
+bool COptions::Create( std::string appDataFolder, std::string pgmFolder )
 {
     // Set the file name of the configuration file including full path
     configFileName = appDataFolder.c_str();
@@ -153,7 +152,7 @@ bool COptions::Create( std::string appDataFolder )
         return false;
 
     // Load game levels data and names
-    if (!LoadLevels())
+    if (!LoadLevels( appDataFolder, pgmFolder ))
         return false;
     
 
@@ -179,22 +178,11 @@ void COptions::Destroy (void)
                 delete [] m_LevelsData[i][j];
 
             delete [] m_LevelsData[i];
-            
-			if (m_LevelsName[i] != NULL) {
-                delete [] m_LevelsName[i];
-				m_LevelsName[i] = NULL;
-			}
         }
 
         delete [] m_LevelsData;
         m_LevelsData = NULL;
         
-        if (m_LevelsName != NULL)
-        {
-            delete [] m_LevelsName;
-            m_LevelsName = NULL;
-        }
-
 		for (int i = 0 ; i < m_NumberOfLevels ; i++) {
 			delete [] m_InitialBomberSkills[i];
 			delete [] m_NumberOfItemsInWalls[i];
@@ -361,7 +349,6 @@ void COptions::WriteData (FILE* pConfigFile)
 void COptions::AllocateLevels (int NumberOfLevels)
 {
     ASSERT(m_LevelsData == NULL);
-    ASSERT(m_LevelsName == NULL);
 	ASSERT(m_NumberOfItemsInWalls == NULL);
 	ASSERT(m_InitialBomberSkills == NULL);
     
@@ -379,41 +366,99 @@ void COptions::AllocateLevels (int NumberOfLevels)
         m_NumberOfItemsInWalls[i] = new int [NUMBER_OF_ITEMS];
         m_InitialBomberSkills[i] = new int [NUMBER_OF_BOMBERSKILLS];
     }
-
-    m_LevelsName = new char* [NumberOfLevels];
-    for ( int i = 0; i < NumberOfLevels; i++ ) {
-        m_LevelsName[ i ] = NULL;
-    }
 }
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::LoadLevels (void)
+bool COptions::LoadLevels( std::string appDataFolder, std::string pgmFolder )
 {
     FILE* File;
     long FindHandle;
     _finddata_t FindData;
-    int CurrentLevel = 0;
-            
+    m_NumberOfLevels = 0;
+
+
     //-------------------------------------------
-    // Determine number of level files available
+    // Set the path where the level files are stored
+    // (in the program files folder)
     //-------------------------------------------
     
-    m_NumberOfLevels = 0;
-    FindHandle = _findfirst("Levels\\*.txt", &FindData);
+    std::string levelFilePath_pgmFolder;
+    levelFilePath_pgmFolder = pgmFolder;
+    levelFilePath_pgmFolder.append( "\\Levels\\" );
+
+    std::string levelFilePath_pgmFolderMask;
+    levelFilePath_pgmFolderMask = levelFilePath_pgmFolder;
+    levelFilePath_pgmFolderMask.append( "*.txt" );
+
+
+    //-------------------------------------------
+    // Set the path where the level files are stored
+    // (in the user's application data folder)
+    //-------------------------------------------
+
+    std::string levelFilePath_appDataFolder;
+    levelFilePath_appDataFolder = appDataFolder;
+    levelFilePath_appDataFolder.append( "Levels\\" );
+
+    std::string levelFilePath_appDataFolderMask;
+    levelFilePath_appDataFolderMask = levelFilePath_appDataFolder;
+    levelFilePath_appDataFolderMask.append( "*.txt" );
+
+
+    //-------------------------------------------
+    // Determine number of level files available
+    // (in the program files folder)
+    //-------------------------------------------
+    
+    FindHandle = _findfirst( levelFilePath_pgmFolderMask.c_str(), &FindData );
     
     if (FindHandle != -1)
     {
         do 
         {
-            m_NumberOfLevels++; 
+            m_NumberOfLevels++;
+
+            std::string fileNameWithoutPath( FindData.name );
+            std::string fileNameWithPath( levelFilePath_pgmFolder );
+            fileNameWithPath.append( FindData.name );
+
+            levelFileNames_short.push_back( fileNameWithoutPath );
+            levelFileNames_full.push_back( fileNameWithPath );
         }
         while (_findnext(FindHandle, &FindData) != -1);
     }
 
     _findclose(FindHandle);
+
+
+    //-------------------------------------------
+    // Determine number of level files available
+    // (in the user's application data folder)
+    //-------------------------------------------    
+
+    FindHandle = _findfirst( levelFilePath_appDataFolderMask.c_str(), &FindData );
+    
+    if (FindHandle != -1)
+    {
+        do 
+        {
+            m_NumberOfLevels++;
+
+            std::string fileNameWithoutPath( FindData.name );
+            std::string fileNameWithPath( levelFilePath_appDataFolder );
+            fileNameWithPath.append( FindData.name );
+
+            levelFileNames_short.push_back( fileNameWithoutPath );
+            levelFileNames_full.push_back( fileNameWithPath );
+        }
+        while (_findnext(FindHandle, &FindData) != -1);
+    }
+
+    _findclose(FindHandle);
+
 
     //---------------------
     // Check for a problem
@@ -442,90 +487,73 @@ bool COptions::LoadLevels (void)
     AllocateLevels(m_NumberOfLevels);
     
     //------------------------------------------------------
-    // Rebrowse all levels but actually load them this time
+    // Load all the level files detected earlier
     //------------------------------------------------------
     
     bool ErrorOccurred = false;    
-    FindHandle = _findfirst("Levels\\*.txt", &FindData);
     
-    if (FindHandle != -1)
-    {
-        do
+    for( unsigned int CurrentLevel = 0; CurrentLevel < levelFileNames_short.size(); CurrentLevel++ ) {
+
+        // theLog.WriteLine ("Options         => Loading level file %s...", levelFileNames_full.at(CurrentLevel).c_str() );
+
+        // Open the existing level file for reading
+        File = fopen( levelFileNames_full.at(CurrentLevel).c_str(), "rt" );
+
+        // If it failed
+        if (File == NULL)
         {
-            // Make the level filename to load
-            char LevelFileName[128];
-            sprintf(LevelFileName, "Levels\\%s", FindData.name);
-
-            // Allocate and store level name
-            m_LevelsName[CurrentLevel] = new char [strlen(FindData.name) + 1];
-            strcpy(m_LevelsName[CurrentLevel], FindData.name);
-
-            // theLog.WriteLine ("Options         => Loading level file %s...", LevelFileName);
-
-            // Open the existing level file for reading
-            File = fopen(LevelFileName, "rt");
-
-            // If it failed
-            if (File == NULL)
-            {
-                // Stop loading levels
-                break;
-            }
-
-            string s;
-            ifstream in;
-            in.open(LevelFileName, ios_base::in);
-            getline( in, s );
-            int LevelVersion;
-            if ( sscanf( s.c_str(), "; Bombermaaan level file version=%d\n", &LevelVersion ) == 0 ) {
-                LevelVersion = 1;
-            }
-            
-            switch ( LevelVersion ) {
-
-                case 1:
-                    if (! LoadLevel_Version1( File, CurrentLevel ) ) {
-                        ErrorOccurred = true;
-                    }
-                    break;
-
-                case 2:
-                    if (!LoadLevel_Version2( in, CurrentLevel ) ) {
-                        ErrorOccurred = true;
-                    }
-                    break;
-
-                default:
-                    theLog.WriteLine ("Options         => !!! Unsupported version of level file %s.", LevelFileName);
-                    ErrorOccurred = true;
-                    break;
-
-            }
-
-			// Close the level file
-            fclose(File);
-        
-            // If there wasn't any problem
-            if (!ErrorOccurred)
-            {
-                theLog.WriteLine ("Options         => Level file %s was successfully loaded (version %d).", LevelFileName, LevelVersion);
-            }
-            // If there was a problem
-            else
-            {
-                theLog.WriteLine ("Options         => !!! Could not load level file %s (version %d).", LevelFileName, LevelVersion);
-                // Stop loading levels
-                break;
-            }
-
-            CurrentLevel++;
+            // Stop loading levels
+            break;
         }
-        while (_findnext(FindHandle, &FindData) != -1);
-    } else {
-        ErrorOccurred = true;
+
+        string s;
+        ifstream in;
+        in.open( levelFileNames_full.at(CurrentLevel).c_str(), ios_base::in );
+        getline( in, s );
+        int LevelVersion;
+        if ( sscanf( s.c_str(), "; Bombermaaan level file version=%d\n", &LevelVersion ) == 0 ) {
+            LevelVersion = 1;
+        }
+        
+        switch ( LevelVersion ) {
+
+            case 1:
+                if (! LoadLevel_Version1( File, CurrentLevel ) ) {
+                    ErrorOccurred = true;
+                }
+                break;
+
+            case 2:
+                if (!LoadLevel_Version2( in, CurrentLevel ) ) {
+                    ErrorOccurred = true;
+                }
+                break;
+
+            default:
+                theLog.WriteLine ("Options         => !!! Unsupported version of level file %s.", levelFileNames_short.at(CurrentLevel).c_str());
+                ErrorOccurred = true;
+                break;
+
+        }
+
+		// Close the level file
+        fclose(File);
+    
+        // If there wasn't any problem
+        if (!ErrorOccurred)
+        {
+            theLog.WriteLine ("Options         => Level file %s was successfully loaded (version %d).", levelFileNames_short.at(CurrentLevel).c_str(), LevelVersion);
+        }
+        // If there was a problem
+        else
+        {
+            theLog.WriteLine ("Options         => !!! Could not load level file %s (version %d).", levelFileNames_short.at(CurrentLevel).c_str(), LevelVersion);
+            // Stop loading levels
+            break;
+        }
+
     }
 
-    _findclose(FindHandle);
 
     // If we had to stop then there is a problem.
     if (ErrorOccurred)

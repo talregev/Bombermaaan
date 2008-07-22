@@ -115,7 +115,8 @@ private:
     EDisplayMode        m_DisplayMode;                  //!< Current display mode to use in the CDisplay object
     int                 m_Control[MAX_PLAYER_INPUT][NUM_CONTROLS]; //!< Control number to use for each player input and for each control
     EBlockType***       m_LevelsData;
-    char**              m_LevelsName;
+    std::vector<std::string>  levelFileNames_short;     //!< A list with file names, one entry for each level (short name withouth path, also see levelFileNames_full)
+    std::vector<std::string>  levelFileNames_full;      //!< A list with file names, one entry for each level (short name withouth path, also see levelFileNames_short)
     int                 m_Level;
     int                 m_NumberOfLevels;
 	int**				m_NumberOfItemsInWalls;
@@ -124,7 +125,7 @@ private:
 
     void                ReadData (FILE* pConfigFile);   //!< Read the options from the configuration file
     void                WriteData (FILE* pConfigFile);  //!< Write the options to the configuration file
-    bool                LoadLevels (void);              //!< Load game levels data and names from the level directory.
+    bool                LoadLevels( std::string appDataFolder, std::string pgmFolder );              //!< Load game levels data and names from the level directory.
     bool                LoadConfiguration (void);       //!< Load the configuration file, create default if it does not exist.
     void                AllocateLevels (int NumberOfLevels); //!< Allocate data and names for the specified number of levels. Warning : does not allocate the names strings (just the array of string pointers).
     bool                LoadLevel_Version1( FILE* File, int CurrentLevel ); //!< Load level file version 1
@@ -136,7 +137,7 @@ public:
                         COptions (void);                //!< Constructor.
                         ~COptions (void);               //!< Destructor. Do nothing.
     COptions&           operator = (COptions& Copy);    //!< Operator = used to copy an option object.
-    bool                Create( std::string appDataFolder );  //!< Load the options. Create the configuration file if it doesn't exist.
+    bool                Create( std::string appDataFolder, std::string pgmFolder );  //!< Load the options. Create the configuration file if it doesn't exist.
     void                Destroy (void);                 //!< Free allocated memory.
     void                SaveBeforeExit (void);          //!< Write the options to the configuration file
     inline int          GetTimeStartMinutes (void);     //!< Get how many minutes in the time when a battle starts
@@ -300,7 +301,7 @@ inline int COptions::GetNumberOfLevels (void)
 inline const char* COptions::GetLevelName (void)
 {
     ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
-    return m_LevelsName[m_Level];
+    return levelFileNames_short.at( m_Level ).c_str();
 }
 
 //******************************************************************************************************************************

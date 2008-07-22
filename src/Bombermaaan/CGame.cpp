@@ -264,7 +264,7 @@ bool CGame::Create (const char* pCommandLine)
         return false;
     }
 
-    if ( ! m_Options.Create( appDataFolder ) )
+    if ( ! m_Options.Create( appDataFolder, pgmDirectory ) )
     {
         // Get out
         return false;

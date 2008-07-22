@@ -1,5 +1,6 @@
 Next version
 
+New feature: Level files are also read from the %APPDATA%\Bombermaaan\Levels directory (#1847811)
 Changed: Bombermaaan can be called from any directory now - no more DLL not found message (revision 464).
 Changed: Log file and configuration file is placed in %APPDATA%\Bombermaaan directory (#1847811, revision 462, revision 463).
 
