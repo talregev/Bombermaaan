@@ -45,7 +45,7 @@ VersionInfoDescription=Installer for Bombermaaan
 VersionInfoCopyright=Copyright (C) Thibaut Tollemer, Bernd Arnold
 WizardImageFile=compiler:wizmodernimage-is.bmp
 ; This is not the best image since the setup dialog shows only square, not a rectangle
-WizardSmallImageFile=HeaderImage.bmp
+WizardSmallImageFile=HeaderImage_Innosetup.bmp
 WizardImageStretch=false
 
 [Languages]

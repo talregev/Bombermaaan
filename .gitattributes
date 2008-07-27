@@ -45,6 +45,8 @@ images/gimp-scripts/bm-color-bombers.scm -text
 installer/Bombermaaan_1.3.0.423_setup_Vista_notes.txt -text
 installer/HeaderImage.bmp -text
 installer/HeaderImage.xcf -text
+installer/HeaderImage_Innosetup.bmp -text
+installer/HeaderImage_Innosetup.xcf -text
 installer/InstallScript.iss -text
 installer/InstallScript.nsi -text
 src/Bombermaaan.dsw -text
