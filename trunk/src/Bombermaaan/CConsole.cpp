@@ -125,7 +125,7 @@ void CConsole::Close (void)
 
 void CConsole::Write (const char *pMessage, ...)
 {
-    // If the ocnsole is opened
+    // If the console is opened
     if (m_Open)
     {
         // Format the given string using the given arguments ("..." parameter)
