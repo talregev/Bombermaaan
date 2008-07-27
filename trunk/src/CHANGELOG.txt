@@ -1,4 +1,6 @@
-Next version
+Version 1.3.1
+
+Released on July 27, 2008
 
 New feature: Level files are also read from the %APPDATA%\Bombermaaan\Levels directory (#1847811) when exe is called with --use-appdata-dir.
 Changed: Bombermaaan can be called from any directory now - no more DLL not found message (revision 464).
