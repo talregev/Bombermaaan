@@ -47,6 +47,7 @@ Compile instructions
 
 <ul>
 <li>Update release date/build strings in CGame.cpp</li>
+<li>Update version strings in file src/Bombermaaan/Bombermaaan.rc</li>
 <li>Update <code>BOMBERMAAAN_WINDOW_TITLE</code> string in CGame.cpp</li>
 <li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in CGame.cpp to comment</li>
 <li>Disable the console window (<code>#define ENABLE_CONSOLE</code> in CGame.cpp)</li>
@@ -63,9 +64,18 @@ Zip package
 <li>Place the files <code>Bombermaaan.exe</code>, <code>Bombermaaan.dll</code> and <code>FMOD.dll</code> in this directory</li>
 <li>Add the readme file <code>Readme.html</code></li>
 <li>Add the license file <code>COPYING.txt</code></li>
-<li>Add the license file <code>CHANGELOG.txt</code></li>
+<li>Add the file <code>CHANGELOG.txt</code></li>
 <li>Copy the directory with level files in the new folder</li>
 <li>Zip the folder</li>
+</ul>
+
+<p>
+Installer package
+</p>
+
+<ul>
+<li>Update version strings</li>
+<li>...</li>
 </ul>
 
 <p>
