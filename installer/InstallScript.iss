@@ -2,8 +2,10 @@
 ; Written by Bernd Arnold, 2008-07-05
 ;
 ; http://bombermaaan.sourceforge.net/
-; 
-
+;
+________________________________TODO: Check if already installed/uninstall before
+________________________________TODO: Update version
+________________________________TODO: new bitmap in upper right corner
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -78,10 +80,10 @@ Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L7.TXT; DestDir: {app}\Leve
 Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L8.TXT; DestDir: {app}\Levels\
 
 [Icons]
-Name: {group}\Bombermaaan (large size); Filename: {app}\Bombermaaan_32.exe; WorkingDir: {app}; Comment: Runs Bombermaaan in a large window; IconIndex: 0; Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque
-Name: {group}\Bombermaaan (groﬂes Fenster); Filename: {app}\Bombermaaan_32.exe; WorkingDir: {app}; Comment: Startet Bombermaaan in einem groﬂen Fenster; IconIndex: 0; Tasks: ; Languages: german
-Name: {group}\Bombermaaan (classic); Filename: {app}\Bombermaaan_16.exe; WorkingDir: {app}; Comment: Runs Bombermaaan in a small window (classic style); IconIndex: 0; Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque
-Name: {group}\Bombermaaan (klassisch); Filename: {app}\Bombermaaan_16.exe; WorkingDir: {app}; Comment: Startet Bombermaaan in einem kleinen Fenster (die klassische Variante); IconIndex: 0; Languages: german
+Name: {group}\Bombermaaan (large size); Filename: {app}\Bombermaaan_32.exe; WorkingDir: {app}; Comment: Runs Bombermaaan in a large window; IconIndex: 0; Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque; Parameters: --use-appdata-dir
+Name: {group}\Bombermaaan (groﬂes Fenster); Filename: {app}\Bombermaaan_32.exe; WorkingDir: {app}; Comment: Startet Bombermaaan in einem groﬂen Fenster; IconIndex: 0; Tasks: ; Languages: german; Parameters: --use-appdata-dir
+Name: {group}\Bombermaaan (classic); Filename: {app}\Bombermaaan_16.exe; WorkingDir: {app}; Comment: Runs Bombermaaan in a small window (classic style); IconIndex: 0; Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque; Parameters: --use-appdata-dir
+Name: {group}\Bombermaaan (klassisch); Filename: {app}\Bombermaaan_16.exe; WorkingDir: {app}; Comment: Startet Bombermaaan in einem kleinen Fenster (die klassische Variante); IconIndex: 0; Languages: german; Parameters: --use-appdata-dir
 Name: {group}\Readme; Filename: {app}\Readme.html; Comment: Opens the HTML readme; Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque
 Name: {group}\Liesmich; Filename: {app}\Readme.html; Comment: ÷ffnet die Liesmich-Datei (Readme) in einem Webbrowser (derzeit nur auf Englisch); Languages: german
 Name: {group}\License (GPL); Filename: {app}\COPYING.txt; Comment: Open the license file (Bombermaaan is licensed under the GNU General Public License); Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque
