@@ -166,6 +166,39 @@ CGame::~CGame ()
 
 bool CGame::Create (const char* pCommandLine)
 {
+    // If certain strings are detected in the command line arguments...
+    // There is no check if the parameters are surrounded by spaces, or at the beginning of the line,
+    // or the end. So "-----__/-h999" would also match (the -h is found).
+    if ( strstr( pCommandLine, "-h" ) != NULL  ||  
+         strstr( pCommandLine, "--help" ) != NULL  ||  // Not really necessary, since "-h" already did the job
+         strstr( pCommandLine, "--license" ) != NULL  ||
+         strstr( pCommandLine, "--show-license" ) != NULL  ||
+         strstr( pCommandLine, "/?" ) != NULL )
+    {
+        // Display a message box
+        MessageBox( NULL, 
+            "Bombermaaan\n"
+            "Copyright (C) 2000-2002, 2007 Thibaut Tollemer\n"
+            "Copyright (C) 2007, 2008 Bernd Arnold\n"
+            "\n"
+            "Bombermaaan is free software: you can redistribute it and/or modify\n"
+            "it under the terms of the GNU General Public License as published by\n"
+            "the Free Software Foundation, either version 3 of the License, or\n"
+            "(at your option) any later version.\n"
+            "\n"
+            "Bombermaaan is distributed in the hope that it will be useful,\n"
+            "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+            "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+            "GNU General Public License for more details.\n"
+            "\n"
+            "You should have received a copy of the GNU General Public License\n"
+            "along with Bombermaaan.  If not, see <http://www.gnu.org/licenses/>.\n",
+            "Bombermaaan", MB_ICONINFORMATION);
+        // Return false so the program will terminate after the message box was closed
+        return false;
+    }
+
+
     //! @see ENABLE_CONSOLE
 #ifdef ENABLE_CONSOLE
 
