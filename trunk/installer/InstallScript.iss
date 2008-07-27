@@ -12,7 +12,7 @@
 #define MAJOR 1
 #define MINOR 3
 #define RELEASE 1
-#define BUILD 475
+#define BUILD 476
 #define BUILDDATE "2008-07-27"
 
 #define APPVERFULL Str(MAJOR) + "." + Str(MINOR) + "." + Str(RELEASE) + "." + Str(BUILD)
