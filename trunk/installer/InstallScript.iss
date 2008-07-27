@@ -3,29 +3,44 @@
 ;
 ; http://bombermaaan.sourceforge.net/
 ;
-________________________________TODO: Check if already installed/uninstall before
-________________________________TODO: Update version
-________________________________TODO: new bitmap in upper right corner
+
+; The APPID is kept as long as the first two numbers in the version are the same
+; (the whole 1.3 version uses the same APPID)
+; (yes, two opening curly braces and only one closing curly brace)
+#define APPID "{{577ACC96-0D1D-4AA1-BFCC-DA0630FA24B0}"
+
+#define MAJOR 1
+#define MINOR 3
+#define RELEASE 0
+#define BUILD 423
+#define BUILDDATE "2008-05-07"
+
+#define APPVERFULL Str(MAJOR) + "." + Str(MINOR) + "." + Str(RELEASE) + "." + Str(BUILD)
+#define APPVERMAIN Str(MAJOR) + "." + Str(MINOR)
+
+;________________________________TODO: Check if already installed/uninstall before
+;________________________________TODO: Update version
+;________________________________TODO: new bitmap in upper right corner
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{577ACC96-0D1D-4AA1-BFCC-DA0630FA24B0}
+AppId={#APPID}
 AppName=Bombermaaan
-AppVerName=Bombermaaan 1.3
+AppVerName=Bombermaaan {#APPVERMAIN}
 AppPublisher=The Bombermaaan team
 AppPublisherURL=http://bombermaaan.sourceforge.net/
 AppSupportURL=http://bombermaaan.sourceforge.net/
 AppUpdatesURL=http://bombermaaan.sourceforge.net/
-DefaultDirName={pf}\Bombermaaan 1.3
-DefaultGroupName=Bombermaaan 1.3
+DefaultDirName={pf}\Bombermaaan {#APPVERMAIN}
+DefaultGroupName=Bombermaaan {#APPVERMAIN}
 AllowNoIcons=true
-LicenseFile=.\packages\Bombermaaan_1.3_2008-05-07\COPYING.txt
+LicenseFile=.\packages\Bombermaaan_{#APPVERMAIN}_2008-05-07\COPYING.txt
 OutputDir=.\output
-OutputBaseFilename=Bombermaaan_1.3.0.423_setup
+OutputBaseFilename=Bombermaaan_{#APPVERFULL}_setup
 Compression=lzma
 SolidCompression=true
-VersionInfoVersion=1.3.0.423
+VersionInfoVersion={#APPVERFULL}
 VersionInfoDescription=Installer for Bombermaaan
 VersionInfoCopyright=Copyright (C) Thibaut Tollemer, Bernd Arnold
 WizardImageFile=compiler:wizmodernimage-is.bmp
@@ -98,6 +113,33 @@ Filename: {app}\Bombermaaan_32.exe; Description: {cm:LaunchProgram,Bombermaaan};
 
 [Dirs]
 Name: {app}\Levels
+
 [Registry]
-Root: HKLM; Subkey: Software\Bombermaaan\Build 423; ValueType: string; ValueName: InstallDirectory; ValueData: {app}\; Flags: uninsdeletekey; Tasks: ; Languages: 
-Root: HKLM; Subkey: Software\Bombermaaan\Build 423; ValueType: string; ValueName: Version; ValueData: 1.3.0.423; Flags: uninsdeletekey; Tasks: ; Languages: 
+Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: InstallDirectory; ValueData: {app}\; Flags: uninsdeletekey; Tasks: ; Languages: 
+; The data of the following three registry keys is updated for every update of version 1.3 - so it reflects the latest update of version 1.3
+Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: Version; ValueData: {#APPVERFULL}; Flags: uninsdeletekey; Tasks: ; Languages: 
+Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: Build; ValueData: {#BUILD}; Flags: uninsdeletekey; Tasks: ; Languages: 
+Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: Builddate; ValueData: {#BUILDDATE}; Flags: uninsdeletekey; Tasks: ; Languages: 
+
+[Code]
+function InitializeSetup(): Boolean;
+var
+	InstalledInPath: String;
+begin
+	Result := true;
+	InstalledInPath := '';
+
+	RegQueryStringValue( HKLM,
+	                     'Software\Microsoft\Windows\CurrentVersion\Uninstall\' + ExpandConstant( '{#APPID}' ) + '_is1',
+	                     'Inno Setup: App Path',
+	                     InstalledInPath );
+
+	if InstalledInPath <> '' then begin
+		MsgBox( 'Bombermaaan is already installed in ' + #13 +
+		        InstalledInPath + '.' + #13#13 +
+		        'Please uninstall Bombermaaan first. Sorry for the inconvenience - I hope this is not necessary in the future. Setup aborted.',
+				mbError, MB_OK
+				);
+		Result := false;
+	end
+end;
