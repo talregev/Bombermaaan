@@ -105,11 +105,11 @@ Name: {group}\License (GPL); Filename: {app}\COPYING.txt; Comment: Open the lice
 Name: {group}\Lizenz (GPL); Filename: {app}\COPYING.txt; Comment: Öffnet die Lizenzdatei (Bombermaaan wird unter der GNU General Public License lizenziert); Languages: german
 Name: {group}\{cm:ProgramOnTheWeb,Bombermaaan}; Filename: http://bombermaaan.sourceforge.net/
 Name: {group}\{cm:UninstallProgram,Bombermaaan}; Filename: {uninstallexe}
-Name: {commondesktop}\Bombermaaan; Filename: {app}\Bombermaaan_32.exe; Tasks: desktopicon
+Name: {commondesktop}\Bombermaaan; Filename: {app}\Bombermaaan_32.exe; Tasks: desktopicon; Parameters: --use-appdata-dir
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\Bombermaaan; Filename: {app}\Bombermaaan_32.exe; Tasks: quicklaunchicon
 
 [Run]
-Filename: {app}\Bombermaaan_32.exe; Description: {cm:LaunchProgram,Bombermaaan}; Flags: nowait postinstall skipifsilent unchecked
+Filename: {app}\Bombermaaan_32.exe; Description: {cm:LaunchProgram,Bombermaaan}; Flags: nowait postinstall skipifsilent unchecked; Parameters: --use-appdata-dir
 
 [Dirs]
 Name: {app}\Levels
