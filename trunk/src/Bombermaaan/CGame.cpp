@@ -214,39 +214,64 @@ bool CGame::Create (const char* pCommandLine)
 #endif
 
 
-    // Check for the Bombermaaan directory in the appdata folder
-    const char *appDataPath = getenv( "APPDATA" );
-    if ( ! appDataPath ) {
-        MessageBox( m_hWnd, 
-                    "Could not get the user application folder (%APPDATA%).\nBombermaaan terminates.", 
-                    "Error", MB_OK | MB_ICONERROR );
-        return false;
-    }
+    // A folder where log file and configuration file are stored.
+    // Is %APPDATA%\Bombermaaan when called with --use-appdata-dir (see below).
+    std::string dynamicDataFolder;
 
-    // Store the Bombermaaan folder name
-    appDataFolder = appDataPath;
-    appDataFolder.append( "\\Bombermaaan\\" );
+    // The "--use-appdata-dir" switch creates config and log file in the user's %APPDATA% directory
+    bool useAppDataFolder = ( strstr( pCommandLine, "--use-appdata-dir" ) != NULL );
 
-    // Create the Bombermaaan directory
-    if ( ! CreateDirectory( appDataFolder.c_str(), NULL ) ) {
-        // Exit the game if the folder cannot be created and it doesn't exist already
-        if ( GetLastError() != ERROR_ALREADY_EXISTS ) {
-            std::string errorMsg = "Could not create folder '";
-            errorMsg.append( appDataFolder );
-            errorMsg.append( "'.\nBombermaaan cannot run without this folder." );
+    // Set the current directory to the directory where the Bombermaaan exe file resides
+    // __argv[0] is the full path including the exe file name
+    // If we append a "\.." to the full path, we get the location where the dll and exe file(s) are placed
+    std::string pgmDirectory;
+    pgmDirectory.append( __argv[ 0 ] );
+    pgmDirectory.append( "\\.." );
+    SetCurrentDirectory( pgmDirectory.c_str() );
+
+
+    if ( useAppDataFolder )
+    {
+        // Check for the Bombermaaan directory in the appdata folder
+        const char *appDataPath = getenv( "APPDATA" );
+        if ( ! appDataPath ) {
             MessageBox( m_hWnd, 
-                        errorMsg.c_str(), 
+                        "Could not get the user application folder (%APPDATA%).\nBombermaaan terminates.", 
                         "Error", MB_OK | MB_ICONERROR );
             return false;
         }
+
+        // Store the Bombermaaan folder name
+        dynamicDataFolder = appDataPath;
+        dynamicDataFolder.append( "\\Bombermaaan\\" );
+
+        // Create the Bombermaaan directory
+        if ( ! CreateDirectory( dynamicDataFolder.c_str(), NULL ) ) {
+            // Exit the game if the folder cannot be created and it doesn't exist already
+            if ( GetLastError() != ERROR_ALREADY_EXISTS ) {
+                std::string errorMsg = "Could not create folder '";
+                errorMsg.append( dynamicDataFolder );
+                errorMsg.append( "'.\nBombermaaan cannot run without this folder." );
+                MessageBox( m_hWnd, 
+                            errorMsg.c_str(), 
+                            "Error", MB_OK | MB_ICONERROR );
+                return false;
+            }
+        }
+
+    } else {
+        // The current folder
+        dynamicDataFolder = ".\\";
     }
+
+
 
 
     //! @see ENABLE_LOG
 #ifdef ENABLE_LOG
 
     std::string logFileName;
-    logFileName.append( appDataFolder );
+    logFileName.append( dynamicDataFolder );
     logFileName.append( "log.txt" );
 
     // Open the log file
@@ -263,14 +288,6 @@ bool CGame::Create (const char* pCommandLine)
     theDebug.SetTimer(&m_Timer);
 	theDebug.SetMatch(&m_Match);
     theDebug.Create();
-
-    // Set the current directory to the directory where the Bombermaaan exe file resides
-    // __argv[0] is the full path including the exe file name
-    // If we append a "\.." to the full path, we get the location where the dll and exe file(s) are placed
-    std::string pgmDirectory;
-    pgmDirectory.append( __argv[ 0 ] );
-    pgmDirectory.append( "\\.." );
-    SetCurrentDirectory( pgmDirectory.c_str() );
 
     // If the resource file does not exist
     if (GetFileAttributes( NAME_OF_BOMBERMAN_DLL ) == -1)
@@ -297,7 +314,7 @@ bool CGame::Create (const char* pCommandLine)
         return false;
     }
 
-    if ( ! m_Options.Create( appDataFolder, pgmDirectory ) )
+    if ( ! m_Options.Create( useAppDataFolder, dynamicDataFolder, pgmDirectory ) )
     {
         // Get out
         return false;

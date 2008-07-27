@@ -140,10 +140,10 @@ COptions& COptions::operator = (COptions& Copy)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::Create( std::string appDataFolder, std::string pgmFolder )
+bool COptions::Create( bool useAppDataFolder, std::string dynamicDataFolder, std::string pgmFolder )
 {
     // Set the file name of the configuration file including full path
-    configFileName = appDataFolder.c_str();
+    configFileName = dynamicDataFolder.c_str();
     configFileName.append( "config.dat" );
     theLog.WriteLine( "Options         => Name of config file: '%s'.", configFileName.c_str() );
     
@@ -152,7 +152,7 @@ bool COptions::Create( std::string appDataFolder, std::string pgmFolder )
         return false;
 
     // Load game levels data and names
-    if (!LoadLevels( appDataFolder, pgmFolder ))
+    if (!LoadLevels( useAppDataFolder ? dynamicDataFolder : "", pgmFolder ))
         return false;
     
 
@@ -372,7 +372,7 @@ void COptions::AllocateLevels (int NumberOfLevels)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::LoadLevels( std::string appDataFolder, std::string pgmFolder )
+bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder )
 {
     FILE* File;
     long FindHandle;
@@ -395,24 +395,12 @@ bool COptions::LoadLevels( std::string appDataFolder, std::string pgmFolder )
 
 
     //-------------------------------------------
-    // Set the path where the level files are stored
-    // (in the user's application data folder)
-    //-------------------------------------------
-
-    std::string levelFilePath_appDataFolder;
-    levelFilePath_appDataFolder = appDataFolder;
-    levelFilePath_appDataFolder.append( "Levels\\" );
-
-    std::string levelFilePath_appDataFolderMask;
-    levelFilePath_appDataFolderMask = levelFilePath_appDataFolder;
-    levelFilePath_appDataFolderMask.append( "*.txt" );
-
-
-    //-------------------------------------------
     // Determine number of level files available
     // (in the program files folder)
     //-------------------------------------------
     
+    theLog.WriteLine( "Options         => Loading level files '%s'.", levelFilePath_pgmFolderMask.c_str() );
+
     FindHandle = _findfirst( levelFilePath_pgmFolderMask.c_str(), &FindData );
     
     if (FindHandle != -1)
@@ -434,30 +422,51 @@ bool COptions::LoadLevels( std::string appDataFolder, std::string pgmFolder )
     _findclose(FindHandle);
 
 
-    //-------------------------------------------
-    // Determine number of level files available
-    // (in the user's application data folder)
-    //-------------------------------------------    
+    // If a dynamic folder is set, load level files from there, too
+    if ( dynamicDataFolder != "" ) {
 
-    FindHandle = _findfirst( levelFilePath_appDataFolderMask.c_str(), &FindData );
-    
-    if (FindHandle != -1)
-    {
-        do 
+        //-------------------------------------------
+        // Set the path where the level files are stored
+        // (in the user's application data folder)
+        //-------------------------------------------
+
+        std::string levelFilePath_dynamicDataFolder;
+        levelFilePath_dynamicDataFolder = dynamicDataFolder;
+        levelFilePath_dynamicDataFolder.append( "Levels\\" );
+
+        std::string levelFilePath_dynamicDataFolderMask;
+        levelFilePath_dynamicDataFolderMask = levelFilePath_dynamicDataFolder;
+        levelFilePath_dynamicDataFolderMask.append( "*.txt" );
+
+
+        //-------------------------------------------
+        // Determine number of level files available
+        // (in the dynamic data folder)
+        //-------------------------------------------    
+
+        theLog.WriteLine( "Options         => Loading level files '%s'.", levelFilePath_dynamicDataFolderMask.c_str() );
+
+        FindHandle = _findfirst( levelFilePath_dynamicDataFolderMask.c_str(), &FindData );
+        
+        if (FindHandle != -1)
         {
-            m_NumberOfLevels++;
+            do 
+            {
+                m_NumberOfLevels++;
 
-            std::string fileNameWithoutPath( FindData.name );
-            std::string fileNameWithPath( levelFilePath_appDataFolder );
-            fileNameWithPath.append( FindData.name );
+                std::string fileNameWithoutPath( FindData.name );
+                std::string fileNameWithPath( levelFilePath_dynamicDataFolder );
+                fileNameWithPath.append( FindData.name );
 
-            levelFileNames_short.push_back( fileNameWithoutPath );
-            levelFileNames_full.push_back( fileNameWithPath );
+                levelFileNames_short.push_back( fileNameWithoutPath );
+                levelFileNames_full.push_back( fileNameWithPath );
+            }
+            while (_findnext(FindHandle, &FindData) != -1);
         }
-        while (_findnext(FindHandle, &FindData) != -1);
-    }
 
-    _findclose(FindHandle);
+        _findclose(FindHandle);
+
+    }
 
 
     //---------------------

@@ -1,7 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
-    Copyright (C) 2007 Bernd Arnold
+    Copyright (C) 2007, 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -137,7 +137,7 @@ public:
                         COptions (void);                //!< Constructor.
                         ~COptions (void);               //!< Destructor. Do nothing.
     COptions&           operator = (COptions& Copy);    //!< Operator = used to copy an option object.
-    bool                Create( std::string appDataFolder, std::string pgmFolder );  //!< Load the options. Create the configuration file if it doesn't exist.
+    bool                Create( bool useAppDataFolder, std::string dynamicDataFolder, std::string pgmFolder );  //!< Load the options. Create the configuration file if it doesn't exist.
     void                Destroy (void);                 //!< Free allocated memory.
     void                SaveBeforeExit (void);          //!< Write the options to the configuration file
     inline int          GetTimeStartMinutes (void);     //!< Get how many minutes in the time when a battle starts
