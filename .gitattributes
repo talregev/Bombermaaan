@@ -369,6 +369,8 @@ trunk/images/gimp-scripts/bm-color-bombers.scm -text
 trunk/installer/Bombermaaan_1.3.0.423_setup_Vista_notes.txt -text
 trunk/installer/HeaderImage.bmp -text
 trunk/installer/HeaderImage.xcf -text
+trunk/installer/HeaderImage_Innosetup.bmp -text
+trunk/installer/HeaderImage_Innosetup.xcf -text
 trunk/installer/InstallScript.iss -text
 trunk/installer/InstallScript.nsi -text
 trunk/src/Bombermaaan.dsw -text
