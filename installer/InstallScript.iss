@@ -11,16 +11,13 @@
 
 #define MAJOR 1
 #define MINOR 3
-#define RELEASE 0
-#define BUILD 423
-#define BUILDDATE "2008-05-07"
+#define RELEASE 1
+#define BUILD 475
+#define BUILDDATE "2008-07-27"
 
 #define APPVERFULL Str(MAJOR) + "." + Str(MINOR) + "." + Str(RELEASE) + "." + Str(BUILD)
 #define APPVERMAIN Str(MAJOR) + "." + Str(MINOR)
 
-;________________________________TODO: Check if already installed/uninstall before
-;________________________________TODO: Update version
-;________________________________TODO: new bitmap in upper right corner
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
@@ -75,24 +72,24 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan.dll; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_16.exe; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_32.dll; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\CHANGELOG.txt; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\COPYING.txt; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\FMOD.DLL; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Readme.html; DestDir: {app}; Flags: ignoreversion; Tasks: ; Languages: 
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan.dll; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_16.exe; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_32.dll; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\CHANGELOG.txt; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\COPYING.txt; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\FMOD.DLL; DestDir: {app}; Flags: ignoreversion
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Readme.html; DestDir: {app}; Flags: ignoreversion; Tasks: ; Languages: 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L1.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L2.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L3.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L4.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L5.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L6.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L7.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3_2008-05-07\Levels\L8.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L1.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L2.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L3.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L4.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L5.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L6.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L7.TXT; DestDir: {app}\Levels\
+Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L8.TXT; DestDir: {app}\Levels\
 
 [Icons]
 Name: {group}\Bombermaaan (large size); Filename: {app}\Bombermaaan_32.exe; WorkingDir: {app}; Comment: Runs Bombermaaan in a large window; IconIndex: 0; Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque; Parameters: --use-appdata-dir
