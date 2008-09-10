@@ -1,0 +1,51 @@
+/*
+
+    Copyright (C) 2008 Bernd Arnold
+	
+*/
+
+/*! \page controls Controls
+
+<h2>Game controls</h2>
+
+During a match:
+- Here are the configurations:
+  - Keyboard 1 (Default): 8/5/4/6 + PageUp/Home
+  - Keyboard 2 (Default): R/F/D/G + 2/1
+  - Joystick X (Default): Up/Down/Left/Right + Button1/Button2
+- On your configuration:
+  - Up/Down/Left/Right: make your bomber move
+  - Action 1: drop a bomb if possible, or lift the bomb you are onto;<br>
+              hold Action 1 to hold the bomb, release Action 1 to throw the bomb.
+  - Action 2: stop a bomb you kicked that is still rolling,<br>
+              or punch a bomb that is right in front of you.
+- Escape: pause the match and make the menu box appear
+- P: pause or resume
+
+In the menu screens:
+- Up/Down: select another field to modify
+- Left/Right: change value of current field
+- Backspace: previous screen
+- Return: next screen
+
+In the menu box:
+- Arrows: change between yes or no
+- Return: validate choice
+- Escape: make the menu box disappear and resume the match
+
+Anywhere in the game:
+- F1: set 320x240 display mode
+- F2: set 512x384 display mode
+- F3: set 640x480 display mode
+- F4: set windowed display mode
+- Ctrl+F12 to quickly exit the game without confirmation
+
+Please note that the display mode you chose may
+be unavailable on your computer. The program will
+not change the display mode if this one is
+unavailable.
+
+If you see a black screen instead of the game after pressing F1, F2 or F3, just press F4. 
+You should be in windowed mode again.
+  
+*/
