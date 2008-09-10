@@ -1,0 +1,60 @@
+/*
+
+    Copyright (C) 2008 Bernd Arnold
+	
+*/
+
+/*! \page index Bombermaaan
+
+<img align=center src="Title.png" alt="Bombermaaan logo">
+   
+<h2>Introduction</h2>
+
+Bombermaaan is a clone of the famous Bomberman and Dynablaster games. It runs under most Win32 operating systems.
+
+You have the choice of installing Bombermaaan and running the game from the start menu or by 
+unzipping the package into a folder and starting the game from there.
+
+See \ref controls to see the keyboard layout. Bombermaaan is controlled by the keyboard.
+
+
+<h2>Bombermaaan license</h2>
+
+<pre>
+Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+Copyright (C) 2007, 2008 Bernd Arnold
+
+Bombermaaan is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Bombermaaan is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Bombermaaan.  If not, see <http://www.gnu.org/licenses/>.
+</pre>
+
+
+<h2>Additional information</h2>
+
+Bombermaaan is using the FMOD Sound System.<br>
+FMOD Sound System, copyright &copy; Firelight Technologies Pty, Ltd., 1994-2007.
+
+The Bombermaaan project is hosted on SourceForge.net. 
+
+
+<h2>Acknowledgements</h2>
+
+Thanks go to:
+<ul>
+<li>Thibaut Tollemer for a great version 1.02 of Bombermaaan
+<li>Dimitri van Heesch for <a href="http://www.doxygen.org/index.html">Doxygen</a>, a powerful
+	documentation system
+<li>you for reading this documentation and (I hope so) playing Bombermaaan :-)
+</ul>
+  
+*/
