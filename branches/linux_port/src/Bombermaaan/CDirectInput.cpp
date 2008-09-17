@@ -26,7 +26,6 @@
 #include "STDAFX.H"
 #include "CDirectInput.h"
 
-
 static const char* GetDirectInputError (HRESULT hRet);
 
 //******************************************************************************************************************************
@@ -213,7 +212,7 @@ bool CDirectInput::Create (void)
         ASSERT (hRet == DI_OK);
 
         // The EnumParam contains the input devices, browse them
-        for (int Index = 0 ; Index < EnumParam.pDevices.size() ; Index++)
+        for (unsigned int Index = 0 ; Index < EnumParam.pDevices.size() ; Index++)
         {
             LPDIRECTINPUTDEVICE7 pDevice = EnumParam.pDevices[Index];
 
@@ -333,7 +332,7 @@ void CDirectInput::Destroy (void)
             theLog.WriteLine ("DirectInput     => Keyboard was released.");
             
             // Scan the joysticks that were created
-            for (int Index = 0 ; Index < m_pJoysticks.size() ; Index++)
+            for (unsigned int Index = 0 ; Index < m_pJoysticks.size() ; Index++)
             {
                 // Release the joystick directinput device
                 m_pJoysticks[Index]->pDevice->Release ();

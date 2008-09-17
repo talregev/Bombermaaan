@@ -27,7 +27,7 @@
 // - Ca sert a rien d'enregistrer les centres d'explosions et les bombers vivants ou entrain de mourir dans la vue.
 // - 
 
-#include "STDAFX.H" 
+#include "STDAFX.H"
 #include "CArena.h"
 #include "CDisplay.h"
 #include "COptions.h"
@@ -184,6 +184,8 @@ void CArena::Create (void)
                     
                     break;
                 }
+                default :
+                    break;
             }
         }
     }
@@ -468,7 +470,7 @@ void CArena::UpdateView (void)
             SetBlockHas (Explosion.GetBlockX(), Explosion.GetBlockY(), BLOCKHAS_EXPLOSION);
             
             // Scan the flames of the explosion
-            for (int Flame = 0 ; Flame < Explosion.GetFlames().size() ; Flame++)
+            for (unsigned int Flame = 0 ; Flame < Explosion.GetFlames().size() ; Flame++)
             {
                 // Record the flame in the view
                 SetBlockHas (Explosion.GetFlames()[Flame].BlockX,
@@ -603,6 +605,7 @@ void CArena::UpdateView (void)
                     case ITEM_ROLLER : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMROLLER); break;
                     case ITEM_KICK   : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMKICK);   break;
                     case ITEM_SKULL  : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMSKULL);  break;
+                    default: break;
                 }
             }
             // If the item is burning
@@ -764,6 +767,7 @@ void CArena::NewFloor (int BlockX, int BlockY, EBlockType BlockType)
         case BLOCKTYPE_MOVEBOMB_DOWN:   action = FLOORACTION_MOVEBOMB_DOWN;     break;
         case BLOCKTYPE_MOVEBOMB_LEFT:   action = FLOORACTION_MOVEBOMB_LEFT;     break;
         case BLOCKTYPE_MOVEBOMB_UP:     action = FLOORACTION_MOVEBOMB_UP;       break;
+        default:                                                                break;
     }
 
     // Scan the floors
@@ -901,6 +905,7 @@ void CArena::NewItem (int BlockX, int BlockY, EItemType Type, bool Fumes, bool F
                 case ITEM_ROLLER : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMROLLER); break;
                 case ITEM_KICK   : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMKICK);   break;
                 case ITEM_SKULL  : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMSKULL);  break;
+                default: break;
             }
 
             return;
