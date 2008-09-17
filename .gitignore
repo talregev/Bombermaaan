@@ -1,6 +1,8 @@
 doxygen/output/html
 installer/output
 installer/packages
+src/.tm_project.cache
+src/.tm_project2.cache
 src/Bombermaaan/Debug
 src/Bombermaaan/Release
 src/RES/Debug
