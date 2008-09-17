@@ -1,3 +1,12 @@
+branches/linux_port/doxygen/output/html
+branches/linux_port/installer/output
+branches/linux_port/installer/packages
+branches/linux_port/src/Bombermaaan/Debug
+branches/linux_port/src/Bombermaaan/Release
+branches/linux_port/src/RES/Debug
+branches/linux_port/src/RES/Release
+branches/linux_port/src/RES32/Debug
+branches/linux_port/src/RES32/Release
 branches/only_ai_alive_1964071/src/Bombermaaan/Debug
 branches/only_ai_alive_1964071/src/Bombermaaan/Release
 branches/only_ai_alive_1964071/src/RES/Debug

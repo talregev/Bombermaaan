@@ -1,0 +1,22 @@
+<hr size="1" />
+
+<address style="text-align: right;">
+<small>
+Generated on $datetime for $projectname by&nbsp;
+<a href="http://www.doxygen.org/index.html"><img src="doxygen.png" alt="doxygen" align="middle" border="0" /></a>
+$doxygenversion
+</small>
+</address>
+
+<div style="background-color: #bb7;">
+<div style="padding: 0.7em;">
+Visit the <a href="http://bombermaaan.sourceforge.net/">Bombermaaan project page</a>
+</div>
+</div>
+
+<div style="text-align: center; margin-top: 0.5em;">
+<a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=81520&amp;type=3" width="125" height="37" border="0" alt="SourceForge.net Logo" /></a>
+</div>
+
+</body>
+</html>
