@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Bombermaaan
+Type=Application
+GenericName=Bombermaaan
+Comment=Play a clone of the classic Bombermaaan game
+Exec=Bombermaaan
+Icon=Bombermaaan.png
+Terminal=false
+Hidden=false
+Categories=Game;ActionGame;
