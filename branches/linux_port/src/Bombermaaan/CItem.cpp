@@ -210,6 +210,7 @@ void CItem::SetSprites (void)
         case ITEM_SKULL :       m_Sprite0 = SPRITE_SKULL0;      m_Sprite1 = SPRITE_SKULL1;      break;
         case ITEM_THROW :       m_Sprite0 = SPRITE_THROW0;      m_Sprite1 = SPRITE_THROW1;      break;
         case ITEM_PUNCH :       m_Sprite0 = SPRITE_PUNCH0;      m_Sprite1 = SPRITE_PUNCH1;      break;
+        default: break;
     }
 
     m_Sprite = m_Sprite0;
@@ -242,6 +243,7 @@ void CItem::Burn (EBurnDirection BurnDirection)
             case BURNDIRECTION_DOWN  : m_Flying = ITEMFLYING_DOWN;  break;
             case BURNDIRECTION_LEFT  : m_Flying = ITEMFLYING_LEFT;  break;
             case BURNDIRECTION_RIGHT : m_Flying = ITEMFLYING_RIGHT; break;
+            default: break;
         }
 
         m_Sprite = ANIM_FLYING1;
@@ -453,6 +455,9 @@ bool CItem::Update (float DeltaTime)
 
                 break;
             }
+            
+            default:
+                break;
         }
 
         m_iX = int (m_fX);

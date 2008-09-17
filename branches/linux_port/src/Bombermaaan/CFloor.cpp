@@ -161,6 +161,7 @@ void CFloor::Display (void)
             case FLOORACTION_MOVEBOMB_DOWN:     Sprite = ARENA_FLOOR_ARROW_DOWN;    break;
             case FLOORACTION_MOVEBOMB_LEFT:     Sprite = ARENA_FLOOR_ARROW_LEFT;    break;
             case FLOORACTION_MOVEBOMB_UP:       Sprite = ARENA_FLOOR_ARROW_UP;      break;
+            default: break;
         }
 
         if ( Sprite != -1 ) {

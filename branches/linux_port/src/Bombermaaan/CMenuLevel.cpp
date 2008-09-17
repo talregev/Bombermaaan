@@ -235,6 +235,7 @@ void CMenuLevel::OnDisplay (void)
                     case BLOCKTYPE_REDBOMBER   : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 2, 1, 2); break;
                     case BLOCKTYPE_BLUEBOMBER  : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 3, 1, 2); break;
                     case BLOCKTYPE_GREENBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 4, 1, 2); break;
+                    default :                                                                                                                                                                                                          break;
                 }
             }
         }
