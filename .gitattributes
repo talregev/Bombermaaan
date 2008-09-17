@@ -164,10 +164,13 @@ branches/linux_port/src/Bombermaaan/CWindow.cpp -text
 branches/linux_port/src/Bombermaaan/CWindow.h -text
 branches/linux_port/src/Bombermaaan/CWinner.cpp -text
 branches/linux_port/src/Bombermaaan/CWinner.h -text
+branches/linux_port/src/Bombermaaan/Makefile -text
+branches/linux_port/src/Bombermaaan/Makefile.win -text
 branches/linux_port/src/Bombermaaan/RESOURCE.H -text
 branches/linux_port/src/Bombermaaan/STDAFX.CPP -text
 branches/linux_port/src/Bombermaaan/STDAFX.H -text
 branches/linux_port/src/Bombermaaan/WinMain.cpp -text
+branches/linux_port/src/Bombermaaan/mssccprj.scc -text
 branches/linux_port/src/CHANGELOG.txt -text
 branches/linux_port/src/RES/IMAGE/arena_arrows.bmp -text
 branches/linux_port/src/RES/IMAGE/arena_arrows.xcf -text
