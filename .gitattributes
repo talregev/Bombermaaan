@@ -147,6 +147,10 @@ src/Bombermaaan/CPlayerInput.cpp -text
 src/Bombermaaan/CPlayerInput.h -text
 src/Bombermaaan/CRandomMosaic.cpp -text
 src/Bombermaaan/CRandomMosaic.h -text
+src/Bombermaaan/CSDLInput.cpp -text
+src/Bombermaaan/CSDLInput.h -text
+src/Bombermaaan/CSDLVideo.cpp -text
+src/Bombermaaan/CSDLVideo.h -text
 src/Bombermaaan/CScores.cpp -text
 src/Bombermaaan/CScores.h -text
 src/Bombermaaan/CScroller.cpp -text
