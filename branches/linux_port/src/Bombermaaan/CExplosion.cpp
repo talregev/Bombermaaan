@@ -23,7 +23,7 @@
 //////////////////////
 // CExplosion.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CExplosion.h"
 #include "CArena.h"
 #include "CWall.h"

@@ -23,7 +23,7 @@
 /////////////////////////
 // CMenuYesNo.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMenuYesNo.h"
 #include "CDisplay.h"
 #include "CInput.h"

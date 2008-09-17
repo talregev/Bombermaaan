@@ -23,7 +23,7 @@
 //////////////////////
 // CConsole.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CConsole.h"
 #include <stdio.h>
 

@@ -24,7 +24,7 @@
 ///////////////////
 // CBomberMove.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CBomberMove.h"
 #include "CBomber.h"
 #include "CArena.h"

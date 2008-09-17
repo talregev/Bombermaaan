@@ -24,7 +24,7 @@
 /////////////////////////////////////////
 // CDebug.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CDebug.h"
 #include "CGame.h"
 #include "CTimer.h"

@@ -23,7 +23,7 @@
 ///////////////////
 // CDirectDraw.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CDirectDraw.h"
 #include <ddraw.h>
 

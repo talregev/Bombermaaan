@@ -23,7 +23,7 @@
 /////////////////////////
 // CMenuBomber.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMenuBomber.h"
 #include "CDisplay.h"
 #include "CInput.h"

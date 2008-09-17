@@ -24,7 +24,7 @@
 ////////////////
 // CFloor.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CFloor.h"         // CFloor
 #include "CDisplay.h"   // CDisplay
 #include "CArena.h"         // CArena and arena values

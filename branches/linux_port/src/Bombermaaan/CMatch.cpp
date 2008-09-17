@@ -24,7 +24,7 @@
 ///////////////////
 // CMatch.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMatch.h"
 #include "CDisplay.h"
 #include "CInput.h"

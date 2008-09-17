@@ -24,7 +24,7 @@
 ///////////////////
 // CVictory.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CVictory.h"
 #include "CGame.h"
 

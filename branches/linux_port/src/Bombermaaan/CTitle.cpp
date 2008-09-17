@@ -24,7 +24,7 @@
 ///////////////////
 // CTitle.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CTitle.h"
 #include "CDisplay.h"
 #include "CInput.h"

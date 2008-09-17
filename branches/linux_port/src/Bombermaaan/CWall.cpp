@@ -23,7 +23,7 @@
 //////////////
 // CWall.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CWall.h"
 #include "CBomber.h"
 #include "CArena.h"

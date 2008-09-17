@@ -24,7 +24,7 @@
 ///////////////////
 // CWinner.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CWinner.h"
 #include "CScores.h"
 #include "CMatch.h"

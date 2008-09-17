@@ -24,7 +24,7 @@
 ///////////////////////
 // CDisplay.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CDisplay.h"
 #include "CDirectDraw.h"
 

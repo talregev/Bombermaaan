@@ -23,7 +23,7 @@
 //////////////////
 // CArenaCloser.cpp
 
-#include "stdafx.h" 
+#include "STDAFX.H" 
 #include "CArenaCloser.h"
 #include "CArena.h"
 #include "COptions.h"

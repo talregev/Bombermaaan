@@ -23,7 +23,7 @@
 //////////////////
 // CAiBomber.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CAiBomber.h"
 #include "CAiArena.h"
 

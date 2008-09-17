@@ -23,7 +23,7 @@
 //////////////////////
 // CCloudManager.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CCloudManager.h"
 #include "CDisplay.h"
 

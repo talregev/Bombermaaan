@@ -24,7 +24,7 @@
 /////////////////////////
 // CSound.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CSound.h"
 #include <fmod_errors.h>
 

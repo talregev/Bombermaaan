@@ -23,7 +23,7 @@
 //////////////////////
 // CInput.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CInput.h"
 #include "COptions.h"
 
