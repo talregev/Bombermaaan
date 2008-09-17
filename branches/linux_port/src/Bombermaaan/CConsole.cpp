@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -91,14 +92,14 @@ void CConsole::Open (void)
     if (!m_Open)
     {
         // Create a console window
-        #ifdef WIN32
-		AllocConsole ();
+#ifdef WIN32
+        AllocConsole ();
 
         // Get the console output (needed to send data to the console)
         m_StdOut = GetStdHandle (STD_OUTPUT_HANDLE);
-		#else
-		m_StdOut = stdout;
-		#endif
+#else
+        m_StdOut = stdout;
+#endif
         
         // The console window is now opened
         m_Open = true;
@@ -115,9 +116,9 @@ void CConsole::Close (void)
     if (m_Open)
     {
         // Destroy the console window
-        #ifdef WIN32
-		FreeConsole ();
-		#endif
+#ifdef WIN32
+        FreeConsole ();
+#endif
 
         // The console window is not opened anymore
         m_Open = false;
@@ -147,12 +148,12 @@ void CConsole::Write (const char *pMessage, ...)
             if (strcmp(Message, m_Message) != 0)
             {
                 // Send the formatted string to the console output
-				#ifdef WIN32
+#ifdef WIN32
                 DWORD Count;
                 WriteConsole (m_StdOut, Message, strlen(Message), &Count, NULL);
-				#else
-				fprintf(m_StdOut, Message);
-				#endif
+#else
+                fprintf(m_StdOut, Message);
+#endif
 
                 // Save the message
                 strcpy(m_Message, Message);
@@ -170,12 +171,12 @@ void CConsole::Write (const char *pMessage, ...)
                 // every REPEATED_MESSAGES_LIMIT repeated messages.
                 if ((m_NumberOfRepeatedMessages % REPEATED_MESSAGES_LIMIT) == 0)
                 {
-					#ifdef WIN32
+#ifdef WIN32
                     DWORD Count;
                     WriteConsole (m_StdOut, ".", 1, &Count, NULL);
-					#else
-					fprintf(m_StdOut, ",");
-					#endif
+#else
+                    fprintf(m_StdOut, ",");
+#endif
                 }
             }
         }
@@ -183,12 +184,12 @@ void CConsole::Write (const char *pMessage, ...)
         else
         {
             // Send the formatted string to the console output
-			#ifdef WIN32
+#ifdef WIN32
             DWORD Count;
             WriteConsole (m_StdOut, Message, strlen(Message), &Count, NULL);
-			#else
-			fprintf(m_StdOut, Message);
-			#endif
+#else
+            fprintf(m_StdOut, Message);
+#endif
         }
     }
 }
