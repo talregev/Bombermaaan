@@ -54,9 +54,14 @@ installer/InstallScript.iss -text
 installer/InstallScript.nsi -text
 src/Bombermaaan.dsw -text
 src/Bombermaaan.sln -text
+src/Bombermaaan/Bombermaaan.bmp -text
+src/Bombermaaan/Bombermaaan.dev -text
 src/Bombermaaan/Bombermaaan.dsp -text
+src/Bombermaaan/Bombermaaan.ico -text
 src/Bombermaaan/Bombermaaan.rc -text
+src/Bombermaaan/Bombermaaan.sh -text
 src/Bombermaaan/Bombermaaan.vcproj -text
+src/Bombermaaan/BombermaaanIco.h -text
 src/Bombermaaan/CAiArena.cpp -text
 src/Bombermaaan/CAiArena.h -text
 src/Bombermaaan/CAiBomber.cpp -text
