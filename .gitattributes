@@ -54,9 +54,14 @@ branches/linux_port/installer/InstallScript.iss -text
 branches/linux_port/installer/InstallScript.nsi -text
 branches/linux_port/src/Bombermaaan.dsw -text
 branches/linux_port/src/Bombermaaan.sln -text
+branches/linux_port/src/Bombermaaan/Bombermaaan.bmp -text
+branches/linux_port/src/Bombermaaan/Bombermaaan.dev -text
 branches/linux_port/src/Bombermaaan/Bombermaaan.dsp -text
+branches/linux_port/src/Bombermaaan/Bombermaaan.ico -text
 branches/linux_port/src/Bombermaaan/Bombermaaan.rc -text
+branches/linux_port/src/Bombermaaan/Bombermaaan.sh -text
 branches/linux_port/src/Bombermaaan/Bombermaaan.vcproj -text
+branches/linux_port/src/Bombermaaan/BombermaaanIco.h -text
 branches/linux_port/src/Bombermaaan/CAiArena.cpp -text
 branches/linux_port/src/Bombermaaan/CAiArena.h -text
 branches/linux_port/src/Bombermaaan/CAiBomber.cpp -text
