@@ -147,6 +147,10 @@ branches/linux_port/src/Bombermaaan/CPlayerInput.cpp -text
 branches/linux_port/src/Bombermaaan/CPlayerInput.h -text
 branches/linux_port/src/Bombermaaan/CRandomMosaic.cpp -text
 branches/linux_port/src/Bombermaaan/CRandomMosaic.h -text
+branches/linux_port/src/Bombermaaan/CSDLInput.cpp -text
+branches/linux_port/src/Bombermaaan/CSDLInput.h -text
+branches/linux_port/src/Bombermaaan/CSDLVideo.cpp -text
+branches/linux_port/src/Bombermaaan/CSDLVideo.h -text
 branches/linux_port/src/Bombermaaan/CScores.cpp -text
 branches/linux_port/src/Bombermaaan/CScores.h -text
 branches/linux_port/src/Bombermaaan/CScroller.cpp -text
