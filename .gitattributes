@@ -171,6 +171,8 @@ branches/linux_port/src/Bombermaaan/STDAFX.CPP -text
 branches/linux_port/src/Bombermaaan/STDAFX.H -text
 branches/linux_port/src/Bombermaaan/WinMain.cpp -text
 branches/linux_port/src/Bombermaaan/mssccprj.scc -text
+branches/linux_port/src/Bombermaaan/template_cpp.txt -text
+branches/linux_port/src/Bombermaaan/template_h.txt -text
 branches/linux_port/src/CHANGELOG.txt -text
 branches/linux_port/src/RES/IMAGE/arena_arrows.bmp -text
 branches/linux_port/src/RES/IMAGE/arena_arrows.xcf -text
