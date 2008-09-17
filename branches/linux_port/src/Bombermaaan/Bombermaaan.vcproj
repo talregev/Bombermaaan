@@ -669,11 +669,11 @@
 			>
 		</File>
 		<File
-			RelativePath=".\resource.h"
+			RelativePath=".\RESOURCE.H"
 			>
 		</File>
 		<File
-			RelativePath=".\stdafx.cpp"
+			RelativePath=".\STDAFX.CPP"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
