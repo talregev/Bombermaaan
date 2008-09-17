@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -26,7 +27,11 @@
 #ifndef __CCONSOLE_H__
 #define __CCONSOLE_H__
 
+#ifdef WIN32
 #include <windows.h>
+#else
+#include "winreplace.h"
+#endif
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -90,7 +95,11 @@ inline bool CConsole::IsOpen (void)
 
 inline void CConsole::SetTextColor (WORD Color)
 {
+	#ifdef WIN32
     SetConsoleTextAttribute (m_StdOut, Color);
+	#else
+	fprintf(m_StdOut, "%c[0;%dm", 26, 30 + Color);
+	#endif
 
     m_Color = Color;
 }
