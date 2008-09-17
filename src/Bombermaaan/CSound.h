@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007 Bernd Arnold
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -27,7 +28,8 @@
 #ifndef __CSOUND_H__
 #define __CSOUND_H__
 
-#include <fmod.h>
+#include "SDL.h"
+#include "SDL_mixer.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -106,10 +108,12 @@ private:
 
     HMODULE m_hModule;                          //!< Connection to the resources
     bool m_GlobalPause;                         //!< Is the sound paused?
-    bool m_SoundOK;                             //!< Could FMOD be initialized? This may be false if there is no sound card
-    FSOUND_SAMPLE* m_Samples [NUM_SAMPLES];     //!< The available samples
-    FMUSIC_MODULE* m_Songs [NUM_SONGS];         //!< The available songs
-
+    bool m_SoundOK;                             //!< Could SDL_mixer be initialized? This may be false if there is no sound card
+    Mix_Chunk *m_Samples [NUM_SAMPLES];         //!< The available samples
+    Mix_Music *m_CurrentSong;                   //!< The current song
+    ESong m_ESong;                              //!< current song number
+    //AudioDevicePtr m_Device;
+		
     bool GetSoundResource (int ResourceID, LPVOID &pData, DWORD &DataSize);
     bool LoadSample (ESample Sample, int ResourceID);
     void FreeSample (ESample Sample);
