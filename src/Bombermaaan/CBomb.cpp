@@ -24,7 +24,7 @@
 ///////////////
 // CBomb.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CBomb.h"
 #include "CArena.h"
 #include "CItem.h"

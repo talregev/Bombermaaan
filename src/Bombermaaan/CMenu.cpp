@@ -23,7 +23,7 @@
 /////////////////////////
 // CMenu.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMenu.h"
 #include "CGame.h"
 #include "CDisplay.h"

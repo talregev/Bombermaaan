@@ -23,7 +23,7 @@
 //////////////////////
 // CPlayerInput.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CPlayerInput.h"
 #include "CDirectInput.h"
 #include "COptions.h"

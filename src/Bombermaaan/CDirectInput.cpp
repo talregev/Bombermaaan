@@ -23,7 +23,7 @@
 //////////////////////
 // CDirectInput.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CDirectInput.h"
 
 

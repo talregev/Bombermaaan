@@ -23,7 +23,7 @@
 /////////////////////////
 // CHurryMessage.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CHurryMessage.h"
 #include "CSound.h"
 #include "CScroller.h"

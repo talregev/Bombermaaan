@@ -23,7 +23,7 @@
 ///////////////////
 // CDemo.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CDemo.h"
 #include "CDisplay.h"
 #include "CInput.h"

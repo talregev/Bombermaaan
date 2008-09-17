@@ -23,7 +23,7 @@
 /////////////////
 // WinMain.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CGame.h"
 
 

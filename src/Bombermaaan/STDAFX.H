@@ -25,7 +25,7 @@
 #define __STDAFX_H__
 
 /**
- *  \file stdafx.h
+ *  \file STDAFX.H
  *  \brief Pre-compiled header file
  */
 

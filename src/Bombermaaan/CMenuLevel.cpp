@@ -23,7 +23,7 @@
 /////////////////////////
 // CMenuLevel.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMenuLevel.h"
 #include "CDisplay.h"
 #include "CInput.h"

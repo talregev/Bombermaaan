@@ -23,7 +23,7 @@
 ///////////////////
 // CBoard.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CBoard.h"
 #include "CClock.h"
 #include "CDisplay.h"

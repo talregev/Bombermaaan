@@ -52,7 +52,7 @@
 // bug contamination : lorsqu'il y a plus de deux joueurs sur une case qui se suivent,
 // avec un joueur malade, y a plein de contamination alors qu'il faudrait pas.
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CBomber.h"
 #include "CArena.h"
 #include "CBomb.h"

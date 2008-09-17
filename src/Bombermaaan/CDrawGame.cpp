@@ -23,7 +23,7 @@
 ///////////////////
 // CDrawGame.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CDrawGame.h"
 #include "CDisplay.h"
 #include "CInput.h"

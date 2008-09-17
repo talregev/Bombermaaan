@@ -23,7 +23,7 @@
 ////////////////
 // CItem.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CItem.h"
 #include "CArena.h"
 #include "CBomber.h"

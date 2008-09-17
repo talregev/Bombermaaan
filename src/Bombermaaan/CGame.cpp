@@ -24,7 +24,7 @@
 //////////////////////
 // CGame.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CGame.h"
 #include "CWindow.h"
 #include "COptions.h"

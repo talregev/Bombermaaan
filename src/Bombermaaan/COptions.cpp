@@ -24,7 +24,7 @@
 /////////////////////////
 // COptions.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "COptions.h"
 #include "CInput.h"
 #include "CItem.h"
