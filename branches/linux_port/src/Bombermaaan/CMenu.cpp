@@ -164,7 +164,7 @@ void CMenu::CloseInput (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-EGameMode CMenu::Update (void)
+int CMenu::Update (void)
 {
     // Increase elapsed time since this game mode has started
     m_GameModeTime += m_pTimer->GetDeltaTime();
@@ -194,7 +194,7 @@ EGameMode CMenu::Update (void)
         //-------------------------------------
 
         // We have to save the menu action to perform
-        EMenuAction MenuAction = MENUACTION_NONE;
+        int MenuAction = MENUACTION_NONE;
 
         // Update the object corresponding to the current menu mode
         switch (m_MenuMode)

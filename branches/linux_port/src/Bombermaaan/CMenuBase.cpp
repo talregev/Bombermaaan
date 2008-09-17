@@ -122,7 +122,7 @@ void CMenuBase::Destroy (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-EMenuAction CMenuBase::Update (void)
+int CMenuBase::Update (void)
 {
     // Increase time elapsed in this menu mode
     m_MenuModeTime += m_pTimer->GetDeltaTime ();
@@ -224,7 +224,7 @@ void CMenuBase::Display (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CMenuBase::Exit (EMenuAction ExitMenuAction)
+void CMenuBase::Exit (int ExitMenuAction)
 {
     // Start exiting this menu mode
     m_HaveToExit = true;

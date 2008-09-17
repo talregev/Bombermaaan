@@ -29,16 +29,15 @@
 
 #include "CElement.h"
 #include "CBomberMove.h"
-#include "COptions.h"
 
 class CArena;
 class CDisplay;
 class CBomb;
 class CArenaSnapshot;
+class COptions;
 
-enum EBombKick;
-enum EBombFlightType;
-enum EItemType;
+#include "CBomb.h"
+#include "CItem.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

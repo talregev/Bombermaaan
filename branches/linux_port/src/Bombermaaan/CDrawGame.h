@@ -35,8 +35,6 @@ class CScores;
 class COptions;
 class CSound;
 
-enum EGameMode;
-
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -68,7 +66,7 @@ public:
     void            Destroy (void);                     //!< Uninitialize the object
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
-    EGameMode       Update (void);                      //!< Update the object and return which game mode should be set
+    int             Update (void);                      //!< Update the object and return which game mode should be set
     void            Display (void);                     //!< Display on the screen
 };
 

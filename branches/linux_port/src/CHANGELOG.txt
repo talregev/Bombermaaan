@@ -1,6 +1,8 @@
 Next version
 
 New feature: AI bomber is punching bombs when he is jammed by a bomb and picked up the punch item (by Markus Drescher)
+New feature: Bombermaaan can be compiled natively on Linux using G++ (without the need of Wine and the Bombermaaan files for Win32, thanks to Markus Drescher)
+Changed: FMOD was replaced by the SDL_mixer library (by Markus Drescher)
 
 
 ----------------------------

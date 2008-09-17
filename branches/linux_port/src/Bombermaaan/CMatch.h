@@ -27,8 +27,6 @@
 #ifndef __CMATCH_H__
 #define __CMATCH_H__
 
-enum EGameMode;
-
 class CDisplay;
 class CInput;
 class COptions;
@@ -38,13 +36,13 @@ class CSound;
 class CPauseMessage;
 class CHurryMessage;
 
-enum ESong;
-
 #include "CBoard.h"
 #include "CArena.h"
 #include "CClock.h"
 #include "CAiManager.h"
 #include "CModeScreen.h"
+
+#include "CSound.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -77,7 +75,7 @@ private:
     CHurryMessage*  m_pHurryMessage;            //!< Hurry up message object, instanciated when the arena starts to close
     float           m_ModeTime;                 //!< Time (in seconds) that elapsed since the mode has started
     float           m_ExitModeTime;             //!< Mode time when we have to start the last black screen
-    EGameMode       m_ExitGameMode;             //!< Game mode to ask for when exiting
+    int             m_ExitGameMode;             //!< Game mode to ask for when exiting
     bool            m_HaveToExit;               //!< Do we have to exit this mode?
     bool            computerPlayersPresent;     //!< True, when there are AI players
     
@@ -110,7 +108,7 @@ public:
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
     inline int      GetWinnerPlayer (void);             //!< Get the number of the player who won this match
-    EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
+    int             Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
 
 #ifdef _DEBUG_FLAG_1
