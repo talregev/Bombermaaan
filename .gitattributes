@@ -173,6 +173,8 @@ src/Bombermaaan/WinMain.cpp -text
 src/Bombermaaan/mssccprj.scc -text
 src/Bombermaaan/template_cpp.txt -text
 src/Bombermaaan/template_h.txt -text
+src/Bombermaaan/winreplace.cpp -text
+src/Bombermaaan/winreplace.h -text
 src/CHANGELOG.txt -text
 src/RES/IMAGE/arena_arrows.bmp -text
 src/RES/IMAGE/arena_arrows.xcf -text
