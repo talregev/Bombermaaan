@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -26,8 +27,6 @@
 
 #include "STDAFX.H"
 #include "CDisplay.h"
-#include "CDirectDraw.h"
-
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -59,23 +58,34 @@ CDisplay::~CDisplay (void)
 bool CDisplay::Create (int Width, int Height, bool FullScreen)
 {
     // Check if we have a connection with the resources
+#ifdef WIN32
     ASSERT (m_hModule != NULL);
+#endif
     
     int Depth = (FullScreen ? 16 : 0);
-    
+	
     // If no display mode has been set yet or the current display mode is not the right one
+#ifdef WIN32
     if (!m_DirectDraw.IsModeSet (Width, Height, Depth, FullScreen))
+#else
+    if (!m_SDLVideo.IsModeSet (Width, Height, Depth, FullScreen))
+#endif
     {
-        // Destroy DirectDraw interface and the sprite tables
-        Destroy ();        
+		    // Destroy DirectDraw/SDLVideo interface and the sprite tables
+        Destroy ();
                 
-        // If DirectDraw object creation failed
+        // If DirectDraw/SDLVideo object creation failed
+#ifdef WIN32
         if (!m_DirectDraw.Create (Width, Height, Depth, FullScreen))
+#else
+        if (!m_SDLVideo.Create (Width, Height, Depth, FullScreen))
+#endif
         {
             // Get out
             return false;
         }
 
+#ifdef WIN32
         // Set the RGB color for transparent pixels in sprites
         // If it failed
         if (!m_DirectDraw.SetTransparentColor (0, 255, 0))
@@ -83,8 +93,8 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             // Get out, it failed
             return false;
         }
-        
-
+#endif        
+			
         // Load the sprite tables. If at least one sprite table could not be loaded
         if (
 #ifdef USE_32_PIXELS_PER_BLOCK
@@ -214,7 +224,11 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
         m_ViewOriginX = (Width - VIEW_WIDTH) / 2;
         m_ViewOriginY = (Height - VIEW_HEIGHT) / 2;
 
+#ifdef WIN32
         m_DirectDraw.SetOrigin (m_ViewOriginX, m_ViewOriginY);
+#else
+        m_SDLVideo.SetOrigin (m_ViewOriginX, m_ViewOriginY);
+#endif
     }
 
     // Everything went right
@@ -236,10 +250,8 @@ bool CDisplay::Create (EDisplayMode DisplayMode)
         case DISPLAYMODE_FULL2    : return Create (512, 384, true);
         case DISPLAYMODE_FULL3    : return Create (640, 480, true);
         case DISPLAYMODE_WINDOWED : return Create (VIEW_WIDTH, VIEW_HEIGHT, false);
+        default                   : return false; // Should never happen
     }
-
-    // Should never happen
-    return false;
 }
 
 //******************************************************************************************************************************
@@ -248,8 +260,12 @@ bool CDisplay::Create (EDisplayMode DisplayMode)
 
 void CDisplay::Destroy (void)
 {
-    // Destroy DirectDraw interface and the sprite tables
+    // Destroy DirectDraw/SDLVideo interface and the sprite tables
+#ifdef WIN32
     m_DirectDraw.Destroy ();
+#else
+    m_SDLVideo.Destroy ();
+#endif
 }
 
 //******************************************************************************************************************************
@@ -263,14 +279,18 @@ bool CDisplay::IsDisplayModeAvailable (EDisplayMode DisplayMode)
     // According to the display mode to test
     switch (DisplayMode)
     {
+#ifdef WIN32
         case DISPLAYMODE_FULL1    : return m_DirectDraw.IsModeAvailable (320, 240, 16);
         case DISPLAYMODE_FULL2    : return m_DirectDraw.IsModeAvailable (512, 384, 16);
         case DISPLAYMODE_FULL3    : return m_DirectDraw.IsModeAvailable (640, 480, 16);
+#else
+        case DISPLAYMODE_FULL1    : return m_SDLVideo.IsModeAvailable (320, 240, 16);
+        case DISPLAYMODE_FULL2    : return m_SDLVideo.IsModeAvailable (512, 384, 16);
+        case DISPLAYMODE_FULL3    : return m_SDLVideo.IsModeAvailable (640, 480, 16);
+#endif
         case DISPLAYMODE_WINDOWED : return true;
+        default                   : return false; // Should never happen
     }
-
-    // Should never happen
-    return false;
 }
 
 //******************************************************************************************************************************
@@ -281,9 +301,10 @@ bool CDisplay::LoadSprites (int SpriteTableWidth,
                             int SpriteTableHeight, 
                             int SpriteWidth, 
                             int SpriteHeight, 
-                            bool Transparent, 
+                            bool Transparent,
                             int BMP_ID)
 {
+#ifdef WIN32
     // Load the bitmap as a resource
     HBITMAP hBitmap = (HBITMAP) LoadImage (m_hModule, MAKEINTRESOURCE(BMP_ID), IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION);
 
@@ -297,20 +318,29 @@ bool CDisplay::LoadSprites (int SpriteTableWidth,
         // Get out
         return false;
     }
-
+#endif
     // Create the sprites by giving the sprite table information and the handle to the bitmap.
     // If it fails
-    if (!m_DirectDraw.LoadSprites (SpriteTableWidth, 
+#ifdef WIN32
+    if (!m_DirectDraw.LoadSprites (SpriteTableWidth,
+#else
+    if (!m_SDLVideo.LoadSprites (SpriteTableWidth,
+#endif
                                    SpriteTableHeight, 
                                    SpriteWidth, 
                                    SpriteHeight, 
-                                   Transparent, 
+                                   Transparent,
+#ifdef WIN32
                                    hBitmap))
+#else
+                                   BMP_ID))
+#endif
     {
         // Get out, failure
         return false;
     }
 
+#ifdef WIN32
     // We no longer need the hBitmap so delete it
     // If it fails
     if (DeleteObject (hBitmap) == 0)
@@ -322,7 +352,8 @@ bool CDisplay::LoadSprites (int SpriteTableWidth,
         // Get out, failure
         return false;
     }
-
+#endif
+																	 
     // Everything went right
     return true;
 }
