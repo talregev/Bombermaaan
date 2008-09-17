@@ -26,8 +26,6 @@
 #ifndef __CDEMO_H__
 #define __CDEMO_H__
 
-enum EGameMode;
-
 class CDisplay;
 class CInput;
 class CScores;
@@ -36,8 +34,6 @@ class CSound;
 class CPauseMessage;
 class CHurryMessage;
 
-enum ESong;
-
 #include "CBoard.h"
 #include "CArena.h"
 #include "CClock.h"
@@ -45,6 +41,8 @@ enum ESong;
 #include "CFont.h"
 #include "CModeScreen.h"
 #include "COptions.h"
+
+#include "CSound.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -71,7 +69,7 @@ private:
     bool            m_DrawDemoText;             //!< Do we currently need to draw the demo text or not draw it?
     float           m_ModeTime;                 //!< Time (in seconds) that elapsed since the mode has started
     float           m_ExitModeTime;             //!< Mode time when we have to start the last black screen
-    EGameMode       m_ExitGameMode;             //!< Game mode to ask for when exiting
+    int             m_ExitGameMode;             //!< Game mode to ask for when exiting
     bool            m_HaveToExit;               //!< Do we have to exit this mode?
     
     void            CreateMainComponents (void);
@@ -106,7 +104,7 @@ public:
     void            Destroy (void);                     //!< Uninitialize the object
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
-    EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
+    int             Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
 };
 

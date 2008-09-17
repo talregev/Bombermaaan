@@ -239,7 +239,7 @@ void CWinner::CloseInput (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-EGameMode CWinner::Update (void)
+int CWinner::Update (void)
 {
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();

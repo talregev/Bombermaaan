@@ -26,7 +26,6 @@
 #include "STDAFX.H"
 #include "CGame.h"
 
-
 /**
  *  \mainpage Bombermaaan source code documentation
  *
@@ -42,14 +41,26 @@
  *  \brief This is the main function of the executable file.
  */
 
+#ifdef WIN32
 int APIENTRY WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdline, int nCmdShow)
+#else
+int main (int argc, char **argv)
+#endif
 {
-    //! Create the CGame instance    
+#ifndef WIN32
+    HINSTANCE hInstance = 0;
+    char **lpCmdline = argv;
+#endif
+	
+    // Create the CGame instance    
     CGame Game (hInstance, lpCmdline);
 
-    //! Create the game (CGame::Create())
     // If creating the game failed
-    if (!Game.Create(lpCmdline))
+#ifdef WIN32
+	if (!Game.Create(lpCmdline))
+#else
+	if (!Game.Create(lpCmdline, argc))
+#endif
     {
         // Get out, failure
         return false;

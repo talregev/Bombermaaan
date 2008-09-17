@@ -26,8 +26,6 @@
 #ifndef __CMENUBASE_H__
 #define __CMENUBASE_H__
 
-enum EMenuAction;
-
 class CDisplay;
 class CInput;
 class CSound;
@@ -45,7 +43,7 @@ private:
 
     float           m_MenuModeTime;         //!< Time (in seconds) that elapsed since this menu mode has started
     bool            m_HaveToExit;           //!< Do we have to exit this menu mode?
-    EMenuAction     m_ExitMenuAction;       //!< Menu action to ask for when exiting (after transition)
+    int             m_ExitMenuAction;       //!< Menu action to ask for when exiting (after transition)
     float           m_ExitMenuModeTime;     //!< Menu mode time when we realized we have to exit (used for transition)
 
 protected:
@@ -68,7 +66,7 @@ protected:
     virtual void    OnPrevious (void) = 0;
     virtual void    OnNext (void) = 0;
 
-    void            Exit (EMenuAction ExitMenuAction);
+    void            Exit (int ExitMenuAction);
     
 public:
 
@@ -85,7 +83,7 @@ public:
     void            Create (void);
     void            Destroy (void);
 
-    EMenuAction     Update (void);
+    int             Update (void);
     void            Display (void);
 };
 

@@ -291,7 +291,7 @@ void CVictory::ResetConfetti (SConfetti* pConfetti)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-EGameMode CVictory::Update (void)
+int CVictory::Update (void)
 {
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();

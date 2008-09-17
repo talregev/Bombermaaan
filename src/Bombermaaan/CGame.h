@@ -92,7 +92,7 @@ class CGame : public CWindow
 {
 private:
     
-    EGameMode       m_GameMode;             //!< Current game mode defining what to update
+    int       		m_GameMode;             //!< Current game mode defining what to update
     HMODULE         m_hModule;              //!< Connection to the resources
     HINSTANCE       m_hInstance;            //!< Application instance handle
     CTimer          m_Timer;                //!< Timer object for movement, animation, synchronization...
@@ -110,6 +110,10 @@ private:
     CControls       m_Controls;             //!< Controls screen object
     CDemo           m_Demo;                 //!< Demo screen object in which we show a match betweeen computer players.
     CMenuYesNo      m_MenuYesNo;            //!< Yes/No message box object
+        
+#ifndef WIN32
+    string          m_WindowTitle;
+#endif
 
     void            OnActivateApp  (WPARAM wParam, LPARAM lParam);
     void            OnMove         (WPARAM wParam, LPARAM lParam);
@@ -117,25 +121,41 @@ private:
     void            OnKeyUp        (WPARAM wParam, LPARAM lParam);
     void            OnPaint        (WPARAM wParam, LPARAM lParam);
     bool            OnSysCommand   (WPARAM wParam, LPARAM lParam);
+    void            OnSize         (WPARAM wParam, LPARAM lParam);
+#ifndef WIN32
+    void            OnJoystickAxis (WPARAM wParam, LPARAM lParam);             // SDL_JOYAXISMOTION
+    void            OnJoystickButton (WPARAM wParam, LPARAM lParam);       // SDL_JOYBUTTONDOWN/-UP
+#endif
     void            OnWindowActive (void);
-    void            StartGameMode (EGameMode GameMode);
+    void            StartGameMode (int GameMode);
     void            FinishGameMode (void);
-    CModeScreen*    GetGameModeObject (EGameMode GameMode);
+    CModeScreen*    GetGameModeObject (int GameMode);
 
 public:
 
+#ifdef WIN32
                     CGame (HINSTANCE hInstance, const char* pCommandLine);
+#else
+					CGame (HINSTANCE hInstance, char **pCommandLine);
+#endif
+
     virtual         ~CGame (void);
-    bool            Create (const char* pCommandLine);
+#ifdef WIN32
+	bool            Create (const char* pCommandLine);
+#else
+	bool            Create (char **pCommandLine, int pCommandLineCount);
+#endif
+
     void            Destroy (void);
-    inline void     SwitchToGameMode (EGameMode GameMode);
+    inline void     SwitchToGameMode (int GameMode);
 };
 
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-inline void CGame::SwitchToGameMode (EGameMode GameMode)
+inline void CGame::SwitchToGameMode (int GameMode)
 {
     FinishGameMode();
     StartGameMode(GameMode);

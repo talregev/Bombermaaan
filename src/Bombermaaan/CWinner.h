@@ -36,8 +36,6 @@ class CMatch;
 class CSound;
 class CMosaic;
 
-enum EGameMode;
-
 #include "CModeScreen.h"
 
 //******************************************************************************************************************************
@@ -64,7 +62,7 @@ private:
     float           m_ExitModeTime;             //!< Mode time when we have to start the last black screen
     float           m_CoinTime;                 //!< Time that elapsed for the current coin sprite
     int             m_CoinSpriteOffset;         //!< Sprite offset of the coin
-    EGameMode       m_ExitGameMode;             //!< Game mode to ask for when exiting
+    int             m_ExitGameMode;             //!< Game mode to ask for when exiting
     bool            m_HaveToExit;               //!< Do we have to exit this mode?
     
 public:
@@ -77,7 +75,7 @@ public:
     void            Destroy (void);                     //!< Uninitialize the object
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
-    EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
+    int             Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
 };
 
