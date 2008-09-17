@@ -730,10 +730,13 @@ trunk/src/Bombermaaan/CWindow.cpp -text
 trunk/src/Bombermaaan/CWindow.h -text
 trunk/src/Bombermaaan/CWinner.cpp -text
 trunk/src/Bombermaaan/CWinner.h -text
+trunk/src/Bombermaaan/Makefile -text
+trunk/src/Bombermaaan/Makefile.win -text
 trunk/src/Bombermaaan/RESOURCE.H -text
 trunk/src/Bombermaaan/STDAFX.CPP -text
 trunk/src/Bombermaaan/STDAFX.H -text
 trunk/src/Bombermaaan/WinMain.cpp -text
+trunk/src/Bombermaaan/mssccprj.scc -text
 trunk/src/CHANGELOG.txt -text
 trunk/src/RES/IMAGE/arena_arrows.bmp -text
 trunk/src/RES/IMAGE/arena_arrows.xcf -text
