@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -19,16 +20,15 @@
 
 ************************************************************************************/
 
-
 ///////////////////
-// CDirectDraw.h
+// CSDLVideo.h
 
 
-#ifndef __CDIRECTDRAW_H__
-#define __CDIRECTDRAW_H__
+#ifndef __CSDLVIDEO_H__
+#define __CSDLVIDEO_H__
 
-#include <ddraw.h>
-
+#include "SDL.h"
+#include "STDAFX.H"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -58,14 +58,11 @@ struct SDisplayMode
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-/**
- *  \brief Describes a drawing request
- *
- *  Drawing requests are stored in a CSpriteManager
- *  instance. They describe a sprite to draw, and
- *  where to draw it, and when to draw to it (using
- *  sprites layers and PriorityInLayer-inside-layer.
- */
+
+// Drawing requests are stored in a CSpriteManager
+// instance. They describe a sprite to draw, and
+// where to draw it, and when to draw to it (using
+// sprites layers and PriorityInLayer-inside-layer.
 
 struct SDrawingRequest
 {
@@ -108,7 +105,7 @@ struct SDrawingRequest
 
 struct SSurface
 {
-    LPDIRECTDRAWSURFACE7    pSurface;           //!< Directdraw surface
+	struct SDL_Surface		*pSurface;			//!< SDL surface
     DWORD                   BlitParameters;     //!< Parameter when blitting, depends on if the surface is transparent
 };
 
@@ -116,21 +113,19 @@ struct SSurface
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! CDirectDraw manages the DirectDraw stuff
-class CDirectDraw
+class CSDLVideo
 {
 private:
 
     HWND                    m_hWnd;                         //!< Window handle
-    RECT                    m_rcScreen;                     //!< Window rect in screen coordinates
-    RECT                    m_rcViewport;                   //!< Window rect in client coordinates
+    SDL_Rect                m_rcScreen;                     //!< Window rect in screen coordinates
+    SDL_Rect                m_rcViewport;                   //!< Window rect in client coordinates
     int                     m_Width;                        //!< Display width when fullscreen
     int                     m_Height;                       //!< Display height when fullscreen
     int                     m_Depth;                        //!< Display depth when fullscreen
     bool                    m_FullScreen;                   //!< Is it fullscreen?
-    LPDIRECTDRAW7           m_pDD;                          //!< Directdraw object
-    LPDIRECTDRAWSURFACE7    m_pBackBuffer;                  //!< Backbuffer surface
-    LPDIRECTDRAWSURFACE7    m_pPrimary;                     //!< Primary surface
+	SDL_Surface				*m_pBackBuffer;					//!< Backbuffer surface
+    SDL_Surface				*m_pPrimary;                    //!< Primary surface
     vector<SSurface>        m_Surfaces;                     //!< Surfaces
     DWORD                   m_ColorKey;                     //!< Color key for transparent surfaces
     priority_queue<SDrawingRequest> m_DrawingRequests;      //!< Automatically sorted drawing requests queue
@@ -145,10 +140,11 @@ private:
     
 public:
 
-    CDirectDraw (void);
-    ~CDirectDraw (void);
+    CSDLVideo (void);
+    ~CSDLVideo (void);
 
-    inline void             SetWindowHandle (HWND hWnd);
+
+	inline void             SetWindowHandle (HWND hWnd);
     bool                    Create (int Width, int Height, int Depth, bool FullScreen);
     void                    Destroy (void);
     bool                    SetTransparentColor (int Red, int Green, int Blue);
@@ -160,6 +156,7 @@ public:
     void                    UpdateAll (void);
     void                    UpdateScreen (void);
     inline void             SetOrigin (int OriginX, int OriginY);
+	inline void				SetNewPrimary (SDL_Surface *pSurface);
     void                    DrawSprite (int PositionX, int PositionY, RECT *pZone, RECT *pClip, int SpriteTable, int Sprite, int SpriteLayer, int PriorityInLayer);
     inline bool             IsModeSet (int Width, int Height, int Depth, bool FullScreen);
     bool                    IsModeAvailable (int Width, int Height, int Depth);
@@ -169,12 +166,12 @@ public:
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-inline void CDirectDraw::SetWindowHandle (HWND hWnd)
+inline void CSDLVideo::SetWindowHandle (HWND hWnd)
 {
     m_hWnd = hWnd;
 }
 
-inline bool CDirectDraw::IsModeSet (int Width, int Height, int Depth, bool FullScreen)
+inline bool CSDLVideo::IsModeSet (int Width, int Height, int Depth, bool FullScreen)
 {
     return m_Width == Width     && 
            m_Height == Height   && 
@@ -182,27 +179,20 @@ inline bool CDirectDraw::IsModeSet (int Width, int Height, int Depth, bool FullS
            m_FullScreen == FullScreen;
 }
 
-/**
- *  \brief Update the screen
- *
- *  \sa UpdateScreen()
- */
-
-inline void CDirectDraw::OnPaint (void)
+inline void CSDLVideo::OnPaint (void)
 {
     UpdateScreen ();
 }
 
-/**
- *  \brief Set the origin of the top left position
- *
- *  Draw requests are relative to this position
- */
-
-inline void CDirectDraw::SetOrigin (int OriginX, int OriginY)
+inline void CSDLVideo::SetOrigin (int OriginX, int OriginY)
 {
     m_OriginX = OriginX;
     m_OriginY = OriginY;
+}
+
+inline void CSDLVideo::SetNewPrimary (SDL_Surface *pSurface)
+{
+    m_pPrimary = pSurface;
 }
 
 //******************************************************************************************************************************
