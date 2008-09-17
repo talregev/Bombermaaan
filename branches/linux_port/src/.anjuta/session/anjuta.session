@@ -1,0 +1,13 @@
+
+[Anjuta]
+Maximized=1
+Geometry=1280x953+0+25
+
+[File Loader]
+Files=file:///home/otto/Projects/Bombermaaan/Bombermaaan/COptions.cpp#150%%%file:///home/otto/Projects/Bombermaaan/Bombermaaan/CGame.cpp#409%%%file:///home/otto/Projects/Bombermaaan/Bombermaaan/CSound.cpp#23%%%file:///home/otto/Projects/Bombermaaan/Bombermaaan/CAiArena.cpp#2%%%file:///home/otto/Projects/Bombermaaan/RES32/resource.rc#102
+
+[Execution]
+Program arguments=
+Run in terminal=1
+Program uri=file:///home/otto/Projects/Bombermaaan/Bombermaaan/Bombermaaan
+Stop at beginning=1
