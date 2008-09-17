@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -19,26 +20,24 @@
 
 ************************************************************************************/
 
-
 ///////////////////
-// CDirectDraw.cpp
+// CSDLVideo.cpp
 
-#include "stdafx.h"
-#include "CDirectDraw.h"
-#include <ddraw.h>
+#include "STDAFX.H"
+#include "CSDLVideo.h"
+#include "BombermaaanIco.h"
 
-
-const char* GetDirectDrawError (HRESULT hRet);
-HRESULT WINAPI AddDisplayMode (LPDDSURFACEDESC2 lpDDSurfaceDesc, LPVOID lpContext);
+static const char* GetSDLVideoError (HRESULT hRet);
+static void AddDisplayMode (int width, int height, int depth, LPVOID lpContext);
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-CDirectDraw::CDirectDraw (void)
+CSDLVideo::CSDLVideo (void)
 {
     m_hWnd = NULL;
-    m_pDD = NULL;
+//    m_pDD = NULL;
     m_pBackBuffer = NULL;
     m_pPrimary = NULL;
     m_Width = 0;
@@ -54,7 +53,7 @@ CDirectDraw::CDirectDraw (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-CDirectDraw::~CDirectDraw (void)
+CSDLVideo::~CSDLVideo (void)
 {
     // Nothing to do
 }
@@ -63,283 +62,202 @@ CDirectDraw::~CDirectDraw (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-static HRESULT WINAPI AddDisplayMode (LPDDSURFACEDESC2 lpDDSurfaceDesc, LPVOID lpContext)
+static void AddDisplayMode (int width, int height, int depth, LPVOID lpContext)
 {
     // The DirectInput device that will be created
     vector<SDisplayMode>* pDisplayModes = (vector<SDisplayMode>*)lpContext;
     
     SDisplayMode DisplayMode;
-    DisplayMode.Width = lpDDSurfaceDesc->dwWidth;
-    DisplayMode.Height = lpDDSurfaceDesc->dwHeight;
-    DisplayMode.Depth = lpDDSurfaceDesc->ddpfPixelFormat.dwRGBBitCount;
+    DisplayMode.Width = width;
+    DisplayMode.Height = height;
+    DisplayMode.Depth = depth;
 
     pDisplayModes->push_back(DisplayMode);
 
-    // Continue enumerating display modes       
-    return DDENUMRET_OK;
+    return;
 }
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool CDirectDraw::Create (int Width, int Height, int Depth, bool FullScreen)
+bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
 {
-    //! Set the display properties
+    // Set the display properties
     m_Width = Width;
     m_Height = Height;
     m_Depth = Depth;
     m_FullScreen = FullScreen;
 
-    m_pDD = NULL;
+    //m_pDD = NULL;
     m_pBackBuffer = NULL;
     m_pPrimary = NULL;
     m_ColorKey = 0;
 
-    HRESULT hRet;
-    DDSURFACEDESC2 ddsd;
-
-    //! Create directdraw object
-    hRet = DirectDrawCreateEx (NULL, (LPVOID *)&m_pDD, IID_IDirectDraw7, NULL);
+    SDL_Rect **modes;
     
-    // If it failed
-    if (hRet != DD_OK)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not create DirectDraw object.");
-        theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
+    int i;
+    bool validMode = false; // is this video mode valid?
+
+    // Enumerate all display modes (without taking refresh rates into account)
+    if (!m_FullScreen) {
+		modes = SDL_ListModes(NULL, SDL_HWSURFACE|SDL_DOUBLEBUF);
+	}
+	else {
+		modes = SDL_ListModes(NULL, SDL_HWSURFACE|SDL_DOUBLEBUF);
+	}
+    
+    // some mode available?
+	if (modes == (SDL_Rect **)0) {
+		// Log failure
+        theLog.WriteLine ("SDLVideo      => !!! Could not find any video modes.");
 
         // Get out
         return false;
     }
-    // If it was successful
-    else
-    {
-        // Log success
-        theLog.WriteLine ("DirectDraw      => DirectDraw object was created.");
+    else if (modes == (SDL_Rect **)-1) {
+		// Log success
+        theLog.WriteLine ("SDLVideo      => All modes available");
+        
+        // so, add 240x234 (window), 320 x 240, 512 x 384, 640 x 480 in 16 bits
+        AddDisplayMode(240, 234, 16, (LPVOID *)&m_AvailableDisplayModes);
+        AddDisplayMode(320, 240, 16, (LPVOID *)&m_AvailableDisplayModes);
+        AddDisplayMode(512, 384, 16, (LPVOID *)&m_AvailableDisplayModes);
+        AddDisplayMode(640, 480, 16, (LPVOID *)&m_AvailableDisplayModes);
+        
+		// so this mode is possible
+		validMode = true;
+	}
+	else {
+		// enumerate modes and add certain
+        for (i = 0; modes[i]; ++i) {
+			if ((modes[i]->w == 240 && modes[i]->h == 234) ||
+				(modes[i]->w == 320 && modes[i]->h == 240) ||
+				(modes[i]->w == 512 && modes[i]->h == 384) ||
+				(modes[i]->w == 640 && modes[i]->h == 480)) {
+				AddDisplayMode(modes[i]->w, modes[i]->h, 16,
+					(LPVOID *)&m_AvailableDisplayModes);
+				
+				// is our requested mode possbile?
+				if (modes[i]->w == m_Width && modes[i]->h == m_Height) {
+						validMode = true;
+				}
+			}
+		}
+			
+	}
+		
+	if (!validMode) {
+		// Log failure
+        theLog.WriteLine ("SDLVideo      => !!! Requested video mode %dx%d not found.", m_Width, m_Height);
+
+        // Get out
+        return false;
     }
-
-    //! Enumerate all display modes (without taking refresh rates into account)
-    m_pDD->EnumDisplayModes(0, NULL, (LPVOID *)&m_AvailableDisplayModes, AddDisplayMode);
-
+    
     // If desired mode is windowed mode
     if (!m_FullScreen)
     {
         // Log that windowed mode is being initialized
-        theLog.WriteLine ("DirectDraw      => Initializing DirectDraw interface for windowed mode %dx%d.", m_Width, m_Height);
+        theLog.WriteLine ("SDLVideo      => Initializing SDLVideo interface for windowed mode %dx%d.", m_Width, m_Height);
 
         // Get normal windowed mode
-        hRet = m_pDD->SetCooperativeLevel (m_hWnd, DDSCL_NORMAL);
+        m_pPrimary = SDL_SetVideoMode(m_Width, m_Height, m_Depth, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_RESIZABLE);
         
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not set cooperative level.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
+        if (m_pPrimary == NULL) {
+			// Log failure
+		    theLog.WriteLine ("SDLVideo      => !!! Requested video mode could not be set. (primary surface)");
+		
+		    // Get out
+		    return false;
+		}
+		    
+		// create primary and back buffer surface
 
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Cooperative level was set.");
-        }
-
-        // Create the primary surface
-        ZeroMemory (&ddsd, sizeof (ddsd));
-        ddsd.dwSize = sizeof (ddsd);
-        ddsd.dwFlags = DDSD_CAPS;
-        ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
-        hRet = m_pDD->CreateSurface (&ddsd, &m_pPrimary, NULL);
-        
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not create primary surface.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Primary surface was created.");
-        }
-        
-        // Create a clipper object since this is for a windowed render
-        LPDIRECTDRAWCLIPPER pClipper;
-        hRet = m_pDD->CreateClipper (0, &pClipper, NULL);
-        
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not create clipper object.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-            
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Clipper object was created.");
-        }
-
-        // Associate the clipper with the window
-        pClipper->SetHWnd (0, m_hWnd);
-        m_pPrimary->SetClipper (pClipper);
-        pClipper->Release ();
-        pClipper = NULL;
-
-        // Resize the window to adjust the client area size
-        RECT rc;
-        SetRect (&rc, 0, 0, m_Width, m_Height);
-        AdjustWindowRectEx (&rc, GetWindowStyle(m_hWnd), (int)GetMenu (m_hWnd), GetWindowExStyle (m_hWnd));
-        SetWindowPos (m_hWnd, HWND_NOTOPMOST, 0, 0, rc.right - rc.left, rc.bottom - rc.top, SWP_NOMOVE);
-
-        // Get the rects of the viewport and screen bounds
-        GetClientRect (m_hWnd, &m_rcViewport);
-        GetClientRect (m_hWnd, &m_rcScreen);
-        ClientToScreen (m_hWnd, (POINT*)&m_rcScreen.left);
-        ClientToScreen (m_hWnd, (POINT*)&m_rcScreen.right);
-
-        // Get the backbuffer
-        ddsd.dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_CAPS;
-        ddsd.dwWidth = m_Width;
-        ddsd.dwHeight = m_Height;
-        ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-        hRet = m_pDD->CreateSurface (&ddsd, &m_pBackBuffer, NULL);
-        
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not create backbuffer surface.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Backbuffer surface was created.");
-        }
-    
-        // In windowed mode, the cursor is visible by default
-        ShowCursor (true);
-    }
+		// Create the primary surface
+		/* Uint32 rmask, gmask, bmask, amask;
+			
+		// SDL interprets each pixel as a 32-bit number, so our masks must depend
+		// on the endianness (byte order) of the machine
+		#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+			rmask = 0xff000000;
+			gmask = 0x00ff0000;
+			bmask = 0x0000ff00;
+			amask = 0x000000ff;
+		#else
+			rmask = 0x000000ff;
+			gmask = 0x0000ff00;
+			bmask = 0x00ff0000;
+			amask = 0xff000000;
+		#endif
+		
+		// Get the backbuffer
+		m_pBackBuffer = SDL_CreateRGBSurface(SDL_HWSURFACE, m_Width, m_Height,
+				m_Depth, rmask, gmask, bmask, amask);
+	
+		// If it failed
+		if (m_pBackBuffer == NULL)
+		{
+			// Log failure
+			theLog.WriteLine ("SDLVideo      => !!! Could not create backbuffer surface.");
+			theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
+	
+			// Get out
+			return false;
+		}
+		// If it was successful
+		else
+		{
+			// Log success
+			theLog.WriteLine ("SDLVideo      => Backbuffer surface was created.");
+		}*/
+	}
     // If desired mode is a fullscreen mode
     else
     {
         // Log that fullscreen mode is being initialized
-        theLog.WriteLine ("DirectDraw      => Initializing DirectDraw interface for fullscreen mode %dx%dx%d.", m_Width, m_Height, m_Depth);
+        theLog.WriteLine ("SDLVideo      => Initializing SDLVideo interface for fullscreen mode %dx%dx%d.", m_Width, m_Height, m_Depth);
          
-        // Get exclusive mode
-        hRet = m_pDD->SetCooperativeLevel (m_hWnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
+        // Get fullscreen mode
+        m_pPrimary = SDL_SetVideoMode(m_Width, m_Height, m_Depth, SDL_HWSURFACE|SDL_FULLSCREEN|SDL_DOUBLEBUF);
         
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not set cooperative level.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
+        if (m_pPrimary == NULL) {
+			// Log failure
+		    theLog.WriteLine ("SDLVideo      => !!! Requested video mode could not be set. (primary/backbuffer)");
+		
+		    // Get out
+		    return false;
+		}
+	}
+					
+    // Get the rects of the viewport and screen bounds
+    m_rcViewport.x = 0;
+    m_rcViewport.y = 0;
 
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Cooperative level was set.");
-        }
-
-        // Set the video mode
-        hRet = m_pDD->SetDisplayMode (m_Width, m_Height, m_Depth, 0, 0);
-        
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not set display mode.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Display mode was set.");
-        }
-        
-        // Create the primary surface with 1 back buffer
-        ZeroMemory (&ddsd, sizeof (ddsd));
-        ddsd.dwSize = sizeof(ddsd);
-        ddsd.dwFlags = DDSD_CAPS | DDSD_BACKBUFFERCOUNT;
-        ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_FLIP | DDSCAPS_COMPLEX;
-        ddsd.dwBackBufferCount = 1;
-        hRet = m_pDD->CreateSurface (&ddsd, &m_pPrimary, NULL);
-        
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not create primary surface.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Primary surface was created.");
-        }
-        
-        DDSCAPS2 ddscaps;
-        ZeroMemory (&ddscaps, sizeof (ddscaps));
-        ddscaps.dwCaps = DDSCAPS_BACKBUFFER;
-        hRet = m_pPrimary->GetAttachedSurface (&ddscaps, &m_pBackBuffer);
-        
-        // If it failed
-        if (hRet != DD_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not get backbuffer surface.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("DirectDraw      => Getting backbuffer surface was successful.");
-        }
-        
-        // Get the dimensions of the viewport and screen bounds
-        // Store the rectangle which contains the renderer
-        SetRect (&m_rcViewport, 0, 0, m_Width, m_Height);
-        memcpy (&m_rcScreen, &m_rcViewport, sizeof (RECT));
-
-        // In fullscreen mode, the cursor is not visible by default
-        ShowCursor (false);
-    }
-
+    m_rcViewport.w = m_Width;
+    m_rcViewport.h = m_Height;
+    
+    memcpy (&m_rcScreen, &m_rcViewport, sizeof (SDL_Rect));
+    
+    // show cursor depending on windowed/fullscreen mode
+    SDL_ShowCursor (!m_FullScreen);
+	
+	SDL_RWops *rwIcon = SDL_RWFromMem(BombermaaanIcon, sizeof(BombermaaanIcon));
+    
+    SDL_Surface *icon = SDL_LoadBMP_RW(rwIcon, 0);
+    
+	if (icon != NULL) {
+		if (SDL_SetColorKey(icon, SDL_SRCCOLORKEY, SDL_MapRGB(icon->format,
+			0x00, 0xff, 0x00)) == 0) {
+			SDL_WM_SetIcon(icon, NULL);
+		}
+	}
+	else {
+		printf ("could not load icon.\n");
+	}
+	
+	SDL_FreeSurface(icon);
+					
     // Clear the back buffer surface
     Clear ();
 
@@ -355,71 +273,47 @@ bool CDirectDraw::Create (int Width, int Height, int Depth, bool FullScreen)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! Destroys the directdraw interface
+// Destroys the SDLVideo interface
 
-void CDirectDraw::Destroy (void)
+void CSDLVideo::Destroy (void)
 {
     // Free drawing requests, sprite tables, surfaces...
     FreeSprites ();
 
-    // If a DirectDraw object exists
-    if (m_pDD != NULL)
+    // If a SDLVideo object exists
+    if (m_pPrimary != NULL)
     {
         // If we are in fullscreen mode
         if (m_FullScreen)
         {
-            // Set cooperative level to normal (for windowed mode)
-            HRESULT hRet = m_pDD->SetCooperativeLevel (m_hWnd, DDSCL_NORMAL);
-
-            // If it failed
-            if (hRet != DD_OK)
-            {
-                // Log failure
-                theLog.WriteLine ("DirectDraw      => !!! Could not set cooperative level.");
-                theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-                // Get out
-                return;
-            }
-            // If it was successful
-            else
-            {
-                // Log success
-                theLog.WriteLine ("DirectDraw      => Cooperative level was set.");
-            }
-            
             // Show the cursor because we are in windowed mode
-            ShowCursor (true);
+            SDL_ShowCursor (true);
         }
         
         // If the back buffer surface exists
         if (m_pBackBuffer != NULL)
         {
             // Release it
-            m_pBackBuffer->Release ();
+            SDL_FreeSurface(m_pBackBuffer);
             m_pBackBuffer = NULL;
 
             // Log release
-            theLog.WriteLine ("DirectDraw      => Backbuffer surface was released.");
+            theLog.WriteLine ("SDLVideo      => Backbuffer surface was released.");
         }
         
         // If the primary surface exists
         if (m_pPrimary != NULL)
         {
             // Release it
-            m_pPrimary->Release ();
+            SDL_FreeSurface(m_pPrimary);
             m_pPrimary = NULL;
 
             // Log release
-            theLog.WriteLine ("DirectDraw      => Primary surface was released.");
+            theLog.WriteLine ("SDLVideo      => Primary surface was released.");
         }
     
-        // Release the DirectDraw object
-        m_pDD->Release();
-        m_pDD = NULL;
-
         // Log release
-        theLog.WriteLine ("DirectDraw      => DirectDraw object was released.");
+        theLog.WriteLine ("SDLVideo      => SDLVideo object was released.");
     }
 }
 
@@ -427,9 +321,10 @@ void CDirectDraw::Destroy (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! Updates the display by blitting the back buffer surface on the primary surface.
+// Updates the display by blitting the back buffer
+// surface on the primary surface.
 
-void CDirectDraw::UpdateScreen (void)
+void CSDLVideo::UpdateScreen (void)
 {
     HRESULT hRet;
 
@@ -439,52 +334,28 @@ void CDirectDraw::UpdateScreen (void)
         if (!m_FullScreen)
         {
             // Update the primary surface with by blitting the backbuffer on the primary surface
-            hRet = m_pPrimary->Blt (&m_rcScreen, m_pBackBuffer, &m_rcViewport, DDBLT_WAIT, NULL);
+            //hRet = SDL_BlitSurface(m_pBackBuffer, &m_rcViewport, m_pPrimary, &m_rcScreen);
+            //hRet = SDL_BlitSurface(m_pBackBuffer, NULL, m_pPrimary, NULL);
+            hRet = SDL_Flip(m_pPrimary);
         }
         // If we are in fullscreen mode
         else
         {
             // Update the primary surface by flipping backbuffer and primary surface
-            hRet = m_pPrimary->Flip (NULL, DDFLIP_WAIT);
+            hRet = SDL_Flip(m_pPrimary);
         }
 
-        // If it worked fine
-        if (hRet == DD_OK)
+		// If it worked fine
+        if (hRet == 0)
         {
             // Get out
             break;
         }
 
-        // If the primary surface was lost
-        if (hRet == DDERR_SURFACELOST)
-        {
-            // Log the primary surface was lost
-            theLog.WriteLine ("DirectDraw      => !!! Primary surface is lost.");
-
-            // Try to restore it
-            hRet = m_pPrimary->Restore ();
-            
-            // If it failed
-            if (hRet != DD_OK)
-            {
-                // Log failure
-                theLog.WriteLine ("DirectDraw      => !!! Could not restore primary surface.");
-                theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-                // Get out
-                break;
-            }
-        }
-
-        // If the primary surface is too busy
-        //! TODO: Check if this should be an equal compare instead of not equal
-        if (hRet != DDERR_WASSTILLDRAWING)
-        {
-            // Log the primary surface is too busy
-            theLog.WriteLine ("DirectDraw      => !!! Primary surface is too busy to be updated.");
-
-            // Get out
-            break;
+        // Log failure
+        if (hRet != 0) {
+	        theLog.WriteLine ("SDLVideo      => !!! Updating failed (switching primary/backbuffer).");
+	        theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
         }
     }
 }
@@ -493,31 +364,23 @@ void CDirectDraw::UpdateScreen (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! Update the drawing zones in case the window moves.
+// Updates the object : this updates the drawing zones
+// in case the window moves.
 
-void CDirectDraw::OnWindowMove ()
+void CSDLVideo::OnWindowMove ()
 {
     // Update the window rect that is used when updating the screen
-    GetClientRect (m_hWnd, &m_rcViewport);
+    /* GetClientRect (m_hWnd, &m_rcViewport);
     GetClientRect (m_hWnd, &m_rcScreen);
     ClientToScreen (m_hWnd, (POINT*)&m_rcScreen.left);
-    ClientToScreen (m_hWnd, (POINT*)&m_rcScreen.right);
+    ClientToScreen (m_hWnd, (POINT*)&m_rcScreen.right); */
 }
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-/**
- *  \brief Store a sprite in the drawing requests list
- *
- *  @param PositionX the x coordinate where the upper left corner should be placed (relative to origin)
- *  @param PositionY the y coordinate where the upper left corner should be placed (relative to origin)
- *
- *  @see SetOrigin()
- */
-
-void CDirectDraw::DrawSprite (int PositionX, 
+void CSDLVideo::DrawSprite (int PositionX, 
                               int PositionY, 
                               RECT *pZone,
                               RECT *pClip,
@@ -527,8 +390,8 @@ void CDirectDraw::DrawSprite (int PositionX,
                               int PriorityInLayer)
 {
     // Check if the parameters are valid
-    ASSERT (SpriteTable >= 0 && SpriteTable < m_SpriteTables.size());
-    ASSERT (Sprite >= 0 && Sprite < m_SpriteTables[SpriteTable].size());
+    ASSERT (SpriteTable >= 0 && SpriteTable < (int)m_SpriteTables.size());
+    ASSERT (Sprite >= 0 && Sprite < (int)m_SpriteTables[SpriteTable].size());
         
     // Prepare a drawing request
     SDrawingRequest DrawingRequest;
@@ -632,7 +495,6 @@ void CDirectDraw::DrawSprite (int PositionX,
     DrawingRequest.PriorityInLayer = PriorityInLayer;
     
     // Store it (automatic sort)
-    //! @see m_DrawingRequests
     m_DrawingRequests.push(DrawingRequest);
 }
 
@@ -640,21 +502,23 @@ void CDirectDraw::DrawSprite (int PositionX,
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! Makes the display black.
+// Makes the display black.
 
-void CDirectDraw::Clear ()
+void CSDLVideo::Clear ()
 {
-    DDBLTFX blt = { 0 };
+	HRESULT hRet;
+    /* DDBLTFX blt = { 0 };
     blt.dwSize = sizeof (blt);
     blt.dwFillColor = 0;
-    m_pBackBuffer->Blt (NULL, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &blt);
+    m_pBackBuffer->Blt (NULL, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &blt); */
+    hRet = SDL_FillRect(m_pPrimary, &m_rcViewport, 0);
 }
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-WORD CDirectDraw::GetNumberOfBits (DWORD dwMask)
+WORD CSDLVideo::GetNumberOfBits (DWORD dwMask)
 {
     WORD wBits = 0;
     while (dwMask)
@@ -669,29 +533,17 @@ WORD CDirectDraw::GetNumberOfBits (DWORD dwMask)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool CDirectDraw::SetTransparentColor (int Red, int Green, int Blue)
+bool CSDLVideo::SetTransparentColor (int Red, int Green, int Blue)
 {
     // Get the pixel format of the primary surface
-    DDPIXELFORMAT pf;
-    ZeroMemory (&pf, sizeof (pf));
-    pf.dwSize = sizeof (pf);
-    HRESULT hRet = m_pPrimary->GetPixelFormat (&pf);
-
-    // If it failed
-    if (hRet != DD_OK)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not get the primary surface pixel format.");
-        theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-        // Get out
-        return false;
-    }
+    SDL_PixelFormat *pf = m_pPrimary->format;
 
     // Compute how many bits for each RGB color component in a pixel data
-    WORD wRBitCount = GetNumberOfBits (pf.dwRBitMask);
-    WORD wGBitCount = GetNumberOfBits (pf.dwGBitMask);
-    WORD wBBitCount = GetNumberOfBits (pf.dwBBitMask);
+    /* WORD wRBitCount = GetNumberOfBits (pf->Rmask);
+    WORD wGBitCount = GetNumberOfBits (pf->Gmask);
+    WORD wBBitCount = GetNumberOfBits (pf->Bmask);
+	
+	printf("numbers of bits: %d %d %d\n", wRBitCount, wGBitCount, wBBitCount);
 
     // Compute RGB color components to use for the color key 
     // according to transparency color RGB components
@@ -700,7 +552,9 @@ bool CDirectDraw::SetTransparentColor (int Red, int Green, int Blue)
     DWORD b = (Blue >> (8 - wBBitCount));
 
     // Compute the color key to apply to the surface
-    m_ColorKey = (r | g | b);
+    m_ColorKey = (r | g | b); */
+	
+	m_ColorKey = SDL_MapRGB(pf, Red, Green, Blue);
 
     // Everything went right
     return true;
@@ -710,135 +564,76 @@ bool CDirectDraw::SetTransparentColor (int Red, int Green, int Blue)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool CDirectDraw::LoadSprites (int SpriteTableWidth, 
-                               int SpriteTableHeight, 
-                               int SpriteWidth, 
-                               int SpriteHeight, 
-                               bool Transparent, 
-                               HBITMAP hBitmap)
+bool CSDLVideo::LoadSprites (int SpriteTableWidth, 
+                             int SpriteTableHeight, 
+                             int SpriteWidth, 
+                             int SpriteHeight, 
+                             bool Transparent, 
+                             HBITMAP hBitmap)
 {
-    HRESULT hRet;
-    
-    // Info structure on the bitmap, contains the size info
-    BITMAP Bitmap;
+    HRESULT hRet = 0;
+    SDL_RWops *rwBitmap;
 
-    // Get the bitmap's attributes
-    // If it fails
-    if (GetObject (hBitmap, sizeof(Bitmap), &Bitmap) == 0)
+    LPVOID pData;
+    DWORD DataSize;
+
+    // Prepare a new surface from the BMP
+    DataSize = GetObject (hBitmap, 0, &pData);
+    if (DataSize == 0)
     {
         // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not get the bitmap's attributes.");
+        theLog.WriteLine ("SDLVideo      => !!! Could not get the bitmap's (res id: %d) attributes.", hBitmap);
         theLog.LogLastError ();
 
         // Get out
         return false;
     }
 
-    // Prepare a new surface
     SSurface Surface;
 
-    // Create a DirectDraw surface for this bitmap
-    DDSURFACEDESC2 ddsd;
-    ZeroMemory (&ddsd, sizeof (ddsd));
-    ddsd.dwSize = sizeof (ddsd);
-    ddsd.dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_CAPS;
-    ddsd.dwWidth = Bitmap.bmWidth;
-    ddsd.dwHeight = Bitmap.bmHeight;
-    ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN;
-    hRet = m_pDD->CreateSurface (&ddsd, &Surface.pSurface, NULL);
-
+    // Create a SDLVideo surface for this bitmap
+    SDL_Surface *ddsd;
+	
+    rwBitmap = SDL_RWFromMem(pData, DataSize);
+    
+	ddsd = SDL_LoadBMP_RW(rwBitmap, 0);
+	
     // If it failed
-    if (hRet != DD_OK)
+    if (ddsd == NULL)
     {
         // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not create surface.");
-        theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
+        theLog.WriteLine ("SDLVideo      => !!! Could not create surface.");
+        theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
 
         // Get out
         return false;
     }
 
-    // Create a device context that is compatible with the current display
-    HDC hdcSrc = CreateCompatibleDC (NULL);
+	/*
+     * Palettized screen modes will have a default palette (a standard
+     * 8*8*4 colour cube), but if the image is palettized as well we can
+     * use that palette for a nicer colour matching
+     */
+    /* if (ddsd->format->palette && m_pPrimary->format->palette) {
+    	SDL_SetColors(m_pPrimary, ddsd->format->palette->colors, 0,
+                  ddsd->format->palette->ncolors);
+    } */
+	
+	
+    // Blit the bitmap onto the SDLVideo surface
+	Surface.pSurface = ddsd;
 
-    // If it failed
-    if (hdcSrc == NULL)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not create a device context.");
-        theLog.LogLastError ();
-
-        // Get out
-        return false;
-    }        
-
-    // Link the device context we created with the bitmap's hBitmap
-    HGDIOBJ hGdiObj = SelectObject (hdcSrc, hBitmap);
-    
-    // If it failed
-    if (hGdiObj == NULL || (DWORD)hGdiObj == GDI_ERROR)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not select the bitmap into the device context.");
-        theLog.LogLastError ();
-
-        // Get out
-        return false;
-    }
-
-    // Handle to a DC on the DirectDraw surface
-    HDC hdcDest;
-    
-    // Get a DC on the surface we will return, to copy the bitmap into the surface with the GDI
-    hRet = Surface.pSurface->GetDC (&hdcDest);
-    
-    // If it failed
-    if (hRet != DD_OK)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not get a device context.");
-        theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-        // Get out
-        return false;
-    }
-
-    // Blit the bitmap onto the DirectDraw surface
     // If it fails
-    if (BitBlt (hdcDest, 0, 0, Bitmap.bmWidth, Bitmap.bmHeight, hdcSrc, 0, 0, SRCCOPY) == 0)
+    /*if (SDL_BlitSurface(ddsd, NULL, Surface.pSurface, NULL) < 0)
     {
         // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not blit the bitmap to the DirectDraw surface.");
+        theLog.WriteLine ("SDLVideo      => !!! Could not blit the bitmap to the SDLVideo surface.");
         theLog.LogLastError ();
 
         // Get out
         return false;
     }
-
-    // Release the DirectDraw surface's device context
-    hRet = Surface.pSurface->ReleaseDC (hdcDest);
-
-    // If it failed
-    if (hRet != DD_OK)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not release the DirectDraw surface's device context.");
-        theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
-
-        // Get out
-        return false;
-    }
-        
-    // If deleting the device context we created with CreateCompatibleDC fails
-    if (DeleteDC (hdcSrc) == 0)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectDraw      => !!! Could not delete the device context.");
-        theLog.LogLastError ();
-
-        // Get out
-        return false;
-    }
+	*/
 
     //----------------------------------------------
     // Set the surface transparency color if needed
@@ -848,21 +643,18 @@ bool CDirectDraw::LoadSprites (int SpriteTableWidth,
     if (Transparent)
     {
         // Set parameter to use when blitting the surface : use transparency
-        Surface.BlitParameters = DDBLTFAST_WAIT | DDBLTFAST_SRCCOLORKEY;
+        //Surface.BlitParameters = DDBLTFAST_WAIT | DDBLTFAST_SRCCOLORKEY;
 
-        // Prepare color key structure
-        DDCOLORKEY CKey;
-        CKey.dwColorSpaceLowValue = CKey.dwColorSpaceHighValue = m_ColorKey;
-        
         // Apply the color key to the surface
-        hRet = Surface.pSurface->SetColorKey (DDCKEY_SRCBLT, &CKey);
-        
+		hRet = SDL_SetColorKey(ddsd, SDL_SRCCOLORKEY,
+			SDL_MapRGB(ddsd->format, 0x00, 0xff, 0x00));
+		
         // If it failed
-        if (hRet != DD_OK)
+        if (hRet != 0)
         {
             // Log failure
-            theLog.WriteLine ("DirectDraw      => !!! Could not set colorkey.");
-            theLog.WriteLine ("DirectDraw      => !!! DirectDraw error is : %s.", GetDirectDrawError(hRet));
+            theLog.WriteLine ("SDLVideo      => !!! Could not set colorkey.");
+            theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
 
             // Get out
             return false;
@@ -871,8 +663,9 @@ bool CDirectDraw::LoadSprites (int SpriteTableWidth,
     else
     {
         // Set parameter to use when blitting the surface : no transparency
-        Surface.BlitParameters = DDBLTFAST_WAIT | DDBLTFAST_NOCOLORKEY;
+        //Surface.BlitParameters = DDBLTFAST_WAIT | DDBLTFAST_NOCOLORKEY;
     }
+
 
     //-----------------------
     // Store the new surface
@@ -927,7 +720,7 @@ bool CDirectDraw::LoadSprites (int SpriteTableWidth,
     // Store the sprite table
     m_SpriteTables.push_back (SpriteTable);
     
-    // Everything went right
+	// Everything went right
     return true;
 }
 
@@ -935,7 +728,7 @@ bool CDirectDraw::LoadSprites (int SpriteTableWidth,
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CDirectDraw::FreeSprites (void)
+void CSDLVideo::FreeSprites (void)
 {
     // Empty drawing requests queue
     while (!m_DrawingRequests.empty())
@@ -945,13 +738,13 @@ void CDirectDraw::FreeSprites (void)
     m_SpriteTables.clear();
     
     // Scan all the surfaces
-    for (int i = 0 ; i < m_Surfaces.size() ; i++)
+    for (unsigned int i = 0 ; i < m_Surfaces.size() ; i++)
     {
         // If the surface exists
         if (m_Surfaces[i].pSurface != NULL)
         {
             // Release it
-            m_Surfaces[i].pSurface->Release();
+            SDL_FreeSurface(m_Surfaces[i].pSurface);
             m_Surfaces[i].pSurface = NULL;
         }
     }
@@ -964,15 +757,7 @@ void CDirectDraw::FreeSprites (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-/**
- *  \brief Processes all drawing requests and calls UpdateScreen
- *
- *  Blit every sprite from the drawing request list to the back buffer surface.
- *
- *  @see UpdateScreen()
- */
-
-void CDirectDraw::UpdateAll (void)
+void CSDLVideo::UpdateAll (void)
 {
     // While all the drawing requests have not been executed
     while (!m_DrawingRequests.empty())
@@ -984,19 +769,24 @@ void CDirectDraw::UpdateAll (void)
         const SSprite *pSprite = &m_SpriteTables[DR.SpriteTable][DR.Sprite];
 
         // Build a RECT structure containing the zone to draw
-        RECT SourceRect;
-        SourceRect.left   = DR.ZoneX1;
-        SourceRect.top    = DR.ZoneY1;
-        SourceRect.right  = DR.ZoneX2;
-        SourceRect.bottom = DR.ZoneY2;
+        SDL_Rect SourceRect;
+        SourceRect.x = DR.ZoneX1;
+        SourceRect.y = DR.ZoneY1;
+        SourceRect.w = DR.ZoneX2 - DR.ZoneX1;
+        SourceRect.h = DR.ZoneY2 - DR.ZoneY1;
+		
+		SDL_Rect DestRect;
+		DestRect.x = DR.PositionX;
+		DestRect.y = DR.PositionY;
+		DestRect.w = 0;
+		DestRect.h = 0;
 
         // Blit the surface zone on the back buffer
-        m_pBackBuffer->BltFast (DR.PositionX, 
-                                DR.PositionY, 
-                                m_Surfaces[pSprite->SurfaceNumber].pSurface, 
-                                &SourceRect,
-                                m_Surfaces[pSprite->SurfaceNumber].BlitParameters);
-
+		if (SDL_BlitSurface(m_Surfaces[pSprite->SurfaceNumber].pSurface,
+			&SourceRect, m_pPrimary, &DestRect) < 0) {
+			// blitting failed
+		}
+			
         // Pop the drawing request to go to the next
         m_DrawingRequests.pop();
     }
@@ -1008,10 +798,10 @@ void CDirectDraw::UpdateAll (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool CDirectDraw::IsModeAvailable (int Width, int Height, int Depth)
+bool CSDLVideo::IsModeAvailable (int Width, int Height, int Depth)
 {
     // Scan all available display modes
-    for (int i = 0 ; i < m_AvailableDisplayModes.size() ; i++)
+    for (unsigned int i = 0 ; i < m_AvailableDisplayModes.size() ; i++)
     {
         // If this is the display mode we are looking for
         if (m_AvailableDisplayModes[i].Width == Width &&
@@ -1031,130 +821,9 @@ bool CDirectDraw::IsModeAvailable (int Width, int Height, int Depth)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-static const char* GetDirectDrawError (HRESULT hRet)
+static const char* GetSDLVideoError (HRESULT hRet)
 {
-    switch (hRet)
-    {
-        case DD_OK : return "DD_OK";
-        case DDERR_ALREADYINITIALIZED : return "DDERR_ALREADYINITIALIZED";
-        case DDERR_BLTFASTCANTCLIP : return "DDERR_BLTFASTCANTCLIP";
-        case DDERR_CANNOTATTACHSURFACE : return "DDERR_CANNOTATTACHSURFACE";
-        case DDERR_CANNOTDETACHSURFACE : return "DDERR_CANNOTDETACHSURFACE";
-        case DDERR_CANTCREATEDC : return "DDERR_CANTCREATEDC";
-        case DDERR_CANTDUPLICATE : return "DDERR_CANTDUPLICATE";
-        case DDERR_CANTLOCKSURFACE : return "DDERR_CANTLOCKSURFACE";
-        case DDERR_CANTPAGELOCK : return "DDERR_CANTPAGELOCK";
-        case DDERR_CANTPAGEUNLOCK : return "DDERR_CANTPAGEUNLOCK";
-        case DDERR_CLIPPERISUSINGHWND : return "DDERR_CLIPPERISUSINGHWND";
-        case DDERR_COLORKEYNOTSET : return "DDERR_COLORKEYNOTSET";
-        case DDERR_CURRENTLYNOTAVAIL : return "DDERR_CURRENTLYNOTAVAIL";
-        case DDERR_DDSCAPSCOMPLEXREQUIRED : return "DDERR_DDSCAPSCOMPLEXREQUIRED";
-        case DDERR_DCALREADYCREATED : return "DDERR_DCALREADYCREATED";
-        case DDERR_DEVICEDOESNTOWNSURFACE : return "DDERR_DEVICEDOESNTOWNSURFACE";
-        case DDERR_DIRECTDRAWALREADYCREATED : return "DDERR_DIRECTDRAWALREADYCREATED";
-        case DDERR_EXCEPTION : return "DDERR_EXCEPTION";
-        case DDERR_EXCLUSIVEMODEALREADYSET : return "DDERR_EXCLUSIVEMODEALREADYSET";
-        case DDERR_EXPIRED : return "DDERR_EXPIRED";
-        case DDERR_GENERIC : return "DDERR_GENERIC";
-        case DDERR_HEIGHTALIGN : return "DDERR_HEIGHTALIGN";
-        case DDERR_HWNDALREADYSET : return "DDERR_HWNDALREADYSET";
-        case DDERR_HWNDSUBCLASSED : return "DDERR_HWNDSUBCLASSED";
-        case DDERR_IMPLICITLYCREATED : return "DDERR_IMPLICITLYCREATED";
-        case DDERR_INCOMPATIBLEPRIMARY : return "DDERR_INCOMPATIBLEPRIMARY";
-        case DDERR_INVALIDCAPS : return "DDERR_INVALIDCAPS";
-        case DDERR_INVALIDCLIPLIST : return "DDERR_INVALIDCLIPLIST";
-        case DDERR_INVALIDDIRECTDRAWGUID : return "DDERR_INVALIDDIRECTDRAWGUID";
-        case DDERR_INVALIDMODE : return "DDERR_INVALIDMODE";
-        case DDERR_INVALIDOBJECT : return "DDERR_INVALIDOBJECT";
-        case DDERR_INVALIDPARAMS : return "DDERR_INVALIDPARAMS";
-        case DDERR_INVALIDPIXELFORMAT : return "DDERR_INVALIDPIXELFORMAT";
-        case DDERR_INVALIDPOSITION : return "DDERR_INVALIDPOSITION";
-        case DDERR_INVALIDRECT : return "DDERR_INVALIDRECT";
-        case DDERR_INVALIDSTREAM : return "DDERR_INVALIDSTREAM";
-        case DDERR_INVALIDSURFACETYPE : return "DDERR_INVALIDSURFACETYPE";
-        case DDERR_LOCKEDSURFACES : return "DDERR_LOCKEDSURFACES";
-        case DDERR_MOREDATA : return "DDERR_MOREDATA";
-        case DDERR_NEWMODE : return "DDERR_NEWMODE";
-        case DDERR_NO3D : return "DDERR_NO3D";
-        case DDERR_NOALPHAHW : return "DDERR_NOALPHAHW";
-        case DDERR_NOBLTHW : return "DDERR_NOBLTHW";
-        case DDERR_NOCLIPLIST : return "DDERR_NOCLIPLIST";
-        case DDERR_NOCLIPPERATTACHED : return "DDERR_NOCLIPPERATTACHED";
-        case DDERR_NOCOLORCONVHW : return "DDERR_NOCOLORCONVHW";
-        case DDERR_NOCOLORKEY : return "DDERR_NOCOLORKEY";
-        case DDERR_NOCOLORKEYHW : return "DDERR_NOCOLORKEYHW";
-        case DDERR_NOCOOPERATIVELEVELSET : return "DDERR_NOCOOPERATIVELEVELSET";
-        case DDERR_NODC : return "DDERR_NODC";
-        case DDERR_NODDROPSHW : return "DDERR_NODDROPSHW";
-        case DDERR_NODIRECTDRAWHW : return "DDERR_NODIRECTDRAWHW";
-        case DDERR_NODIRECTDRAWSUPPORT : return "DDERR_NODIRECTDRAWSUPPORT";
-        case DDERR_NODRIVERSUPPORT : return "DDERR_NODRIVERSUPPORT";
-        case DDERR_NOEMULATION : return "DDERR_NOEMULATION";
-        case DDERR_NOEXCLUSIVEMODE : return "DDERR_NOEXCLUSIVEMODE";
-        case DDERR_NOFLIPHW : return "DDERR_NOFLIPHW";
-        case DDERR_NOFOCUSWINDOW : return "DDERR_NOFOCUSWINDOW";
-        case DDERR_NOGDI : return "DDERR_NOGDI";
-        case DDERR_NOHWND : return "DDERR_NOHWND";
-        case DDERR_NOMIPMAPHW : return "DDERR_NOMIPMAPHW";
-        case DDERR_NOMIRRORHW : return "DDERR_NOMIRRORHW";
-        case DDERR_NOMONITORINFORMATION : return "DDERR_NOMONITORINFORMATION";
-        case DDERR_NONONLOCALVIDMEM : return "DDERR_NONONLOCALVIDMEM";
-        case DDERR_NOOPTIMIZEHW : return "DDERR_NOOPTIMIZEHW";
-        case DDERR_NOOVERLAYDEST : return "DDERR_NOOVERLAYDEST";
-        case DDERR_NOOVERLAYHW : return "DDERR_NOOVERLAYHW";
-        case DDERR_NOPALETTEATTACHED : return "DDERR_NOPALETTEATTACHED";
-        case DDERR_NOPALETTEHW : return "DDERR_NOPALETTEHW";
-        case DDERR_NORASTEROPHW : return "DDERR_NORASTEROPHW";
-        case DDERR_NOROTATIONHW : return "DDERR_NOROTATIONHW";
-        case DDERR_NOSTEREOHARDWARE : return "DDERR_NOSTEREOHARDWARE";
-        case DDERR_NOSTRETCHHW : return "DDERR_NOSTRETCHHW";
-        case DDERR_NOSURFACELEFT : return "DDERR_NOSURFACELEFT";
-        case DDERR_NOT4BITCOLOR : return "DDERR_NOT4BITCOLOR";
-        case DDERR_NOT4BITCOLORINDEX : return "DDERR_NOT4BITCOLORINDEX";
-        case DDERR_NOT8BITCOLOR : return "DDERR_NOT8BITCOLOR";
-        case DDERR_NOTAOVERLAYSURFACE : return "DDERR_NOTAOVERLAYSURFACE";
-        case DDERR_NOTEXTUREHW : return "DDERR_NOTEXTUREHW";
-        case DDERR_NOTFLIPPABLE : return "DDERR_NOTFLIPPABLE";
-        case DDERR_NOTFOUND : return "DDERR_NOTFOUND";
-        case DDERR_NOTINITIALIZED : return "DDERR_NOTINITIALIZED";
-        case DDERR_NOTLOADED : return "DDERR_NOTLOADED";
-        case DDERR_NOTLOCKED : return "DDERR_NOTLOCKED";
-        case DDERR_NOTPAGELOCKED : return "DDERR_NOTPAGELOCKED";
-        case DDERR_NOTPALETTIZED : return "DDERR_NOTPALETTIZED";
-        case DDERR_NOVSYNCHW : return "DDERR_NOVSYNCHW";
-        case DDERR_NOZBUFFERHW : return "DDERR_NOZBUFFERHW";
-        case DDERR_NOZOVERLAYHW : return "DDERR_NOZOVERLAYHW";
-        case DDERR_OUTOFCAPS : return "DDERR_OUTOFCAPS";
-        case DDERR_OUTOFMEMORY : return "DDERR_OUTOFMEMORY";
-        case DDERR_OUTOFVIDEOMEMORY : return "DDERR_OUTOFVIDEOMEMORY";
-        case DDERR_OVERLAPPINGRECTS : return "DDERR_OVERLAPPINGRECTS";
-        case DDERR_OVERLAYCANTCLIP : return "DDERR_OVERLAYCANTCLIP";
-        case DDERR_OVERLAYCOLORKEYONLYONEACTIVE : return "DDERR_OVERLAYCOLORKEYONLYONEACTIVE";
-        case DDERR_OVERLAYNOTVISIBLE : return "DDERR_OVERLAYNOTVISIBLE";
-        case DDERR_PALETTEBUSY : return "DDERR_PALETTEBUSY";
-        case DDERR_PRIMARYSURFACEALREADYEXISTS : return "DDERR_PRIMARYSURFACEALREADYEXISTS";
-        case DDERR_REGIONTOOSMALL : return "DDERR_REGIONTOOSMALL";
-        case DDERR_SURFACEALREADYATTACHED : return "DDERR_SURFACEALREADYATTACHED";
-        case DDERR_SURFACEALREADYDEPENDENT : return "DDERR_SURFACEALREADYDEPENDENT";
-        case DDERR_SURFACEBUSY : return "DDERR_SURFACEBUSY";
-        case DDERR_SURFACEISOBSCURED : return "DDERR_SURFACEISOBSCURED";
-        case DDERR_SURFACELOST : return "DDERR_SURFACELOST";
-        case DDERR_SURFACENOTATTACHED : return "DDERR_SURFACENOTATTACHED";
-        case DDERR_TESTFINISHED : return "DDERR_TESTFINISHED";
-        case DDERR_TOOBIGHEIGHT : return "DDERR_TOOBIGHEIGHT";
-        case DDERR_TOOBIGSIZE : return "DDERR_TOOBIGSIZE";
-        case DDERR_TOOBIGWIDTH : return "DDERR_TOOBIGWIDTH";
-        case DDERR_UNSUPPORTED : return "DDERR_UNSUPPORTED";
-        case DDERR_UNSUPPORTEDFORMAT : return "DDERR_UNSUPPORTEDFORMAT";
-        case DDERR_UNSUPPORTEDMASK : return "DDERR_UNSUPPORTEDMASK";
-        case DDERR_UNSUPPORTEDMODE : return "DDERR_UNSUPPORTEDMODE";
-        case DDERR_VERTICALBLANKINPROGRESS : return "DDERR_VERTICALBLANKINPROGRESS";
-        case DDERR_VIDEONOTACTIVE : return "DDERR_VIDEONOTACTIVE";
-        case DDERR_WASSTILLDRAWING : return "DDERR_WASSTILLDRAWING";
-        case DDERR_WRONGMODE : return "DDERR_WRONGMODE";
-        case DDERR_XALIGN : return "DDERR_XALIGN";
-        default : return "Unknown DirectDraw error!";
-    }
+    return SDL_GetError();
 }
 
 //******************************************************************************************************************************

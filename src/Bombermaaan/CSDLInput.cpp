@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -19,42 +20,38 @@
 
 ************************************************************************************/
 
-
 //////////////////////
-// CDirectInput.cpp
+// CSDLInput.cpp
 
-#include "stdafx.h"
-#include "CDirectInput.h"
+#include "STDAFX.H"
+#include "CSDLInput.h"
 
-
-static const char* GetDirectInputError (HRESULT hRet);
+static const char* GetSDLInputError (HRESULT hRet);
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
 #define JOYSTICK_DEAD_ZONE      10          //!< Percentage of the dead zone to set for each joystick 
-#define JOYSTICK_MINIMUM_AXIS   -1000       //!< Minimum axis value to set for each joystick
-#define JOYSTICK_MAXIMUM_AXIS   +1000       //!< Maximum axis value to set for each joystick
+#define JOYSTICK_MINIMUM_AXIS   -32768      //!< Minimum axis value to set for each joystick
+#define JOYSTICK_MAXIMUM_AXIS   +32767       //!< Maximum axis value to set for each joystick
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-CDirectInput::CDirectInput (void)
+CSDLInput::CSDLInput (void)
 {
-    m_pDI = NULL;
     m_hWnd = NULL;
     m_hInstance = NULL;
     m_Ready = false;
-    m_pKeyboard = NULL;
 }
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-CDirectInput::~CDirectInput (void)
+CSDLInput::~CSDLInput (void)
 {
     // Nothing to do
 }
@@ -65,62 +62,34 @@ CDirectInput::~CDirectInput (void)
 
 struct SEnumParam
 {
-    LPDIRECTINPUT7 pDI;
-    vector<LPDIRECTINPUTDEVICE7> pDevices;
+//    LPSDLINPUT7 pDI;
+    vector<SDL_Joystick *> pDevices;
 };
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-static BOOL CALLBACK CreateInputDevice (LPCDIDEVICEINSTANCE pDeviceInstance, LPVOID pParameter)
-{
-    // The DirectInput device that will be created
-    LPDIRECTINPUTDEVICE7 pDevice;
-    
-    // The parameter is a SEnumParam
-    SEnumParam *pEnumParam = (SEnumParam *) pParameter;
-    
-    // Create the directinput device
-    HRESULT hRet = pEnumParam->pDI->CreateDeviceEx (pDeviceInstance->guidInstance, // Device unique identifier
-                                                    IID_IDirectInputDevice7,       // Ask for DI7 device
-                                                    (void**)&pDevice,              // Give pointer to device
-                                                    NULL);
-    // If it failed
-    if (hRet != DI_OK)
-    {
-        // Log failure
-        theLog.WriteLine ("DirectInput     => !!! Could not create input device object.");
-        theLog.WriteLine ("DirectInput     => !!! DirectInput error is : %s.", GetDirectInputError(hRet));
-    }
-    // If it was successful
-    else
-    {
-        // Add the directinput device 
-        pEnumParam->pDevices.push_back (pDevice);
-    }
-
-    // Continue enumerating input devices        
-    return DIENUM_CONTINUE;
-}
+// static bool CreateInputDevice (int Joystick, LPVOID pParameter)
+// has been removed.
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool CDirectInput::Create (void)
+bool CSDLInput::Create (void)
 {
     if (!m_Ready)
     {
-        // Create the directinput object
-        HRESULT hRet = DirectInputCreateEx (m_hInstance, DIRECTINPUT_VERSION, IID_IDirectInput7, (void**)&m_pDI, NULL); 
+        // Create the SDLinput object
+        /* HRESULT hRet = SDLInputCreateEx (m_hInstance, SDLINPUT_VERSION, IID_ISDLInput7, (void**)&m_pDI, NULL); 
         
         // If it failed
         if (hRet != DI_OK)
         {
             // Log failure
-            theLog.WriteLine ("DirectInput     => !!! Could not create DirectInput object.");
-            theLog.WriteLine ("DirectInput     => !!! DirectInput error is : %s.", GetDirectInputError(hRet));
+            theLog.WriteLine ("SDLInput     => !!! Could not create SDLInput object.");
+            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
 
             // Get out
             return false;
@@ -129,16 +98,16 @@ bool CDirectInput::Create (void)
         else
         {
             // Log success
-            theLog.WriteLine ("DirectInput     => DirectInput object was created successfully.");
+            theLog.WriteLine ("SDLInput     => SDLInput object was created successfully.");
         }
 
-        hRet = m_pDI->CreateDeviceEx (GUID_SysKeyboard, IID_IDirectInputDevice7, (void**)&m_pKeyboard, NULL); 
+        hRet = m_pDI->CreateDeviceEx (GUID_SysKeyboard, IID_ISDLInputDevice7, (void**)&m_pKeyboard, NULL); 
 
         if (hRet != DI_OK)
         {
             // Log failure
-            theLog.WriteLine ("DirectInput     => !!! Could not create keyboard.");
-            theLog.WriteLine ("DirectInput     => !!! DirectInput error is : %s.", GetDirectInputError(hRet));
+            theLog.WriteLine ("SDLInput     => !!! Could not create keyboard.");
+            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
 
             // Get out
             return false;
@@ -146,7 +115,7 @@ bool CDirectInput::Create (void)
         else
         {
             // Log success
-            theLog.WriteLine ("DirectInput     => Keyboard was created.");
+            theLog.WriteLine ("SDLInput     => Keyboard was created.");
         }
 
         // Set the keyboard data format
@@ -156,8 +125,8 @@ bool CDirectInput::Create (void)
         if (hRet != DI_OK)
         {
             // Log failure
-            theLog.WriteLine ("DirectInput     => !!! Could not set data format (keyboard).");
-            theLog.WriteLine ("DirectInput     => !!! DirectInput error is : %s.", GetDirectInputError(hRet));
+            theLog.WriteLine ("SDLInput     => !!! Could not set data format (keyboard).");
+            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
 
             // Get out
             return false;
@@ -170,18 +139,18 @@ bool CDirectInput::Create (void)
         if (hRet != DI_OK)
         {
             // Log failure
-            theLog.WriteLine ("DirectInput     => !!! Could not set cooperative level (keyboard).");
-            theLog.WriteLine ("DirectInput     => !!! DirectInput error is : %s.", GetDirectInputError(hRet));
+            theLog.WriteLine ("SDLInput     => !!! Could not set cooperative level (keyboard).");
+            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
 
             // Get out
             return false;
-        }
+        } */
     
         // Reset the keyboard state
-        ZeroMemory (m_KeyState, MAX_KEYS);
+        memset (m_KeyState, 0, MAX_KEYS);
         
         // The keyboard is not opened yet
-        m_KeyboardOpened = false;
+        /* m_KeyboardOpened = false;
 
         // We need this variable to get information about each key of the keyboard
         DIDEVICEOBJECTINSTANCE DeviceObjectInstance;
@@ -197,115 +166,45 @@ bool CDirectInput::Create (void)
 
             // Store the key's real name, that is to say the name given by Windows
             strcpy (m_KeyRealName[Key], (hRet != DIERR_OBJECTNOTFOUND ? DeviceObjectInstance.tszName : "Key does not exist"));
-        }
+        } */
 
         // Prepare the friendly name for each key
         MakeKeyFriendlyNames ();
 
-        // Prepare the structure to pass when enumerating the devices
-        SEnumParam EnumParam;
-        EnumParam.pDI = m_pDI;
-        
-        // Create all joysticks that are installed in Windows
-        hRet = m_pDI->EnumDevices (DIDEVTYPE_JOYSTICK, CreateInputDevice, &EnumParam, DIEDFL_ALLDEVICES);
-        
-        // Assert it's not an unexpected return value
-        ASSERT (hRet == DI_OK);
+		// Create all joysticks that are installed on the system
+		for(int i=0; i < SDL_NumJoysticks(); i++ ) 
+		{
+			SJoystick *pJoystick = new SJoystick;
 
-        // The EnumParam contains the input devices, browse them
-        for (int Index = 0 ; Index < EnumParam.pDevices.size() ; Index++)
-        {
-            LPDIRECTINPUTDEVICE7 pDevice = EnumParam.pDevices[Index];
-
-            // Set the joystick data format
-            hRet = pDevice->SetDataFormat (&c_dfDIJoystick);
-    
-            // If it failed
-            if (hRet != DI_OK)
+			if (pJoystick == NULL)
             {
                 // Log failure
-                theLog.WriteLine ("DirectInput     => !!! Could not set data format (joystick).");
-                theLog.WriteLine ("DirectInput     => !!! DirectInput error is : %s.", GetDirectInputError(hRet));
-
-                // Get out
-                return false;
-            }
-
-            // Set the joystick cooperative level
-            hRet = pDevice->SetCooperativeLevel (m_hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE); 
-    
-            // If it failed
-            if (hRet != DI_OK)
-            {
-                // Log failure
-                theLog.WriteLine ("DirectInput     => !!! Could not set cooperative level (joystick).");
-                theLog.WriteLine ("DirectInput     => !!! DirectInput error is : %s.", GetDirectInputError(hRet));
-
-                // Get out
-                return false;
-            }
-
-            // We need to prepare this in order to set the joystick dead zone
-	        DIPROPDWORD PropertyDword;
-	        PropertyDword.diph.dwSize = sizeof(PropertyDword);
-	        PropertyDword.diph.dwHeaderSize = sizeof(PropertyDword.diph);
-	        PropertyDword.diph.dwObj = 0;									// Apply to the
-	        PropertyDword.diph.dwHow = DIPH_DEVICE;							// entire device
-	        PropertyDword.dwData = 10000 * JOYSTICK_DEAD_ZONE / 100;
-
-	        // Set the property
-	        hRet = pDevice->SetProperty (DIPROP_DEADZONE, &PropertyDword.diph);
-
-	        // Assert it's not an unexpected error
-	        ASSERT (hRet == DI_OK || hRet == DI_PROPNOEFFECT);
-
-            // We need to prepare this in order to set the joystick range
-	        DIPROPRANGE PropertyRange;
-	        PropertyRange.diph.dwSize = sizeof(PropertyRange);
-	        PropertyRange.diph.dwHeaderSize = sizeof(PropertyRange.diph);
-	        PropertyRange.diph.dwObj = 0;									// Apply to the
-	        PropertyRange.diph.dwHow = DIPH_DEVICE;							// entire device
-	        PropertyRange.lMin = JOYSTICK_MINIMUM_AXIS;
-            PropertyRange.lMax = JOYSTICK_MAXIMUM_AXIS;
-
-	        // Set the property
-	        hRet = pDevice->SetProperty (DIPROP_RANGE, &PropertyRange.diph);
-
-	        // Assert it's not an unexpected error
-	        ASSERT (hRet == DI_OK || hRet == DI_PROPNOEFFECT);
-            
-            // Allocate memory for a joystick
-            SJoystick *pJoystick = new SJoystick;
-         
-            // If allocation failed
-            if (pJoystick == NULL)
-            {
-                // Log failure
-                theLog.WriteLine ("DirectInput     => !!! Could not allocate memory for a joystick.");
+                theLog.WriteLine ("SDLInput     => !!! Could not allocate memory for a joystick.");
             
                 // Get out
                 return false;
             }
 
-            // Reset the joystick state
-            ZeroMemory (&pJoystick->State, sizeof(pJoystick->State));
+			// Reset the joystick state
+            memset (&pJoystick->State, 0, sizeof(pJoystick->State));
             
             // The joystick is not opened yet
             pJoystick->Opened = false;
 
-            // Set the joystick's directinput device
-            pJoystick->pDevice = pDevice;
-            
-            // Add the joystick to the container
-            m_pJoysticks.push_back (pJoystick);
+            // Set the joystick's device to NULL (will be created later)
+            pJoystick->pDevice = NULL;
 
-            // Log we added one joystick
-            theLog.WriteLine ("DirectInput     => One joystick was created.");
-        }
+	        m_pJoysticks.push_back (pJoystick); // the joystick is not opened
 
+        	theLog.WriteLine ("SDLInput     => A joystick was added.");
+			
+		}
+		
         m_Ready = true;
     }
 
+	SDL_JoystickEventState(SDL_ENABLE);
+	
     // Everything went right
     return true;
 }
@@ -314,15 +213,15 @@ bool CDirectInput::Create (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CDirectInput::Destroy (void)
+void CSDLInput::Destroy (void)
 {
     if (m_Ready)
     {
-        // If the DirectInput object is created
-        if (m_pDI != NULL) 
-        {
-            // If the keyboard directinput device is created
-            if (m_pKeyboard != NULL)
+        // If the SDLInput object is created
+        //if (m_pDI != NULL) 
+        //{
+            // If the keyboard SDLinput device is created
+            /* if (m_pKeyboard != NULL)
             {
                 // Release the device
                 m_pKeyboard->Release ();
@@ -330,32 +229,32 @@ void CDirectInput::Destroy (void)
             }
 
             // Log we released the keyboard
-            theLog.WriteLine ("DirectInput     => Keyboard was released.");
+            theLog.WriteLine ("SDLInput     => Keyboard was released."); */
             
             // Scan the joysticks that were created
-            for (int Index = 0 ; Index < m_pJoysticks.size() ; Index++)
+            for (unsigned int Index = 0 ; Index < m_pJoysticks.size() ; Index++)
             {
-                // Release the joystick directinput device
-                m_pJoysticks[Index]->pDevice->Release ();
+                // Release the joystick SDLinput device
+                SDL_JoystickClose(m_pJoysticks[Index]->pDevice);
                 m_pJoysticks[Index]->pDevice = NULL;
                 
                 // Delete the joystick variable
                 delete m_pJoysticks[Index];
 
                 // Log we released a joystick
-                theLog.WriteLine ("DirectInput     => A joystick was released.");
+                theLog.WriteLine ("SDLInput     => A joystick was released.");
             }
                         
-            // Remove the joystick pointers from the container
+            // Remove the joystick pointers from the container 
             m_pJoysticks.clear();
 
-            // Release the DirectInput object
-            m_pDI->Release ();
-            m_pDI = NULL;
+            // Release the SDLInput object
+            //m_pDI->Release ();
+            //m_pDI = NULL;
 
-            // Log we released the DirectInput object
-            theLog.WriteLine ("DirectInput     => DirectInput object was released.");
-        }
+            // Log we released the SDLInput object
+            theLog.WriteLine ("SDLInput     => SDLInput object was released.");
+        //}
     }
 }
 
@@ -363,52 +262,9 @@ void CDirectInput::Destroy (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool CDirectInput::UpdateDevice (LPDIRECTINPUTDEVICE7 pDevice, void *pState, int StateSize)
+bool CSDLInput::UpdateDevice (SDL_Joystick *pDevice, void *pState, int StateSize)
 {
-    HRESULT hRet;
-    bool Opened = false;
-
-    // Try to get the input device state until it works or 
-    // until it is impossible to re-obtain access to the device.
-    while (true)
-    {
-        // Poll the device (some joysticks need this)
-        pDevice->Poll ();
-
-        // Try to get the input device state
-        hRet = pDevice->GetDeviceState (StateSize, pState);
-
-        // Assert it's not an unexpected return value
-        ASSERT (hRet == DI_OK || hRet == DIERR_INPUTLOST || DIERR_NOTACQUIRED);
-
-        // If it was successful
-        if (hRet == DI_OK)
-        {
-            // Save the current opened state
-            Opened = true;
-            
-            // It's ok, stop
-            break;
-        }
-        // If the input was lost or if the device was not acquired
-        else if (hRet == DIERR_INPUTLOST || hRet == DIERR_NOTACQUIRED)
-        {   
-            // Try to re-obtain access to the device.
-            HRESULT hRetAcquire = pDevice->Acquire ();
-            
-            // Assert it's not an unexpected return value
-            ASSERT (hRetAcquire == DI_OK || hRetAcquire == S_FALSE || hRetAcquire == DIERR_OTHERAPPHASPRIO);
-
-            // Save the current opened state
-            Opened = (hRet == DI_OK || hRet == S_FALSE);
-            
-            // Get out, we cannot do better than trying to reacquire the device
-            break;
-        }
-    }
-
-    // Return the current opened state
-    return Opened;
+    return true;
 }
 
 //******************************************************************************************************************************
@@ -416,35 +272,35 @@ bool CDirectInput::UpdateDevice (LPDIRECTINPUTDEVICE7 pDevice, void *pState, int
 //******************************************************************************************************************************
 
 
-void CDirectInput::UpdateKeyboard (void)
+void CSDLInput::UpdateKeyboard (void)
 {
     // Update the device and get the latest real opened state
-    m_KeyboardOpened = UpdateDevice (m_pKeyboard, m_KeyState, MAX_KEYS);
+    //m_KeyboardOpened = UpdateDevice (m_pKeyboard, m_KeyState, MAX_KEYS);
 }
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CDirectInput::UpdateJoystick (int Joystick)
+void CSDLInput::UpdateJoystick (int Joystick)
 {
     // Check if the joystick number is correct
-    ASSERT (Joystick >= 0 && Joystick < m_pJoysticks.size ());
+    ASSERT (Joystick >= 0 && Joystick < (int)m_pJoysticks.size ());
 
     // Check if the joystick is at least supposed to be opened
     ASSERT (m_pJoysticks[Joystick]->Opened);
 
     // Update the device and get the latest real opened state
-    m_pJoysticks[Joystick]->Opened = UpdateDevice (m_pJoysticks[Joystick]->pDevice, 
-                                                   &m_pJoysticks[Joystick]->State, 
-                                                   sizeof(m_pJoysticks[Joystick]->State));
+//    m_pJoysticks[Joystick]->Opened = UpdateDevice (m_pJoysticks[Joystick]->pDevice, 
+//                                                   &m_pJoysticks[Joystick]->State, 
+//                                                   sizeof(m_pJoysticks[Joystick]->State));
 }
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CDirectInput::MakeKeyFriendlyNames (void)
+void CSDLInput::MakeKeyFriendlyNames (void)
 {
     for (int Key = 0 ; Key < MAX_KEYS ; Key++)
     {
@@ -564,25 +420,25 @@ void CDirectInput::MakeKeyFriendlyNames (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// WARNING : Only necessary DirectInput return values are here.
-// It you get a "Unknown DirectInput error!", then maybe it's
+// WARNING : Only necessary SDLInput return values are here.
+// It you get a "Unknown SDLInput error!", then maybe it's
 // an error return value that wasn't added to the switch statement.
 
-static const char* GetDirectInputError (HRESULT hRet)
+static const char* GetSDLInputError (HRESULT hRet)
 {
     switch (hRet)
     {
-        case DI_OK : return "DI_OK";
+        /* case DI_OK : return "DI_OK";
         case DIERR_ACQUIRED : return "DIERR_ACQUIRED";
-        case DIERR_BETADIRECTINPUTVERSION : return "DIERR_BETADIRECTINPUTVERSION";
+        case DIERR_BETASDLINPUTVERSION : return "DIERR_BETASDLINPUTVERSION";
         case DIERR_DEVICENOTREG : return "DIERR_DEVICENOTREG";
         case DIERR_INVALIDPARAM : return "DIERR_INVALIDPARAM";
         case DIERR_NOINTERFACE : return "DIERR_NOINTERFACE";
         case DIERR_NOTINITIALIZED : return "DIERR_NOTINITIALIZED";
-        case DIERR_OLDDIRECTINPUTVERSION : return "DIERR_OLDDIRECTINPUTVERSION";
+        case DIERR_OLDSDLINPUTVERSION : return "DIERR_OLDSDLINPUTVERSION";
         case DIERR_OUTOFMEMORY : return "DIERR_OUTOFMEMORY";
-        case E_HANDLE : return "E_HANDLE";
-        default : return "Unknown DirectInput error!";
+        case E_HANDLE : return "E_HANDLE"; */
+        default : return "Unknown SDLInput error!";
     }
 }
 
@@ -610,9 +466,9 @@ DIERR_OUTOFMEMORY
 
 dinputcreateex
 
-DIERR_BETADIRECTINPUTVERSION  
+DIERR_BETASDLINPUTVERSION  
 DIERR_INVALIDPARAM  
-DIERR_OLDDIRECTINPUTVERSION  
+DIERR_OLDSDLINPUTVERSION  
 DIERR_OUTOFMEMORY  
 
 */
@@ -620,4 +476,3 @@ DIERR_OUTOFMEMORY
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
-
