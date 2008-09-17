@@ -791,7 +791,7 @@ bool CExplosion::Update (float DeltaTime)
 void CExplosion::Display (void)
 {
     // Draw the flames
-    for (int i = 0 ; i < m_Flames.size() ; i++)
+    for (unsigned int i = 0 ; i < m_Flames.size() ; i++)
     {
         // To find the right sprite for a flame, the int value
         // of the flame type is added to the current state of the
@@ -823,7 +823,7 @@ void CExplosion::OnWriteSnapshot (CArenaSnapshot& Snapshot)
     
     Snapshot.WriteInteger(m_Flames.size());
 
-    for (int i = 0 ; i < m_Flames.size() ; i++)
+    for (unsigned int i = 0 ; i < m_Flames.size() ; i++)
     {
         Snapshot.WriteInteger(m_Flames[i].BlockX);
         Snapshot.WriteInteger(m_Flames[i].BlockY);
