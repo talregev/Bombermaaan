@@ -550,11 +550,11 @@ SOURCE=.\doc.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\resource.h
+SOURCE=.\RESOURCE.H
 # End Source File
 # Begin Source File
 
-SOURCE=.\stdafx.cpp
+SOURCE=.\STDAFX.CPP
 # ADD CPP /Yc"STDAFX.H"
 # End Source File
 # Begin Source File
