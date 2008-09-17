@@ -98,7 +98,13 @@ CDebug& CDebug::GetInstance()
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void CDebug::HandleKey (DWORD VirtualKeyCode)
+/**
+ * @brief   handles a key code for debug purposes
+ * @param   VirtualKeyCode  Key to handle
+ * @param   Modifier        Modifier (SDL only)
+ */
+
+void CDebug::HandleKey (DWORD VirtualKeyCode, DWORD Modifier)
 {
     // While holding the CTRL key :
     
@@ -118,7 +124,11 @@ void CDebug::HandleKey (DWORD VirtualKeyCode)
     // TOGGLE THE DEBUGGING INFORMATION OF EACH COMPUTER PLAYER
     // Press the number of the player (0-4)
     
+#ifdef WIN32
     if (GetKeyState(VK_CONTROL) & 0x8000)
+#else
+    if (Modifier & KMOD_CTRL)
+#endif
     {
         switch (VirtualKeyCode)
         {            
@@ -213,6 +223,4 @@ void CDebug::HandleKey (DWORD VirtualKeyCode)
     }
 }
 
-//******************************************************************************************************************************
-//******************************************************************************************************************************
 //******************************************************************************************************************************

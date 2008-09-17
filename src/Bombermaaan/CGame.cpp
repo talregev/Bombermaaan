@@ -853,7 +853,7 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
 #ifdef ENABLE_DEBUG_KEYS
     
     // Read the key that is released and apply changes to the game if needed (for debugging)
-    theDebug.HandleKey(wParam);
+    theDebug.HandleKey(wParam, lParam);
 
 #endif // ENABLE_DEBUG_KEYS
 
