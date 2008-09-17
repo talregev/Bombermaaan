@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -24,8 +25,8 @@
 // CAiBomber.cpp
 
 #include "STDAFX.H"
-#include "CAiBomber.h"
 #include "CAiArena.h"
+#include "CAiBomber.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -70,7 +71,7 @@ void CAiBomber::Create (int Player)
     m_Player = Player;
 
     // Wait a little before thinking for the first time
-    m_StopTimeLeft = 0.5f;
+    m_StopTimeLeft = 0.1f;
 
     // Reset commands variables
     m_BomberMove = BOMBERMOVE_NONE;
@@ -145,6 +146,7 @@ void CAiBomber::Update (float DeltaTime)
                     case COMPUTERMODE_ATTACK  : ModeAttack ();           break;
                     case COMPUTERMODE_DEFENCE : ModeDefence (DeltaTime); break;
                     case COMPUTERMODE_WALK    : ModeWalk (DeltaTime);    break;
+                    default: break;
                 }
 
                 if (m_pBomber->GetSickness() == SICK_INVERTION)
@@ -155,6 +157,7 @@ void CAiBomber::Update (float DeltaTime)
                         case BOMBERMOVE_DOWN  : m_BomberMove = BOMBERMOVE_UP;    break;
                         case BOMBERMOVE_LEFT  : m_BomberMove = BOMBERMOVE_RIGHT; break;
                         case BOMBERMOVE_RIGHT : m_BomberMove = BOMBERMOVE_LEFT;  break;
+                        default: break;
                     }
                 }
             }
@@ -696,6 +699,7 @@ int CAiBomber::ItemMark (int BlockX, int BlockY)
         case ITEM_ROLLER : Mark += 20; break;
         case ITEM_THROW  : Mark += 50; break;
         case ITEM_PUNCH  : Mark += 60; break;
+        default: break;
     }
 
     //--------------------------------------------------------------
@@ -1294,12 +1298,25 @@ void CAiBomber::ModeDefence (float DeltaTime)
 
     int BlockX;
     int BlockY;
+    
+    // next blocks
+    int NextBlockX = -1;
+    int NextBlockY = -1;
 
     // Distance of the best block to go to
     int BestDistance = 999;
 
     bool DeadEnd = true;
+    bool twoBombs = false; // are there two bombs beside us?
+    bool breaking = false; // first break executed.
+    
+    // a timestamp for the log
+    /*time_t long_time;
+    struct tm *newtime;
 
+    time( &long_time );
+    newtime = localtime( &long_time );*/
+    
     // Scan the blocks of the AI view
     for (BlockX = m_BlockHereX - AI_VIEW_SIZE ; BlockX < m_BlockHereX + AI_VIEW_SIZE ; BlockX++)
     {
@@ -1341,19 +1358,24 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     BestBlockY = BlockY;
                     BestDistance = m_Accessible[BlockX][BlockY];
                     DeadEnd = (m_pArena->m_DeadEnd[BlockX][BlockY] != -1);
+
+                    breaking = true;
+					break;
                 }
             }
         }
+        
+        if (breaking) break;
     }
 
     float BestDangerTimeLeft;
 
     if (!Found)
     {
-        if (m_pBomber->CanKickBombs ())
+        if (m_pBomber->CanKickBombs () || m_pBomber->CanPunchBombs ())
         {
             BestDangerTimeLeft = 0.0f;
-
+            
             // Scan the blocks of the AI view
             for (BlockX = m_BlockHereX - AI_VIEW_SIZE ; BlockX < m_BlockHereX + AI_VIEW_SIZE ; BlockX++)
             {
@@ -1394,18 +1416,86 @@ void CAiBomber::ModeDefence (float DeltaTime)
             if (m_BlockHereX - BestBlockX > 0)
             {
                 m_BomberMove = BOMBERMOVE_LEFT;
+                
+                // find out next block
+                if (m_BlockHereX > 0)
+                {
+                    NextBlockX = m_BlockHereX - 1;
+                    NextBlockY = m_BlockHereY;
+									
+                    if (m_BlockHereX > 1)
+                    {
+                        // check if there is more than one bomb besides us.
+                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->m_pArena->IsBomb (NextBlockX - 1, NextBlockY))
+                        {
+                            twoBombs = true;
+                        }
+                    }
+                }
             }
             else if (m_BlockHereX - BestBlockX < 0)
             {
                 m_BomberMove = BOMBERMOVE_RIGHT;
+
+                // find out next block
+                if (m_BlockHereX < ARENA_WIDTH - 1)
+                {
+                    NextBlockX = m_BlockHereX + 1;
+                    NextBlockY = m_BlockHereY;
+
+                    if (m_BlockHereX < ARENA_WIDTH - 2)
+                    {
+                        // check if there is more than one bomb besides us.
+                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->m_pArena->IsBomb (NextBlockX + 1, NextBlockY))
+                        {
+                            twoBombs = true;
+                        }
+                    }
+                }
             }
             else if (m_BlockHereY - BestBlockY > 0)
             {
                 m_BomberMove = BOMBERMOVE_UP;
+
+                // find out next block
+                if (m_BlockHereY > 0)
+                {
+                    NextBlockX = m_BlockHereX;
+                    NextBlockY = m_BlockHereY - 1;
+
+                    if (m_BlockHereY > 1)
+                    {
+	                    // check if there is more than one bomb besides us.
+                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY - 1))
+                        {
+    	                    twoBombs = true;
+	                    }
+                    }
+                }
             }
             else if (m_BlockHereY - BestBlockY < 0)
             {
                 m_BomberMove = BOMBERMOVE_DOWN;
+
+                // find out next block
+                if (m_BlockHereY < ARENA_HEIGHT - 1)
+                {
+                    NextBlockX = m_BlockHereX;
+                    NextBlockY = m_BlockHereY + 1;
+									
+                    if (m_BlockHereY < ARENA_HEIGHT - 2)
+                    {
+                        // check if there is more than one bomb besides us.
+                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY + 1))
+                        {
+                            twoBombs = true;
+                        }
+                    }
+				}
             }
             else
             {
@@ -1415,6 +1505,19 @@ void CAiBomber::ModeDefence (float DeltaTime)
             // If the bomber move is a real move
             if (m_BomberMove != BOMBERMOVE_NONE)
             {
+                // if we want to punch a bomb away, this is the time!
+                // punch 'em, if there are two bombs in a row besides us or
+                // we don't have the ability to kick bombs!
+			    if (NextBlockX != -1 && NextBlockY != -1)
+                {
+                    if ((!m_pBomber->CanKickBombs () || twoBombs) &&
+                        m_pBomber->CanPunchBombs () &&
+                        m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY))
+                    {
+                        m_BomberAction = BOMBERACTION_ACTION2;
+                    }
+                }
+
                 // Send this bomber move to the bomber as many seconds as the time
                 // a bomber takes to walk through an entire block.
                 m_BomberMoveTimeLeft = BLOCK_SIZE * 1.0f / m_pBomber->GetPixelsPerSecond();
@@ -1482,6 +1585,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
         
         // Set the bomber move to send to the bomber so that the bomber goes to the best block
         GoTo (BestBlockX, BestBlockY);
+
     }
     // If a good block to go to was not found
     else
@@ -1877,6 +1981,7 @@ bool CAiBomber::GoTo (int GoalBlockX, int GoalBlockY)
                 case BOMBERMOVE_DOWN  : DangerTimeLeftNext = m_pArena->m_DangerTimeLeft[m_BlockDownX][m_BlockDownY]; break;
                 case BOMBERMOVE_LEFT  : DangerTimeLeftNext = m_pArena->m_DangerTimeLeft[m_BlockLeftX][m_BlockLeftY]; break;
                 case BOMBERMOVE_RIGHT : DangerTimeLeftNext = m_pArena->m_DangerTimeLeft[m_BlockRightX][m_BlockRightY]; break;
+                default: break;
             }
 
             ASSERT (DangerTimeLeftNext != -1.0f);
@@ -1924,6 +2029,7 @@ void CAiBomber::SetComputerMode (EComputerMode ComputerMode)
             case COMPUTERMODE_ATTACK  : m_StopTimeLeft = 0.200f + RANDOM(40) / 1000.0f; break;
             case COMPUTERMODE_DEFENCE : m_StopTimeLeft = 0.120f + RANDOM(40) / 1000.0f; break;
             case COMPUTERMODE_WALK    : m_StopTimeLeft = 0.220f + RANDOM(40) / 1000.0f; break;
+            default: break;
         }
     }
 
