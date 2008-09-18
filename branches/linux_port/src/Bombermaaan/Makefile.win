@@ -6,10 +6,10 @@ SPRITESIZE = 32
 SDL_CONFIG = /opt/mingw32/SDL-1.2.13/bin/sdl-config
 SDL_LIB = `$(SDL_CONFIG) --libs` -lSDL_mixer
 SDL_INC = `$(SDL_CONFIG) --cflags`
-DIRECTX_LIB = ../DXSDK/LIB
-DIRECTX_INC = ../DXSDK/INCLUDE
+DIRECTX_LIB = ../../Bombermaaan-extra/DXSDK/LIB
+DIRECTX_INC = ../../Bombermaaan-extra/DXSDK/INCLUDE
 
-RCFILE = Bombermaaan.rc
+RCFILE = Bombermaaan_mingw32.rc
 
 BIN = Bombermaaan_$(SPRITESIZE).exe
 ifeq ($(SPRITESIZE),16)
@@ -47,7 +47,7 @@ RM = rm -f
 all: all-before $(BIN) all-after
 
 clean: clean-custom
-	${RM} $(OBJ) $(BIN) $(RES)
+	${RM} $(OBJ) $(BIN) $(RES) *~
 
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)

@@ -58,12 +58,7 @@ enum EMenuMode
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-enum EMenuAction
-{
-    MENUACTION_NONE,        //!< Nothing to do, stay in current menu mode and game mode
-    MENUACTION_PREVIOUS,    //!< Go to previous menu mode or to game title screen if there is no previous menu mode
-    MENUACTION_NEXT,        //!< Go to next menu mode or to game match screen if there is no next menu mode
-};
+// EMenuAction is now in STDAFX.H
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -82,7 +77,7 @@ private:
     CMenuLevel      m_MenuLevel;            //!< Menu screen object corresponding to MENUMODE_LEVEL
     float           m_GameModeTime;         //!< Time (in seconds) that elapsed since this game mode has started
     bool            m_HaveToExit;           //!< Do we have to exit this game mode?
-    int             m_ExitGameMode;         //!< Game mode to ask for when exiting (after black screen)
+    EGameMode       m_ExitGameMode;         //!< Game mode to ask for when exiting (after black screen)
     float           m_ExitGameModeTime;     //!< Game mode time when we realized we have to exit (used for blackscreen)
     bool            m_SongStarted;          //!< Did we start playing the song after the black screen?
     CMosaic*        m_pMosaic;              //!< Mosaic object used for the animated mosaic background of the menu screen
@@ -105,7 +100,7 @@ public:
     void            Destroy (void);                     //!< Uninitialize the object
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
-    int             Update (void);                      //!< Update the object and return what game mode should be set
+    EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
     void            SetMenuMode (EMenuMode MenuMode);   //!< Set the current menu mode
 };

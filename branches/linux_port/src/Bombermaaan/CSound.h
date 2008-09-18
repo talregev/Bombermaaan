@@ -2,7 +2,6 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007 Bernd Arnold
-    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 

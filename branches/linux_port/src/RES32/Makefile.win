@@ -32,7 +32,7 @@ RM = rm -f
 all: all-before $(BIN) all-after
 
 clean: clean-custom
-	${RM} $(OBJ) $(BIN) $(RESOURCE_CROSS)
+	${RM} $(OBJ) $(BIN) $(RESOURCE_CROSS) *~
 
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)

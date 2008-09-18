@@ -174,7 +174,7 @@ void CDrawGame::CloseInput (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-int CDrawGame::Update (void)
+EGameMode CDrawGame::Update (void)
 {
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();

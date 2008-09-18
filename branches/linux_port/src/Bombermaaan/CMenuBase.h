@@ -43,7 +43,7 @@ private:
 
     float           m_MenuModeTime;         //!< Time (in seconds) that elapsed since this menu mode has started
     bool            m_HaveToExit;           //!< Do we have to exit this menu mode?
-    int             m_ExitMenuAction;       //!< Menu action to ask for when exiting (after transition)
+    EMenuAction     m_ExitMenuAction;       //!< Menu action to ask for when exiting (after transition)
     float           m_ExitMenuModeTime;     //!< Menu mode time when we realized we have to exit (used for transition)
 
 protected:
@@ -66,7 +66,7 @@ protected:
     virtual void    OnPrevious (void) = 0;
     virtual void    OnNext (void) = 0;
 
-    void            Exit (int ExitMenuAction);
+    void            Exit (EMenuAction ExitMenuAction);
     
 public:
 
@@ -83,7 +83,7 @@ public:
     void            Create (void);
     void            Destroy (void);
 
-    int             Update (void);
+    EMenuAction     Update (void);
     void            Display (void);
 };
 

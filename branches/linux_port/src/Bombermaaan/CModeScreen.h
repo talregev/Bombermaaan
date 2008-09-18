@@ -60,7 +60,7 @@ public:
     virtual void        Destroy (void);                     //!< Uninitialize the object
     virtual void        OpenInput (void) = 0;               //!< Get access to the input this object needs
     virtual void        CloseInput (void) = 0;              //!< Release access to the input this object needs
-    virtual int         Update (void) = 0;                  //!< Update the object and return what game mode should be set
+    virtual EGameMode   Update (void) = 0;                  //!< Update the object and return what game mode should be set
     virtual void        Display (void) = 0;                 //!< Display on the screen
 };
 

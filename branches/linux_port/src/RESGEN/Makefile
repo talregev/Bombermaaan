@@ -27,7 +27,7 @@ SYMLINK = ln -sf
 all: all-before $(BIN) all-after
 
 clean: clean-custom
-	$(RM) $(BIN) $(OBJ) $(RESGENBIN) ResData.c $(BIN) $(BASENAME) $(BIN).$(REVISION)
+	$(RM) $(BIN) $(OBJ) $(RESGENBIN) ResData.c $(BIN) $(BASENAME) $(BIN).$(REVISION) *~
 
 install: all
 	$(INSTALL) $(BIN) $(BIN).$(REVISION) $(prefix)/lib

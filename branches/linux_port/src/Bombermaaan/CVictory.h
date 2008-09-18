@@ -113,7 +113,7 @@ public:
     void            Destroy (void);                     //!< Uninitialize the object
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
-    int             Update (void);                      //!< Update the object and return what game mode should be set
+    EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display the game screen
     void            StopSong (void);
 };

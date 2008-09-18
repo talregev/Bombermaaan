@@ -24,7 +24,7 @@ RM = rm -f
 all: all-before $(BIN) all-after
 
 clean: clean-custom
-	$(RM) $(OBJ) $(BIN)
+	$(RM) $(OBJ) $(BIN) *~
 
 install: all
 	mkdir -p $(prefix)/bin

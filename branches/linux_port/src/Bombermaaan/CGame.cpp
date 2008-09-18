@@ -101,7 +101,7 @@ CGame::CGame (HINSTANCE hInstance, char** pCommandLine)
     m_hInstance = hInstance;
 #else
     SEED_RANDOM(time(NULL));
-	  m_hInstance = NULL;
+    m_hInstance = NULL;
 #endif
     
     //
@@ -798,7 +798,7 @@ void CGame::Destroy (void)
     closesocket(MySocket);
     closesocket(ClientSocket);
 
-	if (WSACleanup() == SOCKET_ERROR) 
+    if (WSACleanup() == SOCKET_ERROR) 
     {
         if (WSAGetLastError() == WSAEINPROGRESS) 
         {
@@ -858,7 +858,7 @@ void CGame::Destroy (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-CModeScreen* CGame::GetGameModeObject (int GameMode)
+CModeScreen* CGame::GetGameModeObject (EGameMode GameMode)
 {
     // According to the specified game mode, return a pointer to the object manager of this mode
     switch (GameMode)
@@ -873,6 +873,7 @@ CModeScreen* CGame::GetGameModeObject (int GameMode)
         case GAMEMODE_CONTROLS :  return &m_Controls; break;
         case GAMEMODE_GREETS   :  break;
         case GAMEMODE_EXIT     :  break;
+        default                :  break;
     }
 
     // There is no object manager for this game mode
@@ -890,7 +891,7 @@ CModeScreen* CGame::GetGameModeObject (int GameMode)
 void CGame::OnWindowActive (void)
 {
     // Prepare a game mode variable to save the mode to set
-    int NextGameMode = m_GameMode;
+    EGameMode NextGameMode = m_GameMode;
 
     m_Timer.Update();
     m_Input.GetMainInput().Update();
@@ -942,7 +943,7 @@ void CGame::OnWindowActive (void)
  *  Set a new game mode. Creates the object corresponding to the new game mode.
  */
 
-void CGame::StartGameMode (int GameMode)
+void CGame::StartGameMode (EGameMode GameMode)
 {
     // Set the new game mode
     m_GameMode = GameMode;
@@ -1008,6 +1009,7 @@ void CGame::OnActivateApp (WPARAM wParam, LPARAM lParam)
 #ifdef ENABLE_SOUND
 	static bool  soundWasPausedWhenLosingFocus = false;
 #endif
+
 
     CWindow::OnActivateApp (wParam, lParam);
 

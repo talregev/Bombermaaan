@@ -45,7 +45,7 @@ private:
     CCloudManager   m_CloudManager;                 //!< Manages the clouds in the sky
     float           m_ModeTime;                     //!< Time (in seconds) that elapsed since the mode has started
     float           m_ExitModeTime;                 //!< Mode time when we have to start the last black screen
-    int       m_ExitGameMode;                 //!< Game mode to ask for when exiting
+    EGameMode       m_ExitGameMode;                 //!< Game mode to ask for when exiting
     bool            m_HaveToExit;                   //!< Do we have to exit this mode?
     int             m_MovingHandDistance;           //!< Extra distance between hand and menu
     float           m_MovingHandTimer;              //!< Timer used for the moving hand
@@ -59,7 +59,7 @@ public:
     void            Destroy (void);                     //!< Uninitialize the object
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
-    int       Update (void);                      //!< Update the object and return what game mode should be set
+    EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
 };
 

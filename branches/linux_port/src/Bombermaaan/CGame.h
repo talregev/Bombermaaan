@@ -47,21 +47,7 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! Describes how the game should currently be updated
-enum EGameMode
-{
-    GAMEMODE_NONE,              //!< No mode! Nothing to update
-    GAMEMODE_TITLE,             //!< Title screen (with the main menu)
-    GAMEMODE_DEMO,              //!< Demo screen, showing a match between computer players.
-    GAMEMODE_CONTROLS,          //!< Controls screen where controls can be customized
-    GAMEMODE_MENU,              //!< Menu screen managing all the menu subscreens which allow to setup and start a new match
-    GAMEMODE_MATCH,             //!< Match screen : arena and board update, bombers are playing...
-    GAMEMODE_WINNER,            //!< Winner screen : display match winner & stuff about scores, update board...
-    GAMEMODE_DRAWGAME,          //!< Draw game screen : simple animated screen, update board...
-    GAMEMODE_VICTORY,           //!< Victory screen : display battle winner...
-    GAMEMODE_GREETS,            //!< Greets screen where the credits are shown
-    GAMEMODE_EXIT               //!< In this mode the game will shutdown and exit to windows
-};
+// enum EGameMode is now in STDAFX.H
 
 enum ENetworkMode
 {
@@ -92,7 +78,7 @@ class CGame : public CWindow
 {
 private:
     
-    int       		m_GameMode;             //!< Current game mode defining what to update
+    EGameMode       m_GameMode;             //!< Current game mode defining what to update
     HMODULE         m_hModule;              //!< Connection to the resources
     HINSTANCE       m_hInstance;            //!< Application instance handle
     CTimer          m_Timer;                //!< Timer object for movement, animation, synchronization...
@@ -127,9 +113,9 @@ private:
     void            OnJoystickButton (WPARAM wParam, LPARAM lParam);       // SDL_JOYBUTTONDOWN/-UP
 #endif
     void            OnWindowActive (void);
-    void            StartGameMode (int GameMode);
+    void            StartGameMode (EGameMode GameMode);
     void            FinishGameMode (void);
-    CModeScreen*    GetGameModeObject (int GameMode);
+    CModeScreen*    GetGameModeObject (EGameMode GameMode);
 
 public:
 
@@ -147,7 +133,7 @@ public:
 #endif
 
     void            Destroy (void);
-    inline void     SwitchToGameMode (int GameMode);
+    inline void     SwitchToGameMode (EGameMode GameMode);
 };
 
 
@@ -155,7 +141,7 @@ public:
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-inline void CGame::SwitchToGameMode (int GameMode)
+inline void CGame::SwitchToGameMode (EGameMode GameMode)
 {
     FinishGameMode();
     StartGameMode(GameMode);

@@ -239,7 +239,7 @@ void CDemo::CloseInput (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-int CDemo::Update (void) 
+EGameMode CDemo::Update (void) 
 {
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();

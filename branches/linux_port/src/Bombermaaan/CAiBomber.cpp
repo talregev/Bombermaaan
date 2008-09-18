@@ -1360,7 +1360,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     DeadEnd = (m_pArena->m_DeadEnd[BlockX][BlockY] != -1);
 
                     breaking = true;
-					break;
+                    break;
                 }
             }
         }
@@ -1585,7 +1585,6 @@ void CAiBomber::ModeDefence (float DeltaTime)
         
         // Set the bomber move to send to the bomber so that the bomber goes to the best block
         GoTo (BestBlockX, BestBlockY);
-
     }
     // If a good block to go to was not found
     else

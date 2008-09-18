@@ -108,7 +108,7 @@ public:
     void            OpenInput (void);                   //!< Get access to the input this object needs
     void            CloseInput (void);                  //!< Release access to the input this object needs
     inline int      GetWinnerPlayer (void);             //!< Get the number of the player who won this match
-    int             Update (void);                      //!< Update the object and return what game mode should be set
+    EGameMode       Update (void);                      //!< Update the object and return what game mode should be set
     void            Display (void);                     //!< Display on the screen
 
 #ifdef _DEBUG_FLAG_1
