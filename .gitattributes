@@ -63,9 +63,9 @@ branches/linux_port/src/Bombermaaan/Bombermaaan.dev -text
 branches/linux_port/src/Bombermaaan/Bombermaaan.dsp -text
 branches/linux_port/src/Bombermaaan/Bombermaaan.ico -text
 branches/linux_port/src/Bombermaaan/Bombermaaan.rc -text
-branches/linux_port/src/Bombermaaan/Bombermaaan.sh -text
 branches/linux_port/src/Bombermaaan/Bombermaaan.vcproj -text
 branches/linux_port/src/Bombermaaan/BombermaaanIco.h -text
+branches/linux_port/src/Bombermaaan/Bombermaaan_mingw32.rc -text
 branches/linux_port/src/Bombermaaan/CAiArena.cpp -text
 branches/linux_port/src/Bombermaaan/CAiArena.h -text
 branches/linux_port/src/Bombermaaan/CAiBomber.cpp -text
@@ -249,7 +249,8 @@ branches/linux_port/src/_Test_/Release/Levels/L5.TXT -text
 branches/linux_port/src/_Test_/Release/Levels/L6.TXT -text
 branches/linux_port/src/_Test_/Release/Levels/L7.TXT -text
 branches/linux_port/src/_Test_/Release/Levels/L8.TXT -text
-branches/linux_port/src/debian-data/DEBIAN/control -text
+branches/linux_port/src/checkLineBreaks.pl -text
+branches/linux_port/src/debian-data/DEBIAN/control.dist -text
 branches/linux_port/src/debian-data/DEBIAN/md5sums -text
 branches/linux_port/src/debian-data/DEBIAN/postinst -text
 branches/linux_port/src/debian-data/DEBIAN/postrm -text
@@ -257,7 +258,7 @@ branches/linux_port/src/debian-data/usr/share/doc/bombermaaan-data/CHANGELOG.txt
 branches/linux_port/src/debian-data/usr/share/doc/bombermaaan-data/TODO -text
 branches/linux_port/src/debian-data/usr/share/doc/bombermaaan-data/changelog.Debian.gz -text
 branches/linux_port/src/debian-data/usr/share/doc/bombermaaan-data/copyright -text
-branches/linux_port/src/debian/DEBIAN/control -text
+branches/linux_port/src/debian/DEBIAN/control.dist -text
 branches/linux_port/src/debian/DEBIAN/md5sums -text
 branches/linux_port/src/debian/DEBIAN/postinst -text
 branches/linux_port/src/debian/DEBIAN/postrm -text
