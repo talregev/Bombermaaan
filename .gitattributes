@@ -63,9 +63,9 @@ src/Bombermaaan/Bombermaaan.dev -text
 src/Bombermaaan/Bombermaaan.dsp -text
 src/Bombermaaan/Bombermaaan.ico -text
 src/Bombermaaan/Bombermaaan.rc -text
-src/Bombermaaan/Bombermaaan.sh -text
 src/Bombermaaan/Bombermaaan.vcproj -text
 src/Bombermaaan/BombermaaanIco.h -text
+src/Bombermaaan/Bombermaaan_mingw32.rc -text
 src/Bombermaaan/CAiArena.cpp -text
 src/Bombermaaan/CAiArena.h -text
 src/Bombermaaan/CAiBomber.cpp -text
@@ -249,7 +249,8 @@ src/_Test_/Release/Levels/L5.TXT -text
 src/_Test_/Release/Levels/L6.TXT -text
 src/_Test_/Release/Levels/L7.TXT -text
 src/_Test_/Release/Levels/L8.TXT -text
-src/debian-data/DEBIAN/control -text
+src/checkLineBreaks.pl -text
+src/debian-data/DEBIAN/control.dist -text
 src/debian-data/DEBIAN/md5sums -text
 src/debian-data/DEBIAN/postinst -text
 src/debian-data/DEBIAN/postrm -text
@@ -257,7 +258,7 @@ src/debian-data/usr/share/doc/bombermaaan-data/CHANGELOG.txt -text
 src/debian-data/usr/share/doc/bombermaaan-data/TODO -text
 src/debian-data/usr/share/doc/bombermaaan-data/changelog.Debian.gz -text
 src/debian-data/usr/share/doc/bombermaaan-data/copyright -text
-src/debian/DEBIAN/control -text
+src/debian/DEBIAN/control.dist -text
 src/debian/DEBIAN/md5sums -text
 src/debian/DEBIAN/postinst -text
 src/debian/DEBIAN/postrm -text
