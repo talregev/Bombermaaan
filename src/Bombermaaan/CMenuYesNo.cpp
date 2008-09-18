@@ -107,12 +107,12 @@ void CMenuYesNo::Destroy (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-int CMenuYesNo::Update (int CurrentGameMode)
+EGameMode CMenuYesNo::Update (EGameMode CurrentGameMode)
 {
     // This new variable will be the function's return value 
     // and will indicate the new game mode to set. For the moment,
     // do not ask for a new game mode after this update.
-    int NextGameMode = CurrentGameMode;
+    EGameMode NextGameMode = CurrentGameMode;
     
     // If the menu yes/no can be activated (it can't if the game mode doesn't allow it)
     if (CurrentGameMode != GAMEMODE_CONTROLS && 

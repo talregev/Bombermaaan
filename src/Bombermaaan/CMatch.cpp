@@ -828,7 +828,7 @@ void CMatch::ManageMatchOver (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-int CMatch::Update (void) 
+EGameMode CMatch::Update (void) 
 {
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();

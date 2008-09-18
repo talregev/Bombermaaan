@@ -374,7 +374,7 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
     long FindHandle;
     _finddata_t FindData;
     m_NumberOfLevels = 0;
-	
+
 #ifndef WIN32
     // initialise OUR data structure
     FindData.name = NULL;

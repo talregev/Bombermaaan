@@ -93,9 +93,9 @@ public:
 inline void CDisplay::SetWindowHandle (HWND hWnd)
 {
 #ifdef WIN32
-	  m_DirectDraw.SetWindowHandle (hWnd);
+    m_DirectDraw.SetWindowHandle (hWnd);
 #else
-	  m_SDLVideo.SetWindowHandle (hWnd);
+    m_SDLVideo.SetWindowHandle (hWnd);
 #endif
 }
 

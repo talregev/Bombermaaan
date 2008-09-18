@@ -1,11 +1,12 @@
-Version 1.3.2
+Next version
 
-Released on September 13, 2008
+New feature: AI bomber is punching bombs when he is jammed by a bomb and picked up the punch item (by Markus Drescher)
+New feature: Bombermaaan can be compiled natively on Linux using G++ (without the need of Wine and the Bombermaaan files for Win32, thanks to Markus Drescher)
+Changed: FMOD was replaced by the SDL_mixer library (by Markus Drescher)
 
-New feature: Linux support added (via SDL).
-New feature: AI players are able to punch bombs if they are stuck
-Changed: Now using SDL_mixer library for mixing sound.
-Changed: Due to the usage of SDL_mixer the MP3 files were converted to OGG Vorbis.
+
+----------------------------
+
 
 Version 1.3.1
 

@@ -102,20 +102,20 @@ bool CLog::Open( const char *pFilename )
         SYSTEMTIME LocalTime;
         GetLocalTime (&LocalTime);
 #else
-		struct tm *LocalTime;
-		time_t curTime = time(NULL);
-		LocalTime = localtime(&curTime);
+        struct tm *LocalTime;
+        time_t curTime = time(NULL);
+        LocalTime = localtime(&curTime);
 #endif
         
         // Store first log entry
         char FirstLogEntry [128];
 #ifdef WIN32
-		sprintf( FirstLogEntry,                                              // String where to write
+        sprintf( FirstLogEntry,                                              // String where to write
                  "==> Log started on %02d/%02d/%02d at %02d:%02d:%02d.\n\n", // Format to use
                  LocalTime.wDay, LocalTime.wMonth, LocalTime.wYear,          // Time numbers to use
                  LocalTime.wHour, LocalTime.wMinute, LocalTime.wSecond );
 #else
-		sprintf( FirstLogEntry,                                              // String where to write
+        sprintf( FirstLogEntry,                                              // String where to write
                  "==> Log started on %02d/%02d/%02d at %02d:%02d:%02d.\n\n", // Format to use
                  LocalTime->tm_mday, LocalTime->tm_mon, LocalTime->tm_year + 1900,          // Time numbers to use
                  LocalTime->tm_hour, LocalTime->tm_min, LocalTime->tm_sec );
@@ -306,8 +306,8 @@ long CLog::WriteLine( const char *pMessage, ... )
         {
             // Get current time
 #ifdef WIN32
-			SYSTEMTIME LocalTime;
-			GetLocalTime (&LocalTime);
+            SYSTEMTIME LocalTime;
+            GetLocalTime (&LocalTime);
 #else
             struct tm *LocalTime;
             time_t curTime = time(NULL);

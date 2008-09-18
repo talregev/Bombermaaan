@@ -196,7 +196,7 @@ void CTitle::CloseInput (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-int CTitle::Update (void) 
+EGameMode CTitle::Update (void) 
 {
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();

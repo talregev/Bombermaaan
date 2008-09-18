@@ -94,7 +94,7 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             return false;
         }
 #endif        
-			
+
         // Load the sprite tables. If at least one sprite table could not be loaded
         if (
 #ifdef USE_32_PIXELS_PER_BLOCK

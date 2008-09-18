@@ -212,7 +212,7 @@ void CControls::CloseInput (void)
 // When the screen should continue, it returns GAMEMODE_CONTROLS to keep this mode.
 // When the screen has ended, it returns GAMEMODE_TITLE to start the title screen.
 
-int CControls::Update (void)
+EGameMode CControls::Update (void)
 {
     // Increase elapsed time since mode has started
     m_ModeTime += m_pTimer->GetDeltaTime();

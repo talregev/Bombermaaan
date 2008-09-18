@@ -86,7 +86,7 @@ CWindow::CWindow (HINSTANCE hInstance, const char *pWindowTitle, int IconResourc
 
     // Init the window class
 #ifdef WIN32
-	WNDCLASSEX WndClassEx;
+    WNDCLASSEX WndClassEx;
     WndClassEx.cbSize = sizeof(WNDCLASSEX);
     WndClassEx.lpszClassName = "Class name";
     WndClassEx.lpfnWndProc = DefaultWinProc;        // Biiiig Hack. See the function DefaultWinProc
@@ -147,7 +147,7 @@ CWindow::CWindow (HINSTANCE hInstance, const char *pWindowTitle, int IconResourc
         PostMessage (m_hWnd, WM_SETICON, (WPARAM) ICON_BIG, (LPARAM) hIcon);
     }
 #endif
-	// the icon in Linux is loaded in CSDLVideo
+    // the icon in Linux is loaded in CSDLVideo
 }
 
 
@@ -552,9 +552,9 @@ bool CWindow::OnSysCommand (WPARAM wParam, LPARAM lParam)
 
 void CWindow::OnClose (WPARAM wParam, LPARAM lParam) 
 { 
-    #ifdef WIN32
+#ifdef WIN32
 	DestroyWindow (m_hWnd); // Posts WM_DESTROY
-	#endif
+#endif
 }
 
 
