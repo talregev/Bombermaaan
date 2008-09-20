@@ -595,6 +595,8 @@ void CBomber::Action ()
                     }
                 }
 
+                bool bomberHasPunchedBomb = false;
+
                 // If the bomber can punch bombs
                 if (CanPunchBombs())
                 {
@@ -654,6 +656,9 @@ void CBomber::Action ()
                                 m_BomberState = BOMBERSTATE_PUNCH;
                                 m_PunchingTimeElapsed = 0.0f;
 
+                                // Set we have punched a bomb right now (used for remote fusing bombs, see below)
+                                bomberHasPunchedBomb = true;
+
                                 break;
                             }
                         }
@@ -661,8 +666,8 @@ void CBomber::Action ()
                 }
 
 				
-				// If the bomber can remote fuse bombs
-                if (CanRemoteFuseBombs())
+				// If the bomber can remote fuse bombs and we didn't punch a bomb (see above)
+                if (CanRemoteFuseBombs() && !bomberHasPunchedBomb)
                 {
                     // Find the first bomb to fuse.
                     for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
