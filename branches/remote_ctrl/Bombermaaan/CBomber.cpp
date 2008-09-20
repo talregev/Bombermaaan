@@ -234,6 +234,11 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define SICK_SPRITE_ROW_FULL        MAX_PLAYERS             //!< The row with the full black bomber sprites (this is the number of maximum players)
 #define SICK_SPRITE_ROW_SHADOW      (MAX_PLAYERS + 1)       //!< The row with the black shadow bomber sprites (one row below SICK_SPRITE_ROW_FULL)
 
+// If set to true, only the first bomb will be fused by the remote control of a bomber
+// If set to false, all bombs are immediately fused
+// First means: the first bomb found in the bomb array, not the first in time
+#define REMOTE_FUSE_ONLY_FIRST_BOMB         true
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -667,6 +672,11 @@ void CBomber::Action ()
                             m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
                         {
 							m_pArena->GetBomb(Index).Burn();
+
+                            // Leave the for-loop, otherwise all bombs would be burned immediately
+                            if ( REMOTE_FUSE_ONLY_FIRST_BOMB ) {
+                                break;
+                            }
                         }
                     }
                 }
