@@ -839,6 +839,10 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    // The remote fuse feature came after Level file version 2, so this must be set hard coded
+   	m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = INITIAL_ITEMREMOTE;
+    
+    
     //---------------------
     // Read the BomberSkillsAtStart values
     //---------------------
@@ -891,6 +895,10 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
+    // The remote fuse feature came after Level file version 2, so this must be set hard coded
+	m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] = 0;
+    
+    
     //---------------------
     // Read the ContaminationsNotUsed setting
     //---------------------
