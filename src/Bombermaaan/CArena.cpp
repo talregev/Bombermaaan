@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -208,7 +209,8 @@ void CArena::Create (void)
                         m_pOptions->GetNumberOfItemsInWalls (ITEM_KICK),
                         m_pOptions->GetNumberOfItemsInWalls (ITEM_SKULL),
                         m_pOptions->GetNumberOfItemsInWalls (ITEM_THROW),
-                        m_pOptions->GetNumberOfItemsInWalls (ITEM_PUNCH));
+                        m_pOptions->GetNumberOfItemsInWalls (ITEM_PUNCH),
+						m_pOptions->GetNumberOfItemsInWalls (ITEM_REMOTE));
 
     //-----------------
     // Finish creation

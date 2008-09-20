@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -140,6 +141,7 @@ BMP_ARENA_BOMBER_PUNCH  BITMAP  DISCARDABLE     "Image\\arena_bomber_punch.bmp"
 BMP_ARENA_BOMBER_STUNT  BITMAP  DISCARDABLE     "Image\\arena_bomber_stunt.bmp"
 BMP_ARENA_ARROWS        BITMAP  DISCARDABLE     "Image\\arena_arrows.bmp"
 BMP_MENU_HAND_TITLE     BITMAP  DISCARDABLE     "Image\\menu_hand_title.bmp"
+BMP_ARENA_REMOTE_BOMB   BITMAP  DISCARDABLE     "image\\arena_remote_bomb.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -211,4 +213,3 @@ SND_BOMBER_LOSE_ITEM    SOUND   DISCARDABLE     "Sound\\BOMBER_LOSE_ITEM.mp3"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

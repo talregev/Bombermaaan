@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -78,6 +79,7 @@ enum EBomberSkills
 	BOMBERSKILL_KICKITEMS,
 	BOMBERSKILL_THROWITEMS,
 	BOMBERSKILL_PUNCHITEMS,
+	BOMBERSKILL_REMOTEITEMS,
 	NUMBER_OF_BOMBERSKILLS
 };
 

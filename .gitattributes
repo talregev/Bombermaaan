@@ -190,6 +190,7 @@ src/RES32/IMAGE/arena_hurry.bmp -text
 src/RES32/IMAGE/arena_hurry.xcf -text
 src/RES32/IMAGE/arena_item_0-bomb.xcf -text
 src/RES32/IMAGE/arena_item_1-flame.xcf -text
+src/RES32/IMAGE/arena_item_7-remotecontrol.xcf -text
 src/RES32/IMAGE/arena_item_template.xcf -text
 src/RES32/IMAGE/arena_pause.bmp -text
 src/RES32/IMAGE/arena_pause.xcf -text
