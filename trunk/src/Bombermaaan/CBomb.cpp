@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -132,6 +133,7 @@ int CBomb::m_BounceMoveY[NUMBER_OF_BOMBFLY_DIRECTIONS][3] =
 
 // Sprite table
 #define ARENA_BOMB_SPRITETABLE              4
+#define ARENA_REMOTE_BOMB_SPRITETABLE		65
 
 // Movement times when the bomb is flying
 #define THROW_BASE_FRAME_TIME       0.030f // When bomb was thrown
@@ -198,7 +200,8 @@ void CBomb::Create (int BlockX, int BlockY, int FlameSize, float TimeLeft, int O
     m_FlightFrame = -1;
     m_FlightType = BOMBFLIGHTTYPE_NONE;
     m_Warping = false;
-    
+	m_Remote = m_pArena->GetBomber(OwnerPlayer).CanRemoteFuseBombs();
+		
     if (TimeLeft <= 1.0f)
     {
         m_AnimationTimes[0] = ANIMBOMB_FAST_TIME1;
@@ -600,17 +603,20 @@ bool CBomb::Update (float DeltaTime)
         // then it can tick and explode
         if (!m_BeingLifted && !m_BeingHeld && !m_BeingPunched && m_BombFly == BOMBFLY_NONE)
         {        
-            // If the bomb has some ticks left before exploding
-            if (m_TimeLeft > 0.0f)
-            {
-                // Make the bomb explode if time is up
-                m_TimeLeft -= DeltaTime;
-                if (m_TimeLeft <= 0.0f)
-                {
-                    Explode ();
-                    m_TimeLeft = 0.0f;
-                }
-            }
+			// dont update timer if it is a not activated remote bomb
+			if (!m_Remote || (m_TimeLeft <= EXPLODE_SOON))
+
+				// If the bomb has some ticks left before exploding
+				if (m_TimeLeft > 0.0f)
+				{
+					// Make the bomb explode if time is up
+					m_TimeLeft -= DeltaTime;
+					if (m_TimeLeft <= 0.0f)
+					{
+						Explode ();
+						m_TimeLeft = 0.0f;
+					}
+				}
         }
         
         // Kick this bomb by special blocks
@@ -678,11 +684,21 @@ void CBomb::Display (void)
     Clip.bottom = VIEW_HEIGHT - 26;
 
     // Draw the bomb sprite. Priority is not used.
-    m_pDisplay->DrawSprite (m_iX, 
+    if (!m_Remote)
+		m_pDisplay->DrawSprite (m_iX, 
                             m_iY, 
                             NULL,                            // Draw entire sprite
                             &Clip,                           // Clip sprite to arena view !!!
                             ARENA_BOMB_SPRITETABLE, 
+                            m_Sprite, 
+                            SpriteTable,
+                            PRIORITY_UNUSED);
+	else
+		m_pDisplay->DrawSprite (m_iX, 
+                            m_iY, 
+                            NULL,                            // Draw entire sprite
+                            &Clip,                           // Clip sprite to arena view !!!
+                            ARENA_REMOTE_BOMB_SPRITETABLE, 
                             m_Sprite, 
                             SpriteTable,
                             PRIORITY_UNUSED);
@@ -721,7 +737,8 @@ void CBomb::OnWriteSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.WriteFloat(m_FlightTimer);
     Snapshot.WriteInteger(m_FlightFrame);
     Snapshot.WriteInteger(m_FlightType);
-    Snapshot.WriteInteger(m_Warping);
+    Snapshot.WriteBoolean(m_Warping);
+	Snapshot.WriteBoolean(m_Remote);
 }
 
 //******************************************************************************************************************************
@@ -758,6 +775,7 @@ void CBomb::OnReadSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.ReadInteger(&m_FlightFrame);
     Snapshot.ReadInteger((int*)&m_FlightType);
     Snapshot.ReadBoolean(&m_Warping);
+	Snapshot.ReadBoolean(&m_Remote);
 }
 
 //******************************************************************************************************************************

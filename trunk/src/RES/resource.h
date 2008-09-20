@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -149,12 +150,13 @@
 #define SND_BOMBER_LOSE_ITEM            351
 #define BMP_ARENA_ARROWS                352
 #define BMP_MENU_HAND_TITLE             353
+#define BMP_ARENA_REMOTE_BOMB           354
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        354
+#define _APS_NEXT_RESOURCE_VALUE        355
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           101

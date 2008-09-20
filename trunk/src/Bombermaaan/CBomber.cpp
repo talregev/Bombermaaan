@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -233,6 +234,11 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define SICK_SPRITE_ROW_FULL        MAX_PLAYERS             //!< The row with the full black bomber sprites (this is the number of maximum players)
 #define SICK_SPRITE_ROW_SHADOW      (MAX_PLAYERS + 1)       //!< The row with the black shadow bomber sprites (one row below SICK_SPRITE_ROW_FULL)
 
+// If set to true, only the first bomb will be fused by the remote control of a bomber
+// If set to false, all bombs are immediately fused
+// First means: the first bomb found in the bomb array, not the first in time
+#define REMOTE_FUSE_ONLY_FIRST_BOMB         true
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -295,6 +301,7 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
 	m_NumberOfKickItems = options->GetInitialBomberSkills( BOMBERSKILL_KICKITEMS );
     m_NumberOfThrowItems = options->GetInitialBomberSkills( BOMBERSKILL_THROWITEMS );
     m_NumberOfPunchItems = options->GetInitialBomberSkills( BOMBERSKILL_PUNCHITEMS );
+	m_NumberOfRemoteItems = options->GetInitialBomberSkills( BOMBERSKILL_REMOTEITEMS );
 
     m_ReturnedItems = false;
 
@@ -588,6 +595,8 @@ void CBomber::Action ()
                     }
                 }
 
+                bool bomberHasPunchedBomb = false;
+
                 // If the bomber can punch bombs
                 if (CanPunchBombs())
                 {
@@ -647,11 +656,36 @@ void CBomber::Action ()
                                 m_BomberState = BOMBERSTATE_PUNCH;
                                 m_PunchingTimeElapsed = 0.0f;
 
+                                // Set we have punched a bomb right now (used for remote fusing bombs, see below)
+                                bomberHasPunchedBomb = true;
+
                                 break;
                             }
                         }
                     }
                 }
+
+				
+				// If the bomber can remote fuse bombs and we didn't punch a bomb (see above)
+                if (CanRemoteFuseBombs() && !bomberHasPunchedBomb)
+                {
+                    // Find the first bomb to fuse.
+                    for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
+                    {						
+                        // Test existence and kicker player number
+                        if (m_pArena->GetBomb(Index).Exist() && m_pArena->GetBomb(Index).IsRemote() &&
+                            m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
+                        {
+							m_pArena->GetBomb(Index).Burn();
+
+                            // Leave the for-loop, otherwise all bombs would be burned immediately
+                            if ( REMOTE_FUSE_ONLY_FIRST_BOMB ) {
+                                break;
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
@@ -1263,6 +1297,7 @@ void CBomber::OnWriteSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.WriteInteger(m_NumberOfKickItems);
     Snapshot.WriteInteger(m_NumberOfThrowItems);
     Snapshot.WriteInteger(m_NumberOfPunchItems);
+	Snapshot.WriteInteger(m_NumberOfRemoteItems);
     Snapshot.WriteBoolean(m_ReturnedItems);
     Snapshot.WriteInteger(m_Player);
     Snapshot.WriteInteger(m_Dead);
@@ -1311,6 +1346,7 @@ void CBomber::OnReadSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.ReadInteger(&m_NumberOfKickItems);
     Snapshot.ReadInteger(&m_NumberOfThrowItems);
     Snapshot.ReadInteger(&m_NumberOfPunchItems);
+	Snapshot.ReadInteger(&m_NumberOfRemoteItems);
     Snapshot.ReadBoolean(&m_ReturnedItems);
     Snapshot.ReadInteger(&m_Player);
     Snapshot.ReadInteger((int*)&m_Dead);
@@ -1358,7 +1394,8 @@ void CBomber::ReturnItems (float DeltaTime)
                                     m_NumberOfKickItems, 
                                     0,
                                     m_NumberOfThrowItems,
-                                    m_NumberOfPunchItems))
+                                    m_NumberOfPunchItems,
+									m_NumberOfRemoteItems))
             {
                 // Play the item fumes sound
                 m_pSound->PlaySample (SAMPLE_ITEM_FUMES);
@@ -1491,6 +1528,14 @@ void CBomber::ItemEffect (EItemType Type)
                 break;
             }
 
+			case ITEM_REMOTE :
+            {
+                // One more picked up remote controler item
+                m_NumberOfRemoteItems++;
+
+                break;
+            }
+
             default :
             {
                 assert(0);
@@ -1615,6 +1660,11 @@ void CBomber::Stunt (void)
     {   
         m_NumberOfRollerItems--;
         ItemType = ITEM_ROLLER;
+    }
+	else if (m_NumberOfRemoteItems > 0)
+    {   
+        m_NumberOfRemoteItems--;
+        ItemType = ITEM_REMOTE;
     }
 
     if (ItemType != ITEM_NONE)

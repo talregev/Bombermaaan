@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -112,6 +113,7 @@ private:
     int                 m_FlightFrame;              //!< Index in the corresponding flight position arrays, used to know the bomb's position.
     EBombFlightType     m_FlightType;               //!< Cause of the flight, used to make the flight movement different according to the cause.
     bool                m_Warping;                  //!< Is the bomb currently moving from one side of the arena and coming out from the opposite side? (up/down or left/right)
+	bool                m_Remote;                   //!< Is the bomb a remote controled bomb ?
 
     static int          m_ThrowMoveX[NUMBER_OF_BOMBFLY_DIRECTIONS][6]; //!< Offset to apply to the bomb's X position for each "frame" of the flight, according to the direction of the flight. When bomb was thrown.
     static int          m_ThrowMoveY[NUMBER_OF_BOMBFLY_DIRECTIONS][6]; //!< Offset to apply to the bomb's Y position for each "frame" of the flight, according to the direction of the flight. When bomb was thrown.
@@ -159,6 +161,7 @@ public:
     inline float        GetTimeLeft (void);                     //!< Return the time left before the bomb will explode (unless the explosion is triggered earlier)
     inline int          GetFlameSize (void);                    //!< Return the size of the flames (in blocks) when the bomb will explode
     inline bool         IsOnFloor (void);                       //!< Return whether the bomb is on the floor (not in the air)
+	inline bool         IsRemote (void);                        //!< Return whether the bomb is a remote bomb
 
 #ifdef _DEBUG_FLAG_1
     void                _Debug_WriteToLog();
@@ -208,6 +211,11 @@ inline float CBomb::GetTimeLeft (void)
 inline int CBomb::GetFlameSize (void) 
 { 
     return m_FlameSize; 
+}
+
+inline bool CBomb::IsRemote (void) 
+{ 
+    return m_Remote; 
 }
 
 inline void CBomb::SetPosition (int X, int Y)

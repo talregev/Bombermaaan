@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+	Copyright (C) 2008 Jerome Bigot
 
     This file is part of Bombermaaan.
 
@@ -80,6 +81,8 @@
 #define SPRITE_THROW1       11
 #define SPRITE_PUNCH0       12
 #define SPRITE_PUNCH1       13
+#define SPRITE_REMOTE0      14
+#define SPRITE_REMOTE1      15
 
 // Fume animation sprites
 #define ANIM_FUMES_1    0
@@ -210,6 +213,7 @@ void CItem::SetSprites (void)
         case ITEM_SKULL :       m_Sprite0 = SPRITE_SKULL0;      m_Sprite1 = SPRITE_SKULL1;      break;
         case ITEM_THROW :       m_Sprite0 = SPRITE_THROW0;      m_Sprite1 = SPRITE_THROW1;      break;
         case ITEM_PUNCH :       m_Sprite0 = SPRITE_PUNCH0;      m_Sprite1 = SPRITE_PUNCH1;      break;
+		case ITEM_REMOTE :		m_Sprite0 = SPRITE_REMOTE0;		m_Sprite1 = SPRITE_REMOTE1;     break;
     }
 
     m_Sprite = m_Sprite0;
@@ -660,7 +664,8 @@ bool CItem::CreateItems (CArena *pArena,
                          int NumberOfItemKicks, 
                          int NumberOfItemSkulls,
                          int NumberOfItemThrow,
-                         int NumberOfItemPunch)
+                         int NumberOfItemPunch,
+						 int NumberOfItemRemote)
 {
     int X, Y;
     int Index;
@@ -748,7 +753,8 @@ bool CItem::CreateItems (CArena *pArena,
                NumberOfItemKicks + 
                NumberOfItemSkulls +
                NumberOfItemThrow +
-               NumberOfItemPunch > CountPossible)
+               NumberOfItemPunch +
+			   NumberOfItemRemote > CountPossible)
         {
             // Choose a type of item and reduce the number
             switch (RANDOM(NUMBER_OF_ITEMS))
@@ -760,6 +766,7 @@ bool CItem::CreateItems (CArena *pArena,
                 case 4 : if (NumberOfItemSkulls > 0)    NumberOfItemSkulls--;   break;
                 case 5 : if (NumberOfItemThrow > 0)     NumberOfItemThrow--;   break;
                 case 6 : if (NumberOfItemPunch > 0)     NumberOfItemPunch--;   break;
+				case 7 : if (NumberOfItemRemote > 0)    NumberOfItemRemote--;   break;
             }
         }
 
@@ -770,7 +777,8 @@ bool CItem::CreateItems (CArena *pArena,
                NumberOfItemKicks > 0 || 
                NumberOfItemSkulls > 0 ||
                NumberOfItemThrow > 0 ||
-               NumberOfItemPunch > 0)
+               NumberOfItemPunch > 0 ||
+			   NumberOfItemRemote > 0)
         {
             // Choose a type of item to create
             EItemType Type = ITEM_NONE;
@@ -812,6 +820,11 @@ bool CItem::CreateItems (CArena *pArena,
             {
                 Type = ITEM_PUNCH;
                 NumberOfItemPunch--;
+            }
+			else if (NumberOfItemRemote > 0)
+            {
+                Type = ITEM_REMOTE;
+                NumberOfItemRemote--;
             }
 
             // Try a random index in the possible places array
