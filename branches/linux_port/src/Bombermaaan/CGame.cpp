@@ -794,22 +794,25 @@ void CGame::Destroy (void)
     // Terminate game mode and set no game mode
     FinishGameMode ();
 
-#ifdef WIN32
-    closesocket(MySocket);
-    closesocket(ClientSocket);
-
-    if (WSACleanup() == SOCKET_ERROR) 
+    if (NetworkMode != NETWORKMODE_LOCAL)
     {
-        if (WSAGetLastError() == WSAEINPROGRESS) 
+#ifdef WIN32
+        closesocket(MySocket);
+        closesocket(ClientSocket);
+
+        if (WSACleanup() == SOCKET_ERROR) 
         {
-            WSACancelBlockingCall();
-            WSACleanup();
+            if (WSAGetLastError() == WSAEINPROGRESS) 
+            {
+                WSACancelBlockingCall();
+                WSACleanup();
+            }
         }
-    }
 #else
-    close(MySocket);
-    close(ClientSocket);
+        close(MySocket);
+        close(ClientSocket);
 #endif
+    }
 
 #ifdef ENABLE_SOUND
     

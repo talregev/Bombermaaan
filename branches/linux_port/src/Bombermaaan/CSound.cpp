@@ -397,7 +397,7 @@ void CSound::PlaySong (ESong Song)
 		
         // note: songs are loaded dynamically because of an error in libmikmod (used by SDL_mixer)
         // load new song (if necessary)
-        if (m_ESong != Song) {
+        if (m_ESong != Song || m_CurrentSong == NULL) {
             switch (Song) {
                 case SONG_MATCH_MUSIC_1_NORMAL:
                     result = LoadSong   (SONG_MATCH_MUSIC_1_NORMAL    , SND_MATCH_MUSIC_1_NORMAL);
@@ -441,7 +441,7 @@ void CSound::StopSong (ESong Song)
         if (m_CurrentSong != NULL)
         {
             // Stop playing current song (we don't know which one is playing)
-            Mix_HaltMusic();
+            FreeSong(Song);
         }
     }
 }

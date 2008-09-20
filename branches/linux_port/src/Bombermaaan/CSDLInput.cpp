@@ -62,7 +62,6 @@ CSDLInput::~CSDLInput (void)
 
 struct SEnumParam
 {
-//    LPSDLINPUT7 pDI;
     vector<SDL_Joystick *> pDevices;
 };
 
@@ -81,93 +80,9 @@ bool CSDLInput::Create (void)
 {
     if (!m_Ready)
     {
-        // Create the SDLinput object
-        /* HRESULT hRet = SDLInputCreateEx (m_hInstance, SDLINPUT_VERSION, IID_ISDLInput7, (void**)&m_pDI, NULL); 
-        
-        // If it failed
-        if (hRet != DI_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("SDLInput     => !!! Could not create SDLInput object.");
-            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
-
-            // Get out
-            return false;
-        }
-        // If it was successful
-        else
-        {
-            // Log success
-            theLog.WriteLine ("SDLInput     => SDLInput object was created successfully.");
-        }
-
-        hRet = m_pDI->CreateDeviceEx (GUID_SysKeyboard, IID_ISDLInputDevice7, (void**)&m_pKeyboard, NULL); 
-
-        if (hRet != DI_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("SDLInput     => !!! Could not create keyboard.");
-            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
-
-            // Get out
-            return false;
-        }
-        else
-        {
-            // Log success
-            theLog.WriteLine ("SDLInput     => Keyboard was created.");
-        }
-
-        // Set the keyboard data format
-        hRet = m_pKeyboard->SetDataFormat (&c_dfDIKeyboard);
-    
-        // If it failed
-        if (hRet != DI_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("SDLInput     => !!! Could not set data format (keyboard).");
-            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
-
-            // Get out
-            return false;
-        }
-
-        // Set the keyboard's cooperative level
-        hRet = m_pKeyboard->SetCooperativeLevel (m_hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE); 
-    
-        // If it failed
-        if (hRet != DI_OK)
-        {
-            // Log failure
-            theLog.WriteLine ("SDLInput     => !!! Could not set cooperative level (keyboard).");
-            theLog.WriteLine ("SDLInput     => !!! SDLInput error is : %s.", GetSDLInputError(hRet));
-
-            // Get out
-            return false;
-        } */
-    
         // Reset the keyboard state
         memset (m_KeyState, 0, MAX_KEYS);
         
-        // The keyboard is not opened yet
-        /* m_KeyboardOpened = false;
-
-        // We need this variable to get information about each key of the keyboard
-        DIDEVICEOBJECTINSTANCE DeviceObjectInstance;
-
-        // Scan the keys the keyboard could have
-        for (int Key = 0 ; Key < MAX_KEYS ; Key++)
-        {       
-            // Initialize the device object instance and get the key's information
-            ZeroMemory (&DeviceObjectInstance, sizeof (DIDEVICEOBJECTINSTANCE));
-            DeviceObjectInstance.dwSize = sizeof (DIDEVICEOBJECTINSTANCE);
-            HRESULT hRet = m_pKeyboard->GetObjectInfo (&DeviceObjectInstance, Key, DIPH_BYOFFSET);
-            ASSERT (hRet == DI_OK || hRet == DIERR_OBJECTNOTFOUND);
-
-            // Store the key's real name, that is to say the name given by Windows
-            strcpy (m_KeyRealName[Key], (hRet != DIERR_OBJECTNOTFOUND ? DeviceObjectInstance.tszName : "Key does not exist"));
-        } */
-
         // Prepare the friendly name for each key
         MakeKeyFriendlyNames ();
 
@@ -217,44 +132,25 @@ void CSDLInput::Destroy (void)
 {
     if (m_Ready)
     {
-        // If the SDLInput object is created
-        //if (m_pDI != NULL) 
-        //{
-            // If the keyboard SDLinput device is created
-            /* if (m_pKeyboard != NULL)
-            {
-                // Release the device
-                m_pKeyboard->Release ();
-                m_pKeyboard = NULL;
-            }
-
-            // Log we released the keyboard
-            theLog.WriteLine ("SDLInput     => Keyboard was released."); */
+        // Scan the joysticks that were created
+        for (unsigned int Index = 0 ; Index < m_pJoysticks.size() ; Index++)
+        {
+            // Release the joystick SDLinput device
+            SDL_JoystickClose(m_pJoysticks[Index]->pDevice);
+            m_pJoysticks[Index]->pDevice = NULL;
             
-            // Scan the joysticks that were created
-            for (unsigned int Index = 0 ; Index < m_pJoysticks.size() ; Index++)
-            {
-                // Release the joystick SDLinput device
-                SDL_JoystickClose(m_pJoysticks[Index]->pDevice);
-                m_pJoysticks[Index]->pDevice = NULL;
-                
-                // Delete the joystick variable
-                delete m_pJoysticks[Index];
+            // Delete the joystick variable
+            delete m_pJoysticks[Index];
 
-                // Log we released a joystick
-                theLog.WriteLine ("SDLInput     => A joystick was released.");
-            }
-                        
-            // Remove the joystick pointers from the container 
-            m_pJoysticks.clear();
+            // Log we released a joystick
+            theLog.WriteLine ("SDLInput     => A joystick was released.");
+        }
+                    
+        // Remove the joystick pointers from the container 
+        m_pJoysticks.clear();
 
-            // Release the SDLInput object
-            //m_pDI->Release ();
-            //m_pDI = NULL;
-
-            // Log we released the SDLInput object
-            theLog.WriteLine ("SDLInput     => SDLInput object was released.");
-        //}
+        // Log we released the SDLInput object
+        theLog.WriteLine ("SDLInput     => SDLInput object was released.");
     }
 }
 
@@ -274,8 +170,6 @@ bool CSDLInput::UpdateDevice (SDL_Joystick *pDevice, void *pState, int StateSize
 
 void CSDLInput::UpdateKeyboard (void)
 {
-    // Update the device and get the latest real opened state
-    //m_KeyboardOpened = UpdateDevice (m_pKeyboard, m_KeyState, MAX_KEYS);
 }
 
 //******************************************************************************************************************************
@@ -302,6 +196,8 @@ void CSDLInput::UpdateJoystick (int Joystick)
 
 void CSDLInput::MakeKeyFriendlyNames (void)
 {
+    int c;
+    
     for (int Key = 0 ; Key < MAX_KEYS ; Key++)
     {
         switch (Key)
@@ -411,7 +307,15 @@ void CSDLInput::MakeKeyFriendlyNames (void)
             case KEYBOARD_RWIN          : strcpy (m_KeyFriendlyName[Key], "R-WIN"); break;
             case KEYBOARD_APPS          : strcpy (m_KeyFriendlyName[Key], "APP-MENU"); break;
 
-            default : strcpy (m_KeyFriendlyName[Key], m_KeyRealName[Key]); break;
+            default :
+                c = snprintf(m_KeyFriendlyName[Key], sizeof(m_KeyFriendlyName[Key]),
+                         "UNKNOWN KEY %d", Key);
+                if (c == -1)
+                    m_KeyFriendlyName[Key][sizeof(m_KeyFriendlyName[Key])-1] = '\0';
+                else
+                    m_KeyFriendlyName[Key][c] = '\0';
+                
+                break;
         }
     }
 }

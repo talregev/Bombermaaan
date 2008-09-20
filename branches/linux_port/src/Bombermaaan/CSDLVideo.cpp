@@ -37,7 +37,6 @@ static void AddDisplayMode (int width, int height, int depth, LPVOID lpContext);
 CSDLVideo::CSDLVideo (void)
 {
     m_hWnd = NULL;
-//    m_pDD = NULL;
     m_pBackBuffer = NULL;
     m_pPrimary = NULL;
     m_Width = 0;
@@ -89,7 +88,6 @@ bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
     m_Depth = Depth;
     m_FullScreen = FullScreen;
 
-    //m_pDD = NULL;
     m_pBackBuffer = NULL;
     m_pPrimary = NULL;
     m_ColorKey = 0;
@@ -171,46 +169,6 @@ bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
 		    // Get out
 		    return false;
 		}
-		    
-		// create primary and back buffer surface
-
-		// Create the primary surface
-		/* Uint32 rmask, gmask, bmask, amask;
-			
-		// SDL interprets each pixel as a 32-bit number, so our masks must depend
-		// on the endianness (byte order) of the machine
-		#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-			rmask = 0xff000000;
-			gmask = 0x00ff0000;
-			bmask = 0x0000ff00;
-			amask = 0x000000ff;
-		#else
-			rmask = 0x000000ff;
-			gmask = 0x0000ff00;
-			bmask = 0x00ff0000;
-			amask = 0xff000000;
-		#endif
-		
-		// Get the backbuffer
-		m_pBackBuffer = SDL_CreateRGBSurface(SDL_HWSURFACE, m_Width, m_Height,
-				m_Depth, rmask, gmask, bmask, amask);
-	
-		// If it failed
-		if (m_pBackBuffer == NULL)
-		{
-			// Log failure
-			theLog.WriteLine ("SDLVideo      => !!! Could not create backbuffer surface.");
-			theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
-	
-			// Get out
-			return false;
-		}
-		// If it was successful
-		else
-		{
-			// Log success
-			theLog.WriteLine ("SDLVideo      => Backbuffer surface was created.");
-		}*/
 	}
     // If desired mode is a fullscreen mode
     else
@@ -257,6 +215,7 @@ bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
 	}
 	
 	SDL_FreeSurface(icon);
+    SDL_FreeRW(rwIcon);
 					
     // Clear the back buffer surface
     Clear ();
@@ -330,20 +289,8 @@ void CSDLVideo::UpdateScreen (void)
 
     while (true)
     {
-        // If we are in windowed mode
-        if (!m_FullScreen)
-        {
-            // Update the primary surface with by blitting the backbuffer on the primary surface
-            //hRet = SDL_BlitSurface(m_pBackBuffer, &m_rcViewport, m_pPrimary, &m_rcScreen);
-            //hRet = SDL_BlitSurface(m_pBackBuffer, NULL, m_pPrimary, NULL);
-            hRet = SDL_Flip(m_pPrimary);
-        }
-        // If we are in fullscreen mode
-        else
-        {
-            // Update the primary surface by flipping backbuffer and primary surface
-            hRet = SDL_Flip(m_pPrimary);
-        }
+        // Update the primary surface by flipping backbuffer and primary surface
+        hRet = SDL_Flip(m_pPrimary);
 
 		// If it worked fine
         if (hRet == 0)
@@ -369,11 +316,7 @@ void CSDLVideo::UpdateScreen (void)
 
 void CSDLVideo::OnWindowMove ()
 {
-    // Update the window rect that is used when updating the screen
-    /* GetClientRect (m_hWnd, &m_rcViewport);
-    GetClientRect (m_hWnd, &m_rcScreen);
-    ClientToScreen (m_hWnd, (POINT*)&m_rcScreen.left);
-    ClientToScreen (m_hWnd, (POINT*)&m_rcScreen.right); */
+
 }
 
 //******************************************************************************************************************************
@@ -507,10 +450,6 @@ void CSDLVideo::DrawSprite (int PositionX,
 void CSDLVideo::Clear ()
 {
 	HRESULT hRet;
-    /* DDBLTFX blt = { 0 };
-    blt.dwSize = sizeof (blt);
-    blt.dwFillColor = 0;
-    m_pBackBuffer->Blt (NULL, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &blt); */
     hRet = SDL_FillRect(m_pPrimary, &m_rcViewport, 0);
 }
 
@@ -538,22 +477,6 @@ bool CSDLVideo::SetTransparentColor (int Red, int Green, int Blue)
     // Get the pixel format of the primary surface
     SDL_PixelFormat *pf = m_pPrimary->format;
 
-    // Compute how many bits for each RGB color component in a pixel data
-    /* WORD wRBitCount = GetNumberOfBits (pf->Rmask);
-    WORD wGBitCount = GetNumberOfBits (pf->Gmask);
-    WORD wBBitCount = GetNumberOfBits (pf->Bmask);
-	
-	printf("numbers of bits: %d %d %d\n", wRBitCount, wGBitCount, wBBitCount);
-
-    // Compute RGB color components to use for the color key 
-    // according to transparency color RGB components
-    DWORD r = (Red >> (8 - wRBitCount)) << (wGBitCount + wBBitCount);
-    DWORD g = (Green >> (8 - wGBitCount)) << wBBitCount;
-    DWORD b = (Blue >> (8 - wBBitCount));
-
-    // Compute the color key to apply to the surface
-    m_ColorKey = (r | g | b); */
-	
 	m_ColorKey = SDL_MapRGB(pf, Red, Green, Blue);
 
     // Everything went right
@@ -597,6 +520,7 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
     rwBitmap = SDL_RWFromMem(pData, DataSize);
     
 	ddsd = SDL_LoadBMP_RW(rwBitmap, 0);
+    SDL_FreeRW(rwBitmap);
 	
     // If it failed
     if (ddsd == NULL)
@@ -608,32 +532,34 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
         // Get out
         return false;
     }
+    
+    // check pixel format. If BitsPerPixel > 24 convert to 24 bit
+    if (ddsd->format->BitsPerPixel > 24)
+    {
+        SDL_PixelFormat newPixelFormat;
+        memcpy(&newPixelFormat, ddsd->format, sizeof(SDL_PixelFormat));
+        
+        newPixelFormat.BitsPerPixel = 24;
+        newPixelFormat.BytesPerPixel = 3;
+        
+        SDL_Surface *newDdsd = SDL_ConvertSurface(ddsd, &newPixelFormat, SDL_HWSURFACE|SDL_SRCCOLORKEY);
+        if (newDdsd == NULL)
+        {
+            // Log failure
+            theLog.WriteLine ("SDLVideo      => !!! Could not convert surface to 24 BitPerPixel format.");
+            theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
 
-	/*
-     * Palettized screen modes will have a default palette (a standard
-     * 8*8*4 colour cube), but if the image is palettized as well we can
-     * use that palette for a nicer colour matching
-     */
-    /* if (ddsd->format->palette && m_pPrimary->format->palette) {
-    	SDL_SetColors(m_pPrimary, ddsd->format->palette->colors, 0,
-                  ddsd->format->palette->ncolors);
-    } */
-	
-	
+            // Get out
+            return false;
+        }
+        
+        // delete old surface
+        SDL_FreeSurface(ddsd);
+        ddsd = newDdsd;
+    }
+
     // Blit the bitmap onto the SDLVideo surface
 	Surface.pSurface = ddsd;
-
-    // If it fails
-    /*if (SDL_BlitSurface(ddsd, NULL, Surface.pSurface, NULL) < 0)
-    {
-        // Log failure
-        theLog.WriteLine ("SDLVideo      => !!! Could not blit the bitmap to the SDLVideo surface.");
-        theLog.LogLastError ();
-
-        // Get out
-        return false;
-    }
-	*/
 
     //----------------------------------------------
     // Set the surface transparency color if needed
@@ -642,12 +568,9 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
     // If the sprite table uses transparency
     if (Transparent)
     {
-        // Set parameter to use when blitting the surface : use transparency
-        //Surface.BlitParameters = DDBLTFAST_WAIT | DDBLTFAST_SRCCOLORKEY;
-
         // Apply the color key to the surface
-		hRet = SDL_SetColorKey(ddsd, SDL_SRCCOLORKEY,
-			SDL_MapRGB(ddsd->format, 0x00, 0xff, 0x00));
+		hRet = SDL_SetColorKey(ddsd, SDL_SRCCOLORKEY|SDL_RLEACCEL,
+			SDL_MapRGBA(ddsd->format, 0x00, 0xff, 0x00, 0xff));
 		
         // If it failed
         if (hRet != 0)
@@ -660,12 +583,6 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
             return false;
         }
     }
-    else
-    {
-        // Set parameter to use when blitting the surface : no transparency
-        //Surface.BlitParameters = DDBLTFAST_WAIT | DDBLTFAST_NOCOLORKEY;
-    }
-
 
     //-----------------------
     // Store the new surface

@@ -81,6 +81,7 @@ void CAiBomber::Create (int Player)
     m_BlockWalk = 0;
 
     // Think next time
+    m_ComputerMode = COMPUTERMODE_THINK; // added due to a valgrind warning
     SetComputerMode (COMPUTERMODE_THINK);
 }
 
@@ -2020,7 +2021,7 @@ void CAiBomber::SetComputerMode (EComputerMode ComputerMode)
     if (ComputerMode == COMPUTERMODE_THINK)
     {
         // Stop commanding the bomber for a little time
-        //m_StopTimeLeft = 0.180f;
+        m_StopTimeLeft = 0.180f;
 
         switch (m_ComputerMode)
         {

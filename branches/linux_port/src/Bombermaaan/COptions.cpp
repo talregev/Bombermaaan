@@ -175,18 +175,14 @@ void COptions::Destroy (void)
                 delete [] m_LevelsData[i][j];
 
             delete [] m_LevelsData[i];
+            delete [] m_InitialBomberSkills[i];
+            delete [] m_NumberOfItemsInWalls[i];
         }
 
         delete [] m_LevelsData;
+        delete [] m_InitialBomberSkills;
+        delete [] m_NumberOfItemsInWalls;
         m_LevelsData = NULL;
-        
-        for (i = 0 ; i < m_NumberOfLevels ; i++) {
-            delete [] m_InitialBomberSkills[i];
-            delete [] m_NumberOfItemsInWalls[i];
-            m_InitialBomberSkills[i] = NULL;
-            m_NumberOfItemsInWalls[i] = NULL;
-        }
-
         m_NumberOfItemsInWalls = NULL;
         m_InitialBomberSkills = NULL;
 
