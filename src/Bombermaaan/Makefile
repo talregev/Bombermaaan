@@ -17,6 +17,9 @@ INCS =  -I./
 CXXINCS =  -I./
 BIN  = Bombermaaan
 CXXFLAGS = $(CXXINCS) $(SDL_CFLAGS) -Wall -O2
+ifeq ($(DEBUG),1)
+	CXXFLAGS += -g
+endif
 RM = rm -f
 
 .PHONY: all all-before all-after clean clean-custom

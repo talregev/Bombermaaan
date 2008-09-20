@@ -176,15 +176,12 @@ private:
     bool                    m_Ready;
     HINSTANCE               m_hInstance;    //!< Handle to the application instance (needed to use SDLInput)
     HWND                    m_hWnd;         //!< Handle to the window (needed to use SDLInput)
-    //LPSDLINPUT7          m_pDI;          //!< SDLInput object pointer
-  
-    //LPSDLINPUTDEVICE7    m_pKeyboard;                    //!< SDLInput device of the system keyboard
+        
     bool                    m_KeyboardOpened;               //!< Is the system keyboard _supposed_ to be opened?
     char                    m_KeyState [MAX_KEYS];          //!< State of each key on the system keyboard
-    char                    m_KeyRealName [MAX_KEYS][MAX_PATH]; //!< Real name (the one given by Windows) of each key on the system keyboard
     char                    m_KeyFriendlyName [MAX_KEYS][MAX_PATH]; //!< More friendly name for each key
 
-    vector<SJoystick*>      m_pJoysticks;   //!< All joystick SDLInput devices installed in Windows
+    vector<SJoystick*>      m_pJoysticks;   //!< All joystick SDLInput devices installed in the system
 
     bool                    UpdateDevice (SDL_Joystick *pDevice, void *pState, int StateSize);
     void                    MakeKeyFriendlyNames (void);
@@ -203,7 +200,6 @@ public:
     void                    UpdateKeyboard      (void);
     inline bool             GetKey              (int Key);
     inline void             SetKey              (int Key, bool KeySet);
-    inline const char*      GetKeyRealName      (int Key);
     inline const char*      GetKeyFriendlyName  (int Key);
     inline int              GetJoystickCount    (void);
     inline void             OpenJoystick        (int Joystick);
@@ -234,14 +230,6 @@ inline void CSDLInput::SetInstanceHandle (HINSTANCE hInstance)
 
 inline void CSDLInput::OpenKeyboard (void)
 {
-    // Try to acquire the keyboard
-    /* HRESULT hRet = m_pKeyboard->Acquire ();
-    
-    // Assert it's not an unexpected return value
-    ASSERT (hRet == DI_OK || hRet == S_FALSE || hRet == DIERR_OTHERAPPHASPRIO);
-
-    // Set the opened state according to the return value
-    m_KeyboardOpened = (hRet == DI_OK || hRet == S_FALSE); */
 	m_KeyboardOpened = true;
 }
 
@@ -253,10 +241,6 @@ inline bool CSDLInput::IsKeyboardOpened (void)
 
 inline void CSDLInput::CloseKeyboard (void)
 {
-    // Release access to keyboard
-    //m_pKeyboard->Unacquire ();
-
-    // We are sure the keyboard is not opened
     m_KeyboardOpened = false;
 }
 
@@ -283,15 +267,6 @@ inline void CSDLInput::SetKey (int Key, bool KeySet)
 	}
 	
 	return;
-}
-
-inline const char* CSDLInput::GetKeyRealName (int Key)
-{
-    // Assert the key number is correct
-    ASSERT (Key >= 0 && Key < MAX_KEYS);
-
-    // Return the name of the key
-    return m_KeyRealName[Key];
 }
 
 inline const char* CSDLInput::GetKeyFriendlyName (int Key)
