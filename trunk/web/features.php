@@ -69,7 +69,8 @@ _add( "Various power-ups", "At the beginning of a match your bomber can drop onl
 <img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;bomb &amp; foot&quot;\" /> Kick bombs: bombs start moving away when you walk towards them (<i>Image not available yet.</i>)<br />
 <img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;skull&quot;\" /> Contaminations: see the contaminations section below (<i>Image not available yet.</i>)<br />
 <img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;hand&quot;\" /> Throw bombs: pick up bombs, carry them and throw them away (<i>Image not available yet.</i>)<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;glove&quot;\" /> Punch bombs: punch a bomb that is lying in front of you (<i>Image not available yet.</i>)<br />" );
+<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;glove&quot;\" /> Punch bombs: punch a bomb that is lying in front of you (<i>Image not available yet.</i>)<br />
+<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;glove&quot;\" /> Remote fuse: remote fuse a bomb, available in experimental release 528 (<i>Image not available yet.</i>)<br />" );
 
 _add( "Various contaminations after skull item is taken", "The skull item influences the health of your bomber. It can result to: inverted controls, bombs with small flames, have no bombs to place, always dropping bombs, slow speed, fast speed, always move, bombs ticking shorter, and bombs ticking longer than usual. <i>Next version: </i>invisibility of a bomber, bomber is flameproof." );
 

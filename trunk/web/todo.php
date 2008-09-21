@@ -83,11 +83,12 @@ This list shows the ideas we had and don't want to forget.
 
 <tr>
 <td>Remote control lets bombs explode</td>
-<td>0 %</td>
-<td>Noticed</td>
-<td>A new item can be picked up by the bombers to let the players decide whether they want their bomb explode before the default time ends. This shouldn't work when the bomber is contaminated with the &quot;long bomb explode time&quot; and the "short bomb explode time&quot;.</td>
+<td>95 %</td>
+<td>In Progress</td>
+<td>A new item can be picked up by the bombers to let the players decide whether they want their bomb explode before the default time ends. This shouldn't work when the bomber is contaminated with the &quot;long bomb explode time&quot; and the "short bomb explode time&quot;.<br/>
+Feature is available in an experimental version 1.3.1.528, released 2008-09-21.</td>
 <td>2007-12-13</td>
-<td>2007-12-13</td>
+<td>2008-09-21</td>
 </tr>
 
 <tr>
