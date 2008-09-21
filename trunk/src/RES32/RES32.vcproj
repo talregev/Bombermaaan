@@ -292,6 +292,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IMAGE\arena_remote_bomb.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\Image\board_drawgame.bmp"
 				>
 			</File>

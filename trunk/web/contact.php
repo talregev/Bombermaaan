@@ -34,6 +34,10 @@ This requires that you are loggend in with your SourceForge.net account.
 <a href="https://sourceforge.net/tracker/?atid=563213&amp;group_id=81520&amp;func=browse">Feature requests</a>: List feature requests for Bombermaaan or submit your own.
 </p>
 
+<p>
+<a href="https://sourceforge.net/tracker/?atid=563212&amp;group_id=81520&amp;func=browse">Patches</a>: Submit and share your patches.
+</p>
+
 <h2>Forums</h2>
 
 <p>
