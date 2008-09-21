@@ -24,7 +24,7 @@
 ///////////////////
 // CBomberMove.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CBomberMove.h"
 #include "CBomber.h"
 #include "CArena.h"
@@ -177,6 +177,8 @@ void CBomberMove::Command (EBomberMove BomberMove)
                         case BOMBERMOVE_RIGHT :
                             // OK if you won't be blocked (Otherwise the player could be able to stop his bomber)
                             Can = (CanMove(BomberMove) != CANMOVE_CANNOT);
+                            break;
+                        default:
                             break;
                     }
 
@@ -701,6 +703,8 @@ bool CBomberMove::TryMove (float fPixels)
                         return true;
                     }
                     break;
+                default:
+                    break;
             }
         }
         // Turning
@@ -946,6 +950,8 @@ bool CBomberMove::TryMove (float fPixels)
                             m_Turning = TURNING_NOTTURNING;
                             continue;
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -1273,6 +1279,8 @@ ECanMove CBomberMove::CanMove (EBomberMove TestMove)
                         return CanMove;
                     }
                     break;
+                default:
+                    break;
             }
         }
         // Turning
@@ -1510,6 +1518,8 @@ ECanMove CBomberMove::CanMove (EBomberMove TestMove)
                             Turning = TURNING_NOTTURNING;
                             continue;
                     }
+                    break;
+                default:
                     break;
             }
         }
@@ -1811,6 +1821,8 @@ ETurning CBomberMove::TurnTest (EBomberMove TestMove)
                         return Turning;
                     }
                     break;
+                default:
+                    break;
             }
         }
         // Turning
@@ -2040,6 +2052,8 @@ ETurning CBomberMove::TurnTest (EBomberMove TestMove)
                             Turning = TURNING_NOTTURNING;
                             continue;
                     }
+                    break;
+                default:
                     break;
             }
         }

@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
 	Copyright (C) 2008 Jerome Bigot
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -33,7 +34,7 @@ class CArena;
 class CDisplay;
 class CArenaSnapshot;
 
-enum EBurnDirection;
+#include "CExplosion.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

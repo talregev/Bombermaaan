@@ -1,0 +1,50 @@
+# Makefile for Mingw32
+# Use CROSS environment variable to make a cross build
+# i.e. CROSS=1 make -f Makefile.win
+
+RESOURCE_RC = resource.rc
+RESOURCE_CROSS = resource_cross.rc
+
+ifdef CROSS
+CPP  = i386-mingw32-g++
+CC   = i386-mingw32-gcc
+WINDRES = i386-mingw32-windres
+RESOURCE = $(RESOURCE_CROSS)
+else
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RESOURCE = $(RESOURCE_RC)
+endif
+RES  = resource.res
+OBJ  = RES.o StdAfx.o $(RES)
+LINKOBJ  = RES.o StdAfx.o $(RES)
+LIBS = -shared
+INCS = 
+CXXINCS = 
+BIN  = Bombermaaan.dll
+CXXFLAGS = $(CXXINCS) -D__GNUWIN32__ -Wall -DWIN32 -DNDEBUG -D_WINDOWS -D_MBCS  
+CFLAGS = $(INCS) -D__GNUWIN32__ -Wall -DWIN32 -DNDEBUG -D_WINDOWS -D_MBCS  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN) $(RESOURCE_CROSS) *~
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+RES.o: RES.CPP
+	$(CPP) -c RES.CPP -o RES.o $(CXXFLAGS)
+
+StdAfx.o: StdAfx.cpp
+	$(CPP) -c StdAfx.cpp -o StdAfx.o $(CXXFLAGS)
+
+resource.res: $(RESOURCE)
+	$(WINDRES) -i $(RESOURCE) --input-format=rc -o resource.res -O coff 
+
+$(RESOURCE_CROSS): $(RESOURCE_RC)
+	sed 's/[\\][\\]/\//g' $(RESOURCE_RC) > $(RESOURCE_CROSS)

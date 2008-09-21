@@ -21,7 +21,7 @@
 
 
 /////////////////////////////////////////
-// CLog.cpp
+// CLog.h
 //
 // by Thibaut "Fury" Tollemer
 // 

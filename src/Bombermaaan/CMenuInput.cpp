@@ -23,7 +23,7 @@
 /////////////////////////
 // CMenuInput.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMenuInput.h"
 #include "CDisplay.h"
 #include "CInput.h"

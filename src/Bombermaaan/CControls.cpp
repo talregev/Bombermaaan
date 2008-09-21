@@ -24,7 +24,7 @@
 ///////////////////
 // CControls.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CControls.h"
 #include "CGame.h"
 #include "COptions.h"

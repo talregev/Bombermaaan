@@ -23,7 +23,7 @@
 ///////////////////
 // CScores.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CScores.h"
 #include "COptions.h"
 

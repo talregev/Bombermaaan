@@ -25,7 +25,7 @@
  *  \brief Pre-compiled file
  */
 
-#include "stdafx.h"
+#include "STDAFX.H"
 
 // TODO: Check if they are still used. I think they are replaced by CDebug class methods
 float g_Debug_GameSpeed;

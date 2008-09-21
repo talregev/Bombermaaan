@@ -23,7 +23,7 @@
 /////////////////////////
 // CMenuBomber.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMenuBomber.h"
 #include "CDisplay.h"
 #include "CInput.h"
@@ -163,6 +163,7 @@ void CMenuBomber::OnLeft (void)
         case BOMBERTYPE_OFF : m_pOptions->SetBomberType (m_CursorPlayer, BOMBERTYPE_COM); break;
         case BOMBERTYPE_MAN : m_pOptions->SetBomberType (m_CursorPlayer, BOMBERTYPE_OFF); break;
         case BOMBERTYPE_COM : m_pOptions->SetBomberType (m_CursorPlayer, BOMBERTYPE_MAN); break;
+        default:                                                                          break;
     }
 }
 
@@ -178,6 +179,7 @@ void CMenuBomber::OnRight (void)
         case BOMBERTYPE_OFF : m_pOptions->SetBomberType (m_CursorPlayer, BOMBERTYPE_MAN); break;
         case BOMBERTYPE_MAN : m_pOptions->SetBomberType (m_CursorPlayer, BOMBERTYPE_COM); break;
         case BOMBERTYPE_COM : m_pOptions->SetBomberType (m_CursorPlayer, BOMBERTYPE_OFF); break;
+        default:                                                                          break;
     }
 }
 
@@ -320,6 +322,8 @@ void CMenuBomber::OnDisplay (void)
 
                 break;
             }
+            default :
+                break;
         }
 
         // Draw the bomber head corresponding to the current player

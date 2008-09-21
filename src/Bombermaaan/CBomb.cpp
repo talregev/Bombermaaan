@@ -25,7 +25,7 @@
 ///////////////
 // CBomb.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CBomb.h"
 #include "CArena.h"
 #include "CItem.h"
@@ -356,26 +356,30 @@ void CBomb::ManageMove (float DeltaTime)
         while (true)
         {
             // Check if the bomb has to change its direction (initiated by a block) and whether it is centered
-            if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED &&
-                 (!(m_iX & (BLOCK_SIZE - 1)) && !(m_iY & (BLOCK_SIZE - 1))) && // Taken from below
-                 m_BombKick != BOMBKICK_NONE  // Bomb is still moving (could be reset by TryMove()
-               )
+            if (m_BombFly == BOMBFLY_NONE)
             {
-                EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
+                if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED &&
+                     (!(m_iX & (BLOCK_SIZE - 1)) && !(m_iY & (BLOCK_SIZE - 1))) && // Taken from below
+                     m_BombKick != BOMBKICK_NONE  // Bomb is still moving (could be reset by TryMove()
+                   )
+                {
+                    EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
 
-                EBombKick kickDirection = BOMBKICK_NONE;
+                    EBombKick kickDirection = BOMBKICK_NONE;
 
-                switch( action ) {
-                    case FLOORACTION_MOVEBOMB_RIGHT:    kickDirection = BOMBKICK_RIGHT; break;
-                    case FLOORACTION_MOVEBOMB_DOWN:     kickDirection = BOMBKICK_DOWN;  break;
-                    case FLOORACTION_MOVEBOMB_LEFT:     kickDirection = BOMBKICK_LEFT;  break;
-                    case FLOORACTION_MOVEBOMB_UP:       kickDirection = BOMBKICK_UP;    break;
+                    switch( action ) {
+                        case FLOORACTION_MOVEBOMB_RIGHT:    kickDirection = BOMBKICK_RIGHT; break;
+                        case FLOORACTION_MOVEBOMB_DOWN:     kickDirection = BOMBKICK_DOWN;  break;
+                        case FLOORACTION_MOVEBOMB_LEFT:     kickDirection = BOMBKICK_LEFT;  break;
+                        case FLOORACTION_MOVEBOMB_UP:       kickDirection = BOMBKICK_UP;    break;
+                        default:                                                            break;
+                    }
+
+                    ASSERT( kickDirection != BOMBKICK_NONE );
+
+                    // Set the new direction
+                    m_BombKick = kickDirection;
                 }
-
-                ASSERT( kickDirection != BOMBKICK_NONE );
-
-                // Set the new direction
-                m_BombKick = kickDirection;
             }
 
             if (fPixels >= 1.0f)
@@ -578,6 +582,8 @@ bool CBomb::TryMove (float fPixels)
                 return false;
             }
             break;
+        default:
+            break;
     }
 
     // Can't happen
@@ -622,23 +628,26 @@ bool CBomb::Update (float DeltaTime)
         // Kick this bomb by special blocks
         // Don't start the move if bomb exploded in the meanwhile (m_Dead)
         // Also don't start the move if the bomb is already in action (lifted, held, punched or flying)
-        if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && m_BombKick == BOMBKICK_NONE && !m_Dead && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB &&
-             !m_BeingLifted && !m_BeingHeld && !m_BeingPunched && m_BombFly == BOMBFLY_NONE
-           ) {
-            EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
-            
-            EBombKick kickDirection = BOMBKICK_NONE;
-            
-            switch( action ) {
-                case FLOORACTION_MOVEBOMB_RIGHT:    kickDirection = BOMBKICK_RIGHT; break;
-                case FLOORACTION_MOVEBOMB_DOWN:     kickDirection = BOMBKICK_DOWN;  break;
-                case FLOORACTION_MOVEBOMB_LEFT:     kickDirection = BOMBKICK_LEFT;  break;
-                case FLOORACTION_MOVEBOMB_UP:       kickDirection = BOMBKICK_UP;    break;
+        if (m_BombKick == BOMBKICK_NONE && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB &&
+            !m_Dead && !m_BeingLifted && !m_BeingHeld && !m_BeingPunched && m_BombFly == BOMBFLY_NONE)
+        {
+            if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) ) {
+                EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
+                
+                EBombKick kickDirection = BOMBKICK_NONE;
+                
+                switch( action ) {
+                    case FLOORACTION_MOVEBOMB_RIGHT:    kickDirection = BOMBKICK_RIGHT; break;
+                    case FLOORACTION_MOVEBOMB_DOWN:     kickDirection = BOMBKICK_DOWN;  break;
+                    case FLOORACTION_MOVEBOMB_LEFT:     kickDirection = BOMBKICK_LEFT;  break;
+                    case FLOORACTION_MOVEBOMB_UP:       kickDirection = BOMBKICK_UP;    break;
+                    default:                                                            break;
+                }
+                
+                ASSERT( kickDirection != BOMBKICK_NONE );
+                
+                StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
             }
-            
-            ASSERT( kickDirection != BOMBKICK_NONE );
-            
-            StartMoving( kickDirection, -1 ); // -1 is: not a bomber started the move
         }
 
         // Make the bomb move or fly if needed
@@ -902,6 +911,8 @@ void CBomb::ManageFlight (float DeltaTime)
 
                             break;
                         }
+                        default:
+                            break;
                     }
 
                     // We've set the block position, now set the correct pixel position.
@@ -1030,6 +1041,8 @@ void CBomb::ManageFlight (float DeltaTime)
 
                             break;
                         }
+                        default:
+                            break;
                     }
 
                     // We've set the block position, now set the correct pixel position.
@@ -1167,6 +1180,8 @@ void CBomb::ManageFlight (float DeltaTime)
 
                             break;
                         }
+                        default:
+                            break;
                     }
 
                     // We've set the block position, now set the correct pixel position.
@@ -1207,6 +1222,8 @@ void CBomb::ManageFlight (float DeltaTime)
             
                 break;
             }
+            default:
+                break;
         }
         
     }

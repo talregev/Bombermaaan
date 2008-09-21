@@ -25,14 +25,9 @@
 /////////////////////////
 // COptions.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "COptions.h"
 #include "CInput.h"
-#include "CItem.h"
-#include <iostream>
-#include <fstream>
-#include <string>
-
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -168,32 +163,30 @@ bool COptions::Create( bool useAppDataFolder, std::string dynamicDataFolder, std
 
 void COptions::Destroy (void)
 {
+    int i, j;
+    
     //-------------------------------
     // Free all level data and names
     //-------------------------------
 
     if (m_LevelsData != NULL)
     {
-        for (int i = 0 ; i < m_NumberOfLevels ; i++)
+        for (i = 0 ; i < m_NumberOfLevels ; i++)
         {
-            for (int j = 0 ; j < ARENA_WIDTH ; j++)
+            for (j = 0 ; j < ARENA_WIDTH ; j++)
                 delete [] m_LevelsData[i][j];
 
             delete [] m_LevelsData[i];
+            delete [] m_InitialBomberSkills[i];
+            delete [] m_NumberOfItemsInWalls[i];
         }
 
         delete [] m_LevelsData;
+        delete [] m_InitialBomberSkills;
+        delete [] m_NumberOfItemsInWalls;
         m_LevelsData = NULL;
-        
-		for (int i = 0 ; i < m_NumberOfLevels ; i++) {
-			delete [] m_InitialBomberSkills[i];
-			delete [] m_NumberOfItemsInWalls[i];
-			m_InitialBomberSkills[i] = NULL;
-			m_NumberOfItemsInWalls[i] = NULL;
-		}
-
-		m_NumberOfItemsInWalls = NULL;
-		m_InitialBomberSkills = NULL;
+        m_NumberOfItemsInWalls = NULL;
+        m_InitialBomberSkills = NULL;
 
         m_NumberOfLevels = 0;
     }
@@ -376,12 +369,16 @@ void COptions::AllocateLevels (int NumberOfLevels)
 
 bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder )
 {
-    FILE* File;
     long FindHandle;
     _finddata_t FindData;
     m_NumberOfLevels = 0;
 
-
+#ifndef WIN32
+    // initialise OUR data structure
+    FindData.name = NULL;
+    FindData.suffix = NULL;
+#endif
+            
     //-------------------------------------------
     // Set the path where the level files are stored
     // (in the program files folder)
@@ -389,12 +386,25 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
     
     std::string levelFilePath_pgmFolder;
     levelFilePath_pgmFolder = pgmFolder;
-    levelFilePath_pgmFolder.append( "\\Levels\\" );
-
+    if (pgmFolder.length() >= 1)
+    {
+        char delim = pgmFolder.c_str()[pgmFolder.length()-1];
+        if (delim != '\\' && delim != '/')
+#ifdef WIN32
+            levelFilePath_pgmFolder.append("\\");
+#else
+            levelFilePath_pgmFolder.append("/");
+#endif
+    }
+#ifdef WIN32
+    levelFilePath_pgmFolder.append( "Levels\\" );
+#else
+    levelFilePath_pgmFolder.append( "Levels/" );
+#endif
+    
     std::string levelFilePath_pgmFolderMask;
     levelFilePath_pgmFolderMask = levelFilePath_pgmFolder;
-    levelFilePath_pgmFolderMask.append( "*.txt" );
-
+    levelFilePath_pgmFolderMask.append( "*.TXT" );
 
     //-------------------------------------------
     // Determine number of level files available
@@ -434,11 +444,15 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
 
         std::string levelFilePath_dynamicDataFolder;
         levelFilePath_dynamicDataFolder = dynamicDataFolder;
+#ifdef WIN32
         levelFilePath_dynamicDataFolder.append( "Levels\\" );
+#else
+        levelFilePath_dynamicDataFolder.append( "Levels/" );
+#endif
 
         std::string levelFilePath_dynamicDataFolderMask;
         levelFilePath_dynamicDataFolderMask = levelFilePath_dynamicDataFolder;
-        levelFilePath_dynamicDataFolderMask.append( "*.txt" );
+        levelFilePath_dynamicDataFolderMask.append( "*.TXT" );
 
 
         //-------------------------------------------
@@ -505,21 +519,21 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
     
     for( unsigned int CurrentLevel = 0; CurrentLevel < levelFileNames_short.size(); CurrentLevel++ ) {
 
-        // theLog.WriteLine ("Options         => Loading level file %s...", levelFileNames_full.at(CurrentLevel).c_str() );
+        //theLog.WriteLine ("Options         => Loading level file %s...", levelFileNames_full.at(CurrentLevel).c_str() );
 
         // Open the existing level file for reading
-        File = fopen( levelFileNames_full.at(CurrentLevel).c_str(), "rt" );
+        ifstream in;
+        in.open( levelFileNames_full.at(CurrentLevel).c_str(), ios_base::in );
 
         // If it failed
-        if (File == NULL)
+        if (!in.is_open())
         {
+            theLog.WriteLine ("Options         => Loading level file %s failed.", levelFileNames_full.at(CurrentLevel).c_str() );
             // Stop loading levels
             break;
         }
 
         string s;
-        ifstream in;
-        in.open( levelFileNames_full.at(CurrentLevel).c_str(), ios_base::in );
         getline( in, s );
         int LevelVersion;
         if ( sscanf( s.c_str(), "; Bombermaaan level file version=%d\n", &LevelVersion ) == 0 ) {
@@ -529,7 +543,7 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
         switch ( LevelVersion ) {
 
             case 1:
-                if (! LoadLevel_Version1( File, CurrentLevel ) ) {
+                if (!LoadLevel_Version1( in, CurrentLevel ) ) {
                     ErrorOccurred = true;
                 }
                 break;
@@ -548,7 +562,7 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
         }
 
 		// Close the level file
-        fclose(File);
+        in.close();
     
         // If there wasn't any problem
         if (!ErrorOccurred)
@@ -578,27 +592,40 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
+bool COptions::LoadLevel_Version1( ifstream& File, int CurrentLevel ) {
 
     bool StopReadingFile = false;
+    filebuf *pbuf = File.rdbuf();
+    
+    // go to the beginning
+    pbuf->pubseekpos (0,ios::in);
 
     // For each line of characters to read
     for (int y = 0 ; y < ARENA_HEIGHT ; y++)
     {
         // Buffer where we'll store one line of characters. We'll read the two EOL characters as well.
-        char Line[ARENA_WIDTH + 1];
+        string Line;
+        int ReadBytes;
     
         // Read one line of characters (including the EOL chars)
-        int ReadBytes = fread(Line, sizeof(char), (ARENA_WIDTH + 1), File);
+        if (File.good())
+        {
+            getline( File, Line );
+            ReadBytes = Line.size();
+        }
+        else
+        {
+            ReadBytes = 0;
+        }
 
-        // Check if all the characters were read and that the two last bytes are EOL characters
-        if (ReadBytes < ARENA_WIDTH + 1 || Line[ARENA_WIDTH] != 10)
+        // Check if all the characters were read
+        if (ReadBytes < ARENA_WIDTH)
         {
             // Log there is a problem
-            theLog.WriteLine ("Options         => !!! Level file is incorrect (%d, %d, %d).", ReadBytes, Line[ARENA_WIDTH], Line[ARENA_WIDTH + 1]);
+            theLog.WriteLine ("Options         => !!! Level file is incorrect (Line: %d, Length: %d).", y+1, ReadBytes);
         
             // Close the level file
-            fclose(File);
+            File.close();
 
             // Stop loading levels
             StopReadingFile = true;
@@ -609,7 +636,7 @@ bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
         for (int x = 0 ; x < ARENA_WIDTH ; x++)
         {
             // According to the character value, store the corresponding block type in the current position and level
-            switch(Line[x])
+            switch(Line.c_str()[x])
             {
                 case '*' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_HARDWALL;    break;
                 case '-' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_RANDOM;      break;
@@ -629,7 +656,7 @@ bool COptions::LoadLevel_Version1( FILE* File, int CurrentLevel ) {
                     theLog.WriteLine ("Options         => !!! Level file is incorrect (unknown character %c).", Line[x]);
                 
                     // Close the level file
-                    fclose(File);
+                    File.close();
 
                     // Stop loading levels
                     StopReadingFile = true;
@@ -790,7 +817,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         }
 
         int pos = s.find( "=" );
-        if ( pos == -1 || pos + ARENA_WIDTH + 1 != s.length() ) {
+        if ( pos == -1 || pos + ARENA_WIDTH + 1 != (int)s.length() ) {
             theLog.WriteLine ("Options         => !!! Level file is incorrect (%d, %d, %d).", pos, y, s.length() );
             return false;
         }

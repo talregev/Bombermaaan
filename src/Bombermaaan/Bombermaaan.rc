@@ -1,6 +1,6 @@
 //Microsoft Developer Studio generated resource script.
 //
-#include "resource.h"
+#include "RESOURCE.H"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ BEGIN
       VALUE "FileVersion", "1.3.2.528\0"
       VALUE "FileDescription", "Bombermaaan executable file\0"
       VALUE "InternalName", "Bombermaaan.exe\0"
-      VALUE "LegalCopyright", "Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold, Jerome Bigot\0"
+      VALUE "LegalCopyright", "Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold, Jerome Bigot, Markus Drescher\0"
       VALUE "OriginalFilename", "Bombermaaan.exe\0"
       VALUE "ProductName", "Bombermaaan\0"
       VALUE "ProductVersion", "1.3.2.528\0"
@@ -96,7 +96,7 @@ BEGIN
       VALUE "FileVersion", "1.3.2.528\0"
       VALUE "FileDescription", "Bombermaaan ausführbare Datei\0"
       VALUE "InternalName", "Bombermaaan.exe\0"
-      VALUE "LegalCopyright", "Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold, Jerome Bigot\0"
+      VALUE "LegalCopyright", "Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold, Jerome Bigot, Markus Drescher\0"
       VALUE "OriginalFilename", "Bombermaaan.exe\0"
       VALUE "ProductName", "Bombermaaan\0"
       VALUE "ProductVersion", "1.3.2.528\0"
