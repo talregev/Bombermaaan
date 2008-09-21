@@ -75,8 +75,8 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #endif
 
 // Bombermaaan version
-#define BOMBERMAAAN_VERSION_STRING      "1.3.1"
-#define BOMBERMAAAN_BUILD_STRING        "476"
+#define BOMBERMAAAN_VERSION_STRING      "1.3.2"
+#define BOMBERMAAAN_BUILD_STRING        "528"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -180,6 +180,7 @@ bool CGame::Create (const char* pCommandLine)
             "Bombermaaan\n"
             "Copyright (C) 2000-2002, 2007 Thibaut Tollemer\n"
             "Copyright (C) 2007, 2008 Bernd Arnold\n"
+            "Copyright (C) 2008 Jerome Bigot\n"
             "\n"
             "Bombermaaan is free software: you can redistribute it and/or modify\n"
             "it under the terms of the GNU General Public License as published by\n"
