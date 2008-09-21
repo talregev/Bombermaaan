@@ -46,9 +46,8 @@ Compile instructions
 </p>
 
 <ul>
-<li>Update release date/build strings in CGame.cpp</li>
-<li>Update version strings in file src/Bombermaaan/Bombermaaan.rc</li>
-<li>Update <code>BOMBERMAAAN_WINDOW_TITLE</code> string in CGame.cpp</li>
+<li>Update version strings in file src/Bombermaaan/Bombermaaan.rc (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/Bombermaaan.rc?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
+<li>Update <code>BOMBERMAAAN_VERSION_STRING</code> and <code>BOMBERMAAAN_BUILD_STRING</code> in CGame.cpp (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/CGame.cpp?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
 <li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in CGame.cpp to comment</li>
 <li>Disable the console window (<code>#define ENABLE_CONSOLE</code> in CGame.cpp)</li>
 <li>Select configuration &quot;Release&quot; in the solution</li>
@@ -85,6 +84,7 @@ Publishing
 <ul>
 <li>Upload the zip file to the SourceForge.net FTP server</li>
 <li>Add the file in the file release system</li>
+<li>Update download page file web/download.php</li>
 </ul>
 
 
