@@ -23,7 +23,7 @@
 ///////////////////
 // CElement.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CElement.h"
 #include "CArenaSnapshot.h"
 

@@ -23,7 +23,7 @@
 ///////////////////
 // CAiManager.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CAiManager.h"
 #include "CAiBomber.h"
 #include "COptions.h"

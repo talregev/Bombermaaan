@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /I "../DXSDK/Include" /I "../STL" /I "../FMOD" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /W3 /GX /O2 /I "../DXSDK/Include" /I "../STL" /I "../SDL/include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Yu"STDAFX.H" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x40c /d "NDEBUG"
@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 ws2_32.lib fmodvc.lib ddraw.lib dxguid.lib dinput.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /profile /machine:I386 /libpath:"../DXSDK/Lib" /libpath:"../FMOD"
+# ADD LINK32 ws2_32.lib sdl.lib sdl_mixer.lib ddraw.lib dxguid.lib dinput.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /profile /machine:I386 /libpath:"../DXSDK/Lib" /libpath:"../SDL/lib"
 
 !ELSEIF  "$(CFG)" == "Bombermaaan - Win32 Debug"
 
@@ -69,8 +69,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /I "../DXSDK/Include" /I "../STL" /I "../FMOD" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Yu"stdafx.h" /FD /GZ /c
-# SUBTRACT CPP /Fr
+# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /I "../DXSDK/Include" /I "../SDL/Include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Yu"STDAFX.H" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x40c /d "_DEBUG"
@@ -80,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ws2_32.lib fmodvc.lib ddraw.lib dxguid.lib dinput.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /profile /map /debug /machine:I386 /libpath:"../DXSDK/Lib" /libpath:"../FMOD"
+# ADD LINK32 ws2_32.lib sdl.lib sdl_mixer.lib ddraw.lib dxguid.lib dinput.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /profile /map /debug /machine:I386 /libpath:"../DXSDK/Lib" /libpath:"../SDL/lib"
 
 !ENDIF 
 
@@ -550,16 +549,16 @@ SOURCE=.\doc.txt
 # End Source File
 # Begin Source File
 
-SOURCE=.\resource.h
+SOURCE=.\RESOURCE.H
 # End Source File
 # Begin Source File
 
-SOURCE=.\stdafx.cpp
-# ADD CPP /Yc"stdafx.h"
+SOURCE=.\STDAFX.CPP
+# ADD CPP /Yc"STDAFX.H"
 # End Source File
 # Begin Source File
 
-SOURCE=.\stdafx.h
+SOURCE=.\STDAFX.H
 # End Source File
 # Begin Source File
 

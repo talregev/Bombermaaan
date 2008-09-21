@@ -47,21 +47,7 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-//! Describes how the game should currently be updated
-enum EGameMode
-{
-    GAMEMODE_NONE,              //!< No mode! Nothing to update
-    GAMEMODE_TITLE,             //!< Title screen (with the main menu)
-    GAMEMODE_DEMO,              //!< Demo screen, showing a match between computer players.
-    GAMEMODE_CONTROLS,          //!< Controls screen where controls can be customized
-    GAMEMODE_MENU,              //!< Menu screen managing all the menu subscreens which allow to setup and start a new match
-    GAMEMODE_MATCH,             //!< Match screen : arena and board update, bombers are playing...
-    GAMEMODE_WINNER,            //!< Winner screen : display match winner & stuff about scores, update board...
-    GAMEMODE_DRAWGAME,          //!< Draw game screen : simple animated screen, update board...
-    GAMEMODE_VICTORY,           //!< Victory screen : display battle winner...
-    GAMEMODE_GREETS,            //!< Greets screen where the credits are shown
-    GAMEMODE_EXIT               //!< In this mode the game will shutdown and exit to windows
-};
+// enum EGameMode is now in STDAFX.H
 
 enum ENetworkMode
 {
@@ -110,6 +96,10 @@ private:
     CControls       m_Controls;             //!< Controls screen object
     CDemo           m_Demo;                 //!< Demo screen object in which we show a match betweeen computer players.
     CMenuYesNo      m_MenuYesNo;            //!< Yes/No message box object
+        
+#ifndef WIN32
+    string          m_WindowTitle;
+#endif
 
     void            OnActivateApp  (WPARAM wParam, LPARAM lParam);
     void            OnMove         (WPARAM wParam, LPARAM lParam);
@@ -117,6 +107,11 @@ private:
     void            OnKeyUp        (WPARAM wParam, LPARAM lParam);
     void            OnPaint        (WPARAM wParam, LPARAM lParam);
     bool            OnSysCommand   (WPARAM wParam, LPARAM lParam);
+    void            OnSize         (WPARAM wParam, LPARAM lParam);
+#ifndef WIN32
+    void            OnJoystickAxis (WPARAM wParam, LPARAM lParam);             // SDL_JOYAXISMOTION
+    void            OnJoystickButton (WPARAM wParam, LPARAM lParam);       // SDL_JOYBUTTONDOWN/-UP
+#endif
     void            OnWindowActive (void);
     void            StartGameMode (EGameMode GameMode);
     void            FinishGameMode (void);
@@ -124,12 +119,23 @@ private:
 
 public:
 
+#ifdef WIN32
                     CGame (HINSTANCE hInstance, const char* pCommandLine);
+#else
+					CGame (HINSTANCE hInstance, char **pCommandLine);
+#endif
+
     virtual         ~CGame (void);
-    bool            Create (const char* pCommandLine);
+#ifdef WIN32
+	bool            Create (const char* pCommandLine);
+#else
+	bool            Create (char **pCommandLine, int pCommandLineCount);
+#endif
+
     void            Destroy (void);
     inline void     SwitchToGameMode (EGameMode GameMode);
 };
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

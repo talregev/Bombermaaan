@@ -24,7 +24,7 @@
 ///////////////////
 // CMatch.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMatch.h"
 #include "CDisplay.h"
 #include "CInput.h"
@@ -116,7 +116,11 @@ void CMatch::Create (void)
             m_pOptions->SetBomberType(0, BOMBERTYPE_MAN);
             m_pOptions->SetBomberType(1, BOMBERTYPE_NET);
 
+#ifdef WIN32
             DWORD TickCount = GetTickCount();
+#else
+            DWORD TickCount = time(NULL);
+#endif
             send(ClientSocket, (const char*)&TickCount, sizeof(DWORD), 0);
             SEED_RANDOM(TickCount);
         }
@@ -465,9 +469,13 @@ void CMatch::ProcessPlayerCommands (void)
             {
                 // Receive client command chunk
                 int Received = recv(ClientSocket, (char*)&CommandChunk, sizeof(CommandChunk), 0);
+#ifdef WIN32
                 if (Received == SOCKET_ERROR)
                     theConsole.Write("recv error : %d\n", WSAGetLastError());
-
+#else
+                if (Received == -1)
+                    theConsole.Write("recv error : %d\n", Received);
+#endif
                 // Scan all the players
                 for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
                 {
@@ -492,24 +500,39 @@ void CMatch::ProcessPlayerCommands (void)
                 // Make a snapshot of the arena and send it to the client
                 m_Arena.WriteSnapshot(Snapshot);
                 int Sent = send(ClientSocket, (const char*)&Snapshot, sizeof(Snapshot), 0);
+#ifdef WIN32
                 if (Sent == SOCKET_ERROR)
                     theConsole.Write("sent error : %d\n", WSAGetLastError());
+#else
+                if (Sent == -1)
+                    theConsole.Write("sent error : %d\n", Sent);
+#endif
 
             }
             else if (NetworkMode == NETWORKMODE_CLIENT)
             {
                 // Send client command chunk to the server
                 int Sent = send(MySocket, (const char*)&CommandChunk, sizeof(CommandChunk), 0);
+#ifdef WIN32
                 if (Sent == SOCKET_ERROR)
                     theConsole.Write("sent error : %d\n", WSAGetLastError());
+#else
+                if (Sent == -1)
+                    theConsole.Write("sent error : %d\n", Sent);
+#endif
                 
                 // Command chunk was sent, reset it.
                 CommandChunk.Reset();
 
                 // Receive and apply the arena snapshot from the server
                 int Received = recv(MySocket, (char*)&Snapshot, sizeof(Snapshot), 0);
+#ifdef WIN32
                 if (Received == SOCKET_ERROR)
                     theConsole.Write("recv error : %d\n", WSAGetLastError());
+#else
+                if (Received == -1)
+                    theConsole.Write("recv error : %d\n", Received);
+#endif
 
                 m_Arena.ReadSnapshot(Snapshot);
             }

@@ -18,6 +18,8 @@ branches/only_ai_alive_1964071/src/RES32/Release
 trunk/doxygen/output/html
 trunk/installer/output
 trunk/installer/packages
+trunk/src/.tm_project.cache
+trunk/src/.tm_project2.cache
 trunk/src/Bombermaaan/Debug
 trunk/src/Bombermaaan/Release
 trunk/src/RES/Debug

@@ -1,0 +1,25 @@
+Package: bombermaaan-data
+Version: 1.3.2-1
+Architecture: ARCHITECTURE
+Maintainer: Markus Drescher <markus.drescher@ira.uka.de>
+Installed-Size: 4664
+Depends: libc6 (>= 2.7-1), libgcc1 (>= 1:4.1.1-21)
+Suggests: bombermaaan (>= 1.3.2-1)
+Section: games
+Priority: optional
+Description: A Bomberman clone.
+ 
+ Bombermaaan is a classic bomberman game. Thibaut Tollemer started this 
+ project on July 2000. He's been using this project as a demo of what he 
+ could do as a game programmer, in order to be hired.
+ 
+ As he was hired, he published the source code and created a project 
+ space on sourceforge.net on May 2003. Unfortunately, he doesn't have so 
+ much time for programming new features now. Therefore, Bernd Arnold is 
+ going to enhance Bombermaaan and develop new features in his spare 
+ time. 
+ He joined the project in the end of 2007.
+ 
+ Homepage: http://bombermaaan.sourceforge.net
+ 
+ This is the data package.

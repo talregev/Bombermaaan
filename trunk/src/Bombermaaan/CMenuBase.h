@@ -26,8 +26,6 @@
 #ifndef __CMENUBASE_H__
 #define __CMENUBASE_H__
 
-enum EMenuAction;
-
 class CDisplay;
 class CInput;
 class CSound;

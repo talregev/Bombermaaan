@@ -34,8 +34,6 @@ class CTimer;
 class CScores;
 class CSound;
 
-enum EGameMode;
-
 #include "CModeScreen.h"
 
 //******************************************************************************************************************************

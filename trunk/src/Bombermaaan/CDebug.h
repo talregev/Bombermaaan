@@ -55,7 +55,7 @@ public:
 	inline void SetMatch(CMatch* pMatch);
     void Create();
     void Destroy();
-    void HandleKey (DWORD VirtualKeyCode);
+    void HandleKey (DWORD VirtualKeyCode, DWORD Modifier);
     inline bool CanBombersDie();
     inline bool CanBombersBeSick();
     inline bool CanBombersKick();
@@ -65,7 +65,7 @@ private:
     
     CTimer* m_pTimer;
     CGame* m_pGame;
-	CMatch* m_pMatch;
+    CMatch* m_pMatch;
     float m_GameSpeed;
     bool m_CanBombersDie;
     bool m_CanBombersBeSick;

@@ -23,7 +23,7 @@
 /////////////////////////
 // CPauseMessage.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CPauseMessage.h"
 #include "CSound.h"
 #include "CScroller.h"

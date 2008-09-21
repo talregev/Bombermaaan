@@ -23,7 +23,7 @@
 ///////////////////
 // CModeScreen.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CModeScreen.h"
 #include "CDisplay.h"
 #include "CInput.h"

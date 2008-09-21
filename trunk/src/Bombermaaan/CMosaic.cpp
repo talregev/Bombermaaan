@@ -23,7 +23,7 @@
 /////////////////////////
 // CMosaic.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CMosaic.h"
 #include "CDisplay.h"
 

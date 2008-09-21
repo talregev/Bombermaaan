@@ -23,7 +23,7 @@
 /////////////////////////
 // CRandomMosaic.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CRandomMosaic.h"
 #include "CMosaic.h"
 

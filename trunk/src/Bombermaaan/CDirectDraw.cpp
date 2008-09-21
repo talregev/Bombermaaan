@@ -23,13 +23,11 @@
 ///////////////////
 // CDirectDraw.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CDirectDraw.h"
-#include <ddraw.h>
 
-
-const char* GetDirectDrawError (HRESULT hRet);
-HRESULT WINAPI AddDisplayMode (LPDDSURFACEDESC2 lpDDSurfaceDesc, LPVOID lpContext);
+static const char* GetDirectDrawError (HRESULT hRet);
+static HRESULT WINAPI AddDisplayMode (LPDDSURFACEDESC2 lpDDSurfaceDesc, LPVOID lpContext);
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -945,7 +943,7 @@ void CDirectDraw::FreeSprites (void)
     m_SpriteTables.clear();
     
     // Scan all the surfaces
-    for (int i = 0 ; i < m_Surfaces.size() ; i++)
+    for (unsigned int i = 0 ; i < m_Surfaces.size() ; i++)
     {
         // If the surface exists
         if (m_Surfaces[i].pSurface != NULL)
@@ -1011,7 +1009,7 @@ void CDirectDraw::UpdateAll (void)
 bool CDirectDraw::IsModeAvailable (int Width, int Height, int Depth)
 {
     // Scan all available display modes
-    for (int i = 0 ; i < m_AvailableDisplayModes.size() ; i++)
+    for (unsigned int i = 0 ; i < m_AvailableDisplayModes.size() ; i++)
     {
         // If this is the display mode we are looking for
         if (m_AvailableDisplayModes[i].Width == Width &&

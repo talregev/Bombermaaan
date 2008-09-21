@@ -28,7 +28,11 @@
 
 #include "COptions.h"
 
+#ifdef WIN32
 class CDirectInput;
+#else
+class CSDLInput;
+#endif
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -54,7 +58,11 @@ class CPlayerInput
 {
 private:
 
-    CDirectInput*       m_pDirectInput;
+#ifdef WIN32
+	CDirectInput*       m_pDirectInput;
+#else
+	CSDLInput*			m_pDirectInput;
+#endif
     COptions*           m_pOptions;
     int                 m_PlayerInput;
     char                m_Name [MAX_PLAYER_INPUT_NAME_LENGTH];
@@ -66,7 +74,13 @@ public:
                         
                         CPlayerInput();
                         ~CPlayerInput();
+#ifdef WIN32
+    inline CDirectInput *GetDirectInput (void);
     inline void         SetDirectInput (CDirectInput* pDirectInput);
+#else
+    inline CSDLInput   *GetDirectInput (void);
+    inline void         SetDirectInput (CSDLInput* pDirectInput);
+#endif
     inline void         SetOptions (COptions* pOptions);
     void                Create (int PlayerInput);
     void                Destroy (void);
@@ -90,7 +104,20 @@ public:
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+#ifdef WIN32
+inline CDirectInput* CPlayerInput::GetDirectInput (void)
+#else
+inline CSDLInput* CPlayerInput::GetDirectInput (void)
+#endif
+{
+    return m_pDirectInput;
+}
+
+#ifdef WIN32
 inline void CPlayerInput::SetDirectInput (CDirectInput* pDirectInput)
+#else
+inline void CPlayerInput::SetDirectInput (CSDLInput* pDirectInput)
+#endif
 {
     m_pDirectInput = pDirectInput;
 }

@@ -24,7 +24,7 @@
 ////////////////
 // CFloor.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CFloor.h"         // CFloor
 #include "CDisplay.h"   // CDisplay
 #include "CArena.h"         // CArena and arena values
@@ -161,6 +161,7 @@ void CFloor::Display (void)
             case FLOORACTION_MOVEBOMB_DOWN:     Sprite = ARENA_FLOOR_ARROW_DOWN;    break;
             case FLOORACTION_MOVEBOMB_LEFT:     Sprite = ARENA_FLOOR_ARROW_LEFT;    break;
             case FLOORACTION_MOVEBOMB_UP:       Sprite = ARENA_FLOOR_ARROW_UP;      break;
+            default: break;
         }
 
         if ( Sprite != -1 ) {

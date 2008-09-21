@@ -26,8 +26,6 @@
 #ifndef __CMODESCREEN_H__
 #define __CMODESCREEN_H__
 
-enum EGameMode;
-
 class CDisplay;
 class CInput;
 class COptions;

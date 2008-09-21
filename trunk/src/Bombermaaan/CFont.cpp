@@ -23,7 +23,7 @@
 /////////////////////////
 // CFont.cpp
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CFont.h"
 #include "CDisplay.h"
 

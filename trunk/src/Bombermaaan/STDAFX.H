@@ -25,28 +25,39 @@
 #define __STDAFX_H__
 
 /**
- *  \file stdafx.h
+ *  \file STDAFX.H
  *  \brief Pre-compiled header file
  */
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <math.h>
+#include <assert.h>
+
+#ifdef WIN32
 #include <winsock2.h>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <windowsx.h>  // GetWindowStyle(), GetWindowExStyle()
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
 #include <io.h>
+#else
+#include "winreplace.h"
+#include <errno.h>
+#include <arpa/inet.h>
+#include <sys/io.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
 
-//#include <string>
+#include <string>
 //#include <slist>
 //#include <set>
 #include <vector>
 #include <list>
-#include <deque>
 #include <stack>
 #include <queue>
 #include <map>
@@ -76,17 +87,6 @@ using namespace std;
 #define SEED_RANDOM(seed)     srand(seed)
 #define RANDOM(max)       (rand() % max)
 
-#include "CLog.h"
-#include "CConsole.h"
-#include "CDebug.h"
-#include "CTimer.h"
-#ifdef USE_32_PIXELS_PER_BLOCK
-#include "..\RES32\resource.h"
-#else
-#include "..\RES\resource.h"
-#endif
-#include "resource.h"
-
 #define PLAYER_WHITE                    0       //!< Player number of the white bomber
 #define PLAYER_BLACK                    1       //!< Player number of the black bomber
 #define PLAYER_RED                      2       //!< Player number of the red bomber
@@ -106,5 +106,50 @@ using namespace std;
 #endif
 #define VIEW_WIDTH                      (ARENA_WIDTH * BLOCK_SIZE)          // Size of the game view from left to right in pixels (size of client area in windowed mode)
 #define VIEW_HEIGHT                     (26 + ARENA_HEIGHT * BLOCK_SIZE)    // Size of the game view from top to bottom in pixels (size of client area in windowed mode)
+
+#include "CLog.h"
+#include "CConsole.h"
+#include "CDebug.h"
+#include "CTimer.h"
+
+#if defined(WIN32) && !defined(CROSS)
+#  ifdef USE_32_PIXELS_PER_BLOCK
+#    include "..\RES32\resource.h"
+#  else
+#    include "..\RES\resource.h"
+#  endif
+#else
+#  ifdef USE_32_PIXELS_PER_BLOCK
+#    include "../RES32/resource.h"
+#  else
+#    include "../RES/resource.h"
+#  endif
+#endif
+#include "RESOURCE.H"
+
+// Originally taken from CGame.h
+//! Describes how the game should currently be updated
+enum EGameMode
+{
+    GAMEMODE_NONE,              //!< No mode! Nothing to update
+    GAMEMODE_TITLE,             //!< Title screen (with the main menu)
+    GAMEMODE_DEMO,              //!< Demo screen, showing a match between computer players.
+    GAMEMODE_CONTROLS,          //!< Controls screen where controls can be customized
+    GAMEMODE_MENU,              //!< Menu screen managing all the menu subscreens which allow to setup and start a new match
+    GAMEMODE_MATCH,             //!< Match screen : arena and board update, bombers are playing...
+    GAMEMODE_WINNER,            //!< Winner screen : display match winner & stuff about scores, update board...
+    GAMEMODE_DRAWGAME,          //!< Draw game screen : simple animated screen, update board...
+    GAMEMODE_VICTORY,           //!< Victory screen : display battle winner...
+    GAMEMODE_GREETS,            //!< Greets screen where the credits are shown
+    GAMEMODE_EXIT               //!< In this mode the game will shutdown and exit to windows
+};
+
+// Originally taken from CMenu.h
+enum EMenuAction
+{
+    MENUACTION_NONE,        //!< Nothing to do, stay in current menu mode and game mode
+    MENUACTION_PREVIOUS,    //!< Go to previous menu mode or to game title screen if there is no previous menu mode
+    MENUACTION_NEXT,        //!< Go to next menu mode or to game match screen if there is no next menu mode
+};
 
 #endif

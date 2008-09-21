@@ -53,7 +53,7 @@
 // bug contamination : lorsqu'il y a plus de deux joueurs sur une case qui se suivent,
 // avec un joueur malade, y a plein de contamination alors qu'il faudrait pas.
 
-#include "stdafx.h"
+#include "STDAFX.H"
 #include "CBomber.h"
 #include "CArena.h"
 #include "CBomb.h"
@@ -461,6 +461,8 @@ void CBomber::Command (EBomberMove BomberMove, EBomberAction BomberAction)
             
             break;
         }
+        default:
+            break;
     }
 }
 
@@ -625,6 +627,8 @@ void CBomber::Action ()
                         case BOMBERMOVE_RIGHT : 
                             FrontBlockX = m_BomberMove.GetBlockX() + 1; 
                             FrontBlockY = m_BomberMove.GetBlockY();
+                            break;
+                        default:
                             break;
                     }
 
@@ -797,6 +801,7 @@ void CBomber::Animate (float DeltaTime)
                 case BOMBERMOVE_RIGHT : m_Sprite = 1; break;
                 case BOMBERMOVE_LEFT  : m_Sprite = 2; break;
                 case BOMBERMOVE_UP    : m_Sprite = 3; break;
+                default: break;
             }
 
             if (m_StuntTimeElapsed >= 1.0f)
@@ -841,6 +846,8 @@ void CBomber::Animate (float DeltaTime)
                         m_AnimationSprites[1] = BOMBERSPRITE_UP1;
                         m_AnimationSprites[2] = BOMBERSPRITE_UP2;
                         break;
+                    default :
+                        break;
                 }
 
                 // Play animation
@@ -871,6 +878,7 @@ void CBomber::Animate (float DeltaTime)
                     case BOMBERMOVE_RIGHT : m_Sprite = BOMBERSPRITE_RIGHT1;  break;
                     case BOMBERMOVE_LEFT  : m_Sprite = BOMBERSPRITE_LEFT1;   break;
                     case BOMBERMOVE_UP    : m_Sprite = BOMBERSPRITE_UP1;     break;
+                    default: break;
                 }
             }
         }
@@ -904,6 +912,8 @@ void CBomber::Animate (float DeltaTime)
                     m_AnimationSprites[0] = BOMBERSPRITE_LIFTING_UP_0; 
                     m_AnimationSprites[1] = BOMBERSPRITE_LIFTING_UP_1;
                     m_AnimationSprites[2] = BOMBERSPRITE_LIFTING_UP_2;
+                    break;
+                default:
                     break;
             }
 
@@ -963,6 +973,8 @@ void CBomber::Animate (float DeltaTime)
                     m_AnimationSprites[2] = BOMBERSPRITE_THROWING_UP_2;
                     m_AnimationSprites[3] = BOMBERSPRITE_THROWING_UP_3;
                     m_AnimationSprites[4] = BOMBERSPRITE_THROWING_UP_4;
+                    break;
+                default:
                     break;
             }
             
@@ -1026,6 +1038,8 @@ void CBomber::Animate (float DeltaTime)
                 case BOMBERMOVE_UP :
                     m_AnimationSprites[0] = BOMBERSPRITE_PUNCHING_UP_0; 
                     m_AnimationSprites[1] = BOMBERSPRITE_PUNCHING_UP_1;
+                    break;
+                default:
                     break;
             }
             
@@ -1166,6 +1180,7 @@ void CBomber::MakeBombFly (EBombFlightType FlightType)
         case BOMBERMOVE_RIGHT : BombFly = BOMBFLY_RIGHT; break;
         case BOMBERMOVE_LEFT  : BombFly = BOMBFLY_LEFT;  break;
         case BOMBERMOVE_UP    : BombFly = BOMBFLY_UP;    break;
+        default: break;
     }
 
     // Make the bomb fly in the chosen direction
@@ -1627,6 +1642,8 @@ void CBomber::Stunt (void)
 
             break;
         }
+        default:
+            break;
     }
 
     EItemType ItemType = ITEM_NONE;

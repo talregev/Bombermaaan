@@ -28,8 +28,6 @@
 
 #include "CFont.h"
 
-enum EGameMode;
-
 class CDisplay;
 class CInput;
 class CSound;
@@ -64,7 +62,7 @@ public:
     inline void         SetSound (CSound *pSound);          //!< Set link to the sound object to use
     void                Create (void);
     void                Destroy (void);
-    EGameMode           Update (EGameMode CurrentGameMode);                      //!< Update the object and return what was chosen
+    EGameMode           Update (EGameMode CurrentGameMode); //!< Update the object and return what was chosen
     void                Display (void);
     inline bool         IsActive (void);
 };
