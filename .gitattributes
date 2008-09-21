@@ -61,6 +61,7 @@ src/Bombermaaan.sln -text
 src/Bombermaaan/Bombermaaan.dsp -text
 src/Bombermaaan/Bombermaaan.rc -text
 src/Bombermaaan/Bombermaaan.vcproj -text
+src/Bombermaaan/BombermaaanIco.h -text
 src/Bombermaaan/CAiArena.cpp -text
 src/Bombermaaan/CAiArena.h -text
 src/Bombermaaan/CAiBomber.cpp -text
@@ -151,6 +152,10 @@ src/Bombermaaan/CPlayerInput.cpp -text
 src/Bombermaaan/CPlayerInput.h -text
 src/Bombermaaan/CRandomMosaic.cpp -text
 src/Bombermaaan/CRandomMosaic.h -text
+src/Bombermaaan/CSDLInput.cpp -text
+src/Bombermaaan/CSDLInput.h -text
+src/Bombermaaan/CSDLVideo.cpp -text
+src/Bombermaaan/CSDLVideo.h -text
 src/Bombermaaan/CScores.cpp -text
 src/Bombermaaan/CScores.h -text
 src/Bombermaaan/CScroller.cpp -text
@@ -168,10 +173,14 @@ src/Bombermaaan/CWindow.cpp -text
 src/Bombermaaan/CWindow.h -text
 src/Bombermaaan/CWinner.cpp -text
 src/Bombermaaan/CWinner.h -text
+src/Bombermaaan/Makefile -text
+src/Bombermaaan/Makefile.win -text
 src/Bombermaaan/RESOURCE.H -text
 src/Bombermaaan/STDAFX.CPP -text
 src/Bombermaaan/STDAFX.H -text
 src/Bombermaaan/WinMain.cpp -text
+src/Bombermaaan/winreplace.cpp -text
+src/Bombermaaan/winreplace.h -text
 src/CHANGELOG.txt -text
 src/Makefile -text
 src/RES/IMAGE/arena_arrows.bmp -text
