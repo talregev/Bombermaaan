@@ -140,7 +140,7 @@ BMP_ARENA_BOMBER_PUNCH  BITMAP  DISCARDABLE     "IMAGE\\arena_bomber_punch.bmp"
 BMP_ARENA_BOMBER_STUNT  BITMAP  DISCARDABLE     "IMAGE\\arena_bomber_stunt.bmp"
 BMP_ARENA_ARROWS        BITMAP  DISCARDABLE     "IMAGE\\arena_arrows.bmp"
 BMP_MENU_HAND_TITLE     BITMAP  DISCARDABLE     "IMAGE\\menu_hand_title.bmp"
-BMP_ARENA_REMOTE_BOMB   BITMAP  DISCARDABLE     "image\\arena_remote_bomb.bmp"
+BMP_ARENA_REMOTE_BOMB   BITMAP  DISCARDABLE     "IMAGE\\arena_remote_bomb.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
