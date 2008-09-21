@@ -29,32 +29,25 @@ $downloads = array(
 	),
 	"experimental" => array(
 		array(
-		"Bombermaaan_16pixels_rev378.zip",
+		"Bombermaaan_rev528.zip",
 		"Zip file for Win32",
-		"6b2acfd08bda7b20fbacd818f96d9bbf",  // MD5
-		"0b68bca796a8a2468f39708ed6686c56cce24059",  // SHA1
-		"2008-03-15",
+		"51f8a9ae12caf278d07a8472aa2c5fce",  // MD5
+		"b553e783076ee2ce902908103b40d9a1595a1dbf",  // SHA1
+		"2008-09-21",
 		),
 		array(
-		"Bombermaaan_32pixels_rev378.zip",
-		"Zip file for Win32",
-		"2fef54748063f836ffa4550e37da627d",  // MD5
-		"e94cbfe02ee745539cf6082e6d083bf191b9689f",  // SHA1
-		"2008-03-15",
+		"Bombermaaan_rev528_src.zip",
+		"Zip file for Win32 with source code",
+		"27affe053d4f9842968bcbe0e04ba4f5",  // MD5
+		"bdab20e124b7a9c40aedfe29aef17f3d938dd374",  // SHA1
+		"2008-09-21",
 		),
 		array(
-		"Bombermaaan_16pixels_rev294.zip",
-		"Zip file for Win32",
-		"6f2d56729cf0706e93dcc67f26ee5309",  // MD5
-		"afab1b347282354c275510a3368b4b3a954182a6",  // SHA1
-		"2008-03-02",
-		),
-		array(
-		"Bombermaaan_32pixels_rev294.zip",
-		"Zip file for Win32",
-		"7da430500c0e0fc7d4287a6344c38e4b",  // MD5
-		"176d070d4bec92cafe61593eb49e8b9c29e201c5",  // SHA1
-		"2008-03-02",
+		"Bombermaaan-080917.tar.bz2",
+		"Zip file for Debian Linux",
+		"b5c19bc649830f254801b92534c417ed",  // MD5
+		"e8cfe19883caacce252381bb2b4ccf4fb66e67d4",  // SHA1
+		"2008-09-18",
 		),
 /***
 		array(
@@ -181,13 +174,13 @@ If you have TortoiseSVN installed, you can check out the <a href="tsvn:https://b
 <h2><a id="experimental">Experimental releases</a></h2>
 
 <p>
-<strong>Please note:</strong>
-There is no new experimental release currently available.
+These packages have more features and bug fixes, but may also be unstable.
+You can download the files if you want to try more recent builds but don't want to compile Bombermaaan on your own.
 </p>
 
 <p>
-These packages have more features and bug fixes, but may also be unstable.
-You can download the files if you want to try more recent builds but don't want to compile Bombermaaan on your own.
+Looking for Linux files?<br />
+You can download <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331&amp;release_id=627216">Debian Linux package files</a> for x86 and AMD64.
 </p>
 
 <table class="downloadbox">
