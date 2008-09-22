@@ -125,7 +125,6 @@ void CArena::Create (void)
                 {
                     // Create a hard wall
                     NewWall (X, Y, WALL_HARD);
-                     
                     break;
                 }
                 

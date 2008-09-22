@@ -554,6 +554,12 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
                 }
                 break;
 
+            case 3:
+                if (!LoadLevel_Version3( in, CurrentLevel ) ) {
+                    ErrorOccurred = true;
+                }
+                break;
+            
             default:
                 theLog.WriteLine ("Options         => !!! Unsupported version of level file %s.", levelFileNames_short.at(CurrentLevel).c_str());
                 ErrorOccurred = true;
@@ -701,7 +707,7 @@ bool COptions::LoadLevel_Version1( ifstream& File, int CurrentLevel ) {
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
+bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requireRemoteFuse ) {
 
     string s;
     int value;
@@ -907,15 +913,27 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
-    // The remote fuse feature came after Level file version 2, so this must be set hard coded
-   	m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = INITIAL_ITEMREMOTE;
+    // The remote fuse feature came after Level file version 2, so requireRemoteFuse must be true,
+    // otherwise hardcode this:
+    getline( file, s );
+    if (requireRemoteFuse)
+    {
+        if ( sscanf( s.c_str(), "ItemsInWalls.Remotes=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] ) != 1 ) {
+            theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
+            return false;
+        }
+        getline( file, s );
+    }    
+    else
+    {
+   	    m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = INITIAL_ITEMREMOTE;
+    }
     
     
     //---------------------
     // Read the BomberSkillsAtStart values
     //---------------------
-
-    getline( file, s );
+    // note: The getline command supposed to be here is above
     if ( sscanf( s.c_str(), "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) {
         theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
         return false;
@@ -963,9 +981,20 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
         return false;
     }
 
-    // The remote fuse feature came after Level file version 2, so this must be set hard coded
-	m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] = 0;
-    
+    // The remote fuse feature came after Level file version 2, so this must be set hard coded if requireRemoteFuse is false
+    getline( file, s );
+    if (requireRemoteFuse)
+    {
+        if ( sscanf( s.c_str(), "BomberSkillsAtStart.RemoteItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] ) != 1 ) {
+            theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
+            return false;
+        }
+        getline( file, s );
+    }    
+    else
+    {
+   	    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] = 0;
+    }
     
     //---------------------
     // Read the ContaminationsNotUsed setting
@@ -973,7 +1002,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel ) {
 
     // This setting controls which contamination should not be used in this level
     // The only one value allowed is "None" at the moment
-    getline( file, s );
+    // the getline command supposed to be here is above!
     if ( s != "ContaminationsNotUsed=None" ) {
         theLog.WriteLine ("Options         => !!! Line ContaminationsNotUsed is incorrect (%s).", s.c_str() );
         return false;
