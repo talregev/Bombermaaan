@@ -145,6 +145,8 @@ void CAiBomber::Update (float DeltaTime)
                 {                
                     case COMPUTERMODE_ITEM    : ModeItem (DeltaTime);    break;
                     case COMPUTERMODE_ATTACK  : ModeAttack ();           break;
+                    case COMPUTERMODE_THROW   : ModeThrow ();            break;
+                    case COMPUTERMODE_2NDACTION : ModeSecondAction ();   break;
                     case COMPUTERMODE_DEFENCE : ModeDefence (DeltaTime); break;
                     case COMPUTERMODE_WALK    : ModeWalk (DeltaTime);    break;
                     default: break;
@@ -185,13 +187,30 @@ void CAiBomber::Update (float DeltaTime)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool CAiBomber::EnemyNearAndFront (void)
+/**
+ * @brief   determines if there is a bomber near us, i.e. at our position or
+ *          max. MAX_NEAR_DISTANCE blocks away and in front of us
+ * @param   direction           pointer to an enum of the direction of our enemy
+ * @param   BeyondAreaFrontiers should we also look beyond the arena frontiers,
+ *                              i.e. start at the top if we are at the lowest
+ *                              position, start on the left if we are rightmost etc.
+ * @return  true if there is an enemy near and in front of us, false otherwise
+ */
+bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaFrontiers)
 {
     int BlockX;
     int BlockY;
+    
+    // variables to keep loop assertion semantics (they may be out of bounds)
+    int FakeBlockX;
+    int FakeBlockY;
+    
+    bool beyondTheFrontier;
 
     if (m_pArena->m_pArena->IsBomb (m_BlockHereX, m_BlockHereY))
     {
+        if (direction != NULL)
+            *direction = ENEMYDIRECTION_UNKNOWN;
         return false;
     }
 
@@ -212,6 +231,8 @@ bool CAiBomber::EnemyNearAndFront (void)
             m_pArena->m_pArena->GetBomber(Index).GetBlockY() == m_BlockHereY)
         {
             // There is an enemy near our bomber
+            if (direction != NULL)
+                *direction = ENEMYDIRECTION_HERE;
             return true;
         }
     }
@@ -225,29 +246,60 @@ bool CAiBomber::EnemyNearAndFront (void)
     // Start scanning one block to the right
     BlockX = m_BlockHereX + 1;
     BlockY = m_BlockHereY;
+    
+    FakeBlockX = BlockX;
+    FakeBlockY = BlockY;
+    
+    beyondTheFrontier = false;
 
     // While we are still near our bomber
-    while (BlockX <= m_BlockHereX + MAX_NEAR_DISTANCE)
+    while (FakeBlockX <= m_BlockHereX + MAX_NEAR_DISTANCE)
     {
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
-        if (BlockX >= ARENA_WIDTH ||
+        if (!BeyondArenaFrontiers && (BlockX >= ARENA_WIDTH ||
             m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY))
+            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
         }
+        else if (BeyondArenaFrontiers && BlockX >= ARENA_WIDTH)
+        {
+            // begin at the leftmost block. notice that the FakeBlock variable
+            // is not being changed to keep the while condition semantic
+            BlockX = 0;
+            beyondTheFrontier = true; // we passed the frontier
+        }
+        
+        // we are already looking at blocks to the left of us
+        if (BeyondArenaFrontiers && beyondTheFrontier &&
+            BlockX >= m_BlockHereX - MAX_NEAR_DISTANCE)
+            break; // we have returned near us again.
 
         // If there is a bomber where we are scanning
         if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber to the right that is near
             // and in front of our bomber.
+            if (direction != NULL)
+                *direction = ENEMYDIRECTION_RIGHT;
             return true;
         }
 
         // Continue scanning (go right)
+        if (BeyondArenaFrontiers)
+        {
+            // only increase FakeBlock if current block is not a bomb or a wall
+            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
+                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+                FakeBlockX++;
+        }    
+        else
+        {
+            // increase normally
+            FakeBlockX++;
+        }
         BlockX++;
     }
 
@@ -259,28 +311,58 @@ bool CAiBomber::EnemyNearAndFront (void)
     BlockX = m_BlockHereX - 1;
     BlockY = m_BlockHereY;
 
-    // While we are still near our bomber
-    while (BlockX >= m_BlockHereX - MAX_NEAR_DISTANCE)
+    FakeBlockX = BlockX;
+    FakeBlockY = BlockY;
+    
+    beyondTheFrontier = false;
+    // While we are still near our bomber
+    while (FakeBlockX >= m_BlockHereX - MAX_NEAR_DISTANCE)
     {
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
-        if (BlockX < 0 ||
+        if (!BeyondArenaFrontiers && (BlockX < 0 ||
             m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY))
+            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
         }
+        else if (BeyondArenaFrontiers && BlockX < 0)
+        {
+            // begin at the rightmost block. notice that the FakeBlock variable
+            // is not being changed to keep the while condition semantic
+            BlockX = ARENA_WIDTH - 1;
+            beyondTheFrontier = true;
+        }
+        
+        // we are already looking at blocks to the right of us
+        if (BeyondArenaFrontiers && beyondTheFrontier &&
+            BlockX <= m_BlockHereX + MAX_NEAR_DISTANCE)
+            break; // we have returned near us again.
 
         // If there is a bomber where we are scanning
         if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber to the left that is near
             // and in front of our bomber.
+            if (direction != NULL)
+                *direction = ENEMYDIRECTION_LEFT;
             return true;
         }
 
         // Continue scanning (go left)
+        if (BeyondArenaFrontiers)
+        {
+            // only decrease FakeBlock if current block is not a bomb or a wall
+            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
+                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+                FakeBlockX--;
+        }    
+        else
+        {
+            // decrease normally
+            FakeBlockX--;
+        }
         BlockX--;
     }
 
@@ -291,29 +373,60 @@ bool CAiBomber::EnemyNearAndFront (void)
     // Start scanning one block above
     BlockX = m_BlockHereX;
     BlockY = m_BlockHereY - 1;
+    
+    FakeBlockX = BlockX;
+    FakeBlockY = BlockY;
+    
+    beyondTheFrontier = false;
 
     // While we are still near our bomber
-    while (BlockY >= m_BlockHereY - MAX_NEAR_DISTANCE)
+    while (FakeBlockY >= m_BlockHereY - MAX_NEAR_DISTANCE)
     {
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
-        if (BlockY < 0 ||
+        if (!BeyondArenaFrontiers && (BlockY < 0 ||
             m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY))
+            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
         }
+        else if (BeyondArenaFrontiers && BlockY < 0)
+        {
+            // begin at the block the most at the bottom. notice that the FakeBlock variable
+            // is not being changed to keep the while condition semantic
+            BlockY = ARENA_HEIGHT - 1;
+            beyondTheFrontier = true;
+        }
+        
+        // we are already looking at blocks below us
+        if (BeyondArenaFrontiers && beyondTheFrontier &&
+            BlockY <= m_BlockHereY + MAX_NEAR_DISTANCE)
+            break; // we have returned near us again.
 
-        // If there is a bomber where we are scanning
+        // If there is a bomber != me where we are scanning
         if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber above that is near
             // and in front of our bomber.            
+            if (direction != NULL)
+                *direction = ENEMYDIRECTION_ABOVE;
             return true;
         }
 
         // Continue scanning (go up)
+        if (BeyondArenaFrontiers)
+        {
+            // only decrease FakeBlock if current block is not a bomb or a wall
+            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
+                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+                FakeBlockY--;
+        }    
+        else
+        {
+            // decrease normally
+            FakeBlockY--;
+        }
         BlockY--;
     }
 
@@ -324,29 +437,60 @@ bool CAiBomber::EnemyNearAndFront (void)
     // Start scanning one block below
     BlockX = m_BlockHereX;
     BlockY = m_BlockHereY + 1;
+    
+    FakeBlockX = BlockX;
+    FakeBlockY = BlockY;
+    
+    beyondTheFrontier = false;
 
     // While we are still near our bomber
-    while (BlockY <= m_BlockHereY + MAX_NEAR_DISTANCE)
+    while (FakeBlockY <= m_BlockHereY + MAX_NEAR_DISTANCE)
     {
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
-        if (BlockY >= ARENA_HEIGHT ||
+        if (!BeyondArenaFrontiers && (BlockY >= ARENA_HEIGHT ||
             m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY))
+            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
         }
+        else if (BeyondArenaFrontiers && BlockY >= ARENA_HEIGHT)
+        {
+            // begin at the topmost block. notice that the FakeBlock variable
+            // is not being changed to keep the while condition semantic
+            BlockY = 0;
+            beyondTheFrontier = true;
+        }
+        
+        // we are already looking at blocks above us
+        if (BeyondArenaFrontiers && beyondTheFrontier &&
+            BlockY >= m_BlockHereY - MAX_NEAR_DISTANCE)
+            break; // we have returned near us again.
 
-        // If there is a bomber where we are scanning
+        // If there is a bomber != me where we are scanning
         if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber above that is near
             // and in front of our bomber.
+            if (direction != NULL)
+                *direction = ENEMYDIRECTION_BELOW;
             return true;
         }
 
         // Continue scanning (go down)
+        if (BeyondArenaFrontiers)
+        {
+            // only increase FakeBlock if current block is not a bomb or a wall
+            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
+                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+                FakeBlockY++;
+        }    
+        else
+        {
+            // increase normally
+            FakeBlockY++;
+        }
         BlockY++;
     }
 
@@ -388,6 +532,48 @@ bool CAiBomber::EnemyNear (int BlockX, int BlockY)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+bool CAiBomber::EnemyNearRemoteFuseBomb (CBomb& bomb)
+{
+    // TODO: simulate explosion properly (like in CExplosion)
+    int BombX = bomb.GetBlockX();
+    int BombY = bomb.GetBlockY();
+    
+    int BomberX;
+    int BomberY;
+    
+    //ASSERT(bomb.IsRemote());
+    
+    // Scan the players
+    for (int Index = 0 ; Index < MAX_PLAYERS ; Index++)
+    {
+        // If the current player is not the one we are controlling
+        // and the bomber of this player exists and is alive
+        // and its distance to the bomb (on the x or y axis)
+        // is less or equal the bomb's flamesize
+        // do this with 70% probability
+        BomberX = m_pArena->m_pArena->GetBomber(Index).GetBlockX();
+        BomberY = m_pArena->m_pArena->GetBomber(Index).GetBlockY();
+        
+        if (Index != m_Player &&
+            m_pArena->m_pArena->GetBomber(Index).Exist() && 
+            m_pArena->m_pArena->GetBomber(Index).IsAlive() && 
+            ((BomberX == BombX && ABS(BomberY - BombY) <= bomb.GetFlameSize()) ||
+            (BomberY == BombY && ABS(BomberX - BombX) <= bomb.GetFlameSize())) &&
+            RANDOM(100) < 70)
+        {
+            // There is an enemy not far from the tested bomb
+            return true;
+        }
+    }
+
+    // There is no enemy not far from the tested bomb
+    return false;
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
 bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 {
     int Depth;
@@ -403,7 +589,7 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
     // If the tested block is NOT accessible to our bomber
     if (m_Accessible[BlockX][BlockY] == -1)
     {
-        // Why would be drop a bomb here then??
+        // Why would we drop a bomb here then??
         return false;
     }
 
@@ -671,7 +857,7 @@ int CAiBomber::ItemMark (int BlockX, int BlockY)
 
     //----------------------------------------
     // Take the type of the item into account
-    //----------------------------------------
+    //----------------------------------------EnemyDirection
 
     // Variable where to retrieve the type of the item on the tested block
     EItemType ItemType = ITEM_NONE;
@@ -700,6 +886,7 @@ int CAiBomber::ItemMark (int BlockX, int BlockY)
         case ITEM_ROLLER : Mark += 20; break;
         case ITEM_THROW  : Mark += 50; break;
         case ITEM_PUNCH  : Mark += 60; break;
+        case ITEM_REMOTE : Mark += 60; break;
         default: break;
     }
 
@@ -743,9 +930,12 @@ ALGO :
 si on est en danger ou l'arene est presque completement fermee
     mode defense
 
-si ca semble ok d'attaquer
+si ca semble ok d'attaquer (ou bien attaquer en jetant des bombes)
     mode attaque
 
+si on a oublie de detoner une bombe a tele-detonation et il y a un ennemi proche
+    detoner cette bombe la
+ 
 chercher un item
 
 si on a trouve un item
@@ -777,6 +967,7 @@ void CAiBomber::ModeThink (void)
     int BestMark;
     bool FoundSoftWallBurn;
     int BestDistance;
+    EEnemyDirection EnemyDirection;
 
     //--------------------------------------------------
     // Check if we should defend.
@@ -803,8 +994,8 @@ void CAiBomber::ModeThink (void)
 
     // If there is an enemy near and in front of our bomber
     // and it is ok to drop a bomb where our bomber is
-    // with quite big probability
-    if (EnemyNearAndFront() &&
+    // with quite big probability (not beyond the frontiers)
+    if (EnemyNearAndFront(&EnemyDirection, false) &&
         DropBombOK(m_BlockHereX,m_BlockHereY) &&
         RANDOM(100) < 70)
     {
@@ -814,7 +1005,54 @@ void CAiBomber::ModeThink (void)
         // OK, get out since we decided what to do
         return;
     }
+    // If there is an enemy near (also beyond the frontiers)
+    // and we can throw bombs (with a not so quite big probability,
+    // also called fifty : fifty ou bien une chance sur deux ;)
+    else if (m_pBomber->CanThrowBombs () &&
+        EnemyNearAndFront(&EnemyDirection, true) &&
+        (DropBombOK(m_BlockHereX,m_BlockHereY) ||
+         m_pArena->m_pArena->IsBomb (m_BlockHereX, m_BlockHereY)) &&
+        RANDOM(100) < 50)
+    {
+        // Switch to the throw to drop a bomb and turn into the right direction
+        SetComputerMode (COMPUTERMODE_THROW);
+        
+        // OK, get out since we decided what to do
+        return;
+    }
 
+    //----------------------------------------------------------------------
+    // Check if we accidently forgot some bombs which have a remote trigger.
+    // If there are any, find out if some other bomber is in its range.
+    //----------------------------------------------------------------------
+    
+    if (m_pBomber->CanRemoteFuseBombs ())
+    {
+        // Find the first bomb we can fuse.
+        for (int Index = 0 ; Index < m_pArena->m_pArena->MaxBombs() ; Index++)
+        {						
+            // Test existence and player number of the one who planted it.
+            if (m_pArena->m_pArena->GetBomb(Index).Exist() &&
+                m_pArena->m_pArena->GetBomb(Index).IsRemote() &&
+                m_pArena->m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
+            {
+                // It's mine, it's mine!
+                if (EnemyNearRemoteFuseBomb(m_pArena->m_pArena->GetBomb(Index)))
+                {
+                    // Let's detonate it.
+                    SetComputerMode (COMPUTERMODE_2NDACTION);
+                    
+                    // OK, get out since we decided what to do
+                    return;
+                }
+                
+                // there is no enemy :(
+                break;
+            }
+        }
+    }
+
+    
     //----------------------------------------------
     // Check if there is a cool item to pick up
     // Make an estimation of the mark of each item.
@@ -1233,19 +1471,90 @@ void CAiBomber::ModeItem (float DeltaTime)
 
 ALGO :
 
-Poser une bombe
-Passer en mode reflechir
+si on veut jeter une bombe
+    poser la bombe en attendent la prochaine entree du code ici
+sinon
+    poser la bombe
+    Passer en mode reflechir
 
 */
 
-void CAiBomber::ModeAttack (void)
+void CAiBomber::ModeAttack ()
 {
     // Reset the commands to send to the bomber
     m_BomberMove = BOMBERMOVE_NONE;
     m_BomberAction = BOMBERACTION_ACTION1;
 
+    SetComputerMode (COMPUTERMODE_THINK);
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+/*
+
+ALGO :
+
+je voudrais aller jeter ma bombe que je vais poser maintenant.
+donc je la pose et je tourne en bonne direction.
+puis je serai en mode attaque et je vais jeter la bombe.
+
+*/
+
+void CAiBomber::ModeThrow ()
+{
+    EEnemyDirection direction;
+    // Determine direction where i'm throw my bomb.
+    bool enemyNearFront = EnemyNearAndFront (&direction, true);
+    
+    // move to the right direction
+    switch (direction)
+    {
+        case ENEMYDIRECTION_ABOVE : m_BomberMove = BOMBERMOVE_UP;    break;
+        case ENEMYDIRECTION_BELOW : m_BomberMove = BOMBERMOVE_DOWN;  break;
+        case ENEMYDIRECTION_LEFT  : m_BomberMove = BOMBERMOVE_LEFT;  break;
+        case ENEMYDIRECTION_RIGHT : m_BomberMove = BOMBERMOVE_RIGHT; break;
+        default:                    m_BomberMove = BOMBERMOVE_NONE;  break;
+    }
+    
+    // TODO (check if is always enemyNearFront == true)
+    if (!enemyNearFront)
+    {
+        //printf("enemyNearFront == false");
+    }
+    
+    // plant my bomb
+    m_BomberAction = BOMBERACTION_ACTION1;
+
     // What was decided in the think mode has been entirely executed.
-    // Switch to think mode to decide what to do now.
+    // Switch to attack mode, because what to do next has already been
+    // determined.
+    SetComputerMode (COMPUTERMODE_ATTACK);
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+/*
+
+ALGO :
+
+utiliser l'action deux
+Passer en mode reflechir
+
+*/
+
+void CAiBomber::ModeSecondAction ()
+{
+    // TODO determine direction to look (for a bomb to punch for instance)
+    // right now this method is only being used for remote fuse bombs
+    m_BomberMove = BOMBERMOVE_NONE;
+    
+    // use second action
+    m_BomberAction = BOMBERACTION_ACTION2;
+
     SetComputerMode (COMPUTERMODE_THINK);
 }
 
@@ -1281,8 +1590,26 @@ void CAiBomber::ModeDefence (float DeltaTime)
         // Reset commands to send to the bomber in order 
         // to stop moving when the bomber is in a safe block.
         m_BomberMove = BOMBERMOVE_NONE;
-        m_BomberAction = BOMBERACTION_NONE;
         
+        // Did we plant a bomb with a remote trigger?
+        // Because we're out of danger, we may now detonate it.
+        
+        if (m_pBomber->CanRemoteFuseBombs ())
+        {
+            // now find out if we planted some bombs
+            for (int Index = 0 ; Index < m_pArena->m_pArena->MaxBombs() ; Index++)
+            {						
+                // Test existence and kicker player number
+                if (m_pArena->m_pArena->GetBomb(Index).Exist() && m_pArena->m_pArena->GetBomb(Index).IsRemote() &&
+                    m_pArena->m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
+                {
+                    // Leave the for-loop, because we found a bomb
+                    m_BomberAction = BOMBERACTION_ACTION2; // detonate the bomb
+                    break;
+                }
+            }
+        }
+
         // No need to defend, switch to think mode so as to decide what to do.
         SetComputerMode (COMPUTERMODE_THINK);
 
@@ -2017,8 +2344,8 @@ bool CAiBomber::GoTo (int GoalBlockX, int GoalBlockY)
 
 void CAiBomber::SetComputerMode (EComputerMode ComputerMode)
 {
-    // If we are switching to think mode
-    if (ComputerMode == COMPUTERMODE_THINK)
+    // If we are switching to think mode or we are going to throw the bomb
+    if (ComputerMode == COMPUTERMODE_THINK || ComputerMode == COMPUTERMODE_THROW)
     {
         // Stop commanding the bomber for a little time
         m_StopTimeLeft = 0.180f;
@@ -2027,6 +2354,8 @@ void CAiBomber::SetComputerMode (EComputerMode ComputerMode)
         {
             case COMPUTERMODE_ITEM    : m_StopTimeLeft = 0.080f + RANDOM(40) / 1000.0f; break;
             case COMPUTERMODE_ATTACK  : m_StopTimeLeft = 0.200f + RANDOM(40) / 1000.0f; break;
+            case COMPUTERMODE_THROW   : m_StopTimeLeft = 0.200f + RANDOM(40) / 1000.0f; break;
+            case COMPUTERMODE_2NDACTION : m_StopTimeLeft = 0.200f + RANDOM(40) / 1000.0f; break;
             case COMPUTERMODE_DEFENCE : m_StopTimeLeft = 0.120f + RANDOM(40) / 1000.0f; break;
             case COMPUTERMODE_WALK    : m_StopTimeLeft = 0.220f + RANDOM(40) / 1000.0f; break;
             default: break;
@@ -2035,18 +2364,29 @@ void CAiBomber::SetComputerMode (EComputerMode ComputerMode)
 
     // Set the new computer mode
     m_ComputerMode = ComputerMode;
-/*
+
     // Write a console line to specify the mode switch
-    switch (m_ComputerMode)
+/*    switch (m_ComputerMode)
     {
-        case COMPUTERMODE_THINK   : WriteConsole ("MODE THINK\n");   break;
-        case COMPUTERMODE_ITEM    : WriteConsole ("MODE ITEM\n");    break;
-        case COMPUTERMODE_ATTACK  : WriteConsole ("MODE ATTACK\n");  break;
-        case COMPUTERMODE_DEFENCE : WriteConsole ("MODE DEFENCE\n"); break;
-        case COMPUTERMODE_WALK    : WriteConsole ("MODE WALK\n");    break;
-    }*/
+#ifdef WIN32
+        case COMPUTERMODE_THINK   : WriteConsole ("MODE THINK\n");      break;
+        case COMPUTERMODE_ITEM    : WriteConsole ("MODE ITEM\n");       break;
+        case COMPUTERMODE_ATTACK  : WriteConsole ("MODE ATTACK\n");     break;
+        case COMPUTERMODE_THROW   : WriteConsole ("MODE THROW\n");      break;        case COMPUTERMODE_DEFENCE : WriteConsole ("MODE DEFENCE\n");    break;
+        case COMPUTERMODE_WALK    : WriteConsole ("MODE WALK\n");       break;
+#else
+        case COMPUTERMODE_THINK   : fprintf (stdout, "MODE THINK\n");   break;
+        case COMPUTERMODE_ITEM    : fprintf (stdout, "MODE ITEM\n");    break;
+        case COMPUTERMODE_ATTACK  : fprintf (stdout, "MODE ATTACK\n");  break;
+        case COMPUTERMODE_THROW   : fprintf (stdout, "MODE THROW\n");   break;        case COMPUTERMODE_DEFENCE : fprintf (stdout, "MODE DEFENCE\n"); break;
+        case COMPUTERMODE_WALK    : fprintf (stdout, "MODE WALK\n");    break;
+#endif
+        default: break;
+    }
+*/
 }
 
+    
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************

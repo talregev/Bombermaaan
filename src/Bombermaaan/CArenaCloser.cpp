@@ -332,6 +332,13 @@ void CArenaCloser::Update (float DeltaTime)
                         CloseIt = false;
                         break;
                     }
+                    else if (m_pArena->GetWall(Index).Exist() &&
+                        m_pArena->GetWall(Index).GetBlockX() == BlockX &&
+                        m_pArena->GetWall(Index).GetBlockY() == BlockY)
+                    {
+                        // destroy the old wall
+                        m_pArena->GetWall(Index).Destroy();
+                    }
                 }
 
                 // If the block has to be closed

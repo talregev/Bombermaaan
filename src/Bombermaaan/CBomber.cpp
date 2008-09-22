@@ -1634,7 +1634,7 @@ void CBomber::Stunt (void)
         case BOMBERSTATE_THROW :
         {
             // If the bomber still has the bomb
-            if (m_BombIndex != -1)
+            if (m_BombIndex != -1)  
             {
                 // Throw the bomb in the current direction he is heading
                 MakeBombFly (BOMBFLIGHTTYPE_THROW);
@@ -1648,7 +1648,12 @@ void CBomber::Stunt (void)
 
     EItemType ItemType = ITEM_NONE;
     
-    if (m_NumberOfPunchItems > 0)
+	if (m_NumberOfRemoteItems > 0)
+    {   
+        m_NumberOfRemoteItems--;
+        ItemType = ITEM_REMOTE;
+    }
+    else if (m_NumberOfPunchItems > 0)
     {
         m_NumberOfPunchItems--;
         ItemType = ITEM_PUNCH;
@@ -1677,11 +1682,6 @@ void CBomber::Stunt (void)
     {   
         m_NumberOfRollerItems--;
         ItemType = ITEM_ROLLER;
-    }
-	else if (m_NumberOfRemoteItems > 0)
-    {   
-        m_NumberOfRemoteItems--;
-        ItemType = ITEM_REMOTE;
     }
 
     if (ItemType != ITEM_NONE)

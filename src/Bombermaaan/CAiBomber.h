@@ -41,8 +41,25 @@ enum EComputerMode
     COMPUTERMODE_THINK,   //!< Deciding what to do and set the new computer mode
     COMPUTERMODE_ITEM,    //!< Picking up items or dropping bombs in order to burn walls
     COMPUTERMODE_ATTACK,  //!< Attacking a bomber
+    COMPUTERMODE_THROW,   //!< Attacking a bomber (throw the bomb afterwards with COMPUTERMODE_ATTACK)
+    COMPUTERMODE_2NDACTION, //!< Use punch/stop bomb while being kicked/remote detonate
     COMPUTERMODE_DEFENCE, //!< Trying to be in a safe place
     COMPUTERMODE_WALK     //!< Walking in random directions until there is some activity around the bomber
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+//! Describes the direction to the next enemy
+enum EEnemyDirection
+{
+    ENEMYDIRECTION_UNKNOWN, //!< No enemy near us (at least we think so)
+    ENEMYDIRECTION_HERE,    //!< Enemy is at the same position as we are
+    ENEMYDIRECTION_ABOVE,   //!< Enemy is above us
+    ENEMYDIRECTION_BELOW,   //!< Enemy is below us
+    ENEMYDIRECTION_LEFT,
+    ENEMYDIRECTION_RIGHT
 };
 
 //******************************************************************************************************************************
@@ -84,12 +101,15 @@ private:
     void            SetComputerMode (EComputerMode ComputerMode);       // Set the mode of the computer player
     void            ModeThink (void);
     void            ModeItem (float DeltaTime);
-    void            ModeAttack (void);
+    void            ModeAttack ();
+    void            ModeThrow ();
+    void            ModeSecondAction ();
     void            ModeDefence (float DeltaTime);
     void            ModeWalk (float DeltaTime);
     void            UpdateAccessibility (void);
     bool            GoTo (int GoalBlockX, int GoalBlockY);              // Modify the commands to send to the bomber so that it moves to the specified goal
-    bool            EnemyNearAndFront (void);                           // Returns true if a bomber enemy is near the bomber and in front of him
+    bool            EnemyNearAndFront (EEnemyDirection *direction = NULL, bool BeyondArenaFrontiers = false); // Returns true if a bomber enemy is near the bomber and in front of him
+    bool            EnemyNearRemoteFuseBomb (CBomb& bomb);
     bool            DropBombOK (int BlockX, int BlockY);
     bool            EnemyNear (int BlockX, int BlockY);
     int             ItemMark (int BlockX, int BlockY);
