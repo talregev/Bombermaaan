@@ -22,7 +22,7 @@ ifeq ($(DEBUG),1)
 endif
 RM = rm -f
 
-.PHONY: all all-before all-after clean clean-custom
+.PHONY: all all-before all-after clean strip clean-custom
 
 all: all-before $(BIN) all-after
 
@@ -35,6 +35,9 @@ install: all
 
 uninstall: all
 	$(RM) $(prefix)/bin/$(BIN)
+
+strip: $(BIN)
+	$(STRIP) $(BIN)
 
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)

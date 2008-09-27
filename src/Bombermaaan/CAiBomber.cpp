@@ -32,7 +32,17 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-#define AI_VIEW_SIZE        6
+#define AI_VIEW_SIZE                6
+#define AIDEBUG_SPRITELAYER        70
+
+// if we want to visualise the accessible blocks for the AI players, uncomment:
+//#define DEBUG_DRAW_ACCESSIBLE_BLOCKS
+
+// if we want to visualise the pseudo-accessible blocks for the AI players, uncomment:
+//#define DEBUG_DRAW_PSEUDOACCESSIBLE_BLOCKS
+
+// if we want to visualise the best blocks to go in ModeDefence(), uncomment
+//#define DEBUG_DRAW_BEST_BLOCKS_MODEDEFENCE
 
 int CAiBomber::m_BurnMark[4][6] =
 {
@@ -48,6 +58,7 @@ int CAiBomber::m_BurnMark[4][6] =
 
 CAiBomber::CAiBomber (void)
 {
+    m_pDisplay = NULL;
     m_pArena = NULL;
     m_Player = -1;
 }
@@ -91,6 +102,10 @@ void CAiBomber::Create (int Player)
 
 void CAiBomber::Destroy (void)
 {
+#if defined(DEBUG_DRAW_ACCESSIBLE_BLOCKS) || defined(DEBUG_DRAW_PSEUDOACCESSIBLE_BLOCKS) || defined(DEBUG_DRAW_BEST_BLOCKS_MODEDEFENCE)
+    if (m_pDisplay != NULL)
+        m_pDisplay->RemoveAllDebugRectangles();
+#endif
 }
 
 
@@ -315,7 +330,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
     FakeBlockY = BlockY;
     
     beyondTheFrontier = false;
-    // While we are still near our bomber
+
+    // While we are still near our bomber
     while (FakeBlockX >= m_BlockHereX - MAX_NEAR_DISTANCE)
     {
         // If we are scanning out of the arena
@@ -1036,8 +1052,10 @@ void CAiBomber::ModeThink (void)
                 m_pArena->m_pArena->GetBomb(Index).IsRemote() &&
                 m_pArena->m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
             {
-                // It's mine, it's mine!
-                if (EnemyNearRemoteFuseBomb(m_pArena->m_pArena->GetBomb(Index)))
+                // It's mine, it's mine! Check for players near it.
+                // If there are none, there is a 10 % chance that we detonate it
+                if (EnemyNearRemoteFuseBomb(m_pArena->m_pArena->GetBomb(Index))
+                    || RANDOM(100) < 10)
                 {
                     // Let's detonate it.
                     SetComputerMode (COMPUTERMODE_2NDACTION);
@@ -1193,8 +1211,8 @@ void CAiBomber::ModeThink (void)
                             &&
                             RANDOM(100) >= 50
                         )
-                    )// &&
-                    //(m_pArena->m_DeadEnd[BlockX][BlockY] == -1 || !EnemyNear(BlockX,BlockY))
+                    ) &&
+                    (m_pArena->m_DeadEnd[BlockX][BlockY] == -1 || !EnemyNear(BlockX,BlockY))
                     &&
                     (m_pArena->m_WallBurn[BlockX-1][BlockY] ||
                      m_pArena->m_WallBurn[BlockX+1][BlockY] ||
@@ -1232,10 +1250,10 @@ void CAiBomber::ModeThink (void)
 
             // Switch to item mode to execute what was decided
             SetComputerMode (COMPUTERMODE_ITEM);
+
+            // OK, get out since we decided what to do
+            return;
         }
-                
-        // OK, get out since we decided what to do
-        return;
     }
 
     //----------------------------------------------------------
@@ -1335,7 +1353,11 @@ si mon but est de ramasser un item a tel bloc
 
 se diriger vers le bloc de but en cours
 
-si le bloc de but n'est pas accessible
+si le bloc de but est accessible
+    y aller
+    si j'ai l'essayer MAX_CALLS_MODEITEM sans success
+        mode reflechir
+sinon
     mode reflechir
 
 si j'ai atteint le bloc de but
@@ -1343,15 +1365,22 @@ si j'ai atteint le bloc de but
         poser une bombe
     sinon
         fini, j'ai pris l'item, mode reflechir
+sinon
+    si je ne sais pas d'autres strategies il y a MAX_CALLS_MODEITEM fois, mode reflechir
 
 */
+#define MAX_CALLS_MODEITEM  10
 
 void CAiBomber::ModeItem (float DeltaTime)
 {
+    // this variable saves the number of calls the method stayed in the same state
+    // if we exceeded a certain amount of calls (MAX_CALLS_MODEITEM) while
+    // remaining in the same state of this method, we will go into THINK MODE
+    static int CallsOfModeItem = 0; // amount of calls without state change
+    
     // Reset the commands to send to the bomber
     m_BomberMove = BOMBERMOVE_NONE;
     m_BomberAction = BOMBERACTION_NONE;
-    
     
     if ((
             EnemyNearAndFront() && 
@@ -1366,6 +1395,9 @@ void CAiBomber::ModeItem (float DeltaTime)
     {
         // Decide what to do
         SetComputerMode (COMPUTERMODE_THINK);
+        
+        // reset method state variable
+        CallsOfModeItem = 0;
 
         // Get out, mode is over
         return;
@@ -1414,6 +1446,9 @@ void CAiBomber::ModeItem (float DeltaTime)
         {
             // Decide what to do
             SetComputerMode (COMPUTERMODE_THINK);
+            
+            // reset method state variable
+            CallsOfModeItem = 0;
 
             // Get out, mode is over
             return;
@@ -1429,6 +1464,9 @@ void CAiBomber::ModeItem (float DeltaTime)
         // Set the bomber move command so that the bomber goes to the block to go to
         // and return if the goal has been reached.
         GoalReach = GoTo (m_ItemGoalBlockX, m_ItemGoalBlockY);
+        
+        // we may pass here several times, so count the number of passes here
+        CallsOfModeItem++;
     }
     // If the block to go to is not accessible to the bomber
     else
@@ -1436,6 +1474,9 @@ void CAiBomber::ModeItem (float DeltaTime)
         // There is a problem : we're trying to go to a block that is not accessible.
         // Switch to think mode so as to decide what to do.
         SetComputerMode (COMPUTERMODE_THINK);
+        
+        // reset method state variables
+        CallsOfModeItem = 0;
 
         // Get out, no need to stay here
         return;
@@ -1460,6 +1501,17 @@ void CAiBomber::ModeItem (float DeltaTime)
         // What was decided in the think mode has been entirely executed.
         // Switch to think mode to decide what to do now.
         SetComputerMode (COMPUTERMODE_THINK);
+        
+        // reset method state variable
+        CallsOfModeItem = 0;
+    }
+    else if (CallsOfModeItem > MAX_CALLS_MODEITEM)
+    {
+        // if we are too long in Mode Item, think again
+        SetComputerMode (COMPUTERMODE_THINK);
+
+        // reset method state variable
+        CallsOfModeItem = 0;
     }
 }
 
@@ -1593,7 +1645,6 @@ void CAiBomber::ModeDefence (float DeltaTime)
         
         // Did we plant a bomb with a remote trigger?
         // Because we're out of danger, we may now detonate it.
-        
         if (m_pBomber->CanRemoteFuseBombs ())
         {
             // now find out if we planted some bombs
@@ -1636,14 +1687,6 @@ void CAiBomber::ModeDefence (float DeltaTime)
 
     bool DeadEnd = true;
     bool twoBombs = false; // are there two bombs beside us?
-    bool breaking = false; // first break executed.
-    
-    // a timestamp for the log
-    /*time_t long_time;
-    struct tm *newtime;
-
-    time( &long_time );
-    newtime = localtime( &long_time );*/
     
     // Scan the blocks of the AI view
     for (BlockX = m_BlockHereX - AI_VIEW_SIZE ; BlockX < m_BlockHereX + AI_VIEW_SIZE ; BlockX++)
@@ -1686,18 +1729,48 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     BestBlockY = BlockY;
                     BestDistance = m_Accessible[BlockX][BlockY];
                     DeadEnd = (m_pArena->m_DeadEnd[BlockX][BlockY] != -1);
-
-                    breaking = true;
-                    break;
                 }
             }
         }
-        
-        if (breaking) break;
     }
 
     float BestDangerTimeLeft;
+    
+#ifdef DEBUG_DRAW_BEST_BLOCKS_MODEDEFENCE
+    // debug display
+    BYTE r, g, b;
+    BYTE rbase, gbase, bbase;
+    int w, h;
 
+    m_pDisplay->RemoveAllDebugRectangles();
+
+    switch (m_Player)
+    {
+        case 0 :  rbase = 128; gbase = 128; bbase = 128; break; // white player
+        case 1 :  rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // black player
+        case 2 :  rbase = 128; gbase = 0  ; bbase = 0  ; break; // red   player
+        case 3 :  rbase = 0  ; gbase = 0  ; bbase = 128; break; // blue  player
+        case 4 :  rbase = 0  ; gbase = 128; bbase = 0  ; break; // green player
+        default : rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // ??
+    }
+    
+    r = rbase; g = gbase; b = bbase;
+    w = m_pArena->m_pArena->ToPosition(1);
+    h = m_pArena->m_pArena->ToPosition(1);
+    
+    if (m_pDisplay != NULL)
+    {
+        if (Found)
+        {
+            
+            m_pDisplay->DrawDebugRectangle (
+                m_pArena->m_pArena->ToPosition(BestBlockX), 
+                m_pArena->m_pArena->ToPosition(BestBlockY), 
+                w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
+        }
+    }
+#endif
+        
     if (!Found)
     {
         if (m_pBomber->CanKickBombs () || m_pBomber->CanPunchBombs ())
@@ -1741,6 +1814,18 @@ void CAiBomber::ModeDefence (float DeltaTime)
 
         if (Found)
         {
+#ifdef DEBUG_DRAW_BEST_BLOCKS_MODEDEFENCE
+            r += 64; g += 64; b += 64;
+            if (m_pDisplay != NULL)
+            {
+                    
+                m_pDisplay->DrawDebugRectangle (
+                    m_pArena->m_pArena->ToPosition(BestBlockX), 
+                    m_pArena->m_pArena->ToPosition(BestBlockY), 
+                    w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
+            }
+#endif
+
             if (m_BlockHereX - BestBlockX > 0)
             {
                 m_BomberMove = BOMBERMOVE_LEFT;
@@ -1911,6 +1996,17 @@ void CAiBomber::ModeDefence (float DeltaTime)
         ASSERT (BestBlockX != -1);
         ASSERT (BestBlockY != -1);
         
+#ifdef DEBUG_DRAW_BEST_BLOCKS_MODEDEFENCE
+            r += 127; g += 127; b += 127;
+            if (m_pDisplay != NULL)
+            {
+                    
+                m_pDisplay->DrawDebugRectangle (
+                    m_pArena->m_pArena->ToPosition(BestBlockX), 
+                    m_pArena->m_pArena->ToPosition(BestBlockY), 
+                    w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
+            }
+#endif
         // Set the bomber move to send to the bomber so that the bomber goes to the best block
         GoTo (BestBlockX, BestBlockY);
     }
@@ -1937,7 +2033,7 @@ si on est en danger
 si on a un ennemi devant soi et qu'on pourrait poser une bombe
     mode reflechir
 
-si ca fait une seconde qu'on se balade
+si ca fait une seconde ou bien 50 fois qu'on se balade
     mode reflechir
 
 donner une note d'interet a chaque quart de l'arene (le centre etant notre position)
@@ -1948,14 +2044,19 @@ enregistrer le mouvement
 
 void CAiBomber::ModeWalk (float DeltaTime)
 {
+    static unsigned int calls = 0;
     // Set no bomber action to send to the bomber (we are just walking!)
     m_BomberAction = BOMBERACTION_NONE;
+    
+    calls++;
     
     // If the bomber is in danger
     if (m_pArena->m_Danger[m_BlockHereX][m_BlockHereY] != DANGER_NONE)
     {
         // While walking we got into trouble! Decide what to do
         SetComputerMode (COMPUTERMODE_THINK);
+        
+        calls = 0;
 
         // Get out, mode is over
         return;
@@ -1965,6 +2066,8 @@ void CAiBomber::ModeWalk (float DeltaTime)
     {
         // Decide what to do
         SetComputerMode (COMPUTERMODE_THINK);
+        
+        calls = 0;
 
         // Get out, mode is over
         return;
@@ -1973,13 +2076,15 @@ void CAiBomber::ModeWalk (float DeltaTime)
     int BlockX;
     int BlockY;
 
-    if (m_WalkTime >= 1.0f)
+    if (m_WalkTime >= 1.0f || calls > 50)
     {
         SetComputerMode (COMPUTERMODE_THINK);
+        
+        calls = 0;
 
         return;
     }
-
+    
     int MarkDownRight = 0;
     int MarkDownLeft = 0;
     int MarkUpLeft = 0;
@@ -2296,7 +2401,7 @@ bool CAiBomber::GoTo (int GoalBlockX, int GoalBlockY)
                 BlockX++;
             }
         } // while
-
+        
         if (m_pArena->m_pArena->GetArenaCloser().GetNumberOfBlocksLeft() > 10)
         {
             float DangerTimeLeftHere = m_pArena->m_DangerTimeLeft[m_BlockHereX][m_BlockHereY];
@@ -2313,7 +2418,7 @@ bool CAiBomber::GoTo (int GoalBlockX, int GoalBlockY)
 
             ASSERT (DangerTimeLeftNext != -1.0f);
 
-            if (DangerTimeLeftNext == 0.0f || DangerTimeLeftHere - DangerTimeLeftNext >= 0.500f)
+            if (DangerTimeLeftHere > DangerTimeLeftNext)
             {
                 m_BomberMove = BOMBERMOVE_NONE;
             }
@@ -2366,20 +2471,25 @@ void CAiBomber::SetComputerMode (EComputerMode ComputerMode)
     m_ComputerMode = ComputerMode;
 
     // Write a console line to specify the mode switch
-/*    switch (m_ComputerMode)
+/*
+    switch (m_ComputerMode)
     {
 #ifdef WIN32
-        case COMPUTERMODE_THINK   : WriteConsole ("MODE THINK\n");      break;
-        case COMPUTERMODE_ITEM    : WriteConsole ("MODE ITEM\n");       break;
-        case COMPUTERMODE_ATTACK  : WriteConsole ("MODE ATTACK\n");     break;
-        case COMPUTERMODE_THROW   : WriteConsole ("MODE THROW\n");      break;        case COMPUTERMODE_DEFENCE : WriteConsole ("MODE DEFENCE\n");    break;
-        case COMPUTERMODE_WALK    : WriteConsole ("MODE WALK\n");       break;
+        case COMPUTERMODE_THINK     : WriteConsole ("MODE THINK\n");        break;
+        case COMPUTERMODE_ITEM      : WriteConsole ("MODE ITEM\n");         break;
+        case COMPUTERMODE_ATTACK    : WriteConsole ("MODE ATTACK\n");       break;
+        case COMPUTERMODE_THROW     : WriteConsole ("MODE THROW\n");        break;
+        case COMPUTERMODE_2NDACTION : WriteConsole ("MODE 2NDACTION\n");    break;
+        case COMPUTERMODE_DEFENCE   : WriteConsole ("MODE DEFENCE\n");      break;
+        case COMPUTERMODE_WALK      : WriteConsole ("MODE WALK\n");         break;
 #else
-        case COMPUTERMODE_THINK   : fprintf (stdout, "MODE THINK\n");   break;
-        case COMPUTERMODE_ITEM    : fprintf (stdout, "MODE ITEM\n");    break;
-        case COMPUTERMODE_ATTACK  : fprintf (stdout, "MODE ATTACK\n");  break;
-        case COMPUTERMODE_THROW   : fprintf (stdout, "MODE THROW\n");   break;        case COMPUTERMODE_DEFENCE : fprintf (stdout, "MODE DEFENCE\n"); break;
-        case COMPUTERMODE_WALK    : fprintf (stdout, "MODE WALK\n");    break;
+        case COMPUTERMODE_THINK     : fprintf (stdout, "%d\tMODE THINK\n", m_Player);       break;
+        case COMPUTERMODE_ITEM      : fprintf (stdout, "%d\tMODE ITEM\n", m_Player);        break;
+        case COMPUTERMODE_ATTACK    : fprintf (stdout, "%d\tMODE ATTACK\n", m_Player);      break;
+        case COMPUTERMODE_THROW     : fprintf (stdout, "%d\tMODE THROW\n", m_Player);       break;
+        case COMPUTERMODE_2NDACTION : fprintf (stdout, "%d\tMODE 2NDACTION\n", m_Player);   break;
+        case COMPUTERMODE_DEFENCE   : fprintf (stdout, "%d\tMODE DEFENCE\n", m_Player);     break;
+        case COMPUTERMODE_WALK      : fprintf (stdout, "%d\tMODE WALK\n", m_Player);        break;
 #endif
         default: break;
     }
@@ -2494,6 +2604,66 @@ void CAiBomber::UpdateAccessibility()
     } 
     while (Updated);
 
+    // if debug function enabled: draw some squares showing the accesibility
+#if defined(DEBUG_DRAW_ACCESSIBLE_BLOCKS) || defined(DEBUG_DRAW_PSEUDOACCESSIBLE_BLOCKS)
+    // debug display
+    BYTE r, g, b;
+    BYTE rbase, gbase, bbase;
+    int w, h;
+
+    m_pDisplay->RemoveAllDebugRectangles();
+#endif
+#ifdef DEBUG_DRAW_ACCESSIBLE_BLOCKS
+    switch (m_Player)
+    {
+        case 0 :  rbase = 128; gbase = 128; bbase = 128; break; // white player
+        case 1 :  rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // black player
+        case 2 :  rbase = 128; gbase = 0  ; bbase = 0  ; break; // red   player
+        case 3 :  rbase = 0  ; gbase = 0  ; bbase = 128; break; // blue  player
+        case 4 :  rbase = 0  ; gbase = 128; bbase = 0  ; break; // green player
+        default : rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // ??
+    }
+    
+    w = m_pArena->m_pArena->ToPosition(1);
+    h = m_pArena->m_pArena->ToPosition(1);
+    
+    if (m_pDisplay != NULL)
+    {
+        for (BlockX = m_BlockHereX - AI_VIEW_SIZE ; BlockX < m_BlockHereX + AI_VIEW_SIZE ; BlockX++)
+        {
+            for (BlockY = m_BlockHereY - AI_VIEW_SIZE ; BlockY < m_BlockHereY + AI_VIEW_SIZE ; BlockY++)
+            {
+                if (m_Accessible[BlockX][BlockY] > 0)
+                {
+                    r = rbase; g = gbase; b = bbase;
+                    switch (m_Player)
+                    {
+                        case 0 : case 1 : // white or black player
+                            r += m_Accessible[BlockX][BlockY] * 8;
+                            g += m_Accessible[BlockX][BlockY] * 8;
+                            b += m_Accessible[BlockX][BlockY] * 8;
+                            break;
+                        case 2:           // red player
+                            r += m_Accessible[BlockX][BlockY] * 8;
+                            break;
+                        case 3 :          // blue player
+                            b += m_Accessible[BlockX][BlockY] * 8;
+                            break;
+                        case 4:           // green player
+                            g += m_Accessible[BlockX][BlockY] * 8;
+                        default : continue;
+                    }
+                    
+		            m_pDisplay->DrawDebugRectangle (
+                        m_pArena->m_pArena->ToPosition(BlockX), 
+                        m_pArena->m_pArena->ToPosition(BlockY), 
+                        w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
+                }
+            }
+        }
+    }
+#endif
+
     //****************
     // PSEUDO ACCESSIBLE
     //****************
@@ -2585,6 +2755,45 @@ void CAiBomber::UpdateAccessibility()
         }
     } 
     while (Updated);
+
+    // if debug function enabled: draw some squares showing the accesibility
+#ifdef DEBUG_DRAW_PSEUDOACCESSIBLE_BLOCKS
+    // debug display
+    switch (m_Player)
+    {
+        case 0 :  rbase = 128; gbase = 128; bbase = 128; break; // white player
+        case 1 :  rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // black player
+        case 2 :  rbase = 128; gbase = 0  ; bbase = 0  ; break; // red   player
+        case 3 :  rbase = 0  ; gbase = 0  ; bbase = 128; break; // blue  player
+        case 4 :  rbase = 0  ; gbase = 128; bbase = 0  ; break; // green player
+        default : rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // ??
+    }
+    
+    w = m_pArena->m_pArena->ToPosition(1);
+    h = m_pArena->m_pArena->ToPosition(1);
+    
+    if (m_pDisplay != NULL)
+    {
+        for (BlockX = m_BlockHereX - AI_VIEW_SIZE ; BlockX < m_BlockHereX + AI_VIEW_SIZE ; BlockX++)
+        {
+            for (BlockY = m_BlockHereY - AI_VIEW_SIZE ; BlockY < m_BlockHereY + AI_VIEW_SIZE ; BlockY++)
+            {
+                if (m_PseudoAccessible[BlockX][BlockY] > 0)
+                {
+                    r = rbase + m_PseudoAccessible[BlockX][BlockY] * 8;
+                    g = gbase + m_PseudoAccessible[BlockX][BlockY] * 8;
+                    b = bbase + m_PseudoAccessible[BlockX][BlockY] * 8;
+                    
+		            m_pDisplay->DrawDebugRectangle (
+                        m_pArena->m_pArena->ToPosition(BlockX), 
+                        m_pArena->m_pArena->ToPosition(BlockY), 
+                        w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
+                }
+            }
+        }
+    }
+#endif
+
 }
 
 //******************************************************************************************************************************

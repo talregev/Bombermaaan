@@ -4,7 +4,4 @@ Maximized=1
 Geometry=1280x953+0+25
 
 [Execution]
-Program arguments=
-Run in terminal=1
-Program uri=file:///home/otto/Projects/Bombermaaan/Bombermaaan/Bombermaaan
-Stop at beginning=1
+Run in terminal=2

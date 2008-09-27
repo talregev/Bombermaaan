@@ -569,6 +569,7 @@ void CVictory::Display (void)
                 } else {
 
                     // Should never happen
+                    OffsetY = CROWD_OFFSET_SITDOWN;
                     ASSERT( false );
 
                 }

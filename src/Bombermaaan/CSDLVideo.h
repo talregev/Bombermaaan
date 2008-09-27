@@ -103,6 +103,51 @@ struct SDrawingRequest
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+// Drawing request for debug purposes
+
+struct SDebugDrawingRequest
+{
+    int PositionX;        //!< Position X where to draw the sprite (using CDisplay origin)
+    int PositionY;        //!< Position Y where to draw the sprite (using CDisplay origin)
+    int ZoneX1;           // Zone to draw in the selected sprite
+    int ZoneY1;
+    int ZoneX2;
+    int ZoneY2;
+    
+    // rectangle colour
+    Uint8 R;
+    Uint8 G;
+    Uint8 B;
+    
+    int SpriteLayer;      //!< Number of the layer where the sprite has to be drawn
+    int PriorityInLayer;  //!< PriorityInLayer value inside the layer.
+
+    #define PRIORITY_UNUSED     -1
+    
+    // Operators used by STL's PriorityInLayer_queue when sorting
+    // The top layer on the screen is the greatest layer number
+    // The top priority is the greatest priority value
+
+    bool operator < (const SDebugDrawingRequest &DR) const 
+    { 
+        return SpriteLayer > DR.SpriteLayer 
+               ||
+               (
+                SpriteLayer == DR.SpriteLayer &&
+                PriorityInLayer > DR.PriorityInLayer
+               ); 
+    }
+    bool operator == (const SDebugDrawingRequest &DR) const 
+    { 
+        return SpriteLayer == DR.SpriteLayer &&
+               PriorityInLayer == DR.PriorityInLayer; 
+    }
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
 struct SSurface
 {
 	struct SDL_Surface		*pSurface;			//!< SDL surface
@@ -124,11 +169,12 @@ private:
     int                     m_Height;                       //!< Display height when fullscreen
     int                     m_Depth;                        //!< Display depth when fullscreen
     bool                    m_FullScreen;                   //!< Is it fullscreen?
-	SDL_Surface				*m_pBackBuffer;					//!< Backbuffer surface
-    SDL_Surface				*m_pPrimary;                    //!< Primary surface
+    SDL_Surface             *m_pBackBuffer;					//!< Backbuffer surface
+    SDL_Surface             *m_pPrimary;                    //!< Primary surface
     vector<SSurface>        m_Surfaces;                     //!< Surfaces
     DWORD                   m_ColorKey;                     //!< Color key for transparent surfaces
     priority_queue<SDrawingRequest> m_DrawingRequests;      //!< Automatically sorted drawing requests queue
+    vector<SDebugDrawingRequest> m_DebugDrawingRequests;    //!< vector of drawing requests for debugging purposes
     vector<vector<SSprite> > m_SpriteTables;                //!< Available sprite tables
     int                     m_OriginX;                      //!< Origin position where to draw from
     int                     m_OriginY;
@@ -144,7 +190,7 @@ public:
     ~CSDLVideo (void);
 
 
-	inline void             SetWindowHandle (HWND hWnd);
+    inline void             SetWindowHandle (HWND hWnd);
     bool                    Create (int Width, int Height, int Depth, bool FullScreen);
     void                    Destroy (void);
     bool                    SetTransparentColor (int Red, int Green, int Blue);
@@ -156,8 +202,10 @@ public:
     void                    UpdateAll (void);
     void                    UpdateScreen (void);
     inline void             SetOrigin (int OriginX, int OriginY);
-	inline void				SetNewPrimary (SDL_Surface *pSurface);
+    inline void             SetNewPrimary (SDL_Surface *pSurface);
     void                    DrawSprite (int PositionX, int PositionY, RECT *pZone, RECT *pClip, int SpriteTable, int Sprite, int SpriteLayer, int PriorityInLayer);
+    void                    DrawDebugRectangle (int PositionX, int PositionY, int w, int h, Uint8 r, Uint8 g, Uint8 b, int SpriteLayer, int PriorityInLayer);
+    void                    RemoveAllDebugRectangles ();
     inline bool             IsModeSet (int Width, int Height, int Depth, bool FullScreen);
     bool                    IsModeAvailable (int Width, int Height, int Depth);
 };

@@ -288,8 +288,8 @@ void CBomb::Crush (void)
 //******************************************************************************************************************************
 
 // Shorten the time left before the bomb explodes. This
-// is called by flames touching the bomb. The bomb will
-// then explode very soon.
+// is called by flames touching the bomb or by the remote
+// trigger. The bomb will then explode very soon.
 
 void CBomb::Burn (void)
 {

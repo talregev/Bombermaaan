@@ -28,6 +28,7 @@
 #include "STDAFX.H"
 #include "COptions.h"
 #include "CInput.h"
+#include "CArena.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -569,7 +570,37 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
 
 		// Close the level file
         in.close();
-    
+
+        // check if maximum number of items is not exceeded
+        // we do this, because if there is a draw game when many bombers die
+        // they all lose their items at the same time.
+        unsigned int sumOfMaxItems = 0;
+        unsigned int i;
+
+        // count items in walls
+        for (i = ITEM_NONE + 1; i < NUMBER_OF_ITEMS; i++)
+        {
+            sumOfMaxItems += m_NumberOfItemsInWalls[CurrentLevel][i];
+        }
+
+        // count initial bomber skills (note: count the worst case with five players)
+        for (i = BOMBERSKILL_DUMMYFIRST + 1; i < NUMBER_OF_BOMBERSKILLS; i++)
+        {
+            // initial skills like bombs and flames will not be lost
+            if (i != BOMBERSKILL_FLAME && i != BOMBERSKILL_BOMBS)
+                sumOfMaxItems += m_InitialBomberSkills[CurrentLevel][i] * MAX_PLAYERS;
+        }
+        
+        // too many items?
+        if (sumOfMaxItems > MAX_ITEMS)
+        {
+            // Log there is a problem
+            theLog.WriteLine ("Options         => !!! Level file is incorrect (Too many items: %d of %d allowed).", sumOfMaxItems, MAX_ITEMS);
+
+            // Stop loading levels
+            ErrorOccurred = true;
+        }
+
         // If there wasn't any problem
         if (!ErrorOccurred)
         {
@@ -697,8 +728,7 @@ bool COptions::LoadLevel_Version1( ifstream& File, int CurrentLevel ) {
     m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] = 0;
     m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] = 0;
 	m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] = 0;
-
-
+    
     return !StopReadingFile;
 
 }

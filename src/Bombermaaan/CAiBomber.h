@@ -71,6 +71,7 @@ class CAiBomber
 private:
 
     CAiArena*       m_pArena;
+    CDisplay*       m_pDisplay;
     int             m_Player;
     int             m_Accessible [ARENA_WIDTH][ARENA_HEIGHT];           // If this block is not accessible to the bomber (walls and bombs are obstacles), this contains -1. Otherwise this contains the distance (in blocks) between the bomber and the square.
     int             m_PseudoAccessible [ARENA_WIDTH][ARENA_HEIGHT];
@@ -119,6 +120,7 @@ public:
                     CAiBomber (void);
     virtual         ~CAiBomber (void);
     inline void     SetArena (CAiArena* pArena);
+    inline void     SetDisplay (CDisplay* pDisplay);
     void            Create (int Player);
     void            Destroy (void);
     void            Update (float DeltaTime);
@@ -133,6 +135,15 @@ inline void CAiBomber::SetArena (CAiArena* pArena)
     ASSERT (pArena != NULL);
     m_pArena = pArena;
 }
+
+inline void CAiBomber::SetDisplay (CDisplay *pDisplay)
+{
+    ASSERT (pDisplay != NULL);
+    
+    // Save the display object pointer to pass to elements
+    m_pDisplay = pDisplay;
+}
+
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

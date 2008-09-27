@@ -638,6 +638,58 @@ void CDirectDraw::DrawSprite (int PositionX,
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+void CDirectDraw::DrawDebugRectangle (int PositionX, 
+                                      int PositionY, 
+                                      int w, int h,
+                                      BYTE r, BYTE g, BYTE b,
+                                      int SpriteLayer, 
+                                      int PriorityInLayer)
+{
+    // Prepare a drawing request
+    SDebugDrawingRequest DrawingRequest;
+
+    // Use the desired position
+    DrawingRequest.PositionX = PositionX;
+    DrawingRequest.PositionY = PositionY;
+    
+    // Use the zone of the sprite
+    DrawingRequest.ZoneX1 = 0;
+    DrawingRequest.ZoneY1 = 0;
+    DrawingRequest.ZoneX2 = w;
+    DrawingRequest.ZoneY2 = h;
+    
+    // rectangle colour
+    DrawingRequest.R = r;
+    DrawingRequest.G = g;
+    DrawingRequest.B = b;
+
+    // Finish preparing the drawing request
+    DrawingRequest.PositionX += m_OriginX;
+    DrawingRequest.PositionY += m_OriginY;
+    DrawingRequest.SpriteLayer = SpriteLayer;
+    DrawingRequest.PriorityInLayer = PriorityInLayer;
+    
+    // Store it (automatic sort)
+    m_DebugDrawingRequests.push_back(DrawingRequest);
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+void CDirectDraw::RemoveAllDebugRectangles ()
+{
+   m_DebugDrawingRequests.clear();
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
 //! Makes the display black.
 
 void CDirectDraw::Clear ()
@@ -972,6 +1024,16 @@ void CDirectDraw::FreeSprites (void)
 
 void CDirectDraw::UpdateAll (void)
 {
+    // we need the pixel format for drawing the debug rectangles
+    static DDPIXELFORMAT pf;
+    static bool pixelFormatSet = false;
+
+    // how many bits for each RGB color component in a pixel data
+    static WORD wRBitCount = (WORD)-1;
+    static WORD wGBitCount = (WORD)-1;
+    static WORD wBBitCount = (WORD)-1;
+    static WORD BPP;
+
     // While all the drawing requests have not been executed
     while (!m_DrawingRequests.empty())
     {   
@@ -998,6 +1060,160 @@ void CDirectDraw::UpdateAll (void)
         // Pop the drawing request to go to the next
         m_DrawingRequests.pop();
     }
+
+    vector<SDebugDrawingRequest>::iterator it;
+
+    // Debug rectangles?
+    if (m_DebugDrawingRequests.size() > 0)
+    {
+        DDSURFACEDESC2 ddsd;
+
+        if (!pixelFormatSet)
+        {
+            ZeroMemory (&pf, sizeof (pf));
+            pf.dwSize = sizeof (pf);
+            HRESULT hRet = m_pPrimary->GetPixelFormat (&pf);
+
+            // If it failed
+            if (hRet != DD_OK)
+                return;
+
+            pixelFormatSet = true;
+
+            wRBitCount = GetNumberOfBits (pf.dwRBitMask);
+            wGBitCount = GetNumberOfBits (pf.dwGBitMask);
+            wBBitCount = GetNumberOfBits (pf.dwBBitMask);
+            BPP = pf.dwRGBBitCount;
+        }
+
+        // valid pixel formats for our alpha blending method?
+        if (BPP == 16 || BPP == 24 || BPP == 32)
+        {
+
+	        ZeroMemory(&ddsd, sizeof(ddsd));
+	        ddsd.dwSize = sizeof(ddsd);
+
+            // Lock Backbuffer Surface
+            m_pBackBuffer->Lock(NULL, &ddsd, DDLOCK_WAIT, NULL);
+
+            for (it = m_DebugDrawingRequests.begin(); it < m_DebugDrawingRequests.end(); it++)
+            {   
+                // Save the top drawing request
+                const SDebugDrawingRequest &DR = *it;
+
+                // determine colour
+                DWORD r = (DR.R >> (8 - wGBitCount)) << (wGBitCount + wBBitCount);
+                DWORD g = (DR.G >> (8 - wGBitCount)) << wBBitCount;
+                DWORD b = (DR.B >> (8 - wBBitCount));
+
+                // Rectangle for the pixels to blit
+                RECT BlitRect;
+                BlitRect.left = DR.PositionX;
+                BlitRect.top = DR.PositionY;
+                BlitRect.right = DR.PositionX + DR.ZoneX2;
+                BlitRect.bottom = DR.PositionY + DR.ZoneY2;
+
+                // check valid values
+                if (BlitRect.left < 0 || BlitRect.right < 0 ||
+                    BlitRect.bottom < 0 || BlitRect.top < 0)
+                    continue;
+                if ((DWORD)BlitRect.left > ddsd.dwWidth || (DWORD)BlitRect.right > ddsd.dwWidth ||
+                    (DWORD)BlitRect.bottom > ddsd.dwHeight || (DWORD)BlitRect.top > ddsd.dwHeight)
+                    continue;
+                if (BlitRect.left > BlitRect.right || BlitRect.bottom < BlitRect.top)
+                    continue;
+
+                // Apply Alpha Blending
+                BYTE *SurfacePointer = (BYTE*)ddsd.lpSurface;
+                DWORD Result;
+                DWORD SourceColour;
+                DWORD DestColour = (r | g | b);
+                int register X, Y;
+                LONG Pitch = ddsd.lPitch;
+                WORD Skip;
+
+                switch (BPP)
+                {
+                    case 16:
+                        Skip = (WORD)(Pitch - (2 * DR.ZoneX2));
+        		        SurfacePointer += (BlitRect.top * Pitch) + (BlitRect.left * 2);
+
+                        Y = DR.ZoneY2;
+                        do
+                        {
+                            X = DR.ZoneX2;
+                            do
+                            {
+                                SourceColour = *((WORD*)SurfacePointer);
+
+                                Result = ((SourceColour & 0xF7DE) >> 1) +
+                                         ((DestColour & 0xF7DE) >> 1);
+
+					            *((WORD*)SurfacePointer) = Result;
+					            SurfacePointer += 2;
+                            }
+                            while (--X > 0);
+                            SurfacePointer += Skip;
+                        }
+                        while (--Y > 0);
+                        break;
+                    case 24:
+                        Skip = (WORD)(Pitch - (3 * DR.ZoneX2));
+        		        SurfacePointer += (BlitRect.top * Pitch) + (BlitRect.left * 3);
+
+                        Y = DR.ZoneY2;
+                        do
+                        {
+                            X = DR.ZoneX2;
+                            do
+                            {
+                                SourceColour = *((DWORD*)SurfacePointer);
+                                Result = ((SourceColour & 0xFEFEFE) >> 1) +
+                                    ((DestColour & 0xFEFEFE) >> 1);
+
+					            *((WORD*)SurfacePointer) = (WORD)(Result & 0xFFFF);
+					            SurfacePointer += 2;
+					            *SurfacePointer = (BYTE)(Result >> 16);
+					            SurfacePointer++;
+                            }
+                            while (--X > 0);
+                            SurfacePointer += Skip;
+                        }
+                        while (--Y > 0);
+                        break;
+                    case 32:
+                        Skip = (WORD)(Pitch - (4 * DR.ZoneX2));
+        		        SurfacePointer += (BlitRect.top * Pitch) + (BlitRect.left * 4);
+
+                        Y = DR.ZoneY2;
+                        do
+                        {
+                            X = DR.ZoneX2;
+                            do
+                            {
+                                SourceColour = *((DWORD*)SurfacePointer);
+                                Result = ((SourceColour & 0xFEFEFE) >> 1) +
+                                    ((DestColour & 0xFEFEFE) >> 1);
+
+					            *((WORD*)SurfacePointer) = (WORD)(Result & 0xFFFF);
+					            SurfacePointer += 2;
+					            *SurfacePointer = (BYTE)(Result >> 16);
+					            SurfacePointer += 2;
+                            }
+                            while (--X > 0);
+                            SurfacePointer += Skip;
+                        }
+                        while (--Y > 0);
+                        break;
+                    default:
+                        break;
+                } // switch
+            } // for
+        } // if
+
+        // Unlock Surface
+        m_pBackBuffer->Unlock(NULL);
+    } // if
 
     UpdateScreen ();
 }

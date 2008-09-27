@@ -38,6 +38,7 @@
 
 CAiManager::CAiManager (void)
 {
+    m_pDisplay = NULL;
     for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
         m_pBombers[Player] = NULL;
 }
@@ -63,10 +64,12 @@ void CAiManager::Create (COptions* pOptions)
         {
             m_pBombers[Player] = new CAiBomber;
             m_pBombers[Player]->SetArena(&m_Arena);
+            m_pBombers[Player]->SetDisplay(m_pDisplay);
             m_pBombers[Player]->Create(Player);
         }
     }
 
+    m_Arena.SetDisplay(m_pDisplay);
     m_Arena.Create();
 }
 

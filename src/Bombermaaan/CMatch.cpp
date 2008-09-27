@@ -146,6 +146,7 @@ void CMatch::Create (void)
     }
     
     if ( computerPlayersPresent ) {
+        m_AiManager.SetDisplay(m_pDisplay);
         m_AiManager.Create(m_pOptions);
     }
 }

@@ -321,7 +321,8 @@ bool CWall::Update (float DeltaTime)
                 for (Index = 0 ; Index < m_pArena->MaxWalls() ; Index++)
                 {
                     // Test position
-                    if (&m_pArena->GetWall(Index) != this &&    // Not this one! **** perhaps the type != falling should be
+                    if (m_pArena->GetWall(Index).Exist() &&
+                        &m_pArena->GetWall(Index) != this &&    // Not this one! **** perhaps the type != falling should be
                         m_pArena->GetWall(Index).GetBlockX() == m_BlockX &&   // **** tested instead of this obscure ptr thing
                         m_pArena->GetWall(Index).GetBlockY() == m_BlockY)
                     {

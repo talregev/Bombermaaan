@@ -26,6 +26,23 @@
 #include "STDAFX.H"
 #include "CAiArena.h"
 
+#define AIARENADEBUG_SPRITELAYER        70
+
+// if you want to visualise softwall blocks, uncomment:
+//#define DEBUG_DRAW_SOFTWALL_BLOCKS
+
+// if you want to visualise danger and "wall burn" blocks, uncomment:
+//#define DEBUG_DRAW_BURNWALLDANGER_BLOCKS
+
+// if you want to visualise the owner of a bomb, uncomment
+//#define DEBUG_DRAW_BOMB_OWNERS
+
+#ifdef DEBUG_DRAW_BURNWALLDANGER_BLOCKS
+#include "CFont.h"
+
+static CFont m_Font;
+#endif
+
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -37,6 +54,7 @@
 CAiArena::CAiArena (void)
 {
     m_pArena = NULL;
+    m_pDisplay = NULL;
 }
 
 //******************************************************************************************************************************
@@ -55,6 +73,17 @@ CAiArena::~CAiArena (void)
 void CAiArena::Create (void)
 {
     ASSERT (m_pArena != NULL);
+
+#ifdef DEBUG_DRAW_BURNWALLDANGER_BLOCKS
+    m_Font.SetDisplay(m_pDisplay);
+                    
+    m_Font.Create ();
+    m_Font.SetShadow (true);
+    m_Font.SetShadowColor (FONTCOLOR_BLACK);
+    m_Font.SetShadowDirection (SHADOWDIRECTION_DOWNRIGHT);
+    m_Font.SetSpriteLayer (800);
+    m_Font.SetTextColor(FONTCOLOR_WHITE);
+#endif
 }
 
 //******************************************************************************************************************************
@@ -63,6 +92,10 @@ void CAiArena::Create (void)
 
 void CAiArena::Destroy (void)
 {
+#if defined(DEBUG_DRAW_SOFTWALL_BLOCKS) || defined (DEBUG_DRAW_BURNWALLDANGER_BLOCKS) || defined (DEBUG_DRAW_BOMB_OWNERS)
+    if (m_pDisplay != NULL)
+        m_pDisplay->RemoveAllDebugRectangles();
+#endif
 }
 
 
@@ -82,7 +115,7 @@ void CAiArena::Update (float DeltaTime)
     bool IsWallDown;
     bool IsWallLeft;
     bool IsWallRight;
-
+    
     // Current dead end number. Incremented each time there is a new dead end.
     int CurrentDeadEnd = 0;
 
@@ -428,6 +461,44 @@ void CAiArena::Update (float DeltaTime)
             } // if
         } // for
     } // for
+    
+    // if debug function enabled: draw some squares showing the accesibility
+#if defined(DEBUG_DRAW_SOFTWALL_BLOCKS) || defined(DEBUG_DRAW_BURNWALLDANGER_BLOCKS) || defined(DEBUG_DRAW_BOMB_OWNERS)
+    // debug display
+    BYTE r, g, b;
+    BYTE rbase, gbase, bbase;
+    int w, h;
+
+    m_pDisplay->RemoveAllDebugRectangles();
+#endif
+#ifdef DEBUG_DRAW_SOFTWALL_BLOCKS
+    rbase = 128; gbase = 128; bbase = 128; 
+    
+    w = m_pArena->ToPosition(1);
+    h = m_pArena->ToPosition(1);
+    
+    if (m_pDisplay != NULL)
+    {
+        m_pDisplay->RemoveAllDebugRectangles();
+        for (BlockX = 0 ; BlockX < ARENA_WIDTH ; BlockX++)
+        {
+            for (BlockY = 0 ; BlockY < ARENA_HEIGHT ; BlockY++)
+            {
+                if (m_SoftWallNear[BlockX][BlockY] > 0)
+                {
+                    r = rbase + m_SoftWallNear[BlockX][BlockY] * 8;
+                    g = gbase + m_SoftWallNear[BlockX][BlockY] * 8;
+                    b = bbase + m_SoftWallNear[BlockX][BlockY] * 8;
+                    
+		            m_pDisplay->DrawDebugRectangle (
+                        m_pArena->ToPosition(BlockX), 
+                        m_pArena->ToPosition(BlockY), 
+                        w, h, r, g, b, AIARENADEBUG_SPRITELAYER, PRIORITY_UNUSED);
+                }
+            }
+        }
+    }
+#endif
 
     //*************
     // DANGER AND BURNING WALL AND BURNING SOON WALL
@@ -447,290 +518,439 @@ void CAiArena::Update (float DeltaTime)
             m_WallBurn[BlockX][BlockY] = m_pArena->IsBurningWall(BlockX, BlockY);
         }
     }
-
-    // Scan each block of the arena
-    for (BlockX = 0 ; BlockX < ARENA_WIDTH ; BlockX++)
+    
+    // create an index array for the bombs
+    // each element represents a bomb. its value is the index to the bomb which
+    // will ignite this bomb.
+    int *BombIndex = new int[m_pArena->MaxBombs()];
+    if (BombIndex == NULL) return;
+    
+    for (int Index = 0; Index < m_pArena->MaxBombs(); Index++)
     {
-        for (BlockY = 0 ; BlockY < ARENA_HEIGHT ; BlockY++)
+        BombIndex[Index] = Index; // start with the bomb itself
+    }
+
+    // Was there an update?
+    bool Updated;
+    
+    // Scan each block of the arena
+    do {
+        Updated = false;
+        
+        for (BlockX = 0 ; BlockX < ARENA_WIDTH ; BlockX++)
         {
-            // If there is a flame or a wall on this block
-            if (m_pArena->IsFlame (BlockX, BlockY) || m_pArena->IsWall (BlockX, BlockY))
+            for (BlockY = 0 ; BlockY < ARENA_HEIGHT ; BlockY++)
             {
-                // This block is mortal
-                m_Danger[BlockX][BlockY] = DANGER_MORTAL;
-                m_DangerTimeLeft[BlockX][BlockY] = 0.0f;
-            }
-            // If there is a bomb on this block
-            else if (m_pArena->IsBomb (BlockX, BlockY))
-            {
-                // This block will at least soon be mortal (but it can already be mortal)
-                if (m_Danger[BlockX][BlockY] == DANGER_NONE)
-                    m_Danger[BlockX][BlockY] = DANGER_SOON;
-
-                float TimeLeft = -1.0f;
-                int FlameSize = -1;
-
-                for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
+                // If there is a flame or a wall on this block
+                if (m_pArena->IsFlame (BlockX, BlockY) || m_pArena->IsWall (BlockX, BlockY))
                 {
-                    if (m_pArena->GetBomb(Index).GetBlockX() == BlockX &&
-                        m_pArena->GetBomb(Index).GetBlockY() == BlockY)
-                    {
-                        FlameSize = m_pArena->GetBomb(Index).GetFlameSize();
-                        TimeLeft = m_pArena->GetBomb(Index).GetTimeLeft();
-                        break;
-                    }
+                    // This block is mortal
+                    m_Danger[BlockX][BlockY] = DANGER_MORTAL;
+                    m_DangerTimeLeft[BlockX][BlockY] = 0.0f;
                 }
-
-                ASSERT (TimeLeft != -1.0f);
-                ASSERT (FlameSize != -1);
-
-                if (FlameSize >= 4)
+                // If there is a bomb on this block
+                else if (m_pArena->IsBomb (BlockX, BlockY))
                 {
-                    switch (FlameSize)
-                    {
-                        case 4  : FlameSize =  5; break;
-                        case 5  : FlameSize =  7; break;
-                        case 6  : FlameSize =  8; break;
-                        default : FlameSize = 99; break;
-                    }
-                }
+                    // This block will at least soon be mortal (but it can already be mortal)
+                    if (m_Danger[BlockX][BlockY] == DANGER_NONE)
+                        m_Danger[BlockX][BlockY] = DANGER_SOON;
 
-                int Depth;
-                
-                // Block coordinates used to scan the blocks where the bomb creates danger
-                int DangerBlockX;
-                int DangerBlockY;
-                
-                // Auxiliary variables for code readability : is there a wall/bomb on the current block?
-                bool IsWall;
-                bool IsBomb;
-
-                // Start scanning on this block
-                DangerBlockX = BlockX;
-                DangerBlockY = BlockY;
-                Depth = 0;
-
-                // No wall and no bomb on the current block
-                IsWall = false;
-                IsBomb = false;
-
-                // While there is no wall or bomb that could stop the explosion flames
-                while (true)
-                {
-                    // If there is a bomb where we are scanning or if we scanned deep enough
-                    if (IsBomb || Depth > FlameSize)
-                    {                    
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is a wall where we are scanning
-                    else if (IsWall)
-                    {
-                        // If this is a soft wall
-                        if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
-                        {
-                            // Then this wall will soon burn
-                            m_WallBurn[DangerBlockX][DangerBlockY] = true;
-                        }
-
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is no bomb and no wall on the block where we are scanning
-                    else
-                    {
-                        // If no danger was recorded on this block
-                        if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
-                        {
-                            // This block will soon be mortal
-                            m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
-                        }
-
-                        if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
-                        {
-                            m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
-                        }
-                    }
-
-                    // Continue scanning (go right)
-                    DangerBlockX++;
-                    Depth++;            // Go deeper
-
-                    // Update auxiliary variables
-                    IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
-                    IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
-                }
-
-                // Start scanning on this block
-                DangerBlockX = BlockX;
-                DangerBlockY = BlockY;
-                Depth = 0;
-
-                // No wall and no bomb on the current block
-                IsWall = false;
-                IsBomb = false;
-
-                // While there is no wall or bomb that could stop the explosion flames
-                while (true)
-                {
-                    // If there is a bomb where we are scanning or if we scanned deep enough
-                    if (IsBomb || Depth > FlameSize)
-                    {
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is a wall where we are scanning
-                    else if (IsWall)
-                    {
-                        // If this is a soft wall
-                        if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
-                        {
-                            // Then this wall will soon burn
-                            m_WallBurn[DangerBlockX][DangerBlockY] = true;
-                        }
-
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is no bomb and no wall on the block where we are scanning
-                    else
-                    {
-                        // If no danger was recorded on this block
-                        if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
-                        {
-                            // This block will soon be mortal
-                            m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
-                        }
-
-                        if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
-                        {
-                            m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
-                        }
-                    }
+                    float TimeLeft = -1.0f;
+                    int FlameSize = -1;
+                    bool IgnoreBomb = false;
+                    int ThisBombIndex = -1;
                     
-                    // Continue scanning (go left)
-                    DangerBlockX--;
-                    Depth++;            // Go deeper
-
-                    // Update auxiliary variables
-                    IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
-                    IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
-                }
-
-                // Start scanning on this block
-                DangerBlockX = BlockX;
-                DangerBlockY = BlockY;
-                Depth = 0;
-
-                // No wall and no bomb on the current block
-                IsWall = false;
-                IsBomb = false;
-
-                // While there is no wall or bomb that could stop the explosion flames
-                while (true)
-                {
-                    // If there is a bomb where we are scanning or if we scanned deep enough
-                    if (IsBomb || Depth > FlameSize)
+                    for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
                     {
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is a wall where we are scanning
-                    else if (IsWall)
-                    {
-                        // If this is a soft wall
-                        if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
+                        if (m_pArena->GetBomb(Index).GetBlockX() == BlockX &&
+                            m_pArena->GetBomb(Index).GetBlockY() == BlockY)
                         {
-                            // Then this wall will soon burn
-                            m_WallBurn[DangerBlockX][DangerBlockY] = true;
-                        }
-
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is no bomb and no wall on the block where we are scanning
-                    else
-                    {
-                        // If no danger was recorded on this block
-                        if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
-                        {
-                            // This block will soon be mortal
-                            m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
-                        }
-
-                        if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
-                        {
-                            m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
+                            FlameSize = m_pArena->GetBomb(Index).GetFlameSize();
+                            // Time left will be propagated to all bombs being ignited by this bomb
+                            TimeLeft = m_pArena->GetBomb(BombIndex[Index]).GetTimeLeft();
+                            // ignore bomb: when we don't know when a bomb explodes
+                            // we can't know when the soft walls around will disappear
+                            ThisBombIndex = BombIndex[Index];
+                            IgnoreBomb = m_pArena->GetBomb(Index).IsRemote() &&
+                                !m_pArena->GetBomber(m_pArena->GetBomb(Index).GetOwnerPlayer()).IsAlive();
+                            break;
                         }
                     }
+
+                    ASSERT (TimeLeft != -1.0f);
+                    ASSERT (FlameSize != -1);
+                    ASSERT (ThisBombIndex != -1);
+
+                    if (FlameSize >= 4)
+                    {
+                        switch (FlameSize)
+                        {
+                            case 4  : FlameSize =  5; break;
+                            case 5  : FlameSize =  7; break;
+                            case 6  : FlameSize =  8; break;
+                            default : FlameSize = 99; break;
+                        }
+                    }
+
+                    int Depth;
                     
-                    // Continue scanning (go up)
-                    DangerBlockY--;
-                    Depth++;            // Go deeper
-
-                    // Update auxiliary variables
-                    IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
-                    IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
-                }
-
-                // Start scanning on this block
-                DangerBlockX = BlockX;
-                DangerBlockY = BlockY;
-                Depth = 0;
-
-                // No wall and no bomb on the current block
-                IsWall = false;
-                IsBomb = false;
-
-                // While there is no wall or bomb that could stop the explosion flames
-                while (true)
-                {
-                    // If there is a bomb where we are scanning or if we scanned deep enough
-                    if (IsBomb || Depth > FlameSize)
-                    {
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is a wall where we are scanning
-                    else if (IsWall)
-                    {
-                        // If this is a soft wall
-                        if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
-                        {
-                            // Then this wall will soon burn
-                            m_WallBurn[DangerBlockX][DangerBlockY] = true;
-                        }
-
-                        // Stop scanning.
-                        break;
-                    }
-                    // If there is no bomb and no wall on the block where we are scanning
-                    else
-                    {
-                        // If no danger was recorded on this block
-                        if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
-                        {
-                            // This block will soon be mortal
-                            m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
-                        }
-
-                        if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
-                        {
-                            m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
-                        }
-                    }
+                    // Block coordinates used to scan the blocks where the bomb creates danger
+                    int DangerBlockX;
+                    int DangerBlockY;
                     
-                    // Continue scanning (go down)
-                    DangerBlockY++;
-                    Depth++;            // Go deeper
+                    // Auxiliary variables for updating the timeleft when another bomb
+                    // was found which may ignite the bomb we're currently dealing with
+                    int UpdateX;
+                    int UpdateY;
+                    
+                    // Auxilary variable for the time left on the current block
+                    float TimeLeftHere;
+                    
+                    // Auxiliary variables for code readability : is there a wall/bomb on the current block?
+                    bool IsWall;
+                    bool IsBomb;
+                    
+                    // Start scanning on this block
+                    DangerBlockX = BlockX;
+                    DangerBlockY = BlockY;
+                    Depth = 0;
 
-                    // Update auxiliary variables
-                    IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
-                    IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
-                }
-            } // if
+                    // No wall and no bomb on the current block
+                    IsWall = false;
+                    IsBomb = false;
+                    
+                    // While there is no wall or bomb that could stop the explosion flames
+                    while (true)
+                    {
+                        // If there is a bomb where we are scanning or if we scanned deep enough
+                        if (IsBomb || Depth > FlameSize)
+                        {
+                            // Update time left if this bomb might ignite the other
+                            for (int Index = 0 ; IsBomb && Index < m_pArena->MaxBombs() ; Index++)
+                            {
+                                if (m_pArena->GetBomb(Index).GetBlockX() == DangerBlockX &&
+                                    m_pArena->GetBomb(Index).GetBlockY() == DangerBlockY)
+                                {
+                                    TimeLeftHere = m_pArena->GetBomb(BombIndex[Index]).GetTimeLeft();
+                                    if (TimeLeft > TimeLeftHere)
+                                    {
+                                        TimeLeft = TimeLeftHere;
+                                        Updated = true;
+                                        
+                                        // update timeleft on the blocks which have been passed
+                                        for (UpdateX = BlockX; UpdateX <= DangerBlockX; UpdateX++)
+                                            m_DangerTimeLeft[UpdateX][DangerBlockY] = TimeLeft;
+                                        
+                                        // update BombIndex array elements
+                                        for (int i = 0; i < m_pArena->MaxBombs(); i++)
+                                            if (BombIndex[i] == ThisBombIndex)
+                                                BombIndex[i] = BombIndex[Index];
+                                    }
+                                    
+                                    break;
+                                }
+                            }
+                            
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is a wall where we are scanning
+                        else if (IsWall)
+                        {
+                            // If this is a soft wall
+                            if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
+                            {
+                                // Then this wall will soon burn (unless we think we can ignore the bomb)
+                                // in this case it is uncertain when the wall will be burned
+                                if (!IgnoreBomb)
+                                    m_WallBurn[DangerBlockX][DangerBlockY] = true;
+                            }
+
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is no bomb and no wall on the block where we are scanning
+                        else if (!IgnoreBomb)
+                        {
+                            // If no danger was recorded on this block
+                            if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
+                            {
+                                // This block will soon be mortal
+                                m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
+                            }
+
+                            if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
+                            {
+                                m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
+                            }
+                        }
+
+                        // Continue scanning (go right)
+                        DangerBlockX++;
+                        Depth++;            // Go deeper
+
+                        // Update auxiliary variables
+                        IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
+                        IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
+                    } // while
+
+                    // Start scanning on this block
+                    DangerBlockX = BlockX;
+                    DangerBlockY = BlockY;
+                    Depth = 0;
+
+                    // No wall and no bomb on the current block
+                    IsWall = false;
+                    IsBomb = false;
+
+                    // While there is no wall or bomb that could stop the explosion flames
+                    while (true)
+                    {
+                        // If there is a bomb where we are scanning or if we scanned deep enough
+                        if (IsBomb || Depth > FlameSize)
+                        {
+                            // Update time left if this bomb might ignite the other
+                            for (int Index = 0 ; IsBomb && Index < m_pArena->MaxBombs() ; Index++)
+                            {
+                                if (m_pArena->GetBomb(Index).GetBlockX() == DangerBlockX &&
+                                    m_pArena->GetBomb(Index).GetBlockY() == DangerBlockY)
+                                {
+                                    TimeLeftHere = m_pArena->GetBomb(BombIndex[Index]).GetTimeLeft();
+                                    if (TimeLeft > TimeLeftHere)
+                                    {
+                                        TimeLeft = TimeLeftHere;
+                                        Updated = true;
+                                        
+                                        // update timeleft on the blocks which have been passed
+                                        for (UpdateX = DangerBlockX; UpdateX <= BlockX; UpdateX++)
+                                            m_DangerTimeLeft[UpdateX][DangerBlockY] = TimeLeft;
+
+                                        // update BombIndex array elements
+                                        for (int i = 0; i < m_pArena->MaxBombs(); i++)
+                                            if (BombIndex[i] == ThisBombIndex)
+                                                BombIndex[i] = BombIndex[Index];
+                                    }
+                                    
+                                    break;
+                                }
+                            }
+                            
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is a wall where we are scanning
+                        else if (IsWall)
+                        {
+                            // If this is a soft wall
+                            if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
+                            {
+                                // Then this wall will soon burn (unless we think we can ignore the bomb)
+                                if (!IgnoreBomb)
+                                    m_WallBurn[DangerBlockX][DangerBlockY] = true;
+                            }
+
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is no bomb and no wall on the block where we are scanning
+                        else if (!IgnoreBomb)
+                        {
+                            // If no danger was recorded on this block
+                            if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
+                            {
+                                // This block will soon be mortal
+                                m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
+                            }
+
+                            if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
+                            {
+                                m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
+                            }
+                        }
+                        
+                        // Continue scanning (go left)
+                        DangerBlockX--;
+                        Depth++;            // Go deeper
+
+                        // Update auxiliary variables
+                        IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
+                        IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
+                    } // while
+
+                    // Start scanning on this block
+                    DangerBlockX = BlockX;
+                    DangerBlockY = BlockY;
+                    Depth = 0;
+
+                    // No wall and no bomb on the current block
+                    IsWall = false;
+                    IsBomb = false;
+
+                    // While there is no wall or bomb that could stop the explosion flames
+                    while (true)
+                    {
+                        // If there is a bomb where we are scanning or if we scanned deep enough
+                        if (IsBomb || Depth > FlameSize)
+                        {
+                            // Update time left if this bomb might ignite the other
+                            for (int Index = 0 ; IsBomb && Index < m_pArena->MaxBombs() ; Index++)
+                            {
+                                if (m_pArena->GetBomb(Index).GetBlockX() == DangerBlockX &&
+                                    m_pArena->GetBomb(Index).GetBlockY() == DangerBlockY)
+                                {
+                                    TimeLeftHere = m_pArena->GetBomb(BombIndex[Index]).GetTimeLeft();
+                                    if (TimeLeft > TimeLeftHere)
+                                    {
+                                        TimeLeft = TimeLeftHere;
+                                        Updated = true;
+                                        
+                                        // update timeleft on the blocks which have been passed
+                                        for (UpdateY = DangerBlockY; UpdateY <= BlockY; UpdateY++)
+                                            m_DangerTimeLeft[DangerBlockX][UpdateY] = TimeLeft;
+
+                                        // update BombIndex array elements
+                                        for (int i = 0; i < m_pArena->MaxBombs(); i++)
+                                            if (BombIndex[i] == ThisBombIndex)
+                                                BombIndex[i] = BombIndex[Index];
+                                    }
+                                    
+                                    break;
+                                }
+                            }
+                            
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is a wall where we are scanning
+                        else if (IsWall)
+                        {
+                            // If this is a soft wall
+                            if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
+                            {
+                                // Then this wall will soon burn (unless we think we can ignore the bomb)
+                                // in this case it is uncertain when the wall will be burned
+                                if (!IgnoreBomb)
+                                    m_WallBurn[DangerBlockX][DangerBlockY] = true;
+                            }
+
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is no bomb and no wall on the block where we are scanning
+                        else if (!IgnoreBomb)
+                        {
+                            // If no danger was recorded on this block
+                            if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
+                            {
+                                // This block will soon be mortal
+                                m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
+                            }
+
+                            if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
+                            {
+                                m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
+                            }
+                        }
+                        
+                        // Continue scanning (go up)
+                        DangerBlockY--;
+                        Depth++;            // Go deeper
+
+                        // Update auxiliary variables
+                        IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
+                        IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
+                    } // while
+
+                    // Start scanning on this block
+                    DangerBlockX = BlockX;
+                    DangerBlockY = BlockY;
+                    Depth = 0;
+
+                    // No wall and no bomb on the current block
+                    IsWall = false;
+                    IsBomb = false;
+
+                    // While there is no wall or bomb that could stop the explosion flames
+                    while (true)
+                    {
+                        // If there is a bomb where we are scanning or if we scanned deep enough
+                        if (IsBomb || Depth > FlameSize)
+                        {
+                            // Update time left if this bomb might ignite the other
+                            for (int Index = 0 ; IsBomb && Index < m_pArena->MaxBombs() ; Index++)
+                            {
+                                if (m_pArena->GetBomb(Index).GetBlockX() == DangerBlockX &&
+                                    m_pArena->GetBomb(Index).GetBlockY() == DangerBlockY)
+                                {
+                                    TimeLeftHere = m_pArena->GetBomb(BombIndex[Index]).GetTimeLeft();
+                                    if (TimeLeft > TimeLeftHere)
+                                    {
+                                        TimeLeft = TimeLeftHere;
+                                        Updated = true;
+                                        
+                                        // update timeleft on the blocks which have been passed
+                                        for (UpdateY = BlockY; UpdateY <= DangerBlockY; UpdateY++)
+                                            m_DangerTimeLeft[DangerBlockX][UpdateY] = TimeLeft;
+                                        
+                                        // update BombIndex array elements
+                                        for (int i = 0; i < m_pArena->MaxBombs(); i++)
+                                            if (BombIndex[i] == ThisBombIndex)
+                                                BombIndex[i] = BombIndex[Index];
+                                    }
+                                    
+                                    break;
+                                }
+                            }
+                            
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is a wall where we are scanning
+                        else if (IsWall)
+                        {
+                            // If this is a soft wall
+                            if (m_pArena->IsSoftWall(DangerBlockX,DangerBlockY))
+                            {
+                                // Then this wall will soon burn (unless we think we can ignore the bomb)
+                                // in this case it is uncertain when the wall will be burned
+                                if (!IgnoreBomb)
+                                    m_WallBurn[DangerBlockX][DangerBlockY] = true;
+                            }
+
+                            // Stop scanning.
+                            break;
+                        }
+                        // If there is no bomb and no wall on the block where we are scanning
+                        else if (!IgnoreBomb)
+                        {
+                            // If no danger was recorded on this block
+                            if (m_Danger[DangerBlockX][DangerBlockY] == DANGER_NONE)
+                            {
+                                // This block will soon be mortal
+                                m_Danger[DangerBlockX][DangerBlockY] = DANGER_SOON;
+                            }
+
+                            if (m_DangerTimeLeft[DangerBlockX][DangerBlockY] > TimeLeft)
+                            {
+                                m_DangerTimeLeft[DangerBlockX][DangerBlockY] = TimeLeft;
+                            }
+                        }
+                        
+                        // Continue scanning (go down)
+                        DangerBlockY++;
+                        Depth++;            // Go deeper
+
+                        // Update auxiliary variables
+                        IsWall = m_pArena->IsWall(DangerBlockX,DangerBlockY);
+                        IsBomb = m_pArena->IsBomb(DangerBlockX,DangerBlockY);
+                    } // while
+                } // if
+            } // for
         } // for
-    } // for
+    } // do
+    while (Updated);
+    
+    delete[] BombIndex;
     
     // If the arena is closing right now
     if (m_pArena->GetArenaCloser().IsClosing ())
@@ -764,6 +984,89 @@ void CAiArena::Update (float DeltaTime)
             DangerTimeLeft += m_pArena->GetArenaCloser().GetTimeBetweenTwoBlockClosures();
         }
     }
+
+#if defined(DEBUG_DRAW_BURNWALLDANGER_BLOCKS) || defined(DEBUG_DRAW_BOMB_OWNERS)
+    // red: danger, blue: burnwall
+    rbase = 128; gbase = 0; bbase = 128; 
+    
+    w = m_pArena->ToPosition(1);
+    h = m_pArena->ToPosition(1);
+    
+    if (m_pDisplay != NULL)
+    {
+        for (BlockX = 0 ; BlockX < ARENA_WIDTH ; BlockX++)
+        {
+            for (BlockY = 0 ; BlockY < ARENA_HEIGHT ; BlockY++)
+            {
+                if (m_Danger[BlockX][BlockY] != DANGER_NONE &&
+                    !m_pArena->IsWall(BlockX,BlockY) &&
+                    !m_pArena->IsBomb(BlockX,BlockY))
+                {
+                    r = rbase;
+                    if (m_Danger[BlockX][BlockY] == DANGER_MORTAL)
+                        r += 64;
+                    
+                    r += MIN(64, (int)floor(m_DangerTimeLeft[BlockX][BlockY] * 30.0));
+                    
+		            m_pDisplay->DrawDebugRectangle (
+                        m_pArena->ToPosition(BlockX), 
+                        m_pArena->ToPosition(BlockY), 
+                        w, h, r, 0, 0, AIARENADEBUG_SPRITELAYER, PRIORITY_UNUSED);
+                    
+                    m_Font.Draw (m_pArena->ToPosition(BlockX),
+                                 m_pArena->ToPosition(BlockY)+h/4, "%.1f",
+                                 floor(m_DangerTimeLeft[BlockX][BlockY]*10)/10);
+
+                }
+                else if (m_WallBurn[BlockX][BlockY])
+                {
+                    b = bbase;
+                    
+		            m_pDisplay->DrawDebugRectangle (
+                        m_pArena->ToPosition(BlockX), 
+                        m_pArena->ToPosition(BlockY), 
+                        w, h, 0, 0, b, AIARENADEBUG_SPRITELAYER, PRIORITY_UNUSED);
+                }
+                
+#ifdef DEBUG_DRAW_BOMB_OWNERS
+                if (m_pArena->IsBomb (BlockX, BlockY))
+                {
+                    for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
+                    {
+                        if (m_pArena->GetBomb(Index).GetBlockX() == BlockX &&
+                            m_pArena->GetBomb(Index).GetBlockY() == BlockY)
+                        {
+                            if (!m_pArena->GetBomber(m_pArena->GetBomb(Index).GetOwnerPlayer()).IsAlive())
+                            {
+                                // bomber is dead
+                                r = 0; g = 255; b = 255;
+                            }
+                            else
+                            {
+                                switch (m_pArena->GetBomb(Index).GetOwnerPlayer())
+                                {
+                                    case 0 : r = 255; g = 255; b = 255; break;
+                                    case 1 : r = 0;   g = 0;   b = 0;   break;
+                                    case 2 : r = 255; g = 0;   b = 0;   break;
+                                    case 3 : r = 0;   g = 0;   b = 255; break;
+                                    case 4 : r = 0;   g = 255; b = 0;   break;
+                                    default: r = g = b = 0;             break;
+                                }
+                            }
+                            
+		                    m_pDisplay->DrawDebugRectangle (
+                                m_pArena->ToPosition(BlockX), 
+                                m_pArena->ToPosition(BlockY), 
+                                w, h, r, g, b, AIARENADEBUG_SPRITELAYER, PRIORITY_UNUSED);
+                            break;
+                        }
+                    }
+                }  
+#endif
+            }
+        }
+    }
+#endif
 }
 
 //******************************************************************************************************************************

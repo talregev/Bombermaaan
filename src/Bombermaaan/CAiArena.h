@@ -60,6 +60,7 @@ class CAiArena
 public:
     
     CArena*         m_pArena;
+    CDisplay*       m_pDisplay;
     EDanger         m_Danger [ARENA_WIDTH][ARENA_HEIGHT];           // Danger type of each block of the arena
     float           m_DangerTimeLeft [ARENA_WIDTH][ARENA_HEIGHT];
     int             m_DeadEnd [ARENA_WIDTH][ARENA_HEIGHT];          // If this block is not in a dead end, this contains -1. Otherwise it contains the number of the dead end where this square is.
@@ -72,6 +73,7 @@ public:
                     CAiArena (void);
     virtual         ~CAiArena (void);
     inline void     SetArena (CArena* pArena);
+    inline void     SetDisplay (CDisplay* pDisplay);
     void            Create (void);
     void            Destroy (void);
     void            Update (float DeltaTime);
@@ -85,6 +87,13 @@ inline void CAiArena::SetArena (CArena* pArena)
 {
     ASSERT (pArena != NULL);
     m_pArena = pArena;
+}
+
+inline void CAiArena::SetDisplay (CDisplay *pDisplay)
+{
+    ASSERT (pDisplay != NULL);
+    // Save the display object pointer to pass to elements
+    m_pDisplay = pDisplay;
 }
 
 //******************************************************************************************************************************

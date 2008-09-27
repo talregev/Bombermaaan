@@ -34,6 +34,7 @@
 #include <stdarg.h>
 #include <math.h>
 #include <assert.h>
+#include <time.h>
 
 #ifdef WIN32
 #include <winsock2.h>
