@@ -445,6 +445,54 @@ void CSDLVideo::DrawSprite (int PositionX,
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+void CSDLVideo::DrawDebugRectangle (int PositionX, 
+                              int PositionY, 
+                              int w, int h,
+                              Uint8 r, Uint8 g, Uint8 b,
+                              int SpriteLayer, 
+                              int PriorityInLayer)
+{
+    // Prepare a drawing request
+    SDebugDrawingRequest DrawingRequest;
+
+    // Use the desired position
+    DrawingRequest.PositionX = PositionX;
+    DrawingRequest.PositionY = PositionY;
+    
+    // Use the zone of the sprite
+    DrawingRequest.ZoneX1 = 0;
+    DrawingRequest.ZoneY1 = 0;
+    DrawingRequest.ZoneX2 = w;
+    DrawingRequest.ZoneY2 = h;
+    
+    // rectangle colour
+    DrawingRequest.R = r;
+    DrawingRequest.G = g;
+    DrawingRequest.B = b;
+
+    // Finish preparing the drawing request
+    DrawingRequest.PositionX += m_OriginX;
+    DrawingRequest.PositionY += m_OriginY;
+    DrawingRequest.SpriteLayer = SpriteLayer;
+    DrawingRequest.PriorityInLayer = PriorityInLayer;
+    
+    // Store it (automatic sort)
+    m_DebugDrawingRequests.push_back(DrawingRequest);
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+void CSDLVideo::RemoveAllDebugRectangles ()
+{
+   m_DebugDrawingRequests.clear();
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
 // Makes the display black.
 
 void CSDLVideo::Clear ()
@@ -708,6 +756,74 @@ void CSDLVideo::UpdateAll (void)
         m_DrawingRequests.pop();
     }
 
+    vector<SDebugDrawingRequest>::iterator it;
+
+    // Debug rectangles?
+    for (it = m_DebugDrawingRequests.begin(); it < m_DebugDrawingRequests.end(); it++)
+    {   
+        // Save the top drawing request
+        const SDebugDrawingRequest &DR = *it;
+
+        // Build a RECT structure containing the zone to draw
+        SDL_Rect SourceRect;
+        SourceRect.x = DR.ZoneX1;
+        SourceRect.y = DR.ZoneY1;
+        SourceRect.w = DR.ZoneX2 - DR.ZoneX1;
+        SourceRect.h = DR.ZoneY2 - DR.ZoneY1;
+		
+		SDL_Rect DestRect;
+		DestRect.x = DR.PositionX;
+		DestRect.y = DR.PositionY;
+		DestRect.w = 0;
+		DestRect.h = 0;
+        
+        Uint32 rmask, gmask, bmask, amask;
+        Uint8 r, g, b;
+        
+        r = DR.R;
+        g = DR.G;
+        b = DR.B;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+        rmask = 0xff000000;
+        gmask = 0x00ff0000;
+        bmask = 0x0000ff00;
+        amask = 0x000000ff;
+#else
+        rmask = 0x000000ff;
+        gmask = 0x0000ff00;
+        bmask = 0x00ff0000;
+        amask = 0xff000000;
+#endif
+
+        // create surface
+        SDL_Surface *rectangle = SDL_CreateRGBSurface(SDL_HWSURFACE|SDL_SRCALPHA,
+            SourceRect.w, SourceRect.h, 32, rmask, gmask, bmask, amask);
+        
+        SDL_Surface *reals = NULL;
+        
+        SDL_SetAlpha(rectangle, SDL_SRCALPHA|SDL_RLEACCEL, 128);
+        
+        // fill with rectangle
+        if (rectangle != NULL &&
+            SDL_FillRect(rectangle, NULL,
+                         SDL_MapRGBA(rectangle->format, r, g, b, 128)) == 0)
+        {
+            reals = SDL_DisplayFormatAlpha(rectangle);
+            
+            // Blit the surface zone on the back buffer
+		    if (reals != NULL && SDL_BlitSurface(reals,
+			    &SourceRect, m_pPrimary, &DestRect) < 0) {
+			    // blitting failed
+		    }
+        }
+        
+        SDL_FreeSurface(rectangle);
+        if (reals != NULL)
+            SDL_FreeSurface(reals);
+			
+        // do not Pop the drawing request (there is a separate function)
+        //m_DebugDrawingRequests.pop();
+    }
     UpdateScreen ();
 }
 

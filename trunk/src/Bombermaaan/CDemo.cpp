@@ -103,6 +103,7 @@ void CDemo::Create (void)
     CreateMainComponents();
     CreateFont();
 
+    m_AiManager.SetDisplay(m_pDisplay);
     m_AiManager.Create(&m_Options);
 }
 

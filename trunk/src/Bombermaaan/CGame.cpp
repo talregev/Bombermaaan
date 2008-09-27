@@ -80,7 +80,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 
 // Bombermaaan version
 #define BOMBERMAAAN_VERSION_STRING      "1.3.2"
-#define BOMBERMAAAN_BUILD_STRING        "528"
+#define BOMBERMAAAN_BUILD_STRING        "537"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -100,9 +100,9 @@ CGame::CGame (HINSTANCE hInstance, char** pCommandLine)
 #ifdef WIN32
     m_hInstance = hInstance;
 #else
-    SEED_RANDOM(time(NULL));
     m_hInstance = NULL;
 #endif
+    SEED_RANDOM((unsigned)time(NULL));
     
     //
     // Set the window title
@@ -459,7 +459,7 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
 
     // If the resource file does not exist
 #ifdef WIN32
-    if (GetFileAttributes( NAME_OF_BOMBERMAN_DLL ) == -1)
+    if (GetFileAttributes( NAME_OF_BOMBERMAN_DLL ) == (DWORD)-1)
     {
         // Failure
         theLog.WriteLine( "Game            => !!! Could not find " NAME_OF_BOMBERMAN_DLL "." );

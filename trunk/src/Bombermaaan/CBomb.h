@@ -159,6 +159,7 @@ public:
     inline int          GetBlockX (void);                       //!< Return the block position X of the bomb
     inline int          GetBlockY (void);                       //!< Return the block position Y of the bomb
     inline float        GetTimeLeft (void);                     //!< Return the time left before the bomb will explode (unless the explosion is triggered earlier)
+    inline float        GetElapsedTime (void);                  //!< Return the time since the bomb was created
     inline int          GetFlameSize (void);                    //!< Return the size of the flames (in blocks) when the bomb will explode
     inline bool         IsOnFloor (void);                       //!< Return whether the bomb is on the floor (not in the air)
 	inline bool         IsRemote (void);                        //!< Return whether the bomb is a remote bomb
@@ -206,6 +207,11 @@ inline int CBomb::GetBlockY (void)
 inline float CBomb::GetTimeLeft (void) 
 { 
     return m_TimeLeft; 
+}
+
+inline float CBomb::GetElapsedTime (void) 
+{ 
+    return m_ElapsedTime; 
 }
 
 inline int CBomb::GetFlameSize (void) 

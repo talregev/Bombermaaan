@@ -303,6 +303,9 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
     m_NumberOfPunchItems = options->GetInitialBomberSkills( BOMBERSKILL_PUNCHITEMS );
 	m_NumberOfRemoteItems = options->GetInitialBomberSkills( BOMBERSKILL_REMOTEITEMS );
 
+    // increase initial speed
+    m_Speed += SPEED_INC * m_NumberOfRollerItems;
+    
     m_ReturnedItems = false;
 
     m_Victorious = false;
@@ -540,7 +543,8 @@ void CBomber::Action ()
                         // Test existence and position
                         if (m_pArena->GetBomb(Index).Exist() &&
                             m_pArena->GetBomb(Index).GetBlockX() == m_BomberMove.GetBlockX() &&
-                            m_pArena->GetBomb(Index).GetBlockY() == m_BomberMove.GetBlockY())
+                            m_pArena->GetBomb(Index).GetBlockY() == m_BomberMove.GetBlockY() &&
+                            m_pArena->GetBomb(Index).IsOnFloor())
                         {
                             // Save the bomb index
                             m_BombIndex = Index;
@@ -673,20 +677,33 @@ void CBomber::Action ()
 				// If the bomber can remote fuse bombs and we didn't punch a bomb (see above)
                 if (CanRemoteFuseBombs() && !bomberHasPunchedBomb)
                 {
-                    // Find the first bomb to fuse.
+                    float timeMax = 0.0f;   // time elapsed since bomb was created
+                    int   bombTimeMax = -1; // index with the bomb which exists the longest time ago
+                    
+                    // Find the first bomb, i.e. the one which was planted first, to fuse.
                     for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
-                    {						
+                    {			
+                        CBomb& myBomb = m_pArena->GetBomb(Index); // help variable
+                        
                         // Test existence and kicker player number
-                        if (m_pArena->GetBomb(Index).Exist() && m_pArena->GetBomb(Index).IsRemote() &&
-                            m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
+                        if (myBomb.Exist() && myBomb.IsRemote() &&
+                            myBomb.GetOwnerPlayer() == m_Player &&
+                            myBomb.GetElapsedTime() > timeMax)
                         {
-							m_pArena->GetBomb(Index).Burn();
-
-                            // Leave the for-loop, otherwise all bombs would be burned immediately
                             if ( REMOTE_FUSE_ONLY_FIRST_BOMB ) {
-                                break;
+                                // look for the bomb which exists the longest time ago
+                                timeMax = myBomb.GetElapsedTime();
+                                bombTimeMax = Index;
+                            }
+                            else {
+                                myBomb.Burn();
                             }
                         }
+                    }
+                    
+                    if ( REMOTE_FUSE_ONLY_FIRST_BOMB && bombTimeMax > -1) {
+                        // found it, detonate.
+                        m_pArena->GetBomb(bombTimeMax).Burn();
                     }
                 }
 

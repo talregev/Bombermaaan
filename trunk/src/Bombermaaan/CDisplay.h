@@ -80,6 +80,8 @@ public:
     inline void     Update (void);      //!< Draw the sprites that DrawSprite recorded and update the window's client area
     inline void     SetOrigin (int OriginX, int OriginY); //!< Set the origin to draw from the game view origin
     inline void     DrawSprite (int PositionX, int PositionY, RECT *pZone, RECT *pClip, int SpriteTable, int Sprite, int SpriteLayer, int PriorityInLayer); //!< Record a drawing request that will be executed on next call to Update
+    inline void     DrawDebugRectangle (int PositionX, int PositionY, int w, int h, BYTE r, BYTE g, BYTE b, int SpriteLayer, int PriorityInLayer); //!< Record a drawing request for debug purposes
+    inline void     RemoveAllDebugRectangles(void);
 #ifndef WIN32
     inline CSDLVideo& GetSDLVideo(void);
 #endif
@@ -155,6 +157,24 @@ inline void CDisplay::DrawSprite (int PositionX, int PositionY, RECT *pZone, REC
     m_DirectDraw.DrawSprite (PositionX, PositionY, pZone, pClip, SpriteTable, Sprite, SpriteLayer, PriorityInLayer);
 #else
     m_SDLVideo.DrawSprite (PositionX, PositionY, pZone, pClip, SpriteTable, Sprite, SpriteLayer, PriorityInLayer);
+#endif
+}
+
+inline void CDisplay::DrawDebugRectangle (int PositionX, int PositionY, int w, int h, BYTE r, BYTE g, BYTE b, int SpriteLayer, int PriorityInLayer)
+{
+#ifdef WIN32
+    m_DirectDraw.DrawDebugRectangle (PositionX, PositionY, w, h, r, g, b, SpriteLayer, PriorityInLayer);
+#else
+    m_SDLVideo.DrawDebugRectangle (PositionX, PositionY, w, h, r, g, b, SpriteLayer, PriorityInLayer);
+#endif
+}
+
+inline void CDisplay::RemoveAllDebugRectangles (void)
+{
+#ifdef WIN32
+    m_DirectDraw.RemoveAllDebugRectangles();
+#else
+    m_SDLVideo.RemoveAllDebugRectangles();
 #endif
 }
 
