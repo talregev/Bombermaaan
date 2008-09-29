@@ -244,11 +244,19 @@ void CMenuInput::OnDisplay (void)
         // If the current player is a human
         if (m_pOptions->GetBomberType(Player) == BOMBERTYPE_MAN)
         {
+            int PlayerInput = m_pOptions->GetPlayerInput(Player);
+            
+            // If the current input is a joystick, verify that this joystick is plugged in
+            if (PlayerInput >= m_pInput->GetPlayerInputCount())
+            {
+                PlayerInput = 0; // reset to keyboard 1
+            }
+            
             // Set the right font text color and write the current player input name
             m_pFont->SetTextColor (FONTCOLOR_GREEN);
             m_pFont->Draw (INITIAL_TEXT_POSITION_X, 
                            PositionY, 
-                           m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(Player)).GetName()); 
+                           m_pInput->GetPlayerInput(PlayerInput).GetName()); 
 
             // Draw the bomber head corresponding to the current player
             m_pDisplay->DrawSprite (INITIAL_TEXT_POSITION_X + BOMBER_HEAD_SPACE_X,

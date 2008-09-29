@@ -520,9 +520,11 @@ trunk/src/Bombermaaan.anjuta -text
 trunk/src/Bombermaaan.dsw -text
 trunk/src/Bombermaaan.sln -text
 trunk/src/Bombermaaan/Bombermaaan.dsp -text
+trunk/src/Bombermaaan/Bombermaaan.ico -text
 trunk/src/Bombermaaan/Bombermaaan.rc -text
 trunk/src/Bombermaaan/Bombermaaan.vcproj -text
 trunk/src/Bombermaaan/BombermaaanIco.h -text
+trunk/src/Bombermaaan/Bombermaaan_mingw32.rc -text
 trunk/src/Bombermaaan/CAiArena.cpp -text
 trunk/src/Bombermaaan/CAiArena.h -text
 trunk/src/Bombermaaan/CAiBomber.cpp -text
