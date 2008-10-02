@@ -152,8 +152,13 @@ CGame::CGame (HINSTANCE hInstance, char** pCommandLine)
     }
     windowTitle.append( "-" );
 
-    // Day
-    windowTitle.append( __DATE__ + 4, 2);
+    // Day (ensure for leading zero when day is 1 to 9)
+    if ( __DATE__[ 4 ] == ' ' ) {
+        windowTitle.append( "0" );
+        windowTitle.append( __DATE__ + 5, 1 );
+    } else {
+        windowTitle.append( __DATE__ + 4, 2);
+    }
 #endif
 
 #ifdef WIN32
