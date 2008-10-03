@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -45,14 +46,15 @@
 #endif
 
 #ifdef USE_32_PIXELS_PER_BLOCK
-#define MINI_ARENA_POSITION_X   180
-#define MINI_ARENA_POSITION_Y   (73+90)
+#define MINI_ARENA_POSITION_X   120
+#define MINI_ARENA_POSITION_Y   (73+60)
+#define TILE_POSITION_TO_BOMBER_POSITION    -4
 #else
 #define MINI_ARENA_POSITION_X   59
 #define MINI_ARENA_POSITION_Y   73
+#define TILE_POSITION_TO_BOMBER_POSITION    -2
 #endif
 
-#define TILE_POSITION_TO_BOMBER_POSITION    -2
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -180,6 +182,12 @@ void CMenuLevel::OnUpdate (void)
 
 void CMenuLevel::OnDisplay (void)
 {
+#ifdef USE_32_PIXELS_PER_BLOCK
+    int factor = 16;
+#else
+    int factor = 8;
+#endif
+    
     // Set the right font text color and write the menu title string
     m_pFont->SetTextColor (FONTCOLOR_WHITE);
     m_pFont->DrawCenteredX (0, VIEW_WIDTH - 1, TITLE_TEXT_POSITION_Y, m_pOptions->GetLevelName()); 
@@ -193,8 +201,8 @@ void CMenuLevel::OnDisplay (void)
             
             if (BlockType == BLOCKTYPE_HARDWALL)
             {    
-                m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8, 
-                                        MINI_ARENA_POSITION_Y + Y * 8, 
+                m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor, 
+                                        MINI_ARENA_POSITION_Y + Y * factor, 
                                         NULL, 
                                         NULL, 
                                         56, 
@@ -204,8 +212,8 @@ void CMenuLevel::OnDisplay (void)
             }
             else if (BlockType == BLOCKTYPE_RANDOM)
             {
-                m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8, 
-                                        MINI_ARENA_POSITION_Y + Y * 8, 
+                m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor, 
+                                        MINI_ARENA_POSITION_Y + Y * factor, 
                                         NULL, 
                                         NULL, 
                                         56, 
@@ -219,8 +227,8 @@ void CMenuLevel::OnDisplay (void)
                                (m_pOptions->GetBlockType(X, Y - 1) == BLOCKTYPE_HARDWALL ||
                                 m_pOptions->GetBlockType(X, Y - 1) == BLOCKTYPE_RANDOM));
 
-                m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8, 
-                                        MINI_ARENA_POSITION_Y + Y * 8, 
+                m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor, 
+                                        MINI_ARENA_POSITION_Y + Y * factor, 
                                         NULL, 
                                         NULL, 
                                         56, 
@@ -230,12 +238,12 @@ void CMenuLevel::OnDisplay (void)
                 
                 switch (BlockType)
                 {
-                    case BLOCKTYPE_WHITEBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 0, 1, 2); break;
-                    case BLOCKTYPE_BLACKBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 1, 1, 2); break;
-                    case BLOCKTYPE_REDBOMBER   : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 2, 1, 2); break;
-                    case BLOCKTYPE_BLUEBOMBER  : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 3, 1, 2); break;
-                    case BLOCKTYPE_GREENBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * 8 + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * 8 + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 4, 1, 2); break;
-                    default :                                                                                                                                                                                                          break;
+                    case BLOCKTYPE_WHITEBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * factor + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 0, 1, 2); break;
+                    case BLOCKTYPE_BLACKBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * factor + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 1, 1, 2); break;
+                    case BLOCKTYPE_REDBOMBER   : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * factor + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 2, 1, 2); break;
+                    case BLOCKTYPE_BLUEBOMBER  : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * factor + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 3, 1, 2); break;
+                    case BLOCKTYPE_GREENBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * factor + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * factor + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 4, 1, 2); break;
+                    default :                                                                                                                                                                                                                    break;
                 }
             }
         }
