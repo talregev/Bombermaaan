@@ -275,6 +275,7 @@ src/debian/usr/share/games/bombermaaan/Levels/L8.TXT -text
 src/debian/usr/share/menu/bombermaaan -text
 src/debian/usr/share/pixmaps/Bombermaaan.png -text
 src/md5sum.pl -text
+tools/create_experimental-release.bash -text
 web/changelog.php -text
 web/contact.php -text
 web/css.php -text
