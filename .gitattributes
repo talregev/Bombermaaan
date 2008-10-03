@@ -743,6 +743,7 @@ trunk/web/development.php -text
 trunk/web/download.php -text
 trunk/web/faq.php -text
 trunk/web/features.php -text
+trunk/web/history.php -text
 trunk/web/images/arena_item_0-bomb.png -text
 trunk/web/images/arena_item_1-flame.png -text
 trunk/web/images/arena_item_missing.png -text

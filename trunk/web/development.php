@@ -18,6 +18,10 @@ $webpage->head();
 Bombermaaan is written in C++ and hosted on SourceForge.net. Bombermaaan should run on all 32-bit MS Windows operating systems.
 </p>
 
+<p>
+See the <a href="contact.php">contact page</a> for a list of the developers of Bombermaaan.
+</p>
+
 <h2>Links to SourceForge.net</h2>
 
 <ul>
@@ -55,7 +59,7 @@ Compile instructions
 </ul>
 
 <p>
-Zip package
+Zip package for Win32
 </p>
 
 <ul>
@@ -69,7 +73,7 @@ Zip package
 </ul>
 
 <p>
-Installer package
+Installer package for Win32
 </p>
 
 <ul>

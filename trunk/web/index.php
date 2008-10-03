@@ -15,17 +15,12 @@ $webpage->head();
 <h2>Introduction</h2>
 
 <p>
-Bombermaaan is a classic bomberman game. Thibaut Tollemer started this
-project on July 2000. He's been using this project as a demo of what he 
-could do as a game programmer, in order to be hired.
+Bombermaaan is a classic bomberman game. It runs stable on Win32 and - very soon - on Linux, too. You can 
+already try the experimental release on Linux.
 </p>
 
 <p>
-As he was hired, he published the source code and created a project space on sourceforge.net on May 2003. Unfortunately, he doesn't have so much time for programming new features now. Therefore, Bernd Arnold is going to enhance Bombermaaan and develop new features in his spare time. He joined the project in the end of 2007.
-</p>
-
-<p>
-<a href="http://fury94.free.fr/">Thibaut's original project page</a> is still available if you want to have a look at it.
+<a href="download.php">Download Bombermaaan now!</a>
 </p>
 
 <h2>Stay informed</h2>
