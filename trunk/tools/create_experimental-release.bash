@@ -34,6 +34,11 @@ if [ -e "$TARGETZIP" ] ; then
     exit 4
 fi
 
+if [ ! -d ./output ] ; then
+    echo Output folder doesn\'t exist. Maybe we are in the wrong directory? Terminating...
+    exit 5
+fi
+
 #
 # Creating folder
 #
