@@ -118,7 +118,7 @@ $downloads = array(
 </ul>
 </div>
 
-<h2><a id="stable">The current stable version is 1.3</a></h2>
+<h2><a id="stable">The current stable version is 1.3.1</a></h2>
 
 <table class="downloadbox">
 
@@ -169,7 +169,7 @@ There is also a <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout
 <h2><a id="sourcecode">Sourcecode</a></h2>
 
 The sourcecode is hosted in the Subversion repository on SourceForge.net. 
-If you have TortoiseSVN installed, you can check out the <a href="tsvn:https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk">whole sourcecode</a> by clicking on the weblink.
+If you have <a href="http://tortoisesvn.net/">TortoiseSVN</a> installed, you can check out the <a href="tsvn:https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk">whole sourcecode</a> by clicking on the weblink.
 
 <h2><a id="experimental">Experimental releases</a></h2>
 

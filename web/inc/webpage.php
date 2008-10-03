@@ -123,6 +123,10 @@ class WebPage {
 <a href="changelog.php">Changelog</a>
 </div>
 
+<div>
+<a href="history.php">History</a>
+</div>
+
 <hr />
 
 <div>

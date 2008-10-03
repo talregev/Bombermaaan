@@ -15,13 +15,25 @@ $webpage->head();
 <h2>Developers</h2>
 
 <p>
-<strong>Thibaut</strong> created this project. He doesn't have the time to work on Bombermaaan at the moment.
+<strong><a href="https://sourceforge.net/users/fury94/">Thibaut</a></strong>: Founder of Bombermaaan. He doesn't have the time to work on Bombermaaan at the moment.
 </p>
 
 <p>
-<strong>Bernd</strong> joined the project in the end of 2007. 
-You can <a href="https://sourceforge.net/sendmessage.php?touser=988911">send him a message</a> via SourceForge.net.
-This requires that you are loggend in with your SourceForge.net account.
+<strong><a href="https://sourceforge.net/users/wopfel/">Bernd</a></strong>: Win32, 32-pixels version, enhancements, file releases, web site, project management.
+</p>
+
+<p>
+<strong><a href="https://sourceforge.net/users/bigs_fr/">Jerome</a></strong>: Remote-fuse-bombs feature. He's currently inactive.
+</p>
+
+<p>
+<strong><a href="https://sourceforge.net/users/eggomat/">Markus</a></strong>: Win32 and Linux, enhancements, AI stuff.
+</p>
+
+<p>
+You can send a private message to a developer via SourceForge.net by clicking on his name above. 
+This requires that you are logged in with your SourceForge.net account.<br />
+If you like to tell us bugs or feature requests etc., please use the trackers listed below instead.
 </p>
 
 <h2>Trackers</h2>
