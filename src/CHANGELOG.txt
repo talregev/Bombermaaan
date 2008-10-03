@@ -4,6 +4,7 @@ New feature: Bombs can be remotely fused by a bomber (by Jerome Bigot).
 New feature: AI bomber is punching bombs when he is jammed by a bomb and picked up the punch item (by Markus Drescher).
 New feature: Bombermaaan can be compiled natively on Linux using G++ (without the need of Wine and the Bombermaaan files for Win32, thanks to Markus Drescher).
 Changed: FMOD was replaced by the SDL_mixer library (by Markus Drescher).
+Changed: When no config file is present the input for the second player is set to keyboard 2.
 Bug fix: Input field was empty / executable crashed when joystick isn't present the next game start (#2121904).
 
 
