@@ -239,8 +239,12 @@ bool COptions::LoadConfiguration (void)
         m_BomberType[4] = BOMBERTYPE_OFF;
         m_Level = 0;
 
+        // Initialise player inputs:
+        // First bomber uses "keyboard 1"
+        // Second bomber uses "keyboard 2"
+        // All other bomber use "keyboard 1"
         for (i = 0 ; i < MAX_PLAYERS ; i++)
-            m_PlayerInput[i] = 0;
+            m_PlayerInput[i] = ( i == 1 ? CONFIGURATION_KEYBOARD_2 : CONFIGURATION_KEYBOARD_1 );
         
         m_BattleCount = 3;
         m_DisplayMode = DISPLAYMODE_WINDOWED;
