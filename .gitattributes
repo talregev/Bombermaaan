@@ -736,6 +736,7 @@ trunk/src/debian/usr/share/games/bombermaaan/Levels/L8.TXT -text
 trunk/src/debian/usr/share/menu/bombermaaan -text
 trunk/src/debian/usr/share/pixmaps/Bombermaaan.png -text
 trunk/src/md5sum.pl -text
+trunk/tools/create_experimental-release.bash -text
 trunk/web/changelog.php -text
 trunk/web/contact.php -text
 trunk/web/css.php -text
