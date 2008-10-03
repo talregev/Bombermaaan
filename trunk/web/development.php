@@ -46,13 +46,13 @@ The RES32 project generates the DLL for the larger sprites (32 pixels per block)
 <h2>Release steps</h2>
 
 <p>
-Compile instructions
+Compile instructions for Win32
 </p>
 
 <ul>
-<li>Update version strings in file src/Bombermaaan/Bombermaaan.rc (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/Bombermaaan.rc?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
+<li>Update version strings in file <code>src/Bombermaaan/Bombermaaan.rc</code> (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/Bombermaaan.rc?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
 <li>Update <code>BOMBERMAAAN_VERSION_STRING</code> and <code>BOMBERMAAAN_BUILD_STRING</code> in CGame.cpp (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/CGame.cpp?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
-<li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in CGame.cpp to comment</li>
+<li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in <code>CGame.cpp</code> to comment</li>
 <li>Disable the console window (<code>#define ENABLE_CONSOLE</code> in CGame.cpp)</li>
 <li>Select configuration &quot;Release&quot; in the solution</li>
 <li>Rebuild the solution</li>
@@ -63,6 +63,7 @@ Zip package for Win32
 </p>
 
 <ul>
+<li>Update the file <code>CHANGELOG.txt</code></li>
 <li>Create a new folder <span title="For example, Bombermaaan_1.3_2008-05-07 (stable release) Bombermaaan_rev423_2008-05-07 (experimental release)"><code>Bombermaaan_<i>VERSION</i>_<i>RELEASE-DATE</i></code></span>.</li>
 <li>Place the files <code>Bombermaaan.exe</code>, <code>Bombermaaan.dll</code> and <code>FMOD.dll</code> in this directory</li>
 <li>Add the readme file <code>Readme.html</code></li>
@@ -89,6 +90,7 @@ Publishing
 <li>Upload the zip file to the SourceForge.net FTP server</li>
 <li>Add the file in the file release system</li>
 <li>Update download page file web/download.php</li>
+<li>Upload file <code>CHANGELOG.txt</code> to web space</li>
 </ul>
 
 
