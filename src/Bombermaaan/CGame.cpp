@@ -1172,8 +1172,12 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
         //! Change display mode if this is a F1-F4 key
         switch (wParam)
         {
+            // Display modes #1 and #2 are not available in the 32-pixels version
+            // since the screen isn't large enough (so disable F1 and F2 keys)
+#ifndef USE_32_PIXELS_PER_BLOCK
             case VK_F1 : DisplayMode = DISPLAYMODE_FULL1; break;
             case VK_F2 : DisplayMode = DISPLAYMODE_FULL2; break;
+#endif
             case VK_F3 : DisplayMode = DISPLAYMODE_FULL3; break;
             case VK_F4 : DisplayMode = DISPLAYMODE_WINDOWED; break;
             default    : SetDisplayMode = false; break;
