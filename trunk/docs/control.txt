@@ -34,8 +34,8 @@ In the menu box:
 - Escape: make the menu box disappear and resume the match
 
 Anywhere in the game:
-- F1: set 320x240 display mode
-- F2: set 512x384 display mode
+- F1: set 320x240 display mode (not available in 32-pixels version)
+- F2: set 512x384 display mode (not available in 32-pixels version)
 - F3: set 640x480 display mode
 - F4: set windowed display mode
 - Ctrl+F12 to quickly exit the game without confirmation
