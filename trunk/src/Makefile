@@ -8,7 +8,7 @@ SHELL=/bin/sh
 
 prefix?=/usr/local
 exec_prefix=${prefix}
-subdirs=RESGEN Bombermaaan
+subdirs=third-party RESGEN Bombermaaan
 DPKG=dpkg-deb -b
 PLATFORM = $(shell uname -m)
 ifeq ($(PLATFORM),x86_64)
@@ -20,7 +20,7 @@ endif
 ifeq ($(PLATFORM),i586)
 	PLATFORM=i386
 endif
-VERSION=1.3.2-3
+VERSION=1.3.2-5
 BINFILENAME=Bombermaaan
 BIN=Bombermaaan/$(BINFILENAME)
 LIBBASENAME=libbombermaaan.so
