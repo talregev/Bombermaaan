@@ -1663,6 +1663,18 @@ void CBomber::Stunt (void)
             break;
     }
 
+    /**
+     * The bomber will lose one item if it has at least one. The descending order is:
+     * - remote control
+     * - punch
+     * - throw
+     * - kick
+     * - bomb
+     * - flame
+     * - roller
+     * The item (if any) taken from the bomber is populated to the arena so everyone can catch it.
+     */
+
     EItemType ItemType = ITEM_NONE;
     
 	if (m_NumberOfRemoteItems > 0)
