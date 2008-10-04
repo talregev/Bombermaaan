@@ -336,6 +336,19 @@ void CArenaCloser::Update (float DeltaTime)
                         m_pArena->GetWall(Index).GetBlockX() == BlockX &&
                         m_pArena->GetWall(Index).GetBlockY() == BlockY)
                     {
+                        // Find out if there is an Item
+                        for (int ItemIndex = 0; ItemIndex < m_pArena->MaxItems(); ItemIndex++)
+                        {
+                            if (m_pArena->GetItem(ItemIndex).Exist() &&
+                                m_pArena->GetItem(ItemIndex).GetBlockX() == BlockX &&
+                                m_pArena->GetItem(ItemIndex).GetBlockY() == BlockY)
+                            {
+                                // Crush the item
+                                m_pArena->GetItem(ItemIndex).Crush ();
+                                break;
+                            }
+                        }
+                        
                         // destroy the old wall
                         m_pArena->GetWall(Index).Destroy();
                     }
