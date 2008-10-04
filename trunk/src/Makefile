@@ -29,6 +29,8 @@ LIBREVISION=0.0
 LIBFILENAME=$(LIBBASENAME).$(LIBVERSION).$(LIBREVISION)
 LIB = RESGEN/$(LIBFILENAME)
 
+CHMOD=chmod
+CP=cp
 RM=rm -f
 LN=ln -sf
 SED=sed
@@ -64,20 +66,22 @@ debian: debian.deb debian-data.deb
 	@echo "Debian Packages were created successfully."
 
 debian.deb: $(BIN)
-	cp $(BIN) debian/usr/games/$(BINFILENAME)
+	$(CP) $(BIN) debian/usr/games/$(BINFILENAME)
 	$(STRIP) debian/usr/games/$(BINFILENAME)
-	sed -e 's/ARCHITECTURE/$(PLATFORM)/' debian/DEBIAN/control.dist > debian/DEBIAN/control
-	chmod 755 debian/DEBIAN/post*
-	chmod 755 md5sum.pl
+	$(SED) -e 's/ARCHITECTURE/$(PLATFORM)/' debian/DEBIAN/control.dist > debian/DEBIAN/control
+	$(CP) CHANGELOG.txt debian/usr/share/doc/bombermaaan/
+	$(CHMOD) 755 debian/DEBIAN/post*
+	$(CHMOD) 755 md5sum.pl
 	(cd debian; ../md5sum.pl)
 	$(DPKG) debian bombermaaan_$(VERSION)_$(PLATFORM).deb
 
 debian-data.deb: $(LIB)
-	cp $(LIB) debian-data/usr/lib/$(LIBFILENAME)
+	$(CP) $(LIB) debian-data/usr/lib/$(LIBFILENAME)
 	(cd debian-data/usr/lib; $(LN) $(LIBFILENAME) $(LIBBASENAME); $(LN) $(LIBFILENAME) $(LIBBASENAME).$(LIBVERSION))
-	sed -e 's/ARCHITECTURE/$(PLATFORM)/' debian-data/DEBIAN/control.dist > debian-data/DEBIAN/control
-	chmod 755 debian/DEBIAN/post*
-	chmod 755 md5sum.pl
+	$(SED) -e 's/ARCHITECTURE/$(PLATFORM)/' debian-data/DEBIAN/control.dist > debian-data/DEBIAN/control
+	$(CP) CHANGELOG.txt debian-data/usr/share/doc/bombermaaan-data/
+	$(CHMOD) 755 debian/DEBIAN/post*
+	$(CHMOD) 755 md5sum.pl
 	(cd debian-data; ../md5sum.pl)
 	$(DPKG) debian-data bombermaaan-data_$(VERSION)_$(PLATFORM).deb
 
@@ -89,6 +93,7 @@ clean:
 	$(RM) debian/usr/games/$(BIN)
 	$(RM) debian-data/usr/lib/$(LIBFILENAME) debian-data/usr/lib/$(LIBBASENAME) debian-data/usr/lib/$(LIBBASENAME).$(LIBVERSION)
 	$(RM) debian/DEBIAN/control debian-data/DEBIAN/control
+	$(RM) debian/usr/share/doc/bombermaaan/CHANGELOG.txt debian-data/usr/share/doc/bombermaaan-data/CHANGELOG.txt
 	$(RM) bombermaaan_$(VERSION)_$(PLATFORM).deb bombermaaan-data_$(VERSION)_$(PLATFORM).deb
 
 distclean: clean
