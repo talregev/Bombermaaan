@@ -83,7 +83,7 @@ typedef int TBlockHas;
 //******************************************************************************************************************************
 
 #define MAX_FLOORS      (ARENA_WIDTH * ARENA_HEIGHT)
-#define MAX_WALLS       (ARENA_WIDTH * ARENA_HEIGHT)
+#define MAX_WALLS       (2 * ARENA_WIDTH * ARENA_HEIGHT)        // Don't forget the falling walls in 
 #define MAX_BOMBS       50
 #define MAX_ITEMS       50
 #define MAX_EXPLOSIONS  20
