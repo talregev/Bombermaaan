@@ -30,14 +30,14 @@ PLEASE NOTE: This how-to is incomplete so far!
   http://www.libsdl.org/download-1.2.php
   SDL-devel-1.2.13-VC8.zip, about 607 kB (http://www.libsdl.org/release/SDL-devel-1.2.13-VC8.zip)
   The VC8 file is also working for VC9
-  Copy folder SDL-1.2.13 from the zip file to src folder
+  Copy folder SDL-1.2.13 from the zip file to src/third-party/ folder and rename it to "SDL"
   Copy all DLL files from the lib subdirectory to the directory where Bombermaaan.exe resides (needing for runtime)
   
 - Download SDL_mixer development libraries
   http://www.libsdl.org/projects/SDL_mixer/
   SDL_mixer-devel-1.2.8-VC8.zip, about 332 kB (http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.8-VC8.zip)
   The VC8 file is also working for VC9
-  Copy folder SDL_mixer-1.2.8 from the zip file to src folder
+  Copy folder SDL_mixer-1.2.8 from the zip file to src/third-party/ folder and rename it to "SDL_mixer"
   Copy all DLL files from the lib subdirectory to the directory where Bombermaaan.exe resides (needing for runtime)
 
 - Place afxres.h and winres.h in the Bombermaaan directory and in the resource directories RES and RES32. 
