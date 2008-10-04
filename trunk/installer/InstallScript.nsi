@@ -4,6 +4,12 @@
 ; http://bombermaaan.sourceforge.net/
 ; 
 
+; ----------------------------------------------------------------------------------
+;    NOTE:
+;    NSIS is not used any longer
+;    The installation packages are built with InnoSetup now (http://www.jrsoftware.org/isinfo.php)
+; ----------------------------------------------------------------------------------
+
 
 
 

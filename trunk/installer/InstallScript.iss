@@ -39,7 +39,7 @@ Compression=lzma
 SolidCompression=true
 VersionInfoVersion={#APPVERFULL}
 VersionInfoDescription=Installer for Bombermaaan
-VersionInfoCopyright=Copyright (C) Thibaut Tollemer, Bernd Arnold
+VersionInfoCopyright=Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold, Jerome Bigot, Markus Drescher
 WizardImageFile=compiler:wizmodernimage-is.bmp
 ; This is not the best image since the setup dialog shows only square, not a rectangle
 WizardSmallImageFile=HeaderImage_Innosetup.bmp
