@@ -41,22 +41,15 @@ along with Bombermaaan.  If not, see <http://www.gnu.org/licenses/>.
 </pre>
 
 
-<h2>Additional information</h2>
+<h2>Credits</h2>
 
-Bombermaaan is using the FMOD Sound System.<br>
-FMOD Sound System, copyright &copy; Firelight Technologies Pty, Ltd., 1994-2007.
+Bombermaaan is using TinyXML from <a href="https://sourceforge.net/projects/tinyxml">https://sourceforge.net/projects/tinyxml</a>.
+
+Bombermaaan is using <a href="http://www.doxygen.org/index.html">Doxygen</a> for <a href="http://bombermaaan.sourceforge.net/doxydoc/html/">documentation</a> purposes.
+
+
+<h2>Project host</h2>
 
 The Bombermaaan project is hosted on SourceForge.net. 
 
-
-<h2>Acknowledgements</h2>
-
-Thanks go to:
-<ul>
-<li>Thibaut Tollemer for a great version 1.02 of Bombermaaan
-<li>Dimitri van Heesch for <a href="http://www.doxygen.org/index.html">Doxygen</a>, a powerful
-	documentation system
-<li>you for reading this documentation and (I hope so) playing Bombermaaan :-)
-</ul>
-  
 */

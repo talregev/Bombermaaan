@@ -75,6 +75,8 @@ using namespace std;
 //! Define this if the Ctrl+F5 key should output all bombs to the log file for debugging purposes
 #define _DEBUG_FLAG_1
 
+//! Use the STL for TinyXML
+#define TIXML_USE_STL
 
 #define MEMSET(_p,_value,_size)     memset (_p, _value, _size)
 #define MEMZERO(_p,_size)           memset (_p, 0, _size)
