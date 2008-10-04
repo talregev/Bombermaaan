@@ -37,7 +37,7 @@
 // if you want to visualise the owner of a bomb, uncomment
 //#define DEBUG_DRAW_BOMB_OWNERS
 
-#ifdef DEBUG_DRAW_BURNWALLDANGER_BLOCKS
+#if defined(DEBUG_DRAW_SOFTWALL_BLOCKS) || defined (DEBUG_DRAW_BURNWALLDANGER_BLOCKS) || defined (DEBUG_DRAW_BOMB_OWNERS)
 #include "CFont.h"
 
 static CFont m_Font;
@@ -74,7 +74,7 @@ void CAiArena::Create (void)
 {
     ASSERT (m_pArena != NULL);
 
-#ifdef DEBUG_DRAW_BURNWALLDANGER_BLOCKS
+#if defined(DEBUG_DRAW_SOFTWALL_BLOCKS) || defined (DEBUG_DRAW_BURNWALLDANGER_BLOCKS) || defined (DEBUG_DRAW_BOMB_OWNERS)
     m_Font.SetDisplay(m_pDisplay);
                     
     m_Font.Create ();
