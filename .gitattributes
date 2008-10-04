@@ -275,6 +275,13 @@ src/debian/usr/share/games/bombermaaan/Levels/L8.TXT -text
 src/debian/usr/share/menu/bombermaaan -text
 src/debian/usr/share/pixmaps/Bombermaaan.png -text
 src/md5sum.pl -text
+src/third-party/tinyxml/readme.txt -text
+src/third-party/tinyxml/tinystr.cpp -text
+src/third-party/tinyxml/tinystr.h -text
+src/third-party/tinyxml/tinyxml.cpp -text
+src/third-party/tinyxml/tinyxml.h -text
+src/third-party/tinyxml/tinyxmlerror.cpp -text
+src/third-party/tinyxml/tinyxmlparser.cpp -text
 tools/create_experimental-release.bash -text
 web/changelog.php -text
 web/contact.php -text
