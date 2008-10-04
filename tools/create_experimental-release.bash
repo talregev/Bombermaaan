@@ -195,10 +195,11 @@ tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return co
 #
 
 echo
-echo Checksum MD5:
+echo Checksums MD5:
 md5sum $BASENAME*.*       || error "Md5sum ended with return code $?."
 
-echo Checksum SHA1:
+echo
+echo Checksums SHA1:
 sha1sum $BASENAME*.*      || error "Sha1sum ended with return code $?."
 
 #
