@@ -250,7 +250,6 @@ src/debian-data/DEBIAN/control.dist -text
 src/debian-data/DEBIAN/md5sums -text
 src/debian-data/DEBIAN/postinst -text
 src/debian-data/DEBIAN/postrm -text
-src/debian-data/usr/share/doc/bombermaaan-data/CHANGELOG.txt -text
 src/debian-data/usr/share/doc/bombermaaan-data/TODO -text
 src/debian-data/usr/share/doc/bombermaaan-data/changelog.Debian.gz -text
 src/debian-data/usr/share/doc/bombermaaan-data/copyright -text
@@ -259,7 +258,6 @@ src/debian/DEBIAN/md5sums -text
 src/debian/DEBIAN/postinst -text
 src/debian/DEBIAN/postrm -text
 src/debian/usr/share/applications/bombermaaan.desktop -text
-src/debian/usr/share/doc/bombermaaan/CHANGELOG.txt -text
 src/debian/usr/share/doc/bombermaaan/Readme.html -text
 src/debian/usr/share/doc/bombermaaan/TODO -text
 src/debian/usr/share/doc/bombermaaan/changelog.Debian.gz -text
