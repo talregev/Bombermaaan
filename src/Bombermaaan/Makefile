@@ -3,14 +3,18 @@ SDL_CONFIG := sdl-config
 SDL_CFLAGS := $(shell $(SDL_CONFIG) --cflags)
 SDL_LDFLAGS := $(shell $(SDL_CONFIG) --libs) -lSDL_mixer
 
+# tinyxml path
+TINYXML_PATH := ../third-party/tinyxml
+
 CPP  = g++
 CC   = gcc
 OBJ  = CBoard.o CClock.o CCloudManager.o CCommandChunk.o CControls.o CDemo.o CDrawGame.o CHurryMessage.o CMatch.o CMenu.o CMenuBase.o CMenuBomber.o CMenuInput.o CMenuLevel.o CMenuMatch.o CMenuYesNo.o CModeScreen.o CMosaic.o CPauseMessage.o CRandomMosaic.o CScroller.o CTitle.o CVictory.o CWinner.o CConsole.o CSDLVideo.o CSDLInput.o CLog.o CWindow.o CDebug.o CDisplay.o CFont.o CGame.o CInput.o CMainInput.o COptions.o CPlayerInput.o CScores.o CSound.o CArena.o CArenaCloser.o CArenaSnapshot.o CBomb.o CBomber.o CBomberMove.o CElement.o CExplosion.o CFloor.o CItem.o CWall.o CAiArena.o CAiBomber.o CAiManager.o WinMain.o winreplace.o
 SRC  = $(OBJ:%.o=%.cpp) STDAFX.CPP
-LINKOBJ = $(OBJ) STDAFX.o
+LINKOBJ = $(OBJ) STDAFX.o $(TINYXML_PATH)/tinystr.o $(TINYXML_PATH)/tinyxmlerror.o $(TINYXML_PATH)/tinyxml.o $(TINYXML_PATH)/tinyxmlparser.o
 LIBS = -L../RESGEN $(SDL_LDFLAGS) -lbombermaaan
-CXXINCS =  -I./
+CXXINCS =  -I./ -I../third-party/tinyxml
 BIN  = Bombermaaan
+STRIP = strip
 CXXFLAGS = $(CXXINCS) $(SDL_CFLAGS) -Wall -O2
 ifeq ($(DEBUG),1)
 	CXXFLAGS += -g
@@ -20,7 +24,7 @@ DEPENDFILE = .depend
 
 .PHONY: all all-before all-after clean strip clean-custom
 
-all: all-before $(DEPENDFILE) $(BIN) all-after
+all: all-before $(BIN) all-after
 
 $(DEPENDFILE): $(SRC)
 	$(CPP) -MM $(SRC) $(CXXFLAGS) > $(DEPENDFILE)
@@ -40,7 +44,7 @@ uninstall: all
 strip: $(BIN)
 	$(STRIP) $(BIN)
 
-$(BIN): $(LINKOBJ)
+$(BIN): $(DEPENDFILE) $(LINKOBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
 STDAFX.o: STDAFX.CPP

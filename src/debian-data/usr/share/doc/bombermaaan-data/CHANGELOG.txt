@@ -2,8 +2,17 @@ Next version
 
 New feature: AI bomber is punching bombs when he is jammed by a bomb and picked up the punch item (by Markus Drescher)
 New feature: Bombermaaan can be compiled natively on Linux using G++ (without the need of Wine and the Bombermaaan files for Win32, thanks to Markus Drescher)
+New feature: AI players know how to throw bombs with the blue glove.
+New feature: Levels may have remote fused bombs (introduced version 3).
 Changed: FMOD was replaced by the SDL_mixer library (by Markus Drescher)
-
+Changed: Bots "know" which bomb is ignited by another bomb.
+Changed: Algorithmn for bots chosing the best block to escape / defend theirselves.
+Bux fix: Game does not crash anymore if it is being restarted after a joystick was unplugged and nothing was changed in the controls screen.
+Bug fix: Bots are escaping in a certain situation if a player surrounds a bot with bombs.
+Bug fix: Sometimes bots were stuck in the "WALK MODE". If they stay in there too often, they exit the "WALK MODE".
+Bug fix: A bomb could have been "lifted again" if it already was lifted.
+Bug fix: A level could contain too many items (in walls/initial skills of the bomber). That means the sum of maximum items must not exceed 50. (Initial skill items * 5 + Items in Walls <= 50)
+Bug fix: Sometimes too many walls were created causing a game crash.
 
 ----------------------------
 

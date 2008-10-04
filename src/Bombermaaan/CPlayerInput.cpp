@@ -282,9 +282,10 @@ bool CPlayerInput::TestControl (int Control)
     // If the player input is a joystick
     else
     {
-        if (m_pOptions->GetControl(m_PlayerInput, Control) < NUMBER_OF_JOYSTICK_DIRECTIONS)
+        int OptControl = m_pOptions->GetControl(m_PlayerInput, Control);
+        if (OptControl < NUMBER_OF_JOYSTICK_DIRECTIONS)
         {
-            switch (m_pOptions->GetControl(m_PlayerInput, Control))
+            switch (OptControl)
             {   
                 case JOYSTICK_UP    : return (m_pDirectInput->GetJoystickAxisY (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) < 0);
                 case JOYSTICK_DOWN  : return (m_pDirectInput->GetJoystickAxisY (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) > 0);
@@ -294,7 +295,7 @@ bool CPlayerInput::TestControl (int Control)
         }
         else
         {
-            return m_pDirectInput->GetJoystickButton (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS, Control - NUMBER_OF_JOYSTICK_DIRECTIONS);
+            return m_pDirectInput->GetJoystickButton (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS, OptControl - NUMBER_OF_JOYSTICK_DIRECTIONS);
         }
     }
 

@@ -110,13 +110,13 @@ private:
     int                 m_TimeStartSeconds;             //!< How many seconds in the time when a battle starts?
     int                 m_TimeUpMinutes;                //!< How many minutes in the time when the arena starts closing?
     int                 m_TimeUpSeconds;                //!< How many seconds in the time when the arena starts closing?
-    EBomberType                 m_BomberType [MAX_PLAYERS];     //!< Bomber type for each player
+    EBomberType         m_BomberType [MAX_PLAYERS];     //!< Bomber type for each player
     int                 m_PlayerCount;                  //!< Total number of players in the battle
     int                 m_BattleCount;                  //!< How many battles to win in order to be victorious
     int                 m_PlayerInput [MAX_PLAYERS];    //!< Player input to use for each player
-    EDisplayMode                 m_DisplayMode;                  //!< Current display mode to use in the CDisplay object
+    EDisplayMode        m_DisplayMode;                  //!< Current display mode to use in the CDisplay object
     int                 m_Control[MAX_PLAYER_INPUT][NUM_CONTROLS]; //!< Control number to use for each player input and for each control
-    EBlockType***              m_LevelsData;
+    EBlockType***       m_LevelsData;
     std::vector<std::string>  levelFileNames_short;     //!< A list with file names, one entry for each level (short name withouth path, also see levelFileNames_full)
     std::vector<std::string>  levelFileNames_full;      //!< A list with file names, one entry for each level (short name withouth path, also see levelFileNames_short)
     int                 m_Level;
@@ -133,6 +133,7 @@ private:
     bool                LoadLevel_Version1( ifstream& File, int CurrentLevel ); //!< Load level file version 1
     bool                LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requireRemoteFuse = false ); //!< Load level file version 2 (requiredRemoteFuse = false) or 3 (requiredRemoteFuse = true)
     inline bool         LoadLevel_Version3( ifstream& file, int CurrentLevel ); //!< Load level file version 3: method wrapper for Version 2
+    bool                CheckMaxNumberOfItems( int Level, unsigned int *sumOfMaxItems ); //!< Check if number of max items is valid
                         
 public:                 
                         

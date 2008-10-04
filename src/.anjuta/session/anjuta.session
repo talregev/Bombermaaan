@@ -4,4 +4,10 @@ Maximized=1
 Geometry=1280x953+0+25
 
 [Execution]
-Run in terminal=2
+Program arguments=~/.Bombermaaan/Levels/EMPTY.TXT EMPTY.PNG
+Run in terminal=1
+Program uri=file:///home/otto/Projects/Bombermaaan/LEVELPREVIEW/LevelPreview
+Stop at beginning=1
+
+[Debugger]
+Source directories=file:///home/otto/Projects/Bombermaaan/LEVELPREVIEW

@@ -324,7 +324,7 @@ long CLog::WriteLine( const char *pMessage, ... )
                       LocalTime.wSecond);
 #else
             sprintf ( Time,                 // String where to write
-                      "%02d:%02d:%02d",     // Format (don't forget '\n' character!)
+                      "%02d:%02d:%02d  ",     // Format (don't forget '\n' character!)
                       LocalTime->tm_hour,      // Time numbers to use
                       LocalTime->tm_min, 
                       LocalTime->tm_sec);

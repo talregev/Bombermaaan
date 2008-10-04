@@ -636,29 +636,11 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
 
 		// Close the level file
         in.close();
-
-        // check if maximum number of items is not exceeded
-        // we do this, because if there is a draw game when many bombers die
-        // they all lose their items at the same time.
-        unsigned int sumOfMaxItems = 0;
-        unsigned int i;
-
-        // count items in walls
-        for (i = ITEM_NONE + 1; i < NUMBER_OF_ITEMS; i++)
-        {
-            sumOfMaxItems += m_NumberOfItemsInWalls[CurrentLevel][i];
-        }
-
-        // count initial bomber skills (note: count the worst case with five players)
-        for (i = BOMBERSKILL_DUMMYFIRST + 1; i < NUMBER_OF_BOMBERSKILLS; i++)
-        {
-            // initial skills like bombs and flames will not be lost
-            if (i != BOMBERSKILL_FLAME && i != BOMBERSKILL_BOMBS)
-                sumOfMaxItems += m_InitialBomberSkills[CurrentLevel][i] * MAX_PLAYERS;
-        }
         
+        unsigned int sumOfMaxItems;
+
         // too many items?
-        if (sumOfMaxItems > MAX_ITEMS)
+        if (!CheckMaxNumberOfItems( CurrentLevel, &sumOfMaxItems ))
         {
             // Log there is a problem
             theLog.WriteLine ("Options         => !!! Level file is incorrect (Too many items: %d of %d allowed).", sumOfMaxItems, MAX_ITEMS);
@@ -1107,4 +1089,38 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requir
     // Everything went right
     return true;
 
+}
+
+/**
+ * @brief   check if this level does not exceed the maximum possible number of items
+ * @param   Level           the number of the level to check
+ * @param   sumOfMaxItems   pointer to an integer variable where the sum of max items is counted
+ * @return  true if the number of maximum allowed items is not exceeded, false otherwise
+ */
+bool COptions::CheckMaxNumberOfItems( int Level, unsigned int *sumOfMaxItems )
+{
+    // check if maximum number of items is not exceeded
+    // we do this, because if there is a draw game when many bombers die
+    // they all lose their items at the same time.
+    *sumOfMaxItems = 0;
+    unsigned int i;
+
+    // count items in walls
+    for (i = ITEM_NONE + 1; i < NUMBER_OF_ITEMS; i++)
+    {
+        *sumOfMaxItems += m_NumberOfItemsInWalls[Level][i];
+    }
+
+    // count initial bomber skills (note: count the worst case with five players)
+    for (i = BOMBERSKILL_DUMMYFIRST + 1; i < NUMBER_OF_BOMBERSKILLS; i++)
+    {
+        // initial skills like bombs and flames will not be lost
+        if (i != BOMBERSKILL_FLAME && i != BOMBERSKILL_BOMBS)
+            *sumOfMaxItems += m_InitialBomberSkills[Level][i] * MAX_PLAYERS;
+    }
+        
+    if (*sumOfMaxItems > MAX_ITEMS)
+        return false;
+    else
+        return true;
 }
