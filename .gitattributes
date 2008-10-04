@@ -743,7 +743,7 @@ trunk/src/third-party/tinyxml/tinyxml.cpp -text
 trunk/src/third-party/tinyxml/tinyxml.h -text
 trunk/src/third-party/tinyxml/tinyxmlerror.cpp -text
 trunk/src/third-party/tinyxml/tinyxmlparser.cpp -text
-trunk/tools/create_experimental-release.bash -text
+trunk/tools/create_release.sh -text
 trunk/web/changelog.php -text
 trunk/web/contact.php -text
 trunk/web/css.php -text
