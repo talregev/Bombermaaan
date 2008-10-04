@@ -29,6 +29,7 @@
 #include "COptions.h"
 #include "CInput.h"
 #include "CArena.h"
+#include "../third-party/tinyxml/tinyxml.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -216,6 +217,67 @@ void COptions::SaveBeforeExit (void)
 
 bool COptions::LoadConfiguration (void)
 {
+    // ---- Begin of XML test
+
+    TiXmlDocument configDoc( "config.xml" );
+    
+    // Try to load XML file
+    if ( configDoc.LoadFile() ) {
+
+        // The file could be loaded successfully
+        theLog.WriteLine ("Options         => Configuration file config.xml was successfully loaded." );
+
+    } else {
+
+        // The configuration could not be loaded
+        // It might not exist, so try to create the file
+        theLog.WriteLine ("Options         => Configuration file config.xml could not be loaded." );
+
+        TiXmlDocument newConfig;
+	    TiXmlElement* configRev;
+ 	    TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+	    newConfig.LinkEndChild( decl );
+     
+	    TiXmlElement * root = new TiXmlElement( "Bombermaaan" );
+	    newConfig.LinkEndChild( root );
+
+	    TiXmlComment * comment = new TiXmlComment();
+        comment->SetValue(" Configuration settings for the Bombermaaan game (http://bombermaaan.sf.net/) " );
+	    root->LinkEndChild( comment );
+     
+	    TiXmlElement * config = new TiXmlElement( "Configuration" );
+	    root->LinkEndChild( config );
+
+	    configRev = new TiXmlElement( "ConfigRevision" );
+	    configRev->SetAttribute( "value", 1 );
+	    config->LinkEndChild( configRev );
+
+	    bool saveOkay = newConfig.SaveFile( "config.xml" );
+
+        theLog.WriteLine ("Options         => Configuration file config.xml was %s created.", ( saveOkay ? "successfully" : "not" ) );
+
+        // Return if could not successfully create the configuration file
+        if (!saveOkay) return false;
+
+        if ( configDoc.LoadFile() ) {
+
+            // The file could be loaded successfully
+            theLog.WriteLine ("Options         => Configuration file config.xml was successfully loaded." );
+
+        } else {
+
+            // The configuration could not be loaded
+            theLog.WriteLine ("Options         => Configuration file config.xml could not be loaded." );
+
+            return false;
+
+        }
+
+    }
+
+
+    // ---- End of XML test
+
     // Try to open the configuration file
     FILE* pConfigFile = fopen( configFileName.c_str(), "rb" );
     

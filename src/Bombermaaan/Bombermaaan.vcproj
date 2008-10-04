@@ -656,6 +656,34 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="TinyXML"
+			>
+			<File
+				RelativePath="..\third-party\tinyxml\tinystr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\third-party\tinyxml\tinystr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\third-party\tinyxml\tinyxml.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\third-party\tinyxml\tinyxml.h"
+				>
+			</File>
+			<File
+				RelativePath="..\third-party\tinyxml\tinyxmlerror.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\third-party\tinyxml\tinyxmlparser.cpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\Bombermaaan.ico"
 			>
