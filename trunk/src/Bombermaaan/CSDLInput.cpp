@@ -94,7 +94,7 @@ bool CSDLInput::Create (void)
 			if (pJoystick == NULL)
             {
                 // Log failure
-                theLog.WriteLine ("SDLInput     => !!! Could not allocate memory for a joystick.");
+                theLog.WriteLine ("SDLInput        => !!! Could not allocate memory for a joystick.");
             
                 // Get out
                 return false;
@@ -111,7 +111,7 @@ bool CSDLInput::Create (void)
 
 	        m_pJoysticks.push_back (pJoystick); // the joystick is not opened
 
-        	theLog.WriteLine ("SDLInput     => A joystick was added.");
+        	theLog.WriteLine ("SDLInput        => A joystick was added.");
 			
 		}
 		
@@ -143,14 +143,14 @@ void CSDLInput::Destroy (void)
             delete m_pJoysticks[Index];
 
             // Log we released a joystick
-            theLog.WriteLine ("SDLInput     => A joystick was released.");
+            theLog.WriteLine ("SDLInput        => A joystick was released.");
         }
                     
         // Remove the joystick pointers from the container 
         m_pJoysticks.clear();
 
         // Log we released the SDLInput object
-        theLog.WriteLine ("SDLInput     => SDLInput object was released.");
+        theLog.WriteLine ("SDLInput        => SDLInput object was released.");
     }
 }
 
