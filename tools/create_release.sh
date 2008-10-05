@@ -65,11 +65,18 @@ esac
 # Grep the subversion revision number and version string from the CGame.cpp source code file
 REVISION=`grep '^#define BOMBERMAAAN_BUILD_STRING ' ../src/Bombermaaan/CGame.cpp | sed -e 's/.* "//' -e 's/".*//'`
 VERSION=`grep '^#define BOMBERMAAAN_VERSION_STRING ' ../src/Bombermaaan/CGame.cpp | sed -e 's/.* "//' -e 's/".*//'`
+SYSTEM=`uname -s`
+if [ "$SYSTEM" = "Linux" ] ; then
+    SYSSUFFIX=linux32
+else
+    SYSSUFFIX=win32
+fi
 
 # The 'e' means experimental
 BASENAME=Bombermaaan_${VERSION}.${REVISION}e_`date '+%Y%m%d'`
-TARGETDIR=${BASENAME}_win32
-TARGETZIP=${BASENAME}_win32.zip
+TARGETDIR=${BASENAME}_${SYSSUFFIX}
+TARGETGZ=${BASENAME}_${SYSSUFFIX}.tar.gz
+TARGETZIP=${BASENAME}_${SYSSUFFIX}.zip
 SRCTARGETDIR=${BASENAME}_src
 SRCTARGETGZ=${BASENAME}_src.tar.gz
 SRCTARGETZIP=${BASENAME}_src.zip
@@ -91,7 +98,7 @@ if [ -z "$VERSION" ] ; then
 fi
 
 # The build and version strings have to be updated in the file CGame.cpp
-# This check ensures the last check was less then 10 minutes (600 seconds) ago so we don't forget the update
+# This check ensures the last modification was less than 10 minutes (600 seconds) ago so we don't forget the update
 LASTCHG=`date '+%s' -r ../../src/Bombermaaan/CGame.cpp`
 NOW=`date '+%s'`
 let "AGE=NOW-LASTCHG"
@@ -120,6 +127,11 @@ if [ -e "$SRCTARGETGZ" ] ; then
     error "Target zip package '$SRCTARGETGZ' already exists."
 fi
 
+# I'm not sure - is it "Win32"?
+if [ "$SYSTEM" != "Linux" -a "$SYSTEM" != "Win32" ] ; then
+    error "This script was not designed for $SYSTEM."
+fi
+
 
 #
 # Creating folder
@@ -132,17 +144,26 @@ mkdir "$TARGETDIR"                                                              
 mkdir "$TARGETDIR/Levels"                                                       || error "Mkdir ended with return code $?."
 cp ../../src/_Test_/Release/Levels/L*.TXT "$TARGETDIR/Levels/."                 || error "Copy ended with return code $?."
 
-cp ../../src/_Test_/Release/Bombermaaan.exe        "$TARGETDIR/."               || error "Copy ended with return code $?."
-cp ../../src/_Test_/Release/Bombermaaan_32.dll        "$TARGETDIR/."            || error "Copy ended with return code $?."
+if [ "$SYSTEM" = "Linux" ] ; then
+    cp ../../src/Bombermaaan/Bombermaaan        "$TARGETDIR/."                  || error "Copy ended with return code $?."
+else
+    cp ../../src/_Test_/Release/Bombermaaan.exe        "$TARGETDIR/."           || error "Copy ended with return code $?."
+    cp ../../src/_Test_/Release/Bombermaaan_32.dll        "$TARGETDIR/."        || error "Copy ended with return code $?."
+fi
+
 cp ../../src/CHANGELOG.txt        "$TARGETDIR/."                                || error "Copy ended with return code $?."
 cp ../../COPYING.txt        "$TARGETDIR/."                                      || error "Copy ended with return code $?."
 cp ../../docs/Readme.html        "$TARGETDIR/."                                 || error "Copy ended with return code $?."
 
-cp ../../src/_Test_/Release/libogg*.dll            "$TARGETDIR/."               || error "Copy ended with return code $?."
-cp ../../src/_Test_/Release/libvorbis*.dll         "$TARGETDIR/."               || error "Copy ended with return code $?."
-cp ../../src/_Test_/Release/SDL*.dll               "$TARGETDIR/."               || error "Copy ended with return code $?."
-#smpeg.dll not needed?
-#cp ../../src/_Test_/Release/smpeg.dll              "$TARGETDIR/."         || error "Copy ended with return code $?."
+if [ "$SYSTEM" = "Linux" ] ; then
+    cp ../../src/RESGEN/libbombermaaan.so.1.0.0        "$TARGETDIR/."               || error "Copy ended with return code $?."
+else
+    cp ../../src/_Test_/Release/libogg*.dll            "$TARGETDIR/."               || error "Copy ended with return code $?."
+    cp ../../src/_Test_/Release/libvorbis*.dll         "$TARGETDIR/."               || error "Copy ended with return code $?."
+    cp ../../src/_Test_/Release/SDL*.dll               "$TARGETDIR/."               || error "Copy ended with return code $?."
+    #smpeg.dll not needed?
+    #cp ../../src/_Test_/Release/smpeg.dll              "$TARGETDIR/."              || error "Copy ended with return code $?."
+fi
 
 #
 # Creating zip file
@@ -150,7 +171,11 @@ cp ../../src/_Test_/Release/SDL*.dll               "$TARGETDIR/."               
 
 echo Creating $RELEASETYPE release package for version $VERSION, rev. $REVISION now...
 
-/cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$TARGETZIP" "$TARGETDIR"            || error "7-Zip ended with return code $?."
+if [ "$SYSTEM" = "Linux" ] ; then
+    tar czf "$TARGETGZ" "$TARGETDIR"                                                || error "Tar ended with return code $?."
+else
+    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$TARGETZIP" "$TARGETDIR"            || error "7-Zip ended with return code $?."
+fi
 
 #
 # Creating folder with source code
@@ -187,8 +212,13 @@ cp ../../docs/Readme.html        "$SRCTARGETDIR/."                              
 
 echo Creating $RELEASETYPE source release package for version $VERSION, rev. $REVISION now...
 
-/cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$SRCTARGETZIP" "$SRCTARGETDIR"      || error "7-Zip ended with return code $?."
-tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
+if [ "$SYSTEM" = "Linux" ] ; then
+    zip "$SRCTARGETZIP" "$SRCTARGETDIR"      || error "7-Zip ended with return code $?."
+    tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
+else
+    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$SRCTARGETZIP" "$SRCTARGETDIR"      || error "7-Zip ended with return code $?."
+    tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
+fi
 
 #
 # Checksums
