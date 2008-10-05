@@ -108,14 +108,14 @@ bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
     // some mode available?
 	if (modes == (SDL_Rect **)0) {
 		// Log failure
-        theLog.WriteLine ("SDLVideo      => !!! Could not find any video modes.");
+        theLog.WriteLine ("SDLVideo        => !!! Could not find any video modes.");
 
         // Get out
         return false;
     }
     else if (modes == (SDL_Rect **)-1) {
 		// Log success
-        theLog.WriteLine ("SDLVideo      => All modes available");
+        theLog.WriteLine ("SDLVideo        => All modes available");
         
         // so, add 240x234 (window), 320 x 240, 512 x 384, 640 x 480 in 16 bits
         AddDisplayMode(240, 234, 16, (LPVOID *)&m_AvailableDisplayModes);
@@ -147,7 +147,7 @@ bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
 		
 	if (!validMode) {
 		// Log failure
-        theLog.WriteLine ("SDLVideo      => !!! Requested video mode %dx%d not found.", m_Width, m_Height);
+        theLog.WriteLine ("SDLVideo        => !!! Requested video mode %dx%d not found.", m_Width, m_Height);
 
         // Get out
         return false;
@@ -157,14 +157,14 @@ bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
     if (!m_FullScreen)
     {
         // Log that windowed mode is being initialized
-        theLog.WriteLine ("SDLVideo      => Initializing SDLVideo interface for windowed mode %dx%d.", m_Width, m_Height);
+        theLog.WriteLine ("SDLVideo        => Initializing SDLVideo interface for windowed mode %dx%d.", m_Width, m_Height);
 
         // Get normal windowed mode
         m_pPrimary = SDL_SetVideoMode(m_Width, m_Height, m_Depth, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_RESIZABLE);
         
         if (m_pPrimary == NULL) {
 			// Log failure
-		    theLog.WriteLine ("SDLVideo      => !!! Requested video mode could not be set. (primary surface)");
+		    theLog.WriteLine ("SDLVideo        => !!! Requested video mode could not be set. (primary surface)");
 		
 		    // Get out
 		    return false;
@@ -174,14 +174,14 @@ bool CSDLVideo::Create (int Width, int Height, int Depth, bool FullScreen)
     else
     {
         // Log that fullscreen mode is being initialized
-        theLog.WriteLine ("SDLVideo      => Initializing SDLVideo interface for fullscreen mode %dx%dx%d.", m_Width, m_Height, m_Depth);
+        theLog.WriteLine ("SDLVideo        => Initializing SDLVideo interface for fullscreen mode %dx%dx%d.", m_Width, m_Height, m_Depth);
          
         // Get fullscreen mode
         m_pPrimary = SDL_SetVideoMode(m_Width, m_Height, m_Depth, SDL_HWSURFACE|SDL_FULLSCREEN|SDL_DOUBLEBUF);
         
         if (m_pPrimary == NULL) {
 			// Log failure
-		    theLog.WriteLine ("SDLVideo      => !!! Requested video mode could not be set. (primary/backbuffer)");
+		    theLog.WriteLine ("SDLVideo        => !!! Requested video mode could not be set. (primary/backbuffer)");
 		
 		    // Get out
 		    return false;
@@ -257,7 +257,7 @@ void CSDLVideo::Destroy (void)
             m_pBackBuffer = NULL;
 
             // Log release
-            theLog.WriteLine ("SDLVideo      => Backbuffer surface was released.");
+            theLog.WriteLine ("SDLVideo        => Backbuffer surface was released.");
         }
         
         // If the primary surface exists
@@ -268,11 +268,11 @@ void CSDLVideo::Destroy (void)
             m_pPrimary = NULL;
 
             // Log release
-            theLog.WriteLine ("SDLVideo      => Primary surface was released.");
+            theLog.WriteLine ("SDLVideo        => Primary surface was released.");
         }
     
         // Log release
-        theLog.WriteLine ("SDLVideo      => SDLVideo object was released.");
+        theLog.WriteLine ("SDLVideo        => SDLVideo object was released.");
     }
 }
 
@@ -301,8 +301,8 @@ void CSDLVideo::UpdateScreen (void)
 
         // Log failure
         if (hRet != 0) {
-	        theLog.WriteLine ("SDLVideo      => !!! Updating failed (switching primary/backbuffer).");
-	        theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
+	        theLog.WriteLine ("SDLVideo        => !!! Updating failed (switching primary/backbuffer).");
+	        theLog.WriteLine ("SDLVideo        => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
         }
     }
 }
@@ -553,7 +553,7 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
     if (DataSize == 0)
     {
         // Log failure
-        theLog.WriteLine ("SDLVideo      => !!! Could not get the bitmap's (res id: %d) attributes.", hBitmap);
+        theLog.WriteLine ("SDLVideo        => !!! Could not get the bitmap's (res id: %d) attributes.", hBitmap);
         theLog.LogLastError ();
 
         // Get out
@@ -574,8 +574,8 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
     if (ddsd == NULL)
     {
         // Log failure
-        theLog.WriteLine ("SDLVideo      => !!! Could not create surface.");
-        theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
+        theLog.WriteLine ("SDLVideo        => !!! Could not create surface.");
+        theLog.WriteLine ("SDLVideo        => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
 
         // Get out
         return false;
@@ -594,8 +594,8 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
         if (newDdsd == NULL)
         {
             // Log failure
-            theLog.WriteLine ("SDLVideo      => !!! Could not convert surface to 24 BitPerPixel format.");
-            theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
+            theLog.WriteLine ("SDLVideo        => !!! Could not convert surface to 24 BitPerPixel format.");
+            theLog.WriteLine ("SDLVideo        => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
 
             // Get out
             return false;
@@ -624,8 +624,8 @@ bool CSDLVideo::LoadSprites (int SpriteTableWidth,
         if (hRet != 0)
         {
             // Log failure
-            theLog.WriteLine ("SDLVideo      => !!! Could not set colorkey.");
-            theLog.WriteLine ("SDLVideo      => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
+            theLog.WriteLine ("SDLVideo        => !!! Could not set colorkey.");
+            theLog.WriteLine ("SDLVideo        => !!! SDLVideo error is : %s.", GetSDLVideoError(hRet));
 
             // Get out
             return false;
