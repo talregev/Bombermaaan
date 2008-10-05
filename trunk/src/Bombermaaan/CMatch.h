@@ -64,7 +64,7 @@ private:
     CClock          m_Clock;                    //!< Clock object
     CArena          m_Arena;                    //!< Arena object
     CAiManager      m_AiManager;                //!< Computer brain
-    //! @TODO: Check why m_NoComputer is there (didn't find references)
+    //! @todo Check why m_NoComputer is there (didn't find references)
     bool            m_NoComputer;               //!< True if no computer is playing in this match
     bool            m_MatchOver;                //!< Is match over? (ie. there is a result : winner or draw game)
     int             m_WinnerPlayer;             //!< Number of the player who won if there is a winner
