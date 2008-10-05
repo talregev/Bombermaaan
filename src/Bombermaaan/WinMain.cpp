@@ -30,6 +30,8 @@
  *  \mainpage Bombermaaan source code documentation
  *
  *  This is the source code documentation of Bombermaaan created by Doxygen.
+ *
+ *  Bombermaaan is a classic Bomberman game, also similar to Dynablaster.
  */
 
 
