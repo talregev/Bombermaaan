@@ -29,7 +29,6 @@
 #include "COptions.h"
 #include "CInput.h"
 #include "CArena.h"
-#include "../third-party/tinyxml/tinyxml.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -154,7 +153,10 @@ bool COptions::Create( bool useAppDataFolder, std::string dynamicDataFolder, std
     configFileName.append( "config.dat" );
     theLog.WriteLine( "Options         => Name of config file: '%s'.", configFileName.c_str() );
     
-    // Load configuration file
+    // Set default configuration values before loading the configuration file and overwriting the default
+    SetDefaultValues();
+
+    // Load configuration file and overwrite the previously set defaults
     if (!LoadConfiguration())
         return false;
 
@@ -208,7 +210,10 @@ void COptions::Destroy (void)
 
 void COptions::SaveBeforeExit (void)
 {
-   // Try to open the configuration file
+    // Write the values to the XML based configuration file
+    WriteXMLData();
+
+    // Try to open the configuration file
     FILE* pConfigFile = fopen( configFileName.c_str(), "wb");
     
     // Write configuration to file
@@ -217,6 +222,25 @@ void COptions::SaveBeforeExit (void)
         WriteData(pConfigFile);
         fclose(pConfigFile);
     } 
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+void COptions::SetDefaultValues(void)
+{
+    // Time of a match (TimeStart) and when the arena closing begins (TimeUp)
+    m_TimeUpMinutes = TIMEUP_MINUTES;
+    m_TimeUpSeconds = TIMEUP_SECONDS;
+    m_TimeStartMinutes = TIMESTART_MINUTES;
+    m_TimeStartSeconds = TIMESTART_SECONDS;
+
+    // Number of matches for a battle
+    m_BattleCount = 3;
+
+    // First level file (index=0) is selected
+    m_Level = 2;
 }
 
 //******************************************************************************************************************************
@@ -233,7 +257,23 @@ bool COptions::LoadConfiguration (void)
     if ( configDoc.LoadFile() ) {
 
         // The file could be loaded successfully
-        theLog.WriteLine ("Options         => Configuration file config.xml was successfully loaded." );
+        int tempRevision = 0;
+        TiXmlHandle configHandle( &configDoc );
+        TiXmlElement *confRevision = configHandle.FirstChild( "Bombermaaan" ).FirstChild( "Configuration" ).FirstChild( "ConfigRevision" ).ToElement();
+        if ( confRevision )
+            confRevision->QueryIntAttribute( "value", &tempRevision );
+
+        theLog.WriteLine( "Options         => Configuration file config.xml was successfully loaded and is at revision %d.", tempRevision );
+
+        ReadIntFromXML( configDoc, "TimeUp", "minutes", &m_TimeUpMinutes );
+        ReadIntFromXML( configDoc, "TimeUp", "seconds", &m_TimeUpSeconds );
+
+        ReadIntFromXML( configDoc, "TimeStart", "minutes", &m_TimeStartMinutes );
+        ReadIntFromXML( configDoc, "TimeStart", "seconds", &m_TimeStartSeconds );
+        
+        ReadIntFromXML( configDoc, "BattleCount", "value", &m_BattleCount );
+        
+        ReadIntFromXML( configDoc, "LevelFileNumber", "value", &m_Level );
 
     } else {
 
@@ -241,55 +281,8 @@ bool COptions::LoadConfiguration (void)
         // It might not exist, so try to create the file
         theLog.WriteLine ("Options         => Configuration file config.xml could not be loaded." );
 
-        TiXmlDocument newConfig;
-	    TiXmlElement* configRev;
- 	    TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
-	    newConfig.LinkEndChild( decl );
-     
-	    TiXmlElement * root = new TiXmlElement( "Bombermaaan" );
-	    newConfig.LinkEndChild( root );
-
-	    TiXmlComment * comment = new TiXmlComment();
-        comment->SetValue(" Configuration settings for the Bombermaaan game (http://bombermaaan.sf.net/) " );
-	    root->LinkEndChild( comment );
-     
-	    TiXmlElement * config = new TiXmlElement( "Configuration" );
-	    root->LinkEndChild( config );
-
-	    configRev = new TiXmlElement( "ConfigRevision" );
-	    configRev->SetAttribute( "value", 1 );
-	    config->LinkEndChild( configRev );
-
-	    bool saveOkay = newConfig.SaveFile( "config.xml" );
-
-        theLog.WriteLine( "Options         => Configuration file config.xml was %s created.", ( saveOkay ? "successfully" : "not" ) );
-
-        // Return if could not successfully create the configuration file
-        if (!saveOkay) return false;
-
-        if ( configDoc.LoadFile() ) {
-
-            // The file could be loaded successfully
-            theLog.WriteLine( "Options         => Configuration file config.xml was successfully loaded." );
-
-        } else {
-
-            // The configuration could not be loaded
-            theLog.WriteLine( "Options         => Configuration file config.xml could not be loaded." );
-
-            return false;
-
-        }
-
     }
 
-    int tempRevision = 0;
-    TiXmlHandle configHandle( &configDoc );
-    TiXmlElement *confRevision = configHandle.FirstChild( "Bombermaaan" ).FirstChild( "Configuration" ).FirstChild( "ConfigRevision" ).ToElement();
-    if ( confRevision )
-        confRevision->QueryIntAttribute( "value", &tempRevision );
-
-    theLog.WriteLine( "Options         => Configuration file config.xml is at revision %d.", tempRevision );
 
     // ---- End of XML test
 
@@ -305,16 +298,11 @@ bool COptions::LoadConfiguration (void)
 
         int i;
 
-        m_TimeUpMinutes = TIMEUP_MINUTES;
-        m_TimeUpSeconds = TIMEUP_SECONDS;
-        m_TimeStartMinutes = TIMESTART_MINUTES;
-        m_TimeStartSeconds = TIMESTART_SECONDS;
         m_BomberType[0] = BOMBERTYPE_MAN;
         m_BomberType[1] = BOMBERTYPE_MAN;
         m_BomberType[2] = BOMBERTYPE_OFF;
         m_BomberType[3] = BOMBERTYPE_OFF;
         m_BomberType[4] = BOMBERTYPE_OFF;
-        m_Level = 0;
 
         // Initialise player inputs:
         // First bomber uses "keyboard 1"
@@ -323,7 +311,6 @@ bool COptions::LoadConfiguration (void)
         for (i = 0 ; i < MAX_PLAYERS ; i++)
             m_PlayerInput[i] = ( i == 1 ? CONFIGURATION_KEYBOARD_2 : CONFIGURATION_KEYBOARD_1 );
         
-        m_BattleCount = 3;
         m_DisplayMode = DISPLAYMODE_WINDOWED;
 
         m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_UP]      = KEYBOARD_NUMPAD8;
@@ -371,8 +358,6 @@ bool COptions::LoadConfiguration (void)
             m_Control[i][CONTROL_ACTION2] = JOYSTICK_BUTTON(1);
         }
 
-        m_Level = 0;
-
         // Create the configuration file
         pConfigFile = fopen( configFileName.c_str(), "wb" );
         
@@ -408,17 +393,89 @@ bool COptions::LoadConfiguration (void)
 
 void COptions::ReadData (FILE* pConfigFile)
 {
+    // Some values are read into a dummy variable since they are already stored in XML based file
+    int dummy;
+
     // Read each configuration value in the file
-    fread(&m_TimeUpMinutes, sizeof(int), 1, pConfigFile);
-    fread(&m_TimeUpSeconds, sizeof(int), 1, pConfigFile);
-    fread(&m_TimeStartMinutes, sizeof(int), 1, pConfigFile);
-    fread(&m_TimeStartSeconds, sizeof(int), 1, pConfigFile);
+    fread(&dummy, sizeof(int), 1, pConfigFile);
+    fread(&dummy, sizeof(int), 1, pConfigFile);
+    fread(&dummy, sizeof(int), 1, pConfigFile);
+    fread(&dummy, sizeof(int), 1, pConfigFile);
     fread(&m_DisplayMode, sizeof(EDisplayMode), 1, pConfigFile);
-    fread(&m_BattleCount, sizeof(int), 1, pConfigFile);
+    fread(&dummy, sizeof(int), 1, pConfigFile);
     fread(m_BomberType, sizeof(EBomberType), MAX_PLAYERS, pConfigFile);
     fread(m_PlayerInput, sizeof(int), MAX_PLAYERS, pConfigFile);
     fread(m_Control, sizeof(int), MAX_PLAYER_INPUT * NUM_CONTROLS, pConfigFile);
-    fread(&m_Level, sizeof(int), 1, pConfigFile);
+    fread(&dummy, sizeof(int), 1, pConfigFile);
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+void COptions::WriteXMLData()
+{
+    TiXmlDocument newConfig;
+    TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
+    newConfig.LinkEndChild( decl );
+ 
+    TiXmlElement * root = new TiXmlElement( "Bombermaaan" );
+    newConfig.LinkEndChild( root );
+
+    TiXmlComment * comment = new TiXmlComment();
+    comment->SetValue(" Configuration settings for the Bombermaaan game (http://bombermaaan.sf.net/) " );
+    root->LinkEndChild( comment );
+ 
+    TiXmlElement * config = new TiXmlElement( "Configuration" );
+    root->LinkEndChild( config );
+
+    TiXmlElement* configRev = new TiXmlElement( "ConfigRevision" );
+    configRev->SetAttribute( "value", 1 );
+    config->LinkEndChild( configRev );
+
+    TiXmlElement* configTimeUp = new TiXmlElement( "TimeUp" );
+    configTimeUp->SetAttribute( "minutes", m_TimeUpMinutes );
+    configTimeUp->SetAttribute( "seconds", m_TimeUpSeconds );
+    config->LinkEndChild( configTimeUp );
+
+    TiXmlElement* configTimeStart = new TiXmlElement( "TimeStart" );
+    configTimeStart->SetAttribute( "minutes", m_TimeStartMinutes );
+    configTimeStart->SetAttribute( "seconds", m_TimeStartSeconds );
+    config->LinkEndChild( configTimeStart );
+
+    TiXmlElement* configBattleCount = new TiXmlElement( "BattleCount" );
+    configBattleCount->SetAttribute( "value", m_BattleCount );
+    config->LinkEndChild( configBattleCount );
+
+    TiXmlElement* configLevel = new TiXmlElement( "LevelFileNumber" );
+    configLevel->SetAttribute( "value", m_Level );
+    config->LinkEndChild( configLevel );
+
+    bool saveOkay = newConfig.SaveFile( "config.xml" );
+
+    theLog.WriteLine( "Options         => Configuration file config.xml was %s written.", ( saveOkay ? "successfully" : "not" ) );
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+/**
+ *  @todo Set first three parameters to const if possible
+ */
+
+void COptions::ReadIntFromXML( TiXmlDocument &doc, std::string configNode, std::string attrName, int *value )
+{
+    // Create a handle to the XML document
+    TiXmlHandle handle( &doc );
+
+    // Fetch the element
+    TiXmlElement *element = handle.FirstChild( "Bombermaaan" ).FirstChild( "Configuration" ).FirstChild( configNode ).ToElement();
+
+    // If the element exists, read the int value from the specified attribute
+    // The value variable stays unchanged if there's no int value
+    if ( element )
+        element->QueryIntAttribute( attrName, value );
 }
 
 //******************************************************************************************************************************
