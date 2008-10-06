@@ -30,6 +30,7 @@
 
 #include "CDisplay.h"
 #include "CItem.h"
+#include "../third-party/tinyxml/tinyxml.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -125,8 +126,11 @@ private:
 	int**				m_InitialBomberSkills;
     std::string         configFileName;                 //!< Full name of the config file (including path)
 
+    void                SetDefaultValues();             //!< Set the default configuration values
     void                ReadData (FILE* pConfigFile);   //!< Read the options from the configuration file
     void                WriteData (FILE* pConfigFile);  //!< Write the options to the configuration file
+    void                WriteXMLData();                 //!< Write the options to the XML based configuration file
+    void                ReadIntFromXML( TiXmlDocument &doc, std::string configNode, std::string attrName, int *value );
     bool                LoadLevels( std::string appDataFolder, std::string pgmFolder );              //!< Load game levels data and names from the level directory.
     bool                LoadConfiguration (void);       //!< Load the configuration file, create default if it does not exist.
     void                AllocateLevels (int NumberOfLevels); //!< Allocate data and names for the specified number of levels. Warning : does not allocate the names strings (just the array of string pointers).
