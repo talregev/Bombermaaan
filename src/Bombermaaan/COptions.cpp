@@ -254,7 +254,7 @@ bool COptions::LoadConfiguration (void)
 
 	    bool saveOkay = newConfig.SaveFile( "config.xml" );
 
-        theLog.WriteLine ("Options         => Configuration file config.xml was %s created.", ( saveOkay ? "successfully" : "not" ) );
+        theLog.WriteLine( "Options         => Configuration file config.xml was %s created.", ( saveOkay ? "successfully" : "not" ) );
 
         // Return if could not successfully create the configuration file
         if (!saveOkay) return false;
@@ -262,12 +262,12 @@ bool COptions::LoadConfiguration (void)
         if ( configDoc.LoadFile() ) {
 
             // The file could be loaded successfully
-            theLog.WriteLine ("Options         => Configuration file config.xml was successfully loaded." );
+            theLog.WriteLine( "Options         => Configuration file config.xml was successfully loaded." );
 
         } else {
 
             // The configuration could not be loaded
-            theLog.WriteLine ("Options         => Configuration file config.xml could not be loaded." );
+            theLog.WriteLine( "Options         => Configuration file config.xml could not be loaded." );
 
             return false;
 
@@ -275,6 +275,13 @@ bool COptions::LoadConfiguration (void)
 
     }
 
+    int tempRevision = 0;
+    TiXmlHandle configHandle( &configDoc );
+    TiXmlElement *confRevision = configHandle.FirstChild( "Bombermaaan" ).FirstChild( "Configuration" ).FirstChild( "ConfigRevision" ).ToElement();
+    if ( confRevision )
+        confRevision->QueryIntAttribute( "value", &tempRevision );
+
+    theLog.WriteLine( "Options         => Configuration file config.xml is at revision %d.", tempRevision );
 
     // ---- End of XML test
 
