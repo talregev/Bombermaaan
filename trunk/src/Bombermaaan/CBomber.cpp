@@ -568,14 +568,54 @@ void CBomber::Action ()
                         if (!IsObstacle(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY()) && 
                             !m_pArena->IsExplosion(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY()))
                         {
-                            // Create the bomb                  
-                            m_pArena->NewBomb (m_BomberMove.GetBlockX(), m_BomberMove.GetBlockY(), GetFlameSize(), GetBombTime(), m_Player);
+                            // So we can limit the number of dropped bombs
+                            int droppedBombsNow = 0;
+
+                            // @todo The maximum number of bombs should depend on the bomber's skills (extra item 'mass bomb drop').
+                            // @todo Maybe more bombs are only dropped if the player holds the action button for a longer time.
+                            int maxBombs = 1;
+
+                            // Determine the bomber's last move, that is, in which direction he
+                            // is looking. The bombs are dropped behind him.
+                            int deltax, deltay;
+                            switch (m_BomberMove.GetLastRealMove())
+                            {
+                                case BOMBERMOVE_UP:    deltax =  0; deltay =  1; break;
+                                case BOMBERMOVE_DOWN:  deltax =  0; deltay = -1; break;
+                                case BOMBERMOVE_LEFT:  deltax =  1; deltay =  0; break;
+                                case BOMBERMOVE_RIGHT: deltax = -1; deltay =  0; break;
+                                default:               assert( false ); break;
+                            }
+
+                            // Start with the bomber's current position
+                            int x, y;
+                            x = m_BomberMove.GetBlockX();
+                            y = m_BomberMove.GetBlockY();
+
+                            while (true) {
+
+                                // Create the bomb                  
+                                m_pArena->NewBomb (x, y, GetFlameSize(), GetBombTime(), m_Player);
+
+                                // One more used and dropped bomb
+                                m_UsedBombs++;
+                                droppedBombsNow++;
+
+                                // Move to the next position
+                                x += deltax;
+                                y += deltay;
+
+                                // Check if we should end the mass bomb drop
+                                // We can at least drop one bomb, so the checks are at the end here
+                                if (m_UsedBombs >= m_TotalBombs) break;
+                                if (droppedBombsNow >= maxBombs) break;
+                                if (IsObstacle(x,y)) break;
+                                if (m_pArena->IsExplosion(x,y)) break;
+
+                            }
 
                             // Play the drop sound
                             m_pSound->PlaySample (SAMPLE_BOMB_DROP);
-
-                            // One more used bomb
-                            m_UsedBombs++;
                         }
                     }
                 }
