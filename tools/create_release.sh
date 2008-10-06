@@ -80,6 +80,10 @@ TARGETZIP=${BASENAME}_${SYSSUFFIX}.zip
 SRCTARGETDIR=${BASENAME}_src
 SRCTARGETGZ=${BASENAME}_src.tar.gz
 SRCTARGETZIP=${BASENAME}_src.zip
+RESTARGETDIR=${BASENAME}_res
+RESTARGETGZ=${BASENAME}_res.tar.gz
+#DXDTARGETDIR=${BASENAME}_doxy
+DXDTARGETGZ=${BASENAME}_srcdoc.tar.gz
 
 # Makes friendly names in tar packages when additional directories are skipped from the SRCTARGETDIR variable
 cd ./output/.       || error "Cd ended with return code $?."
@@ -127,8 +131,24 @@ if [ -e "$SRCTARGETGZ" ] ; then
     error "Target zip package '$SRCTARGETGZ' already exists."
 fi
 
-# I'm not sure - is it "Win32"?
-if [ "$SYSTEM" != "Linux" -a "$SYSTEM" != "Win32" ] ; then
+if [ -e "$RESTARGETDIR" ] ; then
+    error "Target zip package '$RESTARGETZIP' already exists."
+fi
+
+if [ -e "$RESTARGETGZ" ] ; then
+    error "Target zip package '$RESTARGETGZ' already exists."
+fi
+
+#if [ -e "$DXDTARGETDIR" ] ; then
+#    error "Target zip package '$DXDTARGETZIP' already exists."
+#fi
+
+if [ -e "$DXDTARGETGZ" ] ; then
+    error "Target zip package '$DXDTARGETGZ' already exists."
+fi
+
+# Cygwin on WinXP tells "CYGWIN_NT-5.1"
+if [ "$SYSTEM" != "Linux" -a "$SYSTEM" != "CYGWIN_NT-5.1" ] ; then
     error "This script was not designed for $SYSTEM."
 fi
 
@@ -172,9 +192,9 @@ fi
 echo Creating $RELEASETYPE release package for version $VERSION, rev. $REVISION now...
 
 if [ "$SYSTEM" = "Linux" ] ; then
-    tar czf "$TARGETGZ" "$TARGETDIR"                                                || error "Tar ended with return code $?."
+    tar czf "$TARGETGZ" "$TARGETDIR"                                                    || error "Tar ended with return code $?."
 else
-    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$TARGETZIP" "$TARGETDIR"            || error "7-Zip ended with return code $?."
+    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$TARGETZIP" "$TARGETDIR" 1> /dev/null   || error "7-Zip ended with return code $?."
 fi
 
 #
@@ -207,6 +227,34 @@ cp ../../COPYING.txt        "$SRCTARGETDIR/."                                   
 cp ../../docs/Readme.html        "$SRCTARGETDIR/."                              || error "Copy ended with return code $?."
 
 #
+# Creating folder with resource files
+#
+
+echo Creating $RELEASETYPE resource package folder for version $VERSION, rev. $REVISION now...
+
+mkdir "$RESTARGETDIR"                                                           || error "Mkdir ended with return code $?."
+
+mkdir "$RESTARGETDIR/RES"                                                       || error "Mkdir ended with return code $?."
+mkdir "$RESTARGETDIR/RES/IMAGE"                                                 || error "Mkdir ended with return code $?."
+mkdir "$RESTARGETDIR/RES/SOUND"                                                 || error "Mkdir ended with return code $?."
+cp ../../src/RES/IMAGE/*.bmp "$RESTARGETDIR/RES/IMAGE/."                        || error "Copy ended with return code $?."
+cp ../../src/RES/SOUND/*.ogg "$RESTARGETDIR/RES/SOUND/."                        || error "Copy ended with return code $?."
+cp ../../src/RES/SOUND/*.MOD "$RESTARGETDIR/RES/SOUND/."                        || error "Copy ended with return code $?."
+cp ../../src/RES/SOUND/*.S3M "$RESTARGETDIR/RES/SOUND/."                        || error "Copy ended with return code $?."
+
+mkdir "$RESTARGETDIR/RES32"                                                     || error "Mkdir ended with return code $?."
+mkdir "$RESTARGETDIR/RES32/IMAGE"                                               || error "Mkdir ended with return code $?."
+mkdir "$RESTARGETDIR/RES32/SOUND"                                               || error "Mkdir ended with return code $?."
+cp ../../src/RES32/IMAGE/*.bmp "$RESTARGETDIR/RES32/IMAGE/."                    || error "Copy ended with return code $?."
+cp ../../src/RES32/SOUND/*.ogg "$RESTARGETDIR/RES32/SOUND/."                    || error "Copy ended with return code $?."
+cp ../../src/RES32/SOUND/*.MOD "$RESTARGETDIR/RES32/SOUND/."                    || error "Copy ended with return code $?."
+cp ../../src/RES32/SOUND/*.S3M "$RESTARGETDIR/RES32/SOUND/."                    || error "Copy ended with return code $?."
+
+cp ../../src/CHANGELOG.txt        "$RESTARGETDIR/."                             || error "Copy ended with return code $?."
+cp ../../COPYING.txt        "$RESTARGETDIR/."                                   || error "Copy ended with return code $?."
+cp ../../docs/Readme.html        "$RESTARGETDIR/."                              || error "Copy ended with return code $?."
+
+#
 # Creating zip files from source code folder
 #
 
@@ -216,9 +264,25 @@ if [ "$SYSTEM" = "Linux" ] ; then
     zip "$SRCTARGETZIP" "$SRCTARGETDIR"      || error "7-Zip ended with return code $?."
     tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
 else
-    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$SRCTARGETZIP" "$SRCTARGETDIR"      || error "7-Zip ended with return code $?."
+    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$SRCTARGETZIP" "$SRCTARGETDIR" 1> /dev/null      || error "7-Zip ended with return code $?."
     tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
 fi
+
+#
+# Creating tar file from resource folder
+#
+
+echo Creating $RELEASETYPE resource release package for version $VERSION, rev. $REVISION now...
+
+tar czf "$RESTARGETGZ" "$RESTARGETDIR"        || error "Tar ended with return code $?."
+
+#
+# Creating tar file from doxygen folder
+#
+
+echo Creating $RELEASETYPE resource release package for version $VERSION, rev. $REVISION now...
+
+tar czf "$DXDTARGETGZ" "../../doxygen/output/html"        || error "Tar ended with return code $?."
 
 #
 # Checksums
