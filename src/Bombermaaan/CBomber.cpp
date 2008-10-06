@@ -22,36 +22,38 @@
 ************************************************************************************/
 
 
-///////////////////
-// CBomber.cpp
+/**
+ *  \file CBomber.cpp
+ *  \brief The bombers
+ *
+ *  Jouabilite :
+ *  Pour dans longtemps, pour rendre les deplacements encore mieux.
+ *  Si a gauche le bomber est bloque, on regarde la direction qu'il
+ *  avait avant de vouloir tourner, par exemple haut, et dans ce cas
+ *  qqsoit sa position (mais on verifie qd meme s'il peut aller par la)
+ *  il ira en haut pour eviter le mur.
+ *  Comment peut il etre vraiment bloque ? il suffit qu'il soit une
+ *  direction comme droite et qu'il veuille aller a droite...
+ *
+ *  Bugs : 
+ *  - Pas bon : plus un player est proche de zero, plus il a de 
+ *    chances d'etre contamine (voir CBomber::Contamination())
+ *  - Pendant une colique, le player peut demander sans cesse action2
+ *    et ainsi ne pas poser de bombe
+ *
+ *  Optims :
+ *  - des ToBlock(...) sont recalcules inutilement
+ *  - dans CBomber::Move, deux memes CanMove sont calcules inutilement
+ *  - dans CBomber::CanMove, CANMOVE_AVOID et CANMOVE_TURN, on s'en fout...
+ *  - l'animation du walking, c'est cradoooooooooo
+ *  - j'ai deja essaye mais ca faisait mourir le bomber facilement contre un mur
+ *    Faire en sorte que TryMove, s'il modifie m_Y par exemple, update m_iY et m_BomberMove.GetBlockY(),
+ *    plutot qu'on ait a updater m_iX, m_iY, m_BomberMove.GetBlockX() et m_BomberMove.GetBlockY() a la fin de CBomber::Move.
+ *
+ *  bug contamination : lorsqu'il y a plus de deux joueurs sur une case qui se suivent,
+ *  avec un joueur malade, y a plein de contamination alors qu'il faudrait pas.
+ */
 
-// Jouabilite :
-// Pour dans longtemps, pour rendre les deplacements encore mieux.
-// Si a gauche le bomber est bloque, on regarde la direction qu'il
-// avait avant de vouloir tourner, par exemple haut, et dans ce cas
-// qqsoit sa position (mais on verifie qd meme s'il peut aller par la)
-// il ira en haut pour eviter le mur.
-// Comment peut il etre vraiment bloque ? il suffit qu'il soit une
-// direction comme droite et qu'il veuille aller a droite...
-
-// Bugs : 
-// - Pas bon : plus un player est proche de zero, plus il a de 
-//   chances d'etre contamine (voir CBomber::Contamination())
-// - Pendant une colique, le player peut demander sans cesse action2
-//   et ainsi ne pas poser de bombe
-
-// Optims :
-// - des ToBlock(...) sont recalcules inutilement
-// - dans CBomber::Move, deux memes CanMove sont calcules inutilement
-// - dans CBomber::CanMove, CANMOVE_AVOID et CANMOVE_TURN, on s'en fout...
-// - l'animation du walking, c'est cradoooooooooo
-// - j'ai deja essaye mais ca faisait mourir le bomber facilement contre un mur
-//   Faire en sorte que TryMove, s'il modifie m_Y par exemple, update m_iY et m_BomberMove.GetBlockY(),
-//   plutot qu'on ait a updater m_iX, m_iY, m_BomberMove.GetBlockX() et m_BomberMove.GetBlockY() a la fin de CBomber::Move.
-
-
-// bug contamination : lorsqu'il y a plus de deux joueurs sur une case qui se suivent,
-// avec un joueur malade, y a plein de contamination alors qu'il faudrait pas.
 
 #include "STDAFX.H"
 #include "CBomber.h"
@@ -84,31 +86,31 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 // Bomber speeds (in pixels per second)
 #ifdef USE_32_PIXELS_PER_BLOCK
 
-#define SPEED_SLOW      76                // Speed with SLOW sickness
-#define SPEED_FAST      450               // Speed with FAST sickness
-#define SPEED_NORMAL    120               // Normal speed
-#define SPEED_INC       14                // Speed increase each time a roller item is picked up
+#define SPEED_SLOW      76                //!< Speed with SLOW sickness
+#define SPEED_FAST      450               //!< Speed with FAST sickness
+#define SPEED_NORMAL    120               //!< Normal speed
+#define SPEED_INC       14                //!< Speed increase each time a roller item is picked up
 
 #else
 
-#define SPEED_SLOW      38                // Speed with SLOW sickness
-#define SPEED_FAST      225               // Speed with FAST sickness
-#define SPEED_NORMAL    60                // Normal speed
-#define SPEED_INC       7                 // Speed increase each time a roller item is picked up
+#define SPEED_SLOW      38                //!< Speed with SLOW sickness
+#define SPEED_FAST      225               //!< Speed with FAST sickness
+#define SPEED_NORMAL    60                //!< Normal speed
+#define SPEED_INC       7                 //!< Speed increase each time a roller item is picked up
 
 #endif
                                                             
-// Sick flashing animation times (in seconds)
+//! Sick flashing animation times (in seconds)
 #define ANIMSICK_TIME1      0.090f
 #define ANIMSICK_TIME2      ANIMSICK_TIME1 * 2
 
-// Walk animation times (in seconds)
+//! Walk animation times (in seconds)
 #define ANIMWALK_TIME1      0.150f
 #define ANIMWALK_TIME2      ANIMWALK_TIME1 * 2
 #define ANIMWALK_TIME3      ANIMWALK_TIME1 * 3
 #define ANIMWALK_TIME4      ANIMWALK_TIME1 * 4
 
-// Dying animation times (in seconds)
+//! Dying animation times (in seconds)
 #define ANIMDYING_TIME1     0.070f
 #define ANIMDYING_TIME2     ANIMDYING_TIME1 * 2
 #define ANIMDYING_TIME3     ANIMDYING_TIME1 * 3
@@ -117,24 +119,24 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define ANIMDYING_TIME6     ANIMDYING_TIME1 * 6
 #define ANIMDYING_TIME7     ANIMDYING_TIME1 * 7
 
-// Bomb lifting animation times (in seconds)
+//! Bomb lifting animation times (in seconds)
 #define ANIMBOMBLIFTING_TIME1     0.060f
 #define ANIMBOMBLIFTING_TIME2     ANIMBOMBLIFTING_TIME1 * 2
 #define ANIMBOMBLIFTING_TIME3     ANIMBOMBLIFTING_TIME1 * 3
 
-// Bomb throwing animation times (in seconds)
+//! Bomb throwing animation times (in seconds)
 #define ANIMBOMBTHROWING_TIME1     0.040f
 #define ANIMBOMBTHROWING_TIME2     0.080f
 #define ANIMBOMBTHROWING_TIME3     0.120f
 #define ANIMBOMBTHROWING_TIME4     0.200f
 #define ANIMBOMBTHROWING_TIME5     0.280f
 
-// Bomb punching animation times (in seconds)
+//! Bomb punching animation times (in seconds)
 #define ANIMBOMBPUNCHING_TIME1     0.080f
 #define ANIMBOMBPUNCHING_TIME2     0.220f
 #define ANIMBOMBPUNCHING_TIME3     0.320f
 
-// Animation sprites when walking (holding bomb and not holding bomb)
+//! Animation sprites when walking (holding bomb and not holding bomb)
 #define BOMBERSPRITE_DOWN0      0
 #define BOMBERSPRITE_DOWN1      1
 #define BOMBERSPRITE_DOWN2      2
@@ -148,7 +150,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define BOMBERSPRITE_UP1        10
 #define BOMBERSPRITE_UP2        11
 
-// Animation sprites when dying
+//! Animation sprites when dying
 #define BOMBERSPRITE_DYING0     0
 #define BOMBERSPRITE_DYING1     1
 #define BOMBERSPRITE_DYING2     2
@@ -157,7 +159,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define BOMBERSPRITE_DYING5     5
 #define BOMBERSPRITE_DYING6     6
 
-// Animation sprites when lifting a bomb
+//! Animation sprites when lifting a bomb
 #define BOMBERSPRITE_LIFTING_DOWN_0     0
 #define BOMBERSPRITE_LIFTING_DOWN_1     1
 #define BOMBERSPRITE_LIFTING_DOWN_2     2
@@ -171,7 +173,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define BOMBERSPRITE_LIFTING_UP_1       10
 #define BOMBERSPRITE_LIFTING_UP_2       11
 
-// Animation sprites when throwing a bomb
+//! Animation sprites when throwing a bomb
 #define BOMBERSPRITE_THROWING_DOWN_0     0
 #define BOMBERSPRITE_THROWING_DOWN_1     1
 #define BOMBERSPRITE_THROWING_DOWN_2     2
@@ -193,7 +195,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define BOMBERSPRITE_THROWING_UP_3       18
 #define BOMBERSPRITE_THROWING_UP_4       19
 
-// Animation sprites when punching a bomb
+//! Animation sprites when punching a bomb
 #define BOMBERSPRITE_PUNCHING_DOWN_0     0
 #define BOMBERSPRITE_PUNCHING_DOWN_1     1
 #define BOMBERSPRITE_PUNCHING_RIGHT_0    2
@@ -203,15 +205,15 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define BOMBERSPRITE_PUNCHING_UP_0       6
 #define BOMBERSPRITE_PUNCHING_UP_1       7
 
-// Flamesize when the bomber has the SMALLFLAME sickness
+//! Flamesize when the bomber has the SMALLFLAME sickness
 #define FLAMESIZE_SMALLFLAME    1
 
-// Time left before a bomb the bomber dropped explodes
+//! Time left before a bomb the bomber dropped explodes
 #define BOMBTIMELEFT_NORMAL         2.0f
 #define BOMBTIMELEFT_SICKLONGBOMB   4.0f    // When bomber has LONGBOMB sickness
 #define BOMBTIMELEFT_SICKSHORTBOMB  1.0f    // When bomber has SHORTBOMB sickness
 
-// Wait before rint the items the bomber picked up if bomber is dead (in seconds)
+//! Wait before rint the items the bomber picked up if bomber is dead (in seconds)
 #define RETURNITEMS_WAIT        0.8f
 
 // Offset when drawing the bomber sprite
@@ -223,20 +225,26 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 #define BOMBER_OFFSETY  (-6)
 #endif
 
-// Used for contamination to determine if a bomber can be considered to be NEAR another bomber.
-// A bomber is near another if abs(x2-x1) + abs(y2-y1) <= CONTAMINATION_NEAR. 
-// This is the manhanttan distance in pixels.
+/**
+ *  \brief Manhattan distance
+ *  Used for contamination to determine if a bomber can be considered to be NEAR another bomber.
+ *  A bomber is near another if abs(x2-x1) + abs(y2-y1) <= CONTAMINATION_NEAR. 
+ *  This is the manhanttan distance in pixels (http://en.wikipedia.org/wiki/Manhattan_distance).
+ */
 #define CONTAMINATION_NEAR      9        
 
-// Bomber sprite layer
+//! Bomber sprite layer
 #define BOMBER_SPRITELAYER  50
 
 #define SICK_SPRITE_ROW_FULL        MAX_PLAYERS             //!< The row with the full black bomber sprites (this is the number of maximum players)
 #define SICK_SPRITE_ROW_SHADOW      (MAX_PLAYERS + 1)       //!< The row with the black shadow bomber sprites (one row below SICK_SPRITE_ROW_FULL)
 
-// If set to true, only the first bomb will be fused by the remote control of a bomber
-// If set to false, all bombs are immediately fused
-// First means: the first bomb found in the bomb array, not the first in time
+/**
+ *  \brief Fuse only the first bomb found?
+ *  If set to true, only the first bomb will be fused by the remote control of a bomber.
+ *  If set to false, all bombs are immediately fused.
+ *  First means: the first bomb found in the bomb array, not the first in time.
+ */
 #define REMOTE_FUSE_ONLY_FIRST_BOMB         true
 
 //******************************************************************************************************************************
@@ -760,8 +768,13 @@ void CBomber::Action ()
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// Get the current flame size of the bomber. It depends
-// on sicknesses.
+/**
+ * Get the current flame size of the bomber. It depends on sicknesses.
+ * If the bomber has the SMALLFLAME sickness, the bomb will have a limited
+ * falme size.
+ *
+ * \sa m_Sickness, m_FlameSize
+ */
 
 int CBomber::GetFlameSize (void)
 {
@@ -771,6 +784,14 @@ int CBomber::GetFlameSize (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
+
+/**
+ * Get the time a bomb will tick before it will explode. The time depends on 
+ * the bomber's sickness.
+ * If the bomber has the LONGBOMB or SHORTBOMB sickness, the time is adjusted.
+ *
+ * \sa m_Sickness
+ */
 
 float CBomber::GetBombTime (void)
 {

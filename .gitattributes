@@ -1,11 +1,12 @@
 * text=auto !eol
 /COPYING.txt -text
+docs/Compile[!!-~]instructions.dox -text
 docs/Doxyfile -text
 docs/Level_File_Layout_Version2.html -text
 docs/Readme.html -text
+docs/_generate.cmd -text
 docs/_main.txt -text
 docs/control.txt -text
-docs/how-to-compile.txt -text
 doxygen/Doxyfile.txt -text
 doxygen/HTML[!!-~]footer.txt -text
 doxygen/HTML[!!-~]header.txt -text

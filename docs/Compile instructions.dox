@@ -1,0 +1,97 @@
+/*
+
+    Copyright (C) 2008 Bernd Arnold
+	
+*/
+
+/*! \page compileinstructions Compile instructions
+
+<h2>Compiler setup Win32</h2>
+
+These are the steps how to get Bombermaaan successfully compiled on Windows 32 bit.
+
+- Get the source code from the SourceForge.net download page:
+  https://sourceforge.net/project/showfiles.php?group_id=81520<br>
+  The source code packages are named like <i>Bombermaaan_1.3.2.557e_20081004_<strong>src</strong>.zip</i><br>
+  Extract the contents
+
+- Get the resource files (sound and image):
+  https://sourceforge.net/project/showfiles.php?group_id=81520&package_id=293941<br>
+  The resource packages are named like <i>Bombermaaan_1.3.2.572e_20081006_<strong>res</strong>.tar.gz</i><br>
+  Extract the contents to the Bombermaaan folder
+
+- You need the Windows Platform SDK from Microsoft. I've read on another sf.net project site that this 
+  isn't necessary if you have a full Visual C++ installation, not the Express Edition.<br>
+  Although the title says "Vista" I'm using this on Win XP, too.<br>
+  1 GB download, ISO file<br>
+  http://www.microsoft.com/downloads/details.aspx?familyid=FF6467E6-5BBA-4BF5-B562-9199BE864D29&displaylang=en<br>
+  According to http://en.wikipedia.org/wiki/Microsoft_Windows_SDK there is also the 
+  possibility of a web installation so you don't need to burn a DVD.<br>
+  The installation takes some minutes.
+
+- Get a C++ compiler. In this example, I'm using Microsoft Visual C++ Express Edition.<br>
+  http://en.wikipedia.org/wiki/Microsoft_Visual_Studio_Express#Visual_C.2B.2B_Express<br>
+  Download web installer Visual C++ 2008 Express Edition (vcsetup.exe):
+  http://go.microsoft.com/?linkid=7729279<br>
+  Run vcsetup.exe, the necessary files will be downloaded by the installer (90 MB for me).
+
+- Install service packs. For example for Visual C++ 2005 (!) Express Edition
+  https://www.microsoft.com/downloads/details.aspx?FamilyID=7b0b0339-613a-46e6-ab4d-080d4d4a8c4e&DisplayLang=en
+
+- Download and install the DirectX SDK
+  http://www.microsoft.com/downloads/details.aspx?FamilyID=86CF7FA2-E953-475C-ABDE-F016E4F7B61A&displaylang=en<br>
+  dxsdk_apr2007.exe, about 440 MB
+
+- Download SDL development libraries
+  http://www.libsdl.org/download-1.2.php<br>
+  SDL-devel-1.2.13-VC8.zip, about 607 kB (http://www.libsdl.org/release/SDL-devel-1.2.13-VC8.zip)<br>
+  The VC8 file is also working for VC9<br>
+  Copy folder SDL-1.2.13 from the zip file to src/third-party/ folder and rename it to "SDL"<br>
+  Copy all DLL files from the lib subdirectory to the directory src/_Test_/Release, where Bombermaaan.exe will be generated (needed at runtime)
+  
+- Download SDL_mixer development libraries
+  http://www.libsdl.org/projects/SDL_mixer/<br>
+  SDL_mixer-devel-1.2.8-VC8.zip, about 332 kB (http://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.8-VC8.zip)<br>
+  The VC8 file is also working for VC9<br>
+  Copy folder SDL_mixer-1.2.8 from the zip file to src/third-party/ folder and rename it to "SDL_mixer"<br>
+  Copy all DLL files from the lib subdirectory to the directory src/_Test_/Release, where Bombermaaan.exe will be generated (needed at runtime)
+
+- Place afxres.h and winres.h in the Bombermaaan directory and in the resource directories RES and RES32. 
+  You'll find these two files in a subdirectory of the installed Windows Platform SDK.<br>
+  I've found the files in this subdirectory:
+  C:\\Program Files\\Microsoft SDKs\\Windows\\v6.0\\Samples\\winui\\tsfapp
+
+- You should be able to compile Bombermaaan now
+
+
+<h2>Compiler setup Linux</h2>
+
+These are the steps how to get Bombermaaan successfully compiled on Linux. This list was not verified yet.
+I assume you already have the basic GNU compiler and linker package installed.
+
+- Install the development libraries for SDL and SDL_mixer<br>
+  sudo apt-get install libsdl1.2-dev libsdl-mixer1.2-dev
+
+- Get the source code from the SourceForge.net download page:
+  https://sourceforge.net/project/showfiles.php?group_id=81520<br>
+  The source code packages are named like <i>Bombermaaan_1.3.2.557e_20081004_<strong>src</strong>.tar.gz</i><br>
+  Extract the contents
+
+- Get the resource files (sound and image):
+  https://sourceforge.net/project/showfiles.php?group_id=81520&package_id=293941<br>
+  The resource packages are named like <i>Bombermaaan_1.3.2.572e_20081006_<strong>res</strong>.tar.gz</i><br>
+  Extract the contents to the Bombermaaan folder
+
+- You should be able to compile Bombermaaan now
+
+
+<h2>Credits</h2>
+
+Inspired by the <a href="http://pokerth.svn.sourceforge.net/viewvc/pokerth/trunk/pokerth/docs/build_vc_windows.txt?revision=1347&view=markup&pathrev=1483">build instructions</a> for PokerTH from Lothar May.
+
+Thanks to Markus Drescher for the SDL web links.
+
+By Bernd Arnold<br>
+http://bombermaaan.sourceforge.net/
+  
+*/
