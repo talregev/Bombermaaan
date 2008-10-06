@@ -689,7 +689,8 @@ void CBomber::Action ()
                             // Test existence and position
                             if (m_pArena->GetBomb(Index).Exist() &&
                                 m_pArena->GetBomb(Index).GetBlockX() == FrontBlockX &&
-                                m_pArena->GetBomb(Index).GetBlockY() == FrontBlockY)
+                                m_pArena->GetBomb(Index).GetBlockY() == FrontBlockY &&
+                                !m_pArena->GetBomb(Index).IsBeingPunched())
                             {
                                 // Tell the bomb it is being punched
                                 m_pArena->GetBomb(Index).SetBeingPunched();
