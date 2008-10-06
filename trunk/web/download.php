@@ -113,8 +113,8 @@ $downloads = array(
 <p style="float: right; margin-right: 0.8em; font-style: italic;">Quick links</p>
 <ul>
 <li><a href="#stable">Stable version</a></li>
-<li><a href="#sourcecode">Sourcecode</a></li>
 <li><a href="#experimental">Experimental releases</a></li>
+<li><a href="#sourcecode">Sourcecode</a></li>
 </ul>
 </div>
 
@@ -166,16 +166,16 @@ You can view the <a href="https://sourceforge.net/project/shownotes.php?release_
 There is also a <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/Readme.html">README file</a> available (very latest version out of the subversion repository).
 </p>
 
-<h2><a id="sourcecode">Sourcecode</a></h2>
-
-The sourcecode is hosted in the Subversion repository on SourceForge.net. 
-If you have <a href="http://tortoisesvn.net/">TortoiseSVN</a> installed, you can check out the <a href="tsvn:https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk">whole sourcecode</a> by clicking on the weblink.
-
 <h2><a id="experimental">Experimental releases</a></h2>
 
 <p>
-These packages have more features and bug fixes, but may also be unstable.
+The experimental package releases have more features and bug fixes, but may also be unstable.
 You can download the files if you want to try more recent builds but don't want to compile Bombermaaan on your own.
+We release new packages from time to time. There is no fix time table.
+</p>
+
+<p>
+<a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331">Download experimental releases</a>.
 </p>
 
 <p>
@@ -183,53 +183,28 @@ Looking for Linux files?<br />
 You can download <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331&amp;release_id=627216">Debian Linux package files</a> for x86 and AMD64.
 </p>
 
-<table class="downloadbox">
+<p>
+You can view the release notes. Check for the <img src="https://s.fsdn.com/sf/images/phoneix/icons/tango/edit-paste.png" alt="Release notes icon" /> icon near the release name. 
+You will also find the MD5 and SHA1 checksums there.
+</p>
 
-<tr>
-<th colspan="2">Package</th>
-<th>Released</th>
-<th>Checksums</th>
-</tr>
-
-<?php
-
-foreach ( $downloads[ "experimental" ] as $item ) {
-
-	$file = $item[ 0 ];
-	$text = $item[ 1 ];
-	$md5 = $item[ 2 ];
-	$sha1 = $item[ 3 ];
-	$reldate = $item[ 4 ];
-
-?>	
-<tr>
-<td>
-<a href="http://downloads.sourceforge.net/bombermaaan/<? echo htmlentities( $file ); ?>?download"><?php echo htmlentities( $file ); ?></a>
-</td>
-<td>
-<?php echo htmlentities( $text ); ?>
-</td>
-<td><?php echo $reldate; ?></td>
-<td>
-<?php if ( ! empty( $md5 ) ) { echo "<small>MD5:&nbsp;</small><code>$md5</code><br />"; } ?>
-<?php if ( ! empty( $sha1 ) ) { echo "<small>SHA1:&nbsp;</small><code>$sha1</code>"; } ?>&nbsp;
-</td>
-</tr>
-
-<?
-
-}  // foreach ( ... )
-
-?>
-
-</table>
+<h2><a id="sourcecode">Sourcecode</a></h2>
 
 <p>
-You can view the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">release notes</a> on the download page on SourceForge.net by clicking on the <i>Release Notes</i> icon near a package.
+The sourcecode is hosted in the Subversion repository on SourceForge.net. 
+If you have <a href="http://tortoisesvn.net/">TortoiseSVN</a> installed, you can check out the <a href="tsvn:https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk">whole sourcecode</a> by clicking on the weblink.
 </p>
 
 <p>
-This list shows the most recent/important file releases. You are looking for <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331">older experimental releases</a>?
+The source code is also available as a package, see the <code>*_src.zip</code> and <code>*_src.tar.gz</code> files
+in the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=83430">stable</a>
+and
+<a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331">experimental</a>
+package sections.
+</p>
+
+<p>
+The source documentation and resource files can be found in the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=293941">DevelTools section</a>.
 </p>
 
 </div>
