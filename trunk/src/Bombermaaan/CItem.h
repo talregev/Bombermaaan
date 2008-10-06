@@ -57,7 +57,7 @@ enum EItemType
     ITEM_THROW,     //!< Throw glove item allows a bomber to throw bombs
     ITEM_PUNCH,     //!< Boxing glove item allows a bomber to punch bombs
 	ITEM_REMOTE,    //!< Remote bombs item allows a bomber to remotely control bomb fuse
-    NUMBER_OF_ITEMS
+    NUMBER_OF_ITEMS //!< The number of items (this includes ITEM_NONE)
 };
 
 //******************************************************************************************************************************

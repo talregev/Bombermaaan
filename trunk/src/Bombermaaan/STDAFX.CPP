@@ -21,15 +21,19 @@
 
 
 /**
- *  \file stdafx.cpp
+ *  \file STDAFX.CPP
  *  \brief Pre-compiled file
  */
 
 #include "STDAFX.H"
 
-// TODO: Check if they are still used. I think they are replaced by CDebug class methods
+//! @todo Check if they are still used. I think they are replaced by CDebug class methods
 float g_Debug_GameSpeed;
+//! @todo Check if they are still used. I think they are replaced by CDebug class methods
 bool  g_Debug_CanBombersDie;
+//! @todo Check if they are still used. I think they are replaced by CDebug class methods
 bool  g_Debug_CanBombersBeSick;
+//! @todo Check if they are still used. I think they are replaced by CDebug class methods
 bool  g_Debug_CanBombersKick;
+//! @todo Check if they are still used. I think they are replaced by CDebug class methods
 bool  g_Debug_IsComputerConsoleActive [MAX_PLAYERS];
