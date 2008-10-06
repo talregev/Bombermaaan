@@ -163,6 +163,7 @@ public:
     inline int          GetFlameSize (void);                    //!< Return the size of the flames (in blocks) when the bomb will explode
     inline bool         IsOnFloor (void);                       //!< Return whether the bomb is on the floor (not in the air)
 	inline bool         IsRemote (void);                        //!< Return whether the bomb is a remote bomb
+    inline bool         IsBeingPunched( void );                 //!< Return whether the bomb is punched
 
 #ifdef _DEBUG_FLAG_1
     void                _Debug_WriteToLog();
@@ -305,6 +306,11 @@ inline void CBomb::AbortKick (void)
         m_HasToStopMoving = false;
         CenterOnBlock();
     }
+}
+
+inline bool CBomb::IsBeingPunched (void)
+{
+    return m_BeingPunched;
 }
 
 //******************************************************************************************************************************
