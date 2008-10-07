@@ -151,7 +151,7 @@ bool COptions::Create( bool useAppDataFolder, std::string dynamicDataFolder, std
 {
     // Set the file name of the configuration file including full path
     configFileName = dynamicDataFolder.c_str();
-    configFileName.append( "config.dat" );
+    configFileName.append( "config.xml" );
     theLog.WriteLine( "Options         => Name of config file: '%s'.", configFileName.c_str() );
     
     // Set default configuration values before loading the configuration file and overwriting the default
@@ -165,7 +165,6 @@ bool COptions::Create( bool useAppDataFolder, std::string dynamicDataFolder, std
     if (!LoadLevels( useAppDataFolder ? dynamicDataFolder : "", pgmFolder ))
         return false;
     
-
     // Everything went ok.
     return true;
 }
@@ -300,7 +299,7 @@ void COptions::SetDefaultValues(void)
 
 bool COptions::LoadConfiguration (void)
 {
-    TiXmlDocument configDoc( "config.xml" );
+    TiXmlDocument configDoc( configFileName );
     
     // Try to load XML file
     if ( configDoc.LoadFile() ) {
@@ -312,7 +311,7 @@ bool COptions::LoadConfiguration (void)
         if ( confRevision )
             confRevision->QueryIntAttribute( "value", &tempRevision );
 
-        theLog.WriteLine( "Options         => Configuration file config.xml was successfully loaded and is at revision %d.", tempRevision );
+        theLog.WriteLine( "Options         => Configuration file was successfully loaded and is at revision %d.", tempRevision );
 
         ReadIntFromXML( configDoc, "TimeUp", "minutes", &m_TimeUpMinutes );
         ReadIntFromXML( configDoc, "TimeUp", "seconds", &m_TimeUpSeconds );
@@ -381,10 +380,11 @@ bool COptions::LoadConfiguration (void)
     } else {
 
         // The configuration could not be loaded, maybe it doesn't exist
-        theLog.WriteLine ("Options         => Configuration file config.xml could not be loaded." );
+        theLog.WriteLine ("Options         => Configuration file could not be loaded." );
 
     }
 
+    //! We always return true since it doesn't matter if the configuration file could not be loaded
     // Success
     return true;
 }
@@ -395,46 +395,57 @@ bool COptions::LoadConfiguration (void)
 
 void COptions::WriteXMLData()
 {
+    // Create document
     TiXmlDocument newConfig;
     TiXmlDeclaration* decl = new TiXmlDeclaration( "1.0", "UTF-8", "" );
     newConfig.LinkEndChild( decl );
- 
+
+    // Root node
     TiXmlElement * root = new TiXmlElement( "Bombermaaan" );
     newConfig.LinkEndChild( root );
 
+    // Comment
     TiXmlComment * comment = new TiXmlComment();
     comment->SetValue(" Configuration settings for the Bombermaaan game (http://bombermaaan.sf.net/) " );
     root->LinkEndChild( comment );
- 
+
+    // Configuration tree node - all options have this node as parent
     TiXmlElement * config = new TiXmlElement( "Configuration" );
     root->LinkEndChild( config );
 
+    //! The revision number is currently 1
     TiXmlElement* configRev = new TiXmlElement( "ConfigRevision" );
     configRev->SetAttribute( "value", 1 );
     config->LinkEndChild( configRev );
 
+    // TimeUp (when will arena close begin)
     TiXmlElement* configTimeUp = new TiXmlElement( "TimeUp" );
     configTimeUp->SetAttribute( "minutes", m_TimeUpMinutes );
     configTimeUp->SetAttribute( "seconds", m_TimeUpSeconds );
     config->LinkEndChild( configTimeUp );
 
+    // TimeStart (the duration of a match)
     TiXmlElement* configTimeStart = new TiXmlElement( "TimeStart" );
     configTimeStart->SetAttribute( "minutes", m_TimeStartMinutes );
     configTimeStart->SetAttribute( "seconds", m_TimeStartSeconds );
     config->LinkEndChild( configTimeStart );
 
+    // BattleCount
     TiXmlElement* configBattleCount = new TiXmlElement( "BattleCount" );
     configBattleCount->SetAttribute( "value", m_BattleCount );
     config->LinkEndChild( configBattleCount );
 
+    // LevelFileNumber
     TiXmlElement* configLevel = new TiXmlElement( "LevelFileNumber" );
     configLevel->SetAttribute( "value", m_Level );
     config->LinkEndChild( configLevel );
 
+    // DisplayMode
     TiXmlElement* configDisplayMode = new TiXmlElement( "DisplayMode" );
     configDisplayMode->SetAttribute( "value", (int) m_DisplayMode );
     config->LinkEndChild( configDisplayMode );
 
+    // BomberTypes
     TiXmlElement* configBomberTypes = new TiXmlElement( "BomberTypes" );
     for ( int i = 0; i < MAX_PLAYERS; i++ ) {
         std::ostringstream oss;
@@ -444,6 +455,7 @@ void COptions::WriteXMLData()
     }
     config->LinkEndChild( configBomberTypes );
 
+    // PlayerInputs
     TiXmlElement* configPlayerInputs = new TiXmlElement( "PlayerInputs" );
     for ( int i = 0; i < MAX_PLAYERS; i++ ) {
         std::ostringstream oss;
@@ -453,6 +465,7 @@ void COptions::WriteXMLData()
     }
     config->LinkEndChild( configPlayerInputs );
 
+    // ControlList
     TiXmlElement* configControlList = new TiXmlElement( "ControlList" );
     for ( unsigned int i = 0; i < MAX_PLAYER_INPUT; i++ )
     {
@@ -469,10 +482,14 @@ void COptions::WriteXMLData()
     }
     config->LinkEndChild( configControlList );
 
-    // Save file
-    bool saveOkay = newConfig.SaveFile( "config.xml" );
 
-    theLog.WriteLine( "Options         => Configuration file config.xml was %s written.", ( saveOkay ? "successfully" : "not" ) );
+    //
+    // Save file
+    //
+    bool saveOkay = newConfig.SaveFile( configFileName );
+
+    // Log a message
+    theLog.WriteLine( "Options         => Configuration file was %s written.", ( saveOkay ? "successfully" : "not" ) );
 }
 
 //******************************************************************************************************************************
@@ -480,6 +497,13 @@ void COptions::WriteXMLData()
 //******************************************************************************************************************************
 
 /**
+ *  \brief Read an integer from the XML document structure.
+ *  This function reads an attribute of the node /Bombermaaan/Configuration/NAME, where NAME can be specified by configNode.
+ *
+ *  @param doc          The TinyXML document
+ *  @param configNode   The name of the node below /Bombermaaan/Configuration/
+ *  @param attrName     The name of the attribute to be read
+ *  @param value        Value of the specified attribute
  *  @todo Set first three parameters to const if possible
  */
 
