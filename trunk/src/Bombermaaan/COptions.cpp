@@ -252,6 +252,10 @@ void COptions::SetDefaultValues(void)
     m_BomberType[2] = BOMBERTYPE_OFF;
     m_BomberType[3] = BOMBERTYPE_OFF;
     m_BomberType[4] = BOMBERTYPE_OFF;
+
+    // Initialise player inputs
+    for (int i = 0 ; i < MAX_PLAYERS ; i++)
+        m_PlayerInput[i] = CONFIGURATION_KEYBOARD_1 + i;
 }
 
 //******************************************************************************************************************************
@@ -293,6 +297,7 @@ bool COptions::LoadConfiguration (void)
             oss << "bomber" << i;
             std::string attributeName = oss.str();
             ReadIntFromXML( configDoc, "BomberTypes", attributeName, (int*) (&m_BomberType[i]) );
+            ReadIntFromXML( configDoc, "PlayerInputs", attributeName, (int*) (&m_PlayerInput[i]) );
         }
 
     } else {
@@ -318,13 +323,6 @@ bool COptions::LoadConfiguration (void)
 
         int i;
 
-        // Initialise player inputs:
-        // First bomber uses "keyboard 1"
-        // Second bomber uses "keyboard 2"
-        // All other bomber use "keyboard 1"
-        for (i = 0 ; i < MAX_PLAYERS ; i++)
-            m_PlayerInput[i] = ( i == 1 ? CONFIGURATION_KEYBOARD_2 : CONFIGURATION_KEYBOARD_1 );
-        
         m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_UP]      = KEYBOARD_NUMPAD8;
         m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_DOWN]    = KEYBOARD_NUMPAD5;
         m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_LEFT]    = KEYBOARD_NUMPAD4;
@@ -418,7 +416,9 @@ void COptions::ReadData (FILE* pConfigFile)
     for (int i = 0; i < MAX_PLAYERS; i++ ) {
         fread(&dummy, sizeof(EBomberType), 1, pConfigFile);
     }
-    fread(m_PlayerInput, sizeof(int), MAX_PLAYERS, pConfigFile);
+    for (int i = 0; i < MAX_PLAYERS; i++ ) {
+        fread(&dummy, sizeof(int), 1, pConfigFile);
+    }
     fread(m_Control, sizeof(int), MAX_PLAYER_INPUT * NUM_CONTROLS, pConfigFile);
     fread(&dummy, sizeof(int), 1, pConfigFile);
 }
@@ -478,6 +478,14 @@ void COptions::WriteXMLData()
     }
     config->LinkEndChild( configBomberTypes );
 
+    TiXmlElement* configPlayerInputs = new TiXmlElement( "PlayerInputs" );
+    for ( int i = 0; i < MAX_PLAYERS; i++ ) {
+        std::ostringstream oss;
+        oss << "bomber" << i;
+        std::string attributeName = oss.str();
+        configPlayerInputs->SetAttribute( attributeName, (int) m_PlayerInput[i] );
+    }
+    config->LinkEndChild( configPlayerInputs );
 
     // Save file
     bool saveOkay = newConfig.SaveFile( "config.xml" );
