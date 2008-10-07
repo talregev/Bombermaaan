@@ -275,6 +275,7 @@ src/debian/usr/share/menu/bombermaaan -text
 src/debian/usr/share/pixmaps/Bombermaaan.png -text
 src/md5sum.pl -text
 src/third-party/Makefile -text
+src/third-party/simpleini/SimpleIni.h -text
 src/third-party/tinyxml/Makefile -text
 src/third-party/tinyxml/readme.txt -text
 src/third-party/tinyxml/tinystr.cpp -text
