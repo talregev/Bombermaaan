@@ -127,8 +127,6 @@ private:
     std::string         configFileName;                 //!< Full name of the config file (including path)
 
     void                SetDefaultValues();             //!< Set the default configuration values
-//    void                ReadData (FILE* pConfigFile);   //!< Read the options from the configuration file
-//    void                WriteData (FILE* pConfigFile);  //!< Write the options to the configuration file
     void                WriteXMLData();                 //!< Write the options to the XML based configuration file
     void                ReadIntFromXML( TiXmlDocument &doc, std::string configNode, std::string attrName, int *value );
     bool                LoadLevels( std::string appDataFolder, std::string pgmFolder );              //!< Load game levels data and names from the level directory.
