@@ -736,6 +736,7 @@ trunk/src/debian/usr/share/menu/bombermaaan -text
 trunk/src/debian/usr/share/pixmaps/Bombermaaan.png -text
 trunk/src/md5sum.pl -text
 trunk/src/third-party/Makefile -text
+trunk/src/third-party/simpleini/ConvertUTF.h -text
 trunk/src/third-party/simpleini/SimpleIni.h -text
 trunk/src/third-party/tinyxml/Makefile -text
 trunk/src/third-party/tinyxml/readme.txt -text

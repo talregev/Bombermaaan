@@ -60,7 +60,8 @@ void CAiManager::Create (COptions* pOptions)
 {
     for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
     {
-        if (pOptions->GetBomberType(Player) == BOMBERTYPE_COM)
+        if (pOptions->GetBomberType(Player) == BOMBERTYPE_COM &&
+            m_Arena.GetArena()->GetBomber(Player).Exist())
         {
             m_pBombers[Player] = new CAiBomber;
             m_pBombers[Player]->SetArena(&m_Arena);

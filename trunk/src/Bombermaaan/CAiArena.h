@@ -56,8 +56,7 @@ struct SBlock
 
 class CAiArena
 {
-//private:
-public:
+private:
     
     CArena*         m_pArena;
     CDisplay*       m_pDisplay;
@@ -73,7 +72,14 @@ public:
                     CAiArena (void);
     virtual         ~CAiArena (void);
     inline void     SetArena (CArena* pArena);
+    inline CArena * GetArena (void);
     inline void     SetDisplay (CDisplay* pDisplay);
+    inline EDanger  GetDanger           (int BlockX, int BlockY);
+    inline float    GetDangerTimeLeft   (int BlockX, int BlockY);
+    inline int      GetDeadEnd          (int BlockX, int BlockY);
+    inline SBlock&  GetDeadEndExit      (int Exit);
+    inline int      GetSoftWallNear     (int BlockX, int BlockY);
+    inline bool     GetWallBurn         (int BlockX, int BlockY);
     void            Create (void);
     void            Destroy (void);
     void            Update (float DeltaTime);
@@ -89,11 +95,47 @@ inline void CAiArena::SetArena (CArena* pArena)
     m_pArena = pArena;
 }
 
+inline CArena* CAiArena::GetArena (void)
+{
+    ASSERT (m_pArena != NULL);
+    return m_pArena;
+}
+
 inline void CAiArena::SetDisplay (CDisplay *pDisplay)
 {
     ASSERT (pDisplay != NULL);
     // Save the display object pointer to pass to elements
     m_pDisplay = pDisplay;
+}
+
+inline EDanger CAiArena::GetDanger (int BlockX, int BlockY)
+{
+    return m_Danger[BlockX][BlockY];
+}
+
+inline float CAiArena::GetDangerTimeLeft (int BlockX, int BlockY)
+{
+    return m_DangerTimeLeft[BlockX][BlockY];
+}
+
+inline int CAiArena::GetDeadEnd (int BlockX, int BlockY)
+{
+    return m_DeadEnd[BlockX][BlockY];
+}
+
+inline SBlock& CAiArena::GetDeadEndExit (int Exit)
+{
+    return m_DeadEndExit[Exit];
+}
+
+inline int CAiArena::GetSoftWallNear (int BlockX, int BlockY)
+{
+    return m_SoftWallNear[BlockX][BlockY];
+}
+
+inline bool CAiArena::GetWallBurn (int BlockX, int BlockY)
+{
+    return m_WallBurn[BlockX][BlockY];
 }
 
 //******************************************************************************************************************************

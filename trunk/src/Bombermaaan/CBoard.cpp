@@ -418,7 +418,8 @@ void CBoard::Display (void)
     for (Player = 0 ; Player < MAX_PLAYERS ; Player++)
     {
         // If this player plays then draw its score
-        if (m_pOptions->GetBomberType(Player) != BOMBERTYPE_OFF)
+        if (m_pOptions->GetBomberType(Player) != BOMBERTYPE_OFF
+            && m_pArena->GetBomber(Player).HasExisted())
         {
             int DeadHeadOffset = (m_pArena->GetBomber(Player).IsDead() ? 5 : 0);
 

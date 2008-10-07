@@ -358,6 +358,7 @@ void CBomb::ManageMove (float DeltaTime)
             // Check if the bomb has to change its direction (initiated by a block) and whether it is centered
             if (m_BombFly == BOMBFLY_NONE)
             {
+                ASSERT( m_pArena != NULL );
                 if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) && BOMB_CAN_CHANGE_DIRECTION_WHEN_KICKED &&
                      (!(m_iX & (BLOCK_SIZE - 1)) && !(m_iY & (BLOCK_SIZE - 1))) && // Taken from below
                      m_BombKick != BOMBKICK_NONE  // Bomb is still moving (could be reset by TryMove()
@@ -631,6 +632,7 @@ bool CBomb::Update (float DeltaTime)
         if (m_BombKick == BOMBKICK_NONE && m_ElapsedTime >= TIME_BEFORE_MOVING_BOMB &&
             !m_Dead && !m_BeingLifted && !m_BeingHeld && !m_BeingPunched && m_BombFly == BOMBFLY_NONE)
         {
+            ASSERT( m_pArena != NULL );
             if ( m_pArena->IsFloorWithMoveEffect( m_BlockX, m_BlockY ) ) {
                 EFloorAction action = m_pArena->GetFloorAction( m_BlockX, m_BlockY );
                 

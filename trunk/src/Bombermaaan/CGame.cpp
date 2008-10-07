@@ -80,7 +80,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 
 // Bombermaaan version
 #define BOMBERMAAAN_VERSION_STRING      "1.3.2"
-#define BOMBERMAAAN_BUILD_STRING        "572"
+#define BOMBERMAAAN_BUILD_STRING        "588"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -229,6 +229,7 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
             "Copyright (C) 2000-2002, 2007 Thibaut Tollemer\n"
             "Copyright (C) 2007, 2008 Bernd Arnold\n"
             "Copyright (C) 2008 Jerome Bigot\n"
+            "Copyright (C) 2008 Markus Drescher\n"
             "\n"
             "Bombermaaan is free software: you can redistribute it and/or modify\n"
             "it under the terms of the GNU General Public License as published by\n"
@@ -635,33 +636,48 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
 
     m_MenuYesNo.Create ();
 
+    char IpAddressString[32];
 #ifdef WIN32
-	if (strstr(pCommandLine, "-s") != NULL)
-#else
-	if (strstr(pCommandLine[0], "-s") != NULL)
-#endif
+    const char *pos = strstr(pCommandLine, "-c");
+    if (pos == NULL) pos = strstr(pCommandLine, "--client")
+    
+    // client mode and ip address given?
+    if (pos != NULL && strlen(pCommandLine) > (pos - pCommandLine + 2))
     {
-#ifdef WIN32
+        OutputDebugString("*** STARTING GAME AS CLIENT\n");
+        NetworkMode = NETWORKMODE_CLIENT;
+
+        strcpy(IpAddressString, strstr(pCommandLine, "-c") + 3);
+    }
+	else if (strstr(pCommandLine, "-s") != NULL ||
+             strstr(pCommandLine, "--server") != NULL)
+    {
 		OutputDebugString("*** STARTING GAME AS SERVER\n");
-#else
-		printf("*** STARTING GAME AS SERVER\n");
-#endif
         NetworkMode = NETWORKMODE_SERVER;
     }
-#ifdef WIN32
-    else if (strstr(pCommandLine, "-c") != NULL)
 #else
-	else if (strstr(pCommandLine[0], "-c") != NULL)
-#endif
-    {
-        #ifdef WIN32
-        OutputDebugString("*** STARTING GAME AS CLIENT\n");
-		#else
-		printf("*** STARTING GAME AS CLIENT\n");
-		#endif
-        NetworkMode = NETWORKMODE_CLIENT;
+    for (int i = 0; i < pCommandLineCount; i++)
+	{
+        if (strncmp(pCommandLine[i], "-s", 2) == 0 ||
+            strncmp(pCommandLine[i], "--server", 8) == 0)
+        {
+    		printf("*** STARTING GAME AS SERVER\n");
+            NetworkMode = NETWORKMODE_SERVER;
+            break;
+        }
+        else if ((strncmp(pCommandLine[i], "-c", 2) == 0 ||
+                  strncmp(pCommandLine[i], "--client", 8) == 0) &&
+                  pCommandLineCount > i + 1)
+        {
+		    printf("*** STARTING GAME AS CLIENT\n");
+            NetworkMode = NETWORKMODE_CLIENT;
+            
+			strcpy(IpAddressString, pCommandLine[i+1]);
+            break;
+        }
     }
-
+#endif
+    
     if (NetworkMode != NETWORKMODE_LOCAL)
     {
 #ifdef WIN32
@@ -734,13 +750,6 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
         }
         else if (NetworkMode == NETWORKMODE_CLIENT)
         {
-            char IpAddressString[32];
-#ifdef WIN32
-            strcpy(IpAddressString, strstr(pCommandLine, "-c") + 3);
-#else
-			strcpy(IpAddressString, pCommandLine[1]);
-#endif
-            
             theConsole.Write("connect to %s\n", IpAddressString);
 
             u_long RemoteAddress = inet_addr(IpAddressString);
@@ -1231,7 +1240,7 @@ void CGame::OnPaint (WPARAM wParam, LPARAM lParam)
 /**
  *  \brief Handles system commands
  *
- *  TODO: SCREEN SAVER DISABLING DOES NOT WORK
+ *  \todo: SCREEN SAVER DISABLING DOES NOT WORK
  **/
 
 bool CGame::OnSysCommand (WPARAM wParam, LPARAM lParam)
