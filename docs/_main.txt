@@ -47,6 +47,8 @@ Bombermaaan is using TinyXML from <a href="https://sourceforge.net/projects/tiny
 
 Bombermaaan is using <a href="http://www.doxygen.org/index.html">Doxygen</a> for <a href="http://bombermaaan.sourceforge.net/doxydoc/html/">documentation</a> purposes.
 
+Bombermaaan is using SimpleIni from <a href="http://code.jellycan.com/simpleini/">http://code.jellycan.com/simpleini/</a>.
+
 
 <h2>Project host</h2>
 

@@ -730,18 +730,6 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
         if ( s.find( headerV2plus ) == 0 ) {
             // We can look for the level version now
             LevelVersion = atoi( s.substr( headerV2plus.length() ).c_str() );
-
-            // Test!!
-            // @todo Remove before final release
-            CSimpleIniA iniFile(false, false, false);
-            SI_Error rc = iniFile.LoadFile( levelFileNames_full.at(CurrentLevel).c_str() );
-            if (rc<0) return false;
-            std::string a = iniFile.GetValue( "Settings", "ContaminationsNotUsed", "xy" );
-            theLog.WriteLine ("Test: %d=%s.", rc,a.c_str());
-            int zzz = atoi( iniFile.GetValue( "General", "Height", "1" ) );
-            theLog.WriteLine ("Test2: %d.", zzz);
-            std::string b; iniFile.Save(b);
-            theLog.WriteLine ("Test3: %s.", b.c_str());
         }
         else
         {
@@ -757,17 +745,11 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
                 break;
 
             case 2:
-                if (!LoadLevel_Version2( in, CurrentLevel ) ) {
+                if (!LoadLevel_Version2( levelFileNames_full.at(CurrentLevel), CurrentLevel ) ) {
                     ErrorOccurred = true;
                 }
                 break;
 
-            case 3:
-                if (!LoadLevel_Version3( in, CurrentLevel ) ) {
-                    ErrorOccurred = true;
-                }
-                break;
-            
             default:
                 theLog.WriteLine ("Options         => !!! Unsupported version of level file %s.", levelFileNames_short.at(CurrentLevel).c_str());
                 ErrorOccurred = true;
@@ -926,25 +908,21 @@ bool COptions::LoadLevel_Version1( ifstream& File, int CurrentLevel ) {
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requireRemoteFuse ) {
+bool COptions::LoadLevel_Version2( std::string fileName, int CurrentLevel, bool requireRemoteFuse )
+{
+    // Define INI file
+    CSimpleIniA iniFile(false, false, false);
+
+    // Load INI file
+    SI_Error rc = iniFile.LoadFile( levelFileNames_full.at(CurrentLevel).c_str() );
+    if (rc<0) return false;
 
     string s;
     int value;
 
-    // This line should be the [General] section
-    getline( file, s );
-    if ( s != "[General]" ) {
-        theLog.WriteLine ( "Options         => !!! General section not found in level file." );
-        return false;
-    }
-
     // Read the width of the map and check whether it is allowed
     // At the moment the width is fix, but maybe the width can be changed in the future
-    getline( file, s );
-    if ( sscanf( s.c_str(), "Width=%d\n", &value ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
-        return false;
-    }
+    value = atoi( iniFile.GetValue( "General", "Width", "0" ) );
     if ( value != ARENA_WIDTH ) {
         theLog.WriteLine ("Options         => !!! Invalid arena width %d. Only %d is allowed.", value, ARENA_WIDTH );
         return false;
@@ -952,11 +930,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requir
 
     // Read the height of the map and check whether it is allowed
     // At the moment the height is fix, but maybe the height can be changed in the future
-    getline( file, s );
-    if ( sscanf( s.c_str(), "Height=%d\n", &value ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
-        return false;
-    }
+    value = atoi( iniFile.GetValue( "General", "Height", "0" ) );
     if ( value != ARENA_HEIGHT ) {
         theLog.WriteLine ("Options         => !!! Invalid arena height %d. Only %d is allowed.", value, ARENA_HEIGHT );
         return false;
@@ -965,11 +939,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requir
     // Read the maximum number of players allowed with this level
     // At the moment this must be set to 5
     // Maybe this is changed in the future
-    getline( file, s );
-    if ( sscanf( s.c_str(), "MaxPlayers=%d\n", &value ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
-        return false;
-    }
+    value = atoi( iniFile.GetValue( "General", "MaxPlayers", "0" ) );
     if ( value != 5 ) {
         theLog.WriteLine ("Options         => !!! Invalid maximum players %d. Only %d is allowed.", value, 5 );
         return false;
@@ -978,11 +948,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requir
     // Read the maximum number of players allowed with this level
     // Currently this must be set to 1, though a game with 1 player is not possible
     // Maybe this is changed in the future
-    getline( file, s );
-    if ( sscanf( s.c_str(), "MinPlayers=%d\n", &value ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
-        return false;
-    }
+    value = atoi( iniFile.GetValue( "General", "MinPlayers", "0" ) );
     if ( value != 1 ) {
         theLog.WriteLine ("Options         => !!! Invalid minimum players %d. Only %d is allowed.", value, 1 );
         return false;
@@ -990,71 +956,39 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requir
 
     // Check if there is a line with the creator
     // The creator can be empty, it's not stored anywhere at the moment
-    getline( file, s );
-    if ( s.find( "Creator=" ) != 0 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s).", s.c_str() );
-        return false;
-    }
+    std::string creator = iniFile.GetValue( "General", "Creator", "" );
 
     // Priority line following
     // The priority setting is not used currently
     // For future use:
     // - The levels are first sorted by priority and then by the file name
-    getline( file, s );
-    if ( s.find( "Priority=0" ) != 0 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s) - priority expected.", s.c_str() );
-        return false;
-    }
+    value = atoi( iniFile.GetValue( "General", "Priority", "0" ) );
 
     // Comment line following (not used currently)
-    getline( file, s );
-    if ( s.find( "Comment=" ) != 0 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s) - comment expected.", s.c_str() );
-        return false;
-    }
+    std::string comment = iniFile.GetValue( "General", "Comment", "" );
 
     // Description line following (not used currently)
-    getline( file, s );
-    if ( s.find( "Description=" ) != 0 ) {
-        theLog.WriteLine ("Options         => !!! General option is incorrect (%s) - description expected.", s.c_str() );
-        return false;
-    }
-
-    // Next line should be the [Map] section
-    getline( file, s );
-    if ( s != "[Map]" ) {
-        theLog.WriteLine ( "Options         => !!! Map section not found in level file" );
-        return false;
-    }
+    std::string description = iniFile.GetValue( "General", "Description", "" );
 
     // For each line of characters to read
     for (int y = 0 ; y < ARENA_HEIGHT ; y++)
     {
-        getline( file, s );
+        std::ostringstream oss;
+        oss << "Line." << y;
+        std::string keyName = oss.str();
 
-        if ( sscanf( s.c_str(), "Line.%d=%*s\n", &value ) != 1 ) {
-            theLog.WriteLine ("Options         => !!! Map option is incorrect (%s).", s.c_str() );
+        std::string arenaLine = iniFile.GetValue( "Map", keyName.c_str(), "" );
+
+        if ( arenaLine.length() != ARENA_WIDTH ) {
+            theLog.WriteLine ("Options         => !!! Level file is incorrect (Line.%d wrong length %d).", y, arenaLine.length() );
             return false;
         }
-        if ( value != y ) {
-            theLog.WriteLine ("Options         => !!! Invalid line number %d found. Expected line number %d.", value, y );
-            return false;
-        }
-
-        int pos = s.find( "=" );
-        if ( pos == -1 || pos + ARENA_WIDTH + 1 != (int)s.length() ) {
-            theLog.WriteLine ("Options         => !!! Level file is incorrect (%d, %d, %d).", pos, y, s.length() );
-            return false;
-        }
-
-        // pos points to the next character
-        pos++;
 
         // For each character representing a block in this line
         for (int x = 0 ; x < ARENA_WIDTH ; x++)
         {
             // According to the character value, store the corresponding block type in the current position and level
-            switch(s.at(pos+x))
+            switch(arenaLine.at(x))
             {
                 case '*' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_HARDWALL;    break;
                 case '-' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_RANDOM;      break;
@@ -1071,7 +1005,7 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requir
                 default  : 
                 {
                     // Log there is a problem
-                    theLog.WriteLine ("Options         => !!! Level file is incorrect (unknown character %c).", s.at(pos+x) );
+                    theLog.WriteLine ("Options         => !!! Level file is incorrect (unknown character %c).", arenaLine.at(x) );
                     return false;
                 }
             }
@@ -1079,158 +1013,54 @@ bool COptions::LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requir
 
     }
 
-    // Next line should be the [Settings] section
-    getline( file, s );
-    if ( s != "[Settings]" ) {
-        theLog.WriteLine ( "Options         => !!! Settings section not found in level file" );
-        return false;
-    }
-
     //---------------------
     // Read the ItemsInWalls values
     //---------------------
 
-    getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Bombs=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-        return false;
-    }
+    //! @todo Replace fix value (third parameter of GetValue(...)) by default setting
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Bombs", "0" ) );
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Flames", "0" ) );
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Kicks", "0" ) );
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Rollers", "0" ) );
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Skulls", "0" ) );
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Throws", "0" ) );
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Punches", "0" ) );
+    m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Remotes", "2" /*INITIAL_ITEMREMOTE*/ ) );
 
-    getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Flames=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Kicks=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Rollers=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Skulls=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Throws=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "ItemsInWalls.Punches=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    // The remote fuse feature came after Level file version 2, so requireRemoteFuse must be true,
-    // otherwise hardcode this:
-    getline( file, s );
-    if (requireRemoteFuse)
-    {
-        if ( sscanf( s.c_str(), "ItemsInWalls.Remotes=%d\n", &m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] ) != 1 ) {
-            theLog.WriteLine ("Options         => !!! Items in walls is incorrect (%s).", s.c_str() );
-            return false;
-        }
-        getline( file, s );
-    }    
-    else
-    {
-   	    m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = INITIAL_ITEMREMOTE;
-    }
-    
     
     //---------------------
     // Read the BomberSkillsAtStart values
     //---------------------
-    // note: The getline command supposed to be here is above
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.FlameSize=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
 
-    getline( file, s );
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.MaxBombs=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAME] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.FlameSize", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.MaxBombs", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.BombItems", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAMEITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.FlameItems", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_ROLLERITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.RollerItems", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_KICKITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.KickItems", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_THROWITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.ThrowItems", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_PUNCHITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.PunchItems", "0" ) );
+    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_REMOTEITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.RemoteItems", "0" ) );
 
-    getline( file, s );
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.BombItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
 
-    getline( file, s );
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.FlameItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.RollerItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.KickItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.ThrowItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    getline( file, s );
-    if ( sscanf( s.c_str(), "BomberSkillsAtStart.PunchItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] ) != 1 ) {
-        theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-        return false;
-    }
-
-    // The remote fuse feature came after Level file version 2, so this must be set hard coded if requireRemoteFuse is false
-    getline( file, s );
-    if (requireRemoteFuse)
-    {
-        if ( sscanf( s.c_str(), "BomberSkillsAtStart.RemoteItems=%d\n", &m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] ) != 1 ) {
-            theLog.WriteLine ("Options         => !!! Line BomberSkillsAtStart is incorrect (%s).", s.c_str() );
-            return false;
-        }
-        getline( file, s );
-    }    
-    else
-    {
-   	    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] = 0;
-    }
-    
     //---------------------
     // Read the ContaminationsNotUsed setting
     //---------------------
 
     // This setting controls which contamination should not be used in this level
     // The only one value allowed is "None" at the moment
-    // the getline command supposed to be here is above!
-    if ( s != "ContaminationsNotUsed=None" ) {
-        theLog.WriteLine ("Options         => !!! Line ContaminationsNotUsed is incorrect (%s).", s.c_str() );
-        return false;
-    }
+
+    std::string contaminationsNotToUse = iniFile.GetValue( "Settings", "ContaminationsNotUsed", "" );
+
 
     // Everything went right
     return true;
 
 }
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
 
 /**
  * @brief   check if this level does not exceed the maximum possible number of items
