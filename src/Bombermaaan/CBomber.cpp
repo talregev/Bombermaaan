@@ -604,7 +604,9 @@ void CBomber::Action ()
 
                             while (true) {
 
-                                // Create the bomb                  
+                                // Create the bomb (unless it is possible)
+                                if ( m_pArena->BombsInUse() >= m_pArena->MaxBombs()) break;
+                                
                                 m_pArena->NewBomb (x, y, GetFlameSize(), GetBombTime(), m_Player);
 
                                 // One more used and dropped bomb

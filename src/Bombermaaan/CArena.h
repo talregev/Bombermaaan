@@ -91,7 +91,7 @@ typedef int TBlockHas;
 #define MAX_WALLS       (2 * ARENA_WIDTH * ARENA_HEIGHT)        // Don't forget the falling walls in 
 #define MAX_BOMBS       50
 #define MAX_ITEMS       50
-#define MAX_EXPLOSIONS  20
+#define MAX_EXPLOSIONS  50
 #define MAX_BOMBERS     MAX_PLAYERS
 
 //******************************************************************************************************************************
@@ -113,6 +113,7 @@ private:
     CBomber                 m_Bombers [MAX_BOMBERS];
     CArenaCloser            m_ArenaCloser;
     TBlockHas               m_BlockHas [ARENA_WIDTH][ARENA_HEIGHT]; //!< Simplified view of the arena made using the element containers. This allows a fast access to the basic information of the arena.
+    int                     m_BombsInUse;           //!< A counter for bombs in use
     bool                    m_Prediction;
 
                             CArena (const CArena& Arena);
@@ -166,6 +167,8 @@ public:
     inline int              MaxExplosions  (void);
     inline int              MaxBombers     (void);
     
+    inline int              BombsInUse     (void);
+        
     void                    NewFloor        (int BlockX, int BlockY, EBlockType BlockType);
     void                    NewWall         (int BlockX, int BlockY, EWallType Type);
     void                    NewBomb         (int BlockX, int BlockY, int FlameSize, float TimeLeft, int OwnerPlayer);
@@ -300,6 +303,15 @@ inline int CArena::MaxExplosions (void)
 inline int CArena::MaxBombers (void)   
 { 
     return MAX_BOMBERS; 
+}
+
+/**
+ * @brief   return the bomb counter
+ * @return  how many bombs are currently used
+ */
+inline int CArena::BombsInUse (void)   
+{ 
+    return m_BombsInUse; 
 }
 
 //******************************************************************************************************************************

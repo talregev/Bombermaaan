@@ -63,6 +63,8 @@ CArena::CArena (void)
     m_pDisplay = NULL;
     m_pSound = NULL;
     m_pOptions = NULL;
+    
+    m_BombsInUse = 0;
 
     m_ArenaCloser.SetArena (this);
 
@@ -841,6 +843,7 @@ void CArena::NewWall (int BlockX, int BlockY, EWallType Type)
 void CArena::NewBomb (int BlockX, int BlockY, int FlameSize, float TimeLeft, int OwnerPlayer)
 {
     ASSERT (!m_Prediction);
+    ASSERT (m_BombsInUse < MaxBombs());
 
     // Check coordinates
     ASSERT (BlockX >= 0 && BlockX < ARENA_WIDTH);
@@ -857,6 +860,7 @@ void CArena::NewBomb (int BlockX, int BlockY, int FlameSize, float TimeLeft, int
             m_Bombs[Index].SetDisplay (m_pDisplay);
             m_Bombs[Index].SetSound (m_pSound);
             m_Bombs[Index].Create (BlockX, BlockY, FlameSize, TimeLeft, OwnerPlayer);
+            m_BombsInUse++;
             return;
         }
     }
@@ -1003,8 +1007,10 @@ void CArena::DeleteBomb (int Index)
     ASSERT (!m_Prediction);
     ASSERT (Index >= 0 && Index < MaxBombs());
     ASSERT (m_Bombs[Index].Exist());
+    ASSERT (m_BombsInUse > 0);
 
     m_Bombs[Index].Destroy();
+    m_BombsInUse--;
 }
 
 void CArena::DeleteWall (int Index)
