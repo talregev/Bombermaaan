@@ -29,6 +29,7 @@
 #include "COptions.h"
 #include "CInput.h"
 #include "CArena.h"
+#include <sstream>
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -241,6 +242,16 @@ void COptions::SetDefaultValues(void)
 
     // First level file (index=0) is selected
     m_Level = 2;
+
+    // Default display mode is windowed, not full-screen
+    m_DisplayMode = DISPLAYMODE_WINDOWED;
+
+    // Set the bomber types
+    m_BomberType[0] = BOMBERTYPE_MAN;
+    m_BomberType[1] = BOMBERTYPE_MAN;
+    m_BomberType[2] = BOMBERTYPE_OFF;
+    m_BomberType[3] = BOMBERTYPE_OFF;
+    m_BomberType[4] = BOMBERTYPE_OFF;
 }
 
 //******************************************************************************************************************************
@@ -275,6 +286,15 @@ bool COptions::LoadConfiguration (void)
         
         ReadIntFromXML( configDoc, "LevelFileNumber", "value", &m_Level );
 
+        ReadIntFromXML( configDoc, "DisplayMode", "value", (int*) &m_DisplayMode );
+
+        for ( int i = 0; i < MAX_PLAYERS; i++ ) {
+            std::ostringstream oss;
+            oss << "bomber" << i;
+            std::string attributeName = oss.str();
+            ReadIntFromXML( configDoc, "BomberTypes", attributeName, (int*) (&m_BomberType[i]) );
+        }
+
     } else {
 
         // The configuration could not be loaded
@@ -298,12 +318,6 @@ bool COptions::LoadConfiguration (void)
 
         int i;
 
-        m_BomberType[0] = BOMBERTYPE_MAN;
-        m_BomberType[1] = BOMBERTYPE_MAN;
-        m_BomberType[2] = BOMBERTYPE_OFF;
-        m_BomberType[3] = BOMBERTYPE_OFF;
-        m_BomberType[4] = BOMBERTYPE_OFF;
-
         // Initialise player inputs:
         // First bomber uses "keyboard 1"
         // Second bomber uses "keyboard 2"
@@ -311,8 +325,6 @@ bool COptions::LoadConfiguration (void)
         for (i = 0 ; i < MAX_PLAYERS ; i++)
             m_PlayerInput[i] = ( i == 1 ? CONFIGURATION_KEYBOARD_2 : CONFIGURATION_KEYBOARD_1 );
         
-        m_DisplayMode = DISPLAYMODE_WINDOWED;
-
         m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_UP]      = KEYBOARD_NUMPAD8;
         m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_DOWN]    = KEYBOARD_NUMPAD5;
         m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_LEFT]    = KEYBOARD_NUMPAD4;
@@ -401,9 +413,11 @@ void COptions::ReadData (FILE* pConfigFile)
     fread(&dummy, sizeof(int), 1, pConfigFile);
     fread(&dummy, sizeof(int), 1, pConfigFile);
     fread(&dummy, sizeof(int), 1, pConfigFile);
-    fread(&m_DisplayMode, sizeof(EDisplayMode), 1, pConfigFile);
+    fread(&dummy, sizeof(EDisplayMode), 1, pConfigFile);
     fread(&dummy, sizeof(int), 1, pConfigFile);
-    fread(m_BomberType, sizeof(EBomberType), MAX_PLAYERS, pConfigFile);
+    for (int i = 0; i < MAX_PLAYERS; i++ ) {
+        fread(&dummy, sizeof(EBomberType), 1, pConfigFile);
+    }
     fread(m_PlayerInput, sizeof(int), MAX_PLAYERS, pConfigFile);
     fread(m_Control, sizeof(int), MAX_PLAYER_INPUT * NUM_CONTROLS, pConfigFile);
     fread(&dummy, sizeof(int), 1, pConfigFile);
@@ -451,6 +465,21 @@ void COptions::WriteXMLData()
     configLevel->SetAttribute( "value", m_Level );
     config->LinkEndChild( configLevel );
 
+    TiXmlElement* configDisplayMode = new TiXmlElement( "DisplayMode" );
+    configDisplayMode->SetAttribute( "value", (int) m_DisplayMode );
+    config->LinkEndChild( configDisplayMode );
+
+    TiXmlElement* configBomberTypes = new TiXmlElement( "BomberTypes" );
+    for ( int i = 0; i < MAX_PLAYERS; i++ ) {
+        std::ostringstream oss;
+        oss << "bomber" << i;
+        std::string attributeName = oss.str();
+        configBomberTypes->SetAttribute( attributeName, (int) m_BomberType[i] );
+    }
+    config->LinkEndChild( configBomberTypes );
+
+
+    // Save file
     bool saveOkay = newConfig.SaveFile( "config.xml" );
 
     theLog.WriteLine( "Options         => Configuration file config.xml was %s written.", ( saveOkay ? "successfully" : "not" ) );
