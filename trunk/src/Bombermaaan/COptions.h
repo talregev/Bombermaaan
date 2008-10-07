@@ -133,8 +133,7 @@ private:
     bool                LoadConfiguration (void);       //!< Load the configuration file, create default if it does not exist.
     void                AllocateLevels (int NumberOfLevels); //!< Allocate data and names for the specified number of levels. Warning : does not allocate the names strings (just the array of string pointers).
     bool                LoadLevel_Version1( ifstream& File, int CurrentLevel ); //!< Load level file version 1
-    bool                LoadLevel_Version2( ifstream& file, int CurrentLevel, bool requireRemoteFuse = false ); //!< Load level file version 2 (requiredRemoteFuse = false) or 3 (requiredRemoteFuse = true)
-    inline bool         LoadLevel_Version3( ifstream& file, int CurrentLevel ); //!< Load level file version 3: method wrapper for Version 2
+    bool                LoadLevel_Version2( std::string fileName, int CurrentLevel, bool requireRemoteFuse = false ); //!< Load level file version 2 (requiredRemoteFuse = false) or 3 (requiredRemoteFuse = true)
     bool                CheckMaxNumberOfItems( int Level, unsigned int *sumOfMaxItems ); //!< Check if number of max items is valid
                         
 public:                 
@@ -173,12 +172,6 @@ public:
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
-
-inline bool COptions::LoadLevel_Version3 ( ifstream& file, int CurrentLevel )
-{
-    // this is a wrapper function for LoadLevel_Version2
-    return LoadLevel_Version2( file, CurrentLevel, true );
-}
 
 inline int COptions::GetTimeStartMinutes (void)
 {

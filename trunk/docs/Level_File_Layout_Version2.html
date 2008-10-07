@@ -44,6 +44,7 @@ ItemsInWalls.Rollers=5
 ItemsInWalls.Skulls=1
 ItemsInWalls.Throws=2
 ItemsInWalls.Punches=2
+ItemsInWalls.Remotes=2
 BomberSkillsAtStart.FlameSize=2
 BomberSkillsAtStart.MaxBombs=3
 BomberSkillsAtStart.BombItems=5
@@ -52,29 +53,20 @@ BomberSkillsAtStart.RollerItems=0
 BomberSkillsAtStart.KickItems=1
 BomberSkillsAtStart.ThrowItems=1
 BomberSkillsAtStart.PunchItems=1
+BomberSkillsAtStart.RemoteItems=0
 ContaminationsNotUsed=None
 </pre>
 
-<h2>Notes</h2>
+<h2>Credit</h2>
 
 <p>
-The level file version 2 uses a fixed format. This means, every line in the text file has its own position. Changing line positions and/or deleting lines invalidates the level file. 
-</p>
-
-<p>
-Changes are allowed after the equal sign (=) on these lines:<br />
-- Creator<br />
-- Comment<br />
-- Description<br />
-- Line.*<br />
-- BomberSkillsAtStart.*<br />
-- ItemsInWalls.*<br />
+Bombermaaan is using SimpleIni from <a href="http://code.jellycan.com/simpleini/">http://code.jellycan.com/simpleini/</a> for reading the version-2 level files.
 </p>
 
 <h2>License</h2>
 
 <pre>
-Copyright (C) 2000-2002, 2007 Thibaut Tollemer, Bernd Arnold
+Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold
 
 This file is part of Bombermaaan.
 
@@ -97,6 +89,8 @@ along with Bombermaaan.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 <pre>
 2007-12-19  Bernd Arnold  Created file
 2008-05-07  Bernd Arnold  Added priority, comment and description line (still version 2)
+2008-10-08  Bernd Arnold  Added remote item entry
+2008-10-08  Bernd Arnold  Removed the lines-have-fix-positions paragraph
 </pre>
 
 <h2>Web</h2>

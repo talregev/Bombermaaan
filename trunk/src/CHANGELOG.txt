@@ -9,10 +9,11 @@ Changed: FMOD was replaced by the SDL_mixer library (by Markus Drescher, revisio
 Changed: When no config file is present the input for the second player is set to keyboard 2 (revision 547).
 Changed: Bigger sprites in menu level preview in 32-pixels version (revision 542).
 Changed: F1 and F2 keys don't switch to fullscreen mode in 32-pixels version since the screen resolution is too low and the graphics cannot be seen completely.
-Changed: Configuration file stored in XML format ##### STILL IN PROGRESS #####
+Changed: Configuration file stored in XML format, config.xml (#2121910).
 Changed: Bots "know" which bomb is ignited by another bomb.
 Changed: Algorithm for bots choosing the best block to escape / defend theirselves.
-Changed: Keyboard 3 to 5 as human input available now. Useful if you don't have joysticks (#2150405). #### Delete config.dat file first, otherwise the new keys aren't preset ####
+Changed: Keyboard 3 to 5 as human input available now. Useful if you don't have joysticks (#2150405).
+Changed: Using SimpleIni for reading version-2 level files. The level files can be treated as real INI files now.
 Bug fix: Input field was empty / executable crashed when joystick isn't present the next game start (#2121904, revision 538, revision 539, revision 546).
 Bug fix: Bots are escaping in a certain situation if a player surrounds a bot with bombs.
 Bug fix: Sometimes bots were stuck in the "WALK MODE". If they stay in there too often, they exit the "WALK MODE".
