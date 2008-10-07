@@ -717,10 +717,21 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
             break;
         }
 
+
+        // This is the first line for the level files beginning with version 2 (therefore "V2plus")
+        string headerV2plus( "; Bombermaaan level file version=" );
+
         string s;
         getline( in, s );
         int LevelVersion;
-        if ( sscanf( s.c_str(), "; Bombermaaan level file version=%d\n", &LevelVersion ) == 0 ) {
+
+        // When header string is found at the beginning of the string, find() returns 0 (offset 0)
+        if ( s.find( headerV2plus ) == 0 ) {
+            // We can look for the level version now
+            LevelVersion = atoi( s.substr( headerV2plus.length() ).c_str() );
+        }
+        else
+        {
             LevelVersion = 1;
         }
         
