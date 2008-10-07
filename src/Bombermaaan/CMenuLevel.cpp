@@ -41,8 +41,10 @@
                                                     
 #ifdef USE_32_PIXELS_PER_BLOCK
 #define TITLE_TEXT_POSITION_Y       90              //!< Position Y of the title text that is centered on the X axis
+#define WARNING_TEXT_POSITION_Y    350              //!< Position Y of a warning text that is centered on the X axis (will be displayed if starting points are missing for some players)
 #else
 #define TITLE_TEXT_POSITION_Y       45              //!< Position Y of the title text that is centered on the X axis
+#define WARNING_TEXT_POSITION_Y    185              //!< Position Y of a warning text that is centered on the X axis (will be displayed if starting points are missing for some players)
 #endif
 
 #ifdef USE_32_PIXELS_PER_BLOCK
@@ -186,7 +188,11 @@ void CMenuLevel::OnDisplay (void)
 {
     // Set the right font text color and write the menu title string
     m_pFont->SetTextColor (FONTCOLOR_WHITE);
-    m_pFont->DrawCenteredX (0, VIEW_WIDTH - 1, TITLE_TEXT_POSITION_Y, m_pOptions->GetLevelName()); 
+    m_pFont->DrawCenteredX (0, VIEW_WIDTH - 1, TITLE_TEXT_POSITION_Y, m_pOptions->GetLevelName());
+    
+    bool StartPointAvailable[MAX_PLAYERS];
+    for (int Player = 0; Player < MAX_PLAYERS; Player++)
+        StartPointAvailable[Player] = false;
 
     // Scan all the blocks of the arena
     for (int X = 0 ; X < ARENA_WIDTH ; X++)
@@ -234,14 +240,58 @@ void CMenuLevel::OnDisplay (void)
                 
                 switch (BlockType)
                 {
-                    case BLOCKTYPE_WHITEBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 0, 1, 2); break;
-                    case BLOCKTYPE_BLACKBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 1, 1, 2); break;
-                    case BLOCKTYPE_REDBOMBER   : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 2, 1, 2); break;
-                    case BLOCKTYPE_BLUEBOMBER  : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 3, 1, 2); break;
-                    case BLOCKTYPE_GREENBOMBER : m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION, NULL, NULL, 57, 4, 1, 2); break;
-                    default : break;
+                    case BLOCKTYPE_WHITEBOMBER :
+                        m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                NULL, NULL, 57, 0, 1, 2);
+                        StartPointAvailable[0] = true;
+                        break;
+                    case BLOCKTYPE_BLACKBOMBER :
+                        m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                NULL, NULL, 57, 1, 1, 2);
+                        StartPointAvailable[1] = true;
+                        break;
+                    case BLOCKTYPE_REDBOMBER   :
+                        m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                NULL, NULL, 57, 2, 1, 2);
+                        StartPointAvailable[2] = true;
+                        break;
+                    case BLOCKTYPE_BLUEBOMBER  :
+                        m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                NULL, NULL, 57, 3, 1, 2);
+                        StartPointAvailable[3] = true;
+                        break;
+                    case BLOCKTYPE_GREENBOMBER :
+                        m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE + TILE_POSITION_TO_BOMBER_POSITION,
+                                                NULL, NULL, 57, 4, 1, 2);
+                        StartPointAvailable[4] = true;
+                        break;
+                    default :
+                        break;
                 }
             }
+        }
+    }
+    
+    // show warning if starting points are missing
+    bool warningShown = false;
+    for (int Player = 0; Player < MAX_PLAYERS; Player++)
+    {
+        if (!StartPointAvailable[Player] && m_pOptions->GetBomberType(Player) != BOMBERTYPE_OFF)
+        {
+            m_pFont->SetTextColor (FONTCOLOR_RED);
+            if (!warningShown)
+            {
+                m_pFont->Draw (MINI_ARENA_POSITION_X / 2, WARNING_TEXT_POSITION_Y, "NO START POS:");
+                warningShown = true;
+            }
+            m_pDisplay->DrawSprite (VIEW_WIDTH - MINI_ARENA_POSITION_X - (MAX_PLAYERS - Player) * (MINI_ARENA_TILE_SIZE - TILE_POSITION_TO_BOMBER_POSITION * 2) + TILE_POSITION_TO_BOMBER_POSITION,
+                                    WARNING_TEXT_POSITION_Y + TILE_POSITION_TO_BOMBER_POSITION,
+                                    NULL, NULL, 57, Player, 1, 2);
         }
     }
 }

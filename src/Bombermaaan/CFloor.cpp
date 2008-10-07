@@ -188,6 +188,7 @@ void CFloor::OnWriteSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.WriteInteger(m_BlockX);
     Snapshot.WriteInteger(m_BlockY);
     Snapshot.WriteBoolean(m_Dead);
+    Snapshot.WriteInteger(m_FloorAction);
 }
 
 //******************************************************************************************************************************
@@ -201,6 +202,7 @@ void CFloor::OnReadSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.ReadInteger(&m_BlockX);
     Snapshot.ReadInteger(&m_BlockY);
     Snapshot.ReadBoolean(&m_Dead);
+    Snapshot.ReadInteger((int*)&m_FloorAction);
 }
 
 //******************************************************************************************************************************

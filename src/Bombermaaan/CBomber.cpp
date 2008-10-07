@@ -253,7 +253,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 
 CBomber::CBomber (void) : CElement()
 {
-    
+    m_HasExisted = false; // the bomber did not exist, yet.
 }
 
 //******************************************************************************************************************************
@@ -272,6 +272,8 @@ CBomber::~CBomber (void)
 void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
 {
     CElement::Create();
+    
+    m_HasExisted = true; // the bomber exists now (must not be reset unless the match is finished/canceled)
 
     m_BomberMove.Create (BlockX, BlockY, Player);
     
@@ -1407,6 +1409,7 @@ void CBomber::OnWriteSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.WriteFloat(m_StuntTimeElapsed);
     Snapshot.WriteInteger(m_BomberState);
     Snapshot.WriteInteger(m_BombIndex);
+    Snapshot.WriteBoolean(m_MakeInvisible);
 }
 
 //******************************************************************************************************************************
@@ -1456,6 +1459,7 @@ void CBomber::OnReadSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.ReadFloat(&m_StuntTimeElapsed);
     Snapshot.ReadInteger((int*)&m_BomberState);
     Snapshot.ReadInteger(&m_BombIndex);
+    Snapshot.ReadBoolean(&m_MakeInvisible);
 }
 
 //******************************************************************************************************************************

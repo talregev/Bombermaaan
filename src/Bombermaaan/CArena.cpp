@@ -315,7 +315,10 @@ void CArena::Destroy (void)
         m_Explosions[i].Destroy();
 
     for (i = 0 ; i < MaxBombers() ; i++)
+    {
         m_Bombers[i].Destroy();
+        m_Bombers[i].ResetHasExisted(); // reset has existed status (needed for CBoard.cpp)
+    }
 }
 
 //******************************************************************************************************************************
@@ -599,13 +602,15 @@ void CArena::UpdateView (void)
                 // Record the item in the view according to its type
                 switch (GetItem(Index).GetType())
                 {
-                    // TODO: Check whether BLOCKHAS_ITEMPUNCH and BLOCKHAS_ITEMTHROW is not listed here (wopfel)
-                    // TODO: Check which functions depend on these BLOCKHAS_xxx values
+                    /// @todo: Check which functions depend on these BLOCKHAS_xxx values
                     case ITEM_BOMB   : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMBOMB);   break;
                     case ITEM_FLAME  : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMFLAME);  break;
                     case ITEM_ROLLER : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMROLLER); break;
                     case ITEM_KICK   : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMKICK);   break;
                     case ITEM_SKULL  : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMSKULL);  break;
+                    case ITEM_THROW  : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMTHROW);  break;
+                    case ITEM_PUNCH  : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMPUNCH);  break;
+                    case ITEM_REMOTE : SetBlockHas (BlockX, BlockY, BLOCKHAS_ITEMREMOTE); break;
                     default: break;
                 }
             }
@@ -684,30 +689,38 @@ void CArena::WriteSnapshot (CArenaSnapshot& Snapshot)
     
     Snapshot.Begin();
     
-    // write arenacloser
-    //m_ArenaCloser.WriteSnapshot (Snapshot);
-
     // for each type of element
     //   write all elements (max number)
     int Index;
 
-    //for (Index = 0 ; Index < MaxExplosions() ; Index++)
-    //    GetExplosion(Index).WriteSnapshot (Snapshot);
+    /*for (Index = 0 ; Index < MaxFloors() ; Index++)
+        GetFloor(Index).WriteSnapshot (Snapshot);
+    
+    for (Index = 0 ; Index < MaxWalls() ; Index++)
+        GetWall(Index).WriteSnapshot (Snapshot);*/
     
     for (Index = 0 ; Index < MaxBombs() ; Index++)
         GetBomb(Index).WriteSnapshot (Snapshot);
     
+    /*for (Index = 0 ; Index < MaxItems() ; Index++)
+        GetItem(Index).WriteSnapshot (Snapshot);
+    
+    for (Index = 0 ; Index < MaxExplosions() ; Index++)
+        GetExplosion(Index).WriteSnapshot (Snapshot);*/
+    
     for (Index = 0 ; Index < MaxBombers() ; Index++)
         GetBomber(Index).WriteSnapshot (Snapshot);
-    /*
-    for (Index = 0 ; Index < MaxWalls() ; Index++)
-        GetWall(Index).WriteSnapshot (Snapshot);
-    
-    for (Index = 0 ; Index < MaxFloors() ; Index++)
-        GetFloor(Index).WriteSnapshot (Snapshot);
-    
-    for (Index = 0 ; Index < MaxItems() ; Index++)
-        GetItem(Index).WriteSnapshot (Snapshot);*/
+
+    // write arenacloser
+    m_ArenaCloser.WriteSnapshot (Snapshot);
+
+    // TBlockHas
+    /*for (int BlockX = 0; BlockX < ARENA_WIDTH; BlockX++)
+        for (int BlockY = 0; BlockY < ARENA_HEIGHT; BlockY++)
+            Snapshot.WriteInteger(m_BlockHas[BlockX][BlockY]);*/
+
+    // further attributes
+    Snapshot.WriteBoolean(m_Prediction);
 }
 
 //******************************************************************************************************************************
@@ -720,31 +733,39 @@ void CArena::ReadSnapshot (CArenaSnapshot& Snapshot)
 
     Snapshot.Begin();
 
-    // read arenaclose
-    //m_ArenaCloser.ReadSnapshot (Snapshot);
-
     // for each type of element
     //   read all elements (max number)
     int Index;
 
-    //for (Index = 0 ; Index < MaxExplosions() ; Index++)
-    //    GetExplosion(Index).ReadSnapshot (Snapshot);
+    /*for (Index = 0 ; Index < MaxFloors() ; Index++)
+        GetFloor(Index).ReadSnapshot (Snapshot);
+    
+    for (Index = 0 ; Index < MaxWalls() ; Index++)
+        GetWall(Index).ReadSnapshot (Snapshot);*/
     
     for (Index = 0 ; Index < MaxBombs() ; Index++)
         GetBomb(Index).ReadSnapshot (Snapshot);
     
+    /*for (Index = 0 ; Index < MaxItems() ; Index++)
+        GetItem(Index).ReadSnapshot (Snapshot);
+
+    for (Index = 0 ; Index < MaxExplosions() ; Index++)
+        GetExplosion(Index).ReadSnapshot (Snapshot);*/
+    
     for (Index = 0 ; Index < MaxBombers() ; Index++)
         GetBomber(Index).ReadSnapshot (Snapshot);
-    /*
-    for (Index = 0 ; Index < MaxWalls() ; Index++)
-        GetWall(Index).ReadSnapshot (Snapshot);
     
-    for (Index = 0 ; Index < MaxFloors() ; Index++)
-        GetFloor(Index).ReadSnapshot (Snapshot);
+    // read arenaclose
+    m_ArenaCloser.ReadSnapshot (Snapshot);
+
+    // TBlockHas
+    /*for (int BlockX = 0; BlockX < ARENA_WIDTH; BlockX++)
+        for (int BlockY = 0; BlockY < ARENA_HEIGHT; BlockY++)
+            Snapshot.ReadInteger(&m_BlockHas[BlockX][BlockY]);*/
     
-    for (Index = 0 ; Index < MaxItems() ; Index++)
-        GetItem(Index).ReadSnapshot (Snapshot);
-*/
+    // Further attributes
+    Snapshot.ReadBoolean(&m_Prediction);
+    
     // update view
     UpdateView();
 }
@@ -926,7 +947,7 @@ void CArena::NewBomber (int BlockX, int BlockY, int Player)
     ASSERT (Player >= 0 && Player < MAX_PLAYERS);
     ASSERT (!m_Bombers[Player].Exist());
 	ASSERT (m_pOptions != NULL);
-
+    
     // Create the bomber and map the player number with it
     m_Bombers[Player].SetArena (this);
     m_Bombers[Player].SetDisplay (m_pDisplay);

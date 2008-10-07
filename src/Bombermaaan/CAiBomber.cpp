@@ -116,7 +116,7 @@ void CAiBomber::Destroy (void)
 void CAiBomber::Update (float DeltaTime)
 {
     // Pointer to bomber
-    m_pBomber = &m_pArena->m_pArena->GetBomber (m_Player);
+    m_pBomber = &m_pArena->GetArena()->GetBomber (m_Player);
 
     // Think and send commands to the bomber only if the bomber is alive
     if (m_pBomber->IsAlive())
@@ -222,7 +222,7 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
     
     bool beyondTheFrontier;
 
-    if (m_pArena->m_pArena->IsBomb (m_BlockHereX, m_BlockHereY))
+    if (m_pArena->GetArena()->IsBomb (m_BlockHereX, m_BlockHereY))
     {
         if (direction != NULL)
             *direction = ENEMYDIRECTION_UNKNOWN;
@@ -240,10 +240,10 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         // and the bomber of this player exists and is alive
         // and this bomber is where our bomber is
         if (Index != m_Player &&
-            m_pArena->m_pArena->GetBomber(Index).Exist() && 
-            m_pArena->m_pArena->GetBomber(Index).IsAlive() && 
-            m_pArena->m_pArena->GetBomber(Index).GetBlockX() == m_BlockHereX && 
-            m_pArena->m_pArena->GetBomber(Index).GetBlockY() == m_BlockHereY)
+            m_pArena->GetArena()->GetBomber(Index).Exist() && 
+            m_pArena->GetArena()->GetBomber(Index).IsAlive() && 
+            m_pArena->GetArena()->GetBomber(Index).GetBlockX() == m_BlockHereX && 
+            m_pArena->GetArena()->GetBomber(Index).GetBlockY() == m_BlockHereY)
         {
             // There is an enemy near our bomber
             if (direction != NULL)
@@ -273,8 +273,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
         if (!BeyondArenaFrontiers && (BlockX >= ARENA_WIDTH ||
-            m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
+            m_pArena->GetArena()->IsWall (BlockX, BlockY) ||
+            m_pArena->GetArena()->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
@@ -293,7 +293,7 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
             break; // we have returned near us again.
 
         // If there is a bomber where we are scanning
-        if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+        if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber to the right that is near
             // and in front of our bomber.
@@ -306,8 +306,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         if (BeyondArenaFrontiers)
         {
             // only increase FakeBlock if current block is not a bomb or a wall
-            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
-                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+            if (!m_pArena->GetArena()->IsBomb (BlockX, BlockY) &&
+                !m_pArena->GetArena()->IsWall (BlockX, BlockY))
                 FakeBlockX++;
         }    
         else
@@ -337,8 +337,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
         if (!BeyondArenaFrontiers && (BlockX < 0 ||
-            m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
+            m_pArena->GetArena()->IsWall (BlockX, BlockY) ||
+            m_pArena->GetArena()->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
@@ -357,7 +357,7 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
             break; // we have returned near us again.
 
         // If there is a bomber where we are scanning
-        if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+        if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber to the left that is near
             // and in front of our bomber.
@@ -370,8 +370,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         if (BeyondArenaFrontiers)
         {
             // only decrease FakeBlock if current block is not a bomb or a wall
-            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
-                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+            if (!m_pArena->GetArena()->IsBomb (BlockX, BlockY) &&
+                !m_pArena->GetArena()->IsWall (BlockX, BlockY))
                 FakeBlockX--;
         }    
         else
@@ -401,8 +401,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
         if (!BeyondArenaFrontiers && (BlockY < 0 ||
-            m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
+            m_pArena->GetArena()->IsWall (BlockX, BlockY) ||
+            m_pArena->GetArena()->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
@@ -421,7 +421,7 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
             break; // we have returned near us again.
 
         // If there is a bomber != me where we are scanning
-        if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+        if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber above that is near
             // and in front of our bomber.            
@@ -434,8 +434,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         if (BeyondArenaFrontiers)
         {
             // only decrease FakeBlock if current block is not a bomb or a wall
-            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
-                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+            if (!m_pArena->GetArena()->IsBomb (BlockX, BlockY) &&
+                !m_pArena->GetArena()->IsWall (BlockX, BlockY))
                 FakeBlockY--;
         }    
         else
@@ -465,8 +465,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         // If we are scanning out of the arena
         // or if there is a wall or a bomb where we are scanning
         if (!BeyondArenaFrontiers && (BlockY >= ARENA_HEIGHT ||
-            m_pArena->m_pArena->IsWall (BlockX, BlockY) ||
-            m_pArena->m_pArena->IsBomb (BlockX, BlockY)))
+            m_pArena->GetArena()->IsWall (BlockX, BlockY) ||
+            m_pArena->GetArena()->IsBomb (BlockX, BlockY)))
         {
             // Stop scanning, there is no enemy near and in front of our bomber in this direction
             break;
@@ -485,7 +485,7 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
             break; // we have returned near us again.
 
         // If there is a bomber != me where we are scanning
-        if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+        if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
         {
             // We have an enemy bomber above that is near
             // and in front of our bomber.
@@ -498,8 +498,8 @@ bool CAiBomber::EnemyNearAndFront (EEnemyDirection *direction, bool BeyondArenaF
         if (BeyondArenaFrontiers)
         {
             // only increase FakeBlock if current block is not a bomb or a wall
-            if (!m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
-                !m_pArena->m_pArena->IsWall (BlockX, BlockY))
+            if (!m_pArena->GetArena()->IsBomb (BlockX, BlockY) &&
+                !m_pArena->GetArena()->IsWall (BlockX, BlockY))
                 FakeBlockY++;
         }    
         else
@@ -529,10 +529,10 @@ bool CAiBomber::EnemyNear (int BlockX, int BlockY)
         // and the manhattan distance between him and the tested block is not too big
         // and with big probability
         if (Index != m_Player &&
-            m_pArena->m_pArena->GetBomber(Index).Exist() && 
-            m_pArena->m_pArena->GetBomber(Index).IsAlive() && 
-            ABS (m_pArena->m_pArena->GetBomber(Index).GetBlockX() - BlockX) + 
-            ABS (m_pArena->m_pArena->GetBomber(Index).GetBlockY() - BlockY) <= 3 &&
+            m_pArena->GetArena()->GetBomber(Index).Exist() && 
+            m_pArena->GetArena()->GetBomber(Index).IsAlive() && 
+            ABS (m_pArena->GetArena()->GetBomber(Index).GetBlockX() - BlockX) + 
+            ABS (m_pArena->GetArena()->GetBomber(Index).GetBlockY() - BlockY) <= 3 &&
             RANDOM(100) < 92)
         {
             // There is an enemy not far from the tested block
@@ -567,12 +567,12 @@ bool CAiBomber::EnemyNearRemoteFuseBomb (CBomb& bomb)
         // and its distance to the bomb (on the x or y axis)
         // is less or equal the bomb's flamesize
         // do this with 70% probability
-        BomberX = m_pArena->m_pArena->GetBomber(Index).GetBlockX();
-        BomberY = m_pArena->m_pArena->GetBomber(Index).GetBlockY();
+        BomberX = m_pArena->GetArena()->GetBomber(Index).GetBlockX();
+        BomberY = m_pArena->GetArena()->GetBomber(Index).GetBlockY();
         
         if (Index != m_Player &&
-            m_pArena->m_pArena->GetBomber(Index).Exist() && 
-            m_pArena->m_pArena->GetBomber(Index).IsAlive() && 
+            m_pArena->GetArena()->GetBomber(Index).Exist() && 
+            m_pArena->GetArena()->GetBomber(Index).IsAlive() && 
             ((BomberX == BombX && ABS(BomberY - BombY) <= bomb.GetFlameSize()) ||
             (BomberY == BombY && ABS(BomberX - BombX) <= bomb.GetFlameSize())) &&
             RANDOM(100) < 70)
@@ -609,22 +609,22 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
         return false;
     }
 
-    if (m_pArena->m_pArena->GetArenaCloser().GetNumberOfBlocksLeft() <= 15)
+    if (m_pArena->GetArena()->GetArenaCloser().GetNumberOfBlocksLeft() <= 15)
     {
         return false;
     }
 
-    if (m_pArena->m_pArena->IsBomb (BlockX, BlockY))
+    if (m_pArena->GetArena()->IsBomb (BlockX, BlockY))
     {
         return false;
     }
 
-    if (m_pArena->m_Danger[BlockX][BlockY] == DANGER_NONE)
+    if (m_pArena->GetDanger(BlockX,BlockY) == DANGER_NONE)
     {
-        if ((BlockX - 1 < 0             || m_pArena->m_Danger[BlockX-1][BlockY] != DANGER_NONE) &&
-            (BlockX + 1 >= ARENA_WIDTH  || m_pArena->m_Danger[BlockX+1][BlockY] != DANGER_NONE) &&
-            (BlockY - 1 < 0             || m_pArena->m_Danger[BlockX][BlockY-1] != DANGER_NONE) &&
-            (BlockX + 1 >= ARENA_HEIGHT || m_pArena->m_Danger[BlockX][BlockY+1] != DANGER_NONE))
+        if ((BlockX - 1 < 0             || m_pArena->GetDanger(BlockX-1, BlockY) != DANGER_NONE) &&
+            (BlockX + 1 >= ARENA_WIDTH  || m_pArena->GetDanger(BlockX+1, BlockY) != DANGER_NONE) &&
+            (BlockY - 1 < 0             || m_pArena->GetDanger(BlockX, BlockY-1) != DANGER_NONE) &&
+            (BlockX + 1 >= ARENA_HEIGHT || m_pArena->GetDanger(BlockX, BlockY+1) != DANGER_NONE))
         {
             return false;
         }
@@ -645,7 +645,7 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
     //-------------------------------------------------------------------------------------------
 
     // Get the exact flame size of our bombs
-    int FlameSize = m_pArena->m_pArena->GetBomber(m_Player).GetFlameSize();
+    int FlameSize = m_pArena->GetArena()->GetBomber(m_Player).GetFlameSize();
 
     // If it exceeds a certain size
     if (FlameSize >= 4)
@@ -678,8 +678,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // While there is no obstacle (wall, bomb)
     // and we didn't finish scanning the flame ray of the simulated explosion
-    while (!m_pArena->m_pArena->IsBomb (DangerBlockX, DangerBlockY) && 
-           !m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
+    while (!m_pArena->GetArena()->IsBomb (DangerBlockX, DangerBlockY) && 
+           !m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
            Depth <= FlameSize)
     {
         // The block we are scanning is accessible and would be endangered by the bomb
@@ -687,7 +687,7 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
         // If there is an item on the block we are scanning
         // and this item is at least a little bit interesting
-        if (m_pArena->m_pArena->IsItem (DangerBlockX, DangerBlockY) && 
+        if (m_pArena->GetArena()->IsItem (DangerBlockX, DangerBlockY) && 
             ItemMark (DangerBlockX, DangerBlockY) > 0)
         {
             // We should not drop a bomb here, this item seems to be interesting
@@ -701,8 +701,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // If the scan was stopped because of a wall
     // and this wall is burning or will burn soon
-    if (m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
-        m_pArena->m_WallBurn[DangerBlockX][DangerBlockY])
+    if (m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
+        m_pArena->GetWallBurn(DangerBlockX, DangerBlockY))
     {
         // We should not drop a bomb here, there could be an item under this wall!
         return false;
@@ -723,8 +723,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // While there is no obstacle (wall, bomb)
     // and we didn't finish scanning the flame ray of the simulated explosion
-    while (!m_pArena->m_pArena->IsBomb (DangerBlockX, DangerBlockY) && 
-           !m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
+    while (!m_pArena->GetArena()->IsBomb (DangerBlockX, DangerBlockY) && 
+           !m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
            Depth <= FlameSize)
     {
         // The block we are scanning is accessible and would be endangered by the bomb
@@ -732,7 +732,7 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
     
         // If there is an item on the block we are scanning
         // and this item is at least a little bit interesting
-        if (m_pArena->m_pArena->IsItem (DangerBlockX, DangerBlockY) && 
+        if (m_pArena->GetArena()->IsItem (DangerBlockX, DangerBlockY) && 
             ItemMark (DangerBlockX, DangerBlockY) > 0)
         {
             // We should not drop a bomb here, this item seems to be interesting
@@ -746,8 +746,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // If the scan was stopped because of a wall
     // and this wall is burning or will burn soon
-    if (m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
-        m_pArena->m_WallBurn[DangerBlockX][DangerBlockY])
+    if (m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
+        m_pArena->GetWallBurn(DangerBlockX,DangerBlockY))
     {
         // We should not drop a bomb here, there could be an item under this wall!
         return false;
@@ -768,8 +768,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // While there is no obstacle (wall, bomb)
     // and we didn't finish scanning the flame ray of the simulated explosion
-    while (!m_pArena->m_pArena->IsBomb (DangerBlockX, DangerBlockY) && 
-           !m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
+    while (!m_pArena->GetArena()->IsBomb (DangerBlockX, DangerBlockY) && 
+           !m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
            Depth <= FlameSize)
     {
         // The block we are scanning is accessible and would be endangered by the bomb
@@ -777,7 +777,7 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
         // If there is an item on the block we are scanning
         // and this item is at least a little bit interesting
-        if (m_pArena->m_pArena->IsItem (DangerBlockX, DangerBlockY) && 
+        if (m_pArena->GetArena()->IsItem (DangerBlockX, DangerBlockY) && 
             ItemMark (DangerBlockX, DangerBlockY) > 0)
         {
             // We should not drop a bomb here, this item seems to be interesting
@@ -791,8 +791,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // If the scan was stopped because of a wall
     // and this wall is burning or will burn soon
-    if (m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
-        m_pArena->m_WallBurn[DangerBlockX][DangerBlockY])
+    if (m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
+        m_pArena->GetWallBurn(DangerBlockX, DangerBlockY))
     {
         // We should not drop a bomb here, there could be an item under this wall!
         return false;
@@ -813,8 +813,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // While there is no obstacle (wall, bomb)
     // and we didn't finish scanning the flame ray of the simulated explosion
-    while (!m_pArena->m_pArena->IsBomb (DangerBlockX, DangerBlockY) && 
-           !m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
+    while (!m_pArena->GetArena()->IsBomb (DangerBlockX, DangerBlockY) && 
+           !m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
            Depth <= FlameSize)
     {
         // The block we are scanning is accessible and would be endangered by the bomb
@@ -822,7 +822,7 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
     
         // If there is an item on the block we are scanning
         // and this item is at least a little bit interesting
-        if (m_pArena->m_pArena->IsItem (DangerBlockX, DangerBlockY) && 
+        if (m_pArena->GetArena()->IsItem (DangerBlockX, DangerBlockY) && 
             ItemMark (DangerBlockX, DangerBlockY) > 0)
         {
             // We should not drop a bomb here, this item seems to be interesting
@@ -836,8 +836,8 @@ bool CAiBomber::DropBombOK (int BlockX, int BlockY)
 
     // If the scan was stopped because of a wall
     // and this wall is burning or will burn soon
-    if (m_pArena->m_pArena->IsWall (DangerBlockX, DangerBlockY) && 
-        m_pArena->m_WallBurn[DangerBlockX][DangerBlockY])
+    if (m_pArena->GetArena()->IsWall (DangerBlockX, DangerBlockY) && 
+        m_pArena->GetWallBurn(DangerBlockX, DangerBlockY))
     {
         // We should not drop a bomb here, there could be an item under this wall!
         return false;
@@ -857,12 +857,12 @@ int CAiBomber::ItemMark (int BlockX, int BlockY)
     // or if the item is not accessible to our bomber
     // or if the item will die in less than one second
     // or if the item is in danger and our bomber is too far away from this item
-    if (!m_pArena->m_pArena->IsItem (BlockX, BlockY) ||
-        m_pArena->m_pArena->IsSkullItem (BlockX, BlockY) ||
-        m_pArena->m_pArena->IsBurningItem (BlockX, BlockY) ||
+    if (!m_pArena->GetArena()->IsItem (BlockX, BlockY) ||
+        m_pArena->GetArena()->IsSkullItem (BlockX, BlockY) ||
+        m_pArena->GetArena()->IsBurningItem (BlockX, BlockY) ||
         m_Accessible[BlockX][BlockY] == -1 ||
-        m_pArena->m_DangerTimeLeft[BlockX][BlockY] < 1.0f ||
-        (m_pArena->m_Danger[BlockX][BlockY] != DANGER_NONE && m_Accessible[BlockX][BlockY] >= 3))
+        m_pArena->GetDangerTimeLeft(BlockX, BlockY) < 1.0f ||
+        (m_pArena->GetDanger(BlockX, BlockY) != DANGER_NONE && m_Accessible[BlockX][BlockY] >= 3))
     {
         // Worst mark, this item is not interesting
         return 0;
@@ -873,20 +873,20 @@ int CAiBomber::ItemMark (int BlockX, int BlockY)
 
     //----------------------------------------
     // Take the type of the item into account
-    //----------------------------------------EnemyDirection
+    //----------------------------------------
 
     // Variable where to retrieve the type of the item on the tested block
     EItemType ItemType = ITEM_NONE;
 
     // Scan the items of the arena
-    for (int Index = 0 ; Index < m_pArena->m_pArena->MaxItems() ; Index++)
+    for (int Index = 0 ; Index < m_pArena->GetArena()->MaxItems() ; Index++)
     {
         // If the current item is on the tested block
-        if (m_pArena->m_pArena->GetItem(Index).GetBlockX() == BlockX &&
-            m_pArena->m_pArena->GetItem(Index).GetBlockY() == BlockY)
+        if (m_pArena->GetArena()->GetItem(Index).GetBlockX() == BlockX &&
+            m_pArena->GetArena()->GetItem(Index).GetBlockY() == BlockY)
         {
             // Get the type of this item and get out
-            ItemType = m_pArena->m_pArena->GetItem(Index).GetType();
+            ItemType = m_pArena->GetArena()->GetItem(Index).GetType();
             break;
         }
     }
@@ -924,7 +924,7 @@ int CAiBomber::ItemMark (int BlockX, int BlockY)
     }
 
     // If the item is not in a dead end
-    if (m_pArena->m_DeadEnd[BlockX][BlockY] == -1)
+    if (m_pArena->GetDeadEnd(BlockX, BlockY) == -1)
     {
         // Increase the item mark
         Mark += 10;
@@ -993,8 +993,8 @@ void CAiBomber::ModeThink (void)
 
     // If the block where the bomber is is dangerous
     // or if there are not many opened blocks left in the arena
-    if (m_pArena->m_Danger[m_BlockHereX][m_BlockHereY] != DANGER_NONE ||
-        m_pArena->m_pArena->GetArenaCloser().GetNumberOfBlocksLeft() <= 10)
+    if (m_pArena->GetDanger(m_BlockHereX, m_BlockHereY) != DANGER_NONE ||
+        m_pArena->GetArena()->GetArenaCloser().GetNumberOfBlocksLeft() <= 10)
     {
         // Switch to the defence mode so that the bomber goes to a safer block
         SetComputerMode (COMPUTERMODE_DEFENCE);
@@ -1027,7 +1027,7 @@ void CAiBomber::ModeThink (void)
     else if (m_pBomber->CanThrowBombs () &&
         EnemyNearAndFront(&EnemyDirection, true) &&
         (DropBombOK(m_BlockHereX,m_BlockHereY) ||
-         m_pArena->m_pArena->IsBomb (m_BlockHereX, m_BlockHereY)) &&
+         m_pArena->GetArena()->IsBomb (m_BlockHereX, m_BlockHereY)) &&
         RANDOM(100) < 50)
     {
         // Switch to the throw to drop a bomb and turn into the right direction
@@ -1045,16 +1045,16 @@ void CAiBomber::ModeThink (void)
     if (m_pBomber->CanRemoteFuseBombs ())
     {
         // Find the first bomb we can fuse.
-        for (int Index = 0 ; Index < m_pArena->m_pArena->MaxBombs() ; Index++)
+        for (int Index = 0 ; Index < m_pArena->GetArena()->MaxBombs() ; Index++)
         {						
             // Test existence and player number of the one who planted it.
-            if (m_pArena->m_pArena->GetBomb(Index).Exist() &&
-                m_pArena->m_pArena->GetBomb(Index).IsRemote() &&
-                m_pArena->m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
+            if (m_pArena->GetArena()->GetBomb(Index).Exist() &&
+                m_pArena->GetArena()->GetBomb(Index).IsRemote() &&
+                m_pArena->GetArena()->GetBomb(Index).GetOwnerPlayer() == m_Player)
             {
                 // It's mine, it's mine! Check for players near it.
                 // If there are none, there is a 10 % chance that we detonate it
-                if (EnemyNearRemoteFuseBomb(m_pArena->m_pArena->GetBomb(Index))
+                if (EnemyNearRemoteFuseBomb(m_pArena->GetArena()->GetBomb(Index))
                     || RANDOM(100) < 10)
                 {
                     // Let's detonate it.
@@ -1153,11 +1153,11 @@ void CAiBomber::ModeThink (void)
         for (int Index = 0 ; Index < MAX_PLAYERS ; Index++)
         {
             if (Index != m_Player &&
-                m_pArena->m_pArena->GetBomber(Index).Exist() && 
-                m_pArena->m_pArena->GetBomber(Index).IsAlive())                
+                m_pArena->GetArena()->GetBomber(Index).Exist() && 
+                m_pArena->GetArena()->GetBomber(Index).IsAlive())                
             {
-                BlockX = m_pArena->m_pArena->GetBomber(Index).GetBlockX();
-                BlockY = m_pArena->m_pArena->GetBomber(Index).GetBlockY();
+                BlockX = m_pArena->GetArena()->GetBomber(Index).GetBlockX();
+                BlockY = m_pArena->GetArena()->GetBomber(Index).GetBlockY();
 
                 if (m_Accessible[BlockX][BlockY] != -1)
                 {
@@ -1212,12 +1212,12 @@ void CAiBomber::ModeThink (void)
                             RANDOM(100) >= 50
                         )
                     ) &&
-                    (m_pArena->m_DeadEnd[BlockX][BlockY] == -1 || !EnemyNear(BlockX,BlockY))
+                    (m_pArena->GetDeadEnd(BlockX,BlockY) == -1 || !EnemyNear(BlockX,BlockY))
                     &&
-                    (m_pArena->m_WallBurn[BlockX-1][BlockY] ||
-                     m_pArena->m_WallBurn[BlockX+1][BlockY] ||
-                     m_pArena->m_WallBurn[BlockX][BlockY-1] ||
-                     m_pArena->m_WallBurn[BlockX][BlockY+1]))
+                    (m_pArena->GetWallBurn(BlockX-1,BlockY)   ||
+                     m_pArena->GetWallBurn(BlockX+1,BlockY)   ||
+                     m_pArena->GetWallBurn(BlockX  ,BlockY-1) ||
+                     m_pArena->GetWallBurn(BlockX  ,BlockY+1) ))
                 {
                     FoundSoftWallBurn = true;
                     BestGoalBlockX = BlockX;
@@ -1281,18 +1281,18 @@ void CAiBomber::ModeThink (void)
             // If the block is inside the arena
             else
             {
-                if (m_pArena->m_SoftWallNear[BlockX][BlockY] != -1 && 
-                    m_pArena->m_SoftWallNear[BlockX][BlockY] > 0 && 
+                if (m_pArena->GetSoftWallNear(BlockX, BlockY) != -1 && 
+                    m_pArena->GetSoftWallNear(BlockX, BlockY) > 0 && 
                     m_Accessible[BlockX][BlockY] != -1 &&
                     m_Accessible[BlockX][BlockY] <= 5 &&
-                    (m_pArena->m_DeadEnd[BlockX][BlockY] == -1 || !EnemyNear(BlockX,BlockY)) &&
-                    m_pArena->m_Danger[BlockX][BlockY] == DANGER_NONE
+                    (m_pArena->GetDeadEnd(BlockX, BlockY) == -1 || !EnemyNear(BlockX,BlockY)) &&
+                    m_pArena->GetDanger(BlockX, BlockY) == DANGER_NONE
                     &&
                     (
-                        BestMark < m_BurnMark[m_pArena->m_SoftWallNear[BlockX][BlockY]][m_Accessible[BlockX][BlockY]]
+                        BestMark < m_BurnMark[m_pArena->GetSoftWallNear(BlockX, BlockY)][m_Accessible[BlockX][BlockY]]
                         ||
                         (
-                            BestMark == m_BurnMark[m_pArena->m_SoftWallNear[BlockX][BlockY]][m_Accessible[BlockX][BlockY]]
+                            BestMark == m_BurnMark[m_pArena->GetSoftWallNear(BlockX, BlockY)][m_Accessible[BlockX][BlockY]]
                             &&
                             RANDOM(100) >= 50
                         )
@@ -1303,7 +1303,7 @@ void CAiBomber::ModeThink (void)
                     BestGoalBlockX = BlockX;
                     BestGoalBlockY = BlockY;
 
-                    BestMark = m_BurnMark[m_pArena->m_SoftWallNear[BlockX][BlockY]][m_Accessible[BlockX][BlockY]];
+                    BestMark = m_BurnMark[m_pArena->GetSoftWallNear(BlockX, BlockY)][m_Accessible[BlockX][BlockY]];
                 }
             }
         }
@@ -1369,7 +1369,7 @@ sinon
     si je ne sais pas d'autres strategies il y a MAX_CALLS_MODEITEM fois, mode reflechir
 
 */
-#define MAX_CALLS_MODEITEM  10
+#define MAX_CALLS_MODEITEM  5
 
 void CAiBomber::ModeItem (float DeltaTime)
 {
@@ -1404,7 +1404,7 @@ void CAiBomber::ModeItem (float DeltaTime)
     }
 
     // If we are trying to pick up an item
-    if (m_pArena->m_pArena->IsItem (m_ItemGoalBlockX, m_ItemGoalBlockY))
+    if (m_pArena->GetArena()->IsItem (m_ItemGoalBlockX, m_ItemGoalBlockY))
     {
         bool FoundItem = false;
         int BestMark = 0;
@@ -1637,7 +1637,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
     m_BomberAction = BOMBERACTION_NONE;
     
     // If the bomber is not in danger
-    if (m_pArena->m_Danger[m_BlockHereX][m_BlockHereY] == DANGER_NONE && m_pArena->m_pArena->GetArenaCloser().GetNumberOfBlocksLeft() > 10)
+    if (m_pArena->GetDanger(m_BlockHereX, m_BlockHereY) == DANGER_NONE && m_pArena->GetArena()->GetArenaCloser().GetNumberOfBlocksLeft() > 10)
     {
         // Reset commands to send to the bomber in order 
         // to stop moving when the bomber is in a safe block.
@@ -1648,11 +1648,11 @@ void CAiBomber::ModeDefence (float DeltaTime)
         if (m_pBomber->CanRemoteFuseBombs ())
         {
             // now find out if we planted some bombs
-            for (int Index = 0 ; Index < m_pArena->m_pArena->MaxBombs() ; Index++)
+            for (int Index = 0 ; Index < m_pArena->GetArena()->MaxBombs() ; Index++)
             {						
                 // Test existence and kicker player number
-                if (m_pArena->m_pArena->GetBomb(Index).Exist() && m_pArena->m_pArena->GetBomb(Index).IsRemote() &&
-                    m_pArena->m_pArena->GetBomb(Index).GetOwnerPlayer() == m_Player)
+                if (m_pArena->GetArena()->GetBomb(Index).Exist() && m_pArena->GetArena()->GetBomb(Index).IsRemote() &&
+                    m_pArena->GetArena()->GetBomb(Index).GetOwnerPlayer() == m_Player)
                 {
                     // Leave the for-loop, because we found a bomb
                     m_BomberAction = BOMBERACTION_ACTION2; // detonate the bomb
@@ -1707,9 +1707,9 @@ void CAiBomber::ModeDefence (float DeltaTime)
                 // and this block is not in danger
                 // and this block is closer than the closest good block we saved
                 if (m_Accessible[BlockX][BlockY] != -1 &&
-                    (EnemyNear(BlockX,BlockY) ? m_pArena->m_DeadEnd[BlockX][BlockY] == -1 : (m_pArena->m_DeadEnd[BlockX][BlockY] != -1 || !DeadEnd)) &&
-                    m_pArena->m_Danger[BlockX][BlockY] == DANGER_NONE &&
-                    !m_pArena->m_pArena->IsSkullItem (BlockX, BlockY)
+                    (EnemyNear(BlockX,BlockY) ? m_pArena->GetDeadEnd(BlockX, BlockY) == -1 : (m_pArena->GetDeadEnd(BlockX, BlockY) != -1 || !DeadEnd)) &&
+                    m_pArena->GetDanger(BlockX, BlockY) == DANGER_NONE &&
+                    !m_pArena->GetArena()->IsSkullItem (BlockX, BlockY)
                     &&
                     (
                         m_Accessible[BlockX][BlockY] < BestDistance 
@@ -1728,7 +1728,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     BestBlockX = BlockX;
                     BestBlockY = BlockY;
                     BestDistance = m_Accessible[BlockX][BlockY];
-                    DeadEnd = (m_pArena->m_DeadEnd[BlockX][BlockY] != -1);
+                    DeadEnd = (m_pArena->GetDeadEnd(BlockX, BlockY) != -1);
                 }
             }
         }
@@ -1755,8 +1755,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
     }
     
     r = rbase; g = gbase; b = bbase;
-    w = m_pArena->m_pArena->ToPosition(1);
-    h = m_pArena->m_pArena->ToPosition(1);
+    w = m_pArena->GetArena()->ToPosition(1);
+    h = m_pArena->GetArena()->ToPosition(1);
     
     if (m_pDisplay != NULL)
     {
@@ -1764,8 +1764,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
         {
             
             m_pDisplay->DrawDebugRectangle (
-                m_pArena->m_pArena->ToPosition(BestBlockX), 
-                m_pArena->m_pArena->ToPosition(BestBlockY), 
+                m_pArena->GetArena()->ToPosition(BestBlockX), 
+                m_pArena->GetArena()->ToPosition(BestBlockY), 
                 w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
         }
     }
@@ -1794,10 +1794,10 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     {
                         if (m_PseudoAccessible[BlockX][BlockY] != -1 &&
                             m_PseudoAccessible[BlockX][BlockY] <= 4 &&
-                            m_pArena->m_pArena->IsBomb (BlockX, BlockY) &&
+                            m_pArena->GetArena()->IsBomb (BlockX, BlockY) &&
                             (BlockX == m_BlockHereX || BlockY == m_BlockHereY) &&
                             (BlockX != m_BlockHereX || BlockY != m_BlockHereY) &&
-                            m_pArena->m_DangerTimeLeft[BlockX][BlockY] >BestDangerTimeLeft)
+                            m_pArena->GetDangerTimeLeft(BlockX, BlockY) >BestDangerTimeLeft)
                         {
                             // We found a good block to go to
                             Found = true;
@@ -1805,7 +1805,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
                             // Save the coordinates and the distance of this block
                             BestBlockX = BlockX;
                             BestBlockY = BlockY;
-                            BestDangerTimeLeft = m_pArena->m_DangerTimeLeft[BlockX][BlockY];
+                            BestDangerTimeLeft = m_pArena->GetDangerTimeLeft(BlockX, BlockY);
                         }
                     }
                 }
@@ -1820,8 +1820,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
             {
                     
                 m_pDisplay->DrawDebugRectangle (
-                    m_pArena->m_pArena->ToPosition(BestBlockX), 
-                    m_pArena->m_pArena->ToPosition(BestBlockY), 
+                    m_pArena->GetArena()->ToPosition(BestBlockX), 
+                    m_pArena->GetArena()->ToPosition(BestBlockY), 
                     w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
             }
 #endif
@@ -1839,8 +1839,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     if (m_BlockHereX > 1)
                     {
                         // check if there is more than one bomb besides us.
-                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
-                            m_pArena->m_pArena->IsBomb (NextBlockX - 1, NextBlockY))
+                        if (m_pArena->GetArena()->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->GetArena()->IsBomb (NextBlockX - 1, NextBlockY))
                         {
                             twoBombs = true;
                         }
@@ -1860,8 +1860,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     if (m_BlockHereX < ARENA_WIDTH - 2)
                     {
                         // check if there is more than one bomb besides us.
-                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
-                            m_pArena->m_pArena->IsBomb (NextBlockX + 1, NextBlockY))
+                        if (m_pArena->GetArena()->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->GetArena()->IsBomb (NextBlockX + 1, NextBlockY))
                         {
                             twoBombs = true;
                         }
@@ -1881,8 +1881,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     if (m_BlockHereY > 1)
                     {
 	                    // check if there is more than one bomb besides us.
-                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
-                            m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY - 1))
+                        if (m_pArena->GetArena()->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->GetArena()->IsBomb (NextBlockX, NextBlockY - 1))
                         {
     	                    twoBombs = true;
 	                    }
@@ -1902,8 +1902,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     if (m_BlockHereY < ARENA_HEIGHT - 2)
                     {
                         // check if there is more than one bomb besides us.
-                        if (m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY) &&
-                            m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY + 1))
+                        if (m_pArena->GetArena()->IsBomb (NextBlockX, NextBlockY) &&
+                            m_pArena->GetArena()->IsBomb (NextBlockX, NextBlockY + 1))
                         {
                             twoBombs = true;
                         }
@@ -1925,7 +1925,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
                 {
                     if ((!m_pBomber->CanKickBombs () || twoBombs) &&
                         m_pBomber->CanPunchBombs () &&
-                        m_pArena->m_pArena->IsBomb (NextBlockX, NextBlockY))
+                        m_pArena->GetArena()->IsBomb (NextBlockX, NextBlockY))
                     {
                         m_BomberAction = BOMBERACTION_ACTION2;
                     }
@@ -1973,7 +1973,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
                     // and this block is not in danger
                     // and this block is closer than the closest good block we saved
                     if (m_Accessible[BlockX][BlockY] != -1 &&
-                        m_pArena->m_DangerTimeLeft[BlockX][BlockY] > BestDangerTimeLeft)
+                        m_pArena->GetDangerTimeLeft(BlockX, BlockY) > BestDangerTimeLeft)
                     {
                         // We found a good block to go to
                         Found = true;
@@ -1983,7 +1983,7 @@ void CAiBomber::ModeDefence (float DeltaTime)
                         BestBlockY = BlockY;
                         BestDistance = m_Accessible[BlockX][BlockY];
                     
-                        BestDangerTimeLeft = m_pArena->m_DangerTimeLeft[BlockX][BlockY];
+                        BestDangerTimeLeft = m_pArena->GetDangerTimeLeft(BlockX, BlockY);
                     }
                 }
             }
@@ -2002,8 +2002,8 @@ void CAiBomber::ModeDefence (float DeltaTime)
             {
                     
                 m_pDisplay->DrawDebugRectangle (
-                    m_pArena->m_pArena->ToPosition(BestBlockX), 
-                    m_pArena->m_pArena->ToPosition(BestBlockY), 
+                    m_pArena->GetArena()->ToPosition(BestBlockX), 
+                    m_pArena->GetArena()->ToPosition(BestBlockY), 
                     w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
             }
 #endif
@@ -2041,6 +2041,7 @@ choisir un mouvement selon l'interet, le danger, notre precedent mouvement, etc
 enregistrer le mouvement
 
 */
+#define MAX_CALLS_MODEWALK  5
 
 void CAiBomber::ModeWalk (float DeltaTime)
 {
@@ -2051,7 +2052,7 @@ void CAiBomber::ModeWalk (float DeltaTime)
     calls++;
     
     // If the bomber is in danger
-    if (m_pArena->m_Danger[m_BlockHereX][m_BlockHereY] != DANGER_NONE)
+    if (m_pArena->GetDanger(m_BlockHereX, m_BlockHereY) != DANGER_NONE)
     {
         // While walking we got into trouble! Decide what to do
         SetComputerMode (COMPUTERMODE_THINK);
@@ -2076,7 +2077,7 @@ void CAiBomber::ModeWalk (float DeltaTime)
     int BlockX;
     int BlockY;
 
-    if (m_WalkTime >= 1.0f || calls > 50)
+    if (m_WalkTime >= 1.0f || calls > MAX_CALLS_MODEWALK)
     {
         SetComputerMode (COMPUTERMODE_THINK);
         
@@ -2099,15 +2100,15 @@ void CAiBomber::ModeWalk (float DeltaTime)
                 continue;
             }
             
-            if (m_pArena->m_pArena->IsSoftWall (BlockX, BlockY))
+            if (m_pArena->GetArena()->IsSoftWall (BlockX, BlockY))
             {
                 MarkDownRight += 2;
             }
-            else if (m_pArena->m_pArena->IsItem (BlockX, BlockY) && !m_pArena->m_pArena->IsSkullItem (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsItem (BlockX, BlockY) && !m_pArena->GetArena()->IsSkullItem (BlockX, BlockY))
             {
                 MarkDownRight += 10;
             }
-            else if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
             {
                 MarkDownRight += 5;
             }
@@ -2123,15 +2124,15 @@ void CAiBomber::ModeWalk (float DeltaTime)
                 continue;
             }
             
-            if (m_pArena->m_pArena->IsSoftWall (BlockX, BlockY))
+            if (m_pArena->GetArena()->IsSoftWall (BlockX, BlockY))
             {
                 MarkDownLeft += 2;
             }
-            else if (m_pArena->m_pArena->IsItem (BlockX, BlockY) && !m_pArena->m_pArena->IsSkullItem (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsItem (BlockX, BlockY) && !m_pArena->GetArena()->IsSkullItem (BlockX, BlockY))
             {
                 MarkDownLeft += 10;
             }
-            else if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
             {
                 MarkDownLeft += 5;
             }
@@ -2147,15 +2148,15 @@ void CAiBomber::ModeWalk (float DeltaTime)
                 continue;
             }
             
-            if (m_pArena->m_pArena->IsSoftWall (BlockX, BlockY))
+            if (m_pArena->GetArena()->IsSoftWall (BlockX, BlockY))
             {
                 MarkUpLeft += 2;
             }
-            else if (m_pArena->m_pArena->IsItem (BlockX, BlockY) && !m_pArena->m_pArena->IsSkullItem (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsItem (BlockX, BlockY) && !m_pArena->GetArena()->IsSkullItem (BlockX, BlockY))
             {
                 MarkUpLeft += 10;
             }
-            else if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
             {
                 MarkUpLeft += 5;
             }
@@ -2171,15 +2172,15 @@ void CAiBomber::ModeWalk (float DeltaTime)
                 continue;
             }
             
-            if (m_pArena->m_pArena->IsSoftWall (BlockX, BlockY))
+            if (m_pArena->GetArena()->IsSoftWall (BlockX, BlockY))
             {
                 MarkUpRight += 2;
             }
-            else if (m_pArena->m_pArena->IsItem (BlockX, BlockY) && !m_pArena->m_pArena->IsSkullItem (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsItem (BlockX, BlockY) && !m_pArena->GetArena()->IsSkullItem (BlockX, BlockY))
             {
                 MarkUpRight += 10;
             }
-            else if (m_pArena->m_pArena->IsBomber (BlockX, BlockY))
+            else if (m_pArena->GetArena()->IsBomber (BlockX, BlockY))
             {
                 MarkUpRight += 5;
             }
@@ -2192,15 +2193,15 @@ void CAiBomber::ModeWalk (float DeltaTime)
     }
 
     // Is a move in a single direction possible?
-    bool CanMoveUp    = !m_pArena->m_pArena->IsWall(m_BlockUpX, m_BlockUpY) && !m_pArena->m_pArena->IsBomb(m_BlockUpX, m_BlockUpY);
-    bool CanMoveDown  = !m_pArena->m_pArena->IsWall(m_BlockDownX, m_BlockDownY) && !m_pArena->m_pArena->IsBomb(m_BlockDownX, m_BlockDownY);
-    bool CanMoveLeft  = !m_pArena->m_pArena->IsWall(m_BlockLeftX, m_BlockLeftY) && !m_pArena->m_pArena->IsBomb(m_BlockLeftX, m_BlockLeftY);
-    bool CanMoveRight = !m_pArena->m_pArena->IsWall(m_BlockRightX, m_BlockRightY) && !m_pArena->m_pArena->IsBomb(m_BlockRightX, m_BlockRightY);
+    bool CanMoveUp    = !m_pArena->GetArena()->IsWall(m_BlockUpX, m_BlockUpY) && !m_pArena->GetArena()->IsBomb(m_BlockUpX, m_BlockUpY);
+    bool CanMoveDown  = !m_pArena->GetArena()->IsWall(m_BlockDownX, m_BlockDownY) && !m_pArena->GetArena()->IsBomb(m_BlockDownX, m_BlockDownY);
+    bool CanMoveLeft  = !m_pArena->GetArena()->IsWall(m_BlockLeftX, m_BlockLeftY) && !m_pArena->GetArena()->IsBomb(m_BlockLeftX, m_BlockLeftY);
+    bool CanMoveRight = !m_pArena->GetArena()->IsWall(m_BlockRightX, m_BlockRightY) && !m_pArena->GetArena()->IsBomb(m_BlockRightX, m_BlockRightY);
 
-    EDanger DangerUp    = m_pArena->m_Danger[m_BlockUpX   ][m_BlockUpY];
-    EDanger DangerDown  = m_pArena->m_Danger[m_BlockDownX ][m_BlockDownY];
-    EDanger DangerLeft  = m_pArena->m_Danger[m_BlockLeftX ][m_BlockLeftY];
-    EDanger DangerRight = m_pArena->m_Danger[m_BlockRightX][m_BlockRightY];
+    EDanger DangerUp    = m_pArena->GetDanger(m_BlockUpX   ,m_BlockUpY);
+    EDanger DangerDown  = m_pArena->GetDanger(m_BlockDownX ,m_BlockDownY);
+    EDanger DangerLeft  = m_pArena->GetDanger(m_BlockLeftX ,m_BlockLeftY);
+    EDanger DangerRight = m_pArena->GetDanger(m_BlockRightX,m_BlockRightY);
 
     if (MarkDownRight >= MarkDownLeft &&
         MarkDownRight >= MarkUpLeft &&
@@ -2402,17 +2403,17 @@ bool CAiBomber::GoTo (int GoalBlockX, int GoalBlockY)
             }
         } // while
         
-        if (m_pArena->m_pArena->GetArenaCloser().GetNumberOfBlocksLeft() > 10)
+        if (m_pArena->GetArena()->GetArenaCloser().GetNumberOfBlocksLeft() > 10)
         {
-            float DangerTimeLeftHere = m_pArena->m_DangerTimeLeft[m_BlockHereX][m_BlockHereY];
+            float DangerTimeLeftHere = m_pArena->GetDangerTimeLeft(m_BlockHereX,m_BlockHereY);
             float DangerTimeLeftNext = -1.0f;
 
             switch (m_BomberMove)
             {
-                case BOMBERMOVE_UP    : DangerTimeLeftNext = m_pArena->m_DangerTimeLeft[m_BlockUpX][m_BlockUpY]; break;
-                case BOMBERMOVE_DOWN  : DangerTimeLeftNext = m_pArena->m_DangerTimeLeft[m_BlockDownX][m_BlockDownY]; break;
-                case BOMBERMOVE_LEFT  : DangerTimeLeftNext = m_pArena->m_DangerTimeLeft[m_BlockLeftX][m_BlockLeftY]; break;
-                case BOMBERMOVE_RIGHT : DangerTimeLeftNext = m_pArena->m_DangerTimeLeft[m_BlockRightX][m_BlockRightY]; break;
+                case BOMBERMOVE_UP    : DangerTimeLeftNext = m_pArena->GetDangerTimeLeft(m_BlockUpX   ,m_BlockUpY);    break;
+                case BOMBERMOVE_DOWN  : DangerTimeLeftNext = m_pArena->GetDangerTimeLeft(m_BlockDownX ,m_BlockDownY);  break;
+                case BOMBERMOVE_LEFT  : DangerTimeLeftNext = m_pArena->GetDangerTimeLeft(m_BlockLeftX ,m_BlockLeftY);  break;
+                case BOMBERMOVE_RIGHT : DangerTimeLeftNext = m_pArena->GetDangerTimeLeft(m_BlockRightX,m_BlockRightY); break;
                 default: break;
             }
 
@@ -2549,8 +2550,8 @@ void CAiBomber::UpdateAccessibility()
                 {
                     // If there is a square ABOVE that is marked as not accessible and it's not a wall/bomb
                     if (m_Accessible[BlockX][BlockY-1] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX,BlockY-1) &&
-                        !m_pArena->m_pArena->IsBomb(BlockX,BlockY-1))
+                        !m_pArena->GetArena()->IsWall(BlockX,BlockY-1) &&
+                        !m_pArena->GetArena()->IsBomb(BlockX,BlockY-1))
                     {
                         // Mark it as accessible
                         m_Accessible[BlockX][BlockY-1] = m_Accessible[BlockX][BlockY] + 1;
@@ -2562,8 +2563,8 @@ void CAiBomber::UpdateAccessibility()
 
                     // If there is a square BELOW that is marked as not accessible and it's not a wall/bomb
                     if (m_Accessible[BlockX][BlockY+1] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX,BlockY+1) &&
-                        !m_pArena->m_pArena->IsBomb(BlockX,BlockY+1))
+                        !m_pArena->GetArena()->IsWall(BlockX,BlockY+1) &&
+                        !m_pArena->GetArena()->IsBomb(BlockX,BlockY+1))
                     {
                         // Mark it as accessible
                         m_Accessible[BlockX][BlockY+1] = m_Accessible[BlockX][BlockY] + 1;
@@ -2575,8 +2576,8 @@ void CAiBomber::UpdateAccessibility()
 
                     // If there is a square TO THE LEFT that is marked as not accessible and it's not a wall/bomb
                     if (m_Accessible[BlockX-1][BlockY] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX-1,BlockY) &&
-                        !m_pArena->m_pArena->IsBomb(BlockX-1,BlockY))
+                        !m_pArena->GetArena()->IsWall(BlockX-1,BlockY) &&
+                        !m_pArena->GetArena()->IsBomb(BlockX-1,BlockY))
                     {
                         // Mark it as accessible
                         m_Accessible[BlockX-1][BlockY] = m_Accessible[BlockX][BlockY] + 1;
@@ -2588,8 +2589,8 @@ void CAiBomber::UpdateAccessibility()
 
                     // If there is a square TO THE RIGHT that is marked as not accessible and it's not a wall/bomb
                     if (m_Accessible[BlockX+1][BlockY] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX+1,BlockY) &&
-                        !m_pArena->m_pArena->IsBomb(BlockX+1,BlockY))
+                        !m_pArena->GetArena()->IsWall(BlockX+1,BlockY) &&
+                        !m_pArena->GetArena()->IsBomb(BlockX+1,BlockY))
                     {
                         // Mark it as accessible
                         m_Accessible[BlockX+1][BlockY] = m_Accessible[BlockX][BlockY] + 1;
@@ -2624,8 +2625,8 @@ void CAiBomber::UpdateAccessibility()
         default : rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // ??
     }
     
-    w = m_pArena->m_pArena->ToPosition(1);
-    h = m_pArena->m_pArena->ToPosition(1);
+    w = m_pArena->GetArena()->ToPosition(1);
+    h = m_pArena->GetArena()->ToPosition(1);
     
     if (m_pDisplay != NULL)
     {
@@ -2655,8 +2656,8 @@ void CAiBomber::UpdateAccessibility()
                     }
                     
 		            m_pDisplay->DrawDebugRectangle (
-                        m_pArena->m_pArena->ToPosition(BlockX), 
-                        m_pArena->m_pArena->ToPosition(BlockY), 
+                        m_pArena->GetArena()->ToPosition(BlockX), 
+                        m_pArena->GetArena()->ToPosition(BlockY), 
                         w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
                 }
             }
@@ -2705,7 +2706,7 @@ void CAiBomber::UpdateAccessibility()
                 {
                     // If there is a square ABOVE that is marked as not accessible and it's not a wall/bomb
                     if (m_PseudoAccessible[BlockX][BlockY-1] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX,BlockY-1))
+                        !m_pArena->GetArena()->IsWall(BlockX,BlockY-1))
                     {
                         // Mark it as accessible
                         m_PseudoAccessible[BlockX][BlockY-1] = m_PseudoAccessible[BlockX][BlockY] + 1;
@@ -2717,7 +2718,7 @@ void CAiBomber::UpdateAccessibility()
 
                     // If there is a square BELOW that is marked as not accessible and it's not a wall/bomb
                     if (m_PseudoAccessible[BlockX][BlockY+1] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX,BlockY+1))
+                        !m_pArena->GetArena()->IsWall(BlockX,BlockY+1))
                     {
                         // Mark it as accessible
                         m_PseudoAccessible[BlockX][BlockY+1] = m_PseudoAccessible[BlockX][BlockY] + 1;
@@ -2729,7 +2730,7 @@ void CAiBomber::UpdateAccessibility()
 
                     // If there is a square TO THE LEFT that is marked as not accessible and it's not a wall/bomb
                     if (m_PseudoAccessible[BlockX-1][BlockY] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX-1,BlockY))
+                        !m_pArena->GetArena()->IsWall(BlockX-1,BlockY))
                     {
                         // Mark it as accessible
                         m_PseudoAccessible[BlockX-1][BlockY] = m_PseudoAccessible[BlockX][BlockY] + 1;
@@ -2741,7 +2742,7 @@ void CAiBomber::UpdateAccessibility()
 
                     // If there is a square TO THE RIGHT that is marked as not accessible and it's not a wall/bomb
                     if (m_PseudoAccessible[BlockX+1][BlockY] == -1 && 
-                        !m_pArena->m_pArena->IsWall(BlockX+1,BlockY))
+                        !m_pArena->GetArena()->IsWall(BlockX+1,BlockY))
                     {
                         // Mark it as accessible
                         m_PseudoAccessible[BlockX+1][BlockY] = m_PseudoAccessible[BlockX][BlockY] + 1;
@@ -2769,8 +2770,8 @@ void CAiBomber::UpdateAccessibility()
         default : rbase = 0  ; gbase = 0  ; bbase = 0  ; break; // ??
     }
     
-    w = m_pArena->m_pArena->ToPosition(1);
-    h = m_pArena->m_pArena->ToPosition(1);
+    w = m_pArena->GetArena()->ToPosition(1);
+    h = m_pArena->GetArena()->ToPosition(1);
     
     if (m_pDisplay != NULL)
     {
@@ -2785,8 +2786,8 @@ void CAiBomber::UpdateAccessibility()
                     b = bbase + m_PseudoAccessible[BlockX][BlockY] * 8;
                     
 		            m_pDisplay->DrawDebugRectangle (
-                        m_pArena->m_pArena->ToPosition(BlockX), 
-                        m_pArena->m_pArena->ToPosition(BlockY), 
+                        m_pArena->GetArena()->ToPosition(BlockX), 
+                        m_pArena->GetArena()->ToPosition(BlockY), 
                         w, h, r, g, b, AIDEBUG_SPRITELAYER, PRIORITY_UNUSED);
                 }
             }

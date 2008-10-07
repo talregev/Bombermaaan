@@ -130,7 +130,14 @@ void CMatch::Create (void)
             m_pOptions->SetBomberType(1, BOMBERTYPE_MAN);
         
             DWORD TickCount;
-            recv(MySocket, (char*)&TickCount, sizeof(DWORD), 0);
+            int Received = recv(MySocket, (char*)&TickCount, sizeof(DWORD), 0);
+#ifdef WIN32
+                if (Received == SOCKET_ERROR)
+                    theConsole.Write("recv error : %d\n", WSAGetLastError());
+#else
+                if (Received == -1)
+                    theConsole.Write("recv error : %d\n", Received);
+#endif
             SEED_RANDOM(TickCount);
         }
     }
@@ -259,7 +266,8 @@ void CMatch::OpenInput (void)
     for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
     {
         // If this player plays and is human
-        if (m_pOptions->GetBomberType(Player) == BOMBERTYPE_MAN)
+        if (m_pOptions->GetBomberType(Player) == BOMBERTYPE_MAN
+            && m_Arena.GetBomber(Player).Exist())
         {
             // Open its player input given current options
             m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(Player)).Open();
@@ -284,7 +292,8 @@ void CMatch::CloseInput (void)
     for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
     {
         // If this player plays and is human
-        if (m_pOptions->GetBomberType(Player) == BOMBERTYPE_MAN)
+        if (m_pOptions->GetBomberType(Player) == BOMBERTYPE_MAN
+            && m_Arena.GetBomber(Player).Exist())
         {
             // Close its player input given current options
             m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(Player)).Close();
@@ -338,7 +347,8 @@ void CMatch::ProcessPlayerCommands (void)
         for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
         {
             // If this player plays and is a human
-            if (m_pOptions->GetBomberType (Player) == BOMBERTYPE_MAN)
+            if (m_pOptions->GetBomberType (Player) == BOMBERTYPE_MAN &&
+                m_Arena.GetBomber(Player).Exist())
             {   
                 // If its bomber is still alive
                 if (m_Arena.GetBomber (Player).IsAlive())
@@ -466,17 +476,43 @@ void CMatch::ProcessPlayerCommands (void)
         TimeElapsedSinceLastCommandChunk += m_pTimer->GetDeltaTime();
         if (TimeElapsedSinceLastCommandChunk >= 0.050f)
         {
+            unsigned int bufsize;
+            char *recvBuf;
+            int Received;
+            
             if (NetworkMode == NETWORKMODE_SERVER)
             {
                 // Receive client command chunk
-                int Received = recv(ClientSocket, (char*)&CommandChunk, sizeof(CommandChunk), 0);
+                bufsize = sizeof(CommandChunk);
+                recvBuf = new char[bufsize];
+                Received = 0;
+                
+                do {
+                    Received += recv(ClientSocket, &recvBuf[Received], bufsize, 0);
 #ifdef WIN32
-                if (Received == SOCKET_ERROR)
-                    theConsole.Write("recv error : %d\n", WSAGetLastError());
+                    if (Received == SOCKET_ERROR)
+                    {
+                        theConsole.Write("recv error : %d\n", WSAGetLastError());
+                        break;
+                    }
 #else
-                if (Received == -1)
-                    theConsole.Write("recv error : %d\n", Received);
+                    if (Received == -1)
+                    {
+                        theConsole.Write("recv error : %d\n", Received);
+                        break;
+                    }
 #endif
+                    bufsize -= Received;
+                }
+                while ((unsigned int)Received < sizeof(CommandChunk));
+                    
+                if (Received == sizeof(CommandChunk))
+                {
+                    memcpy((char *)&CommandChunk, recvBuf, sizeof(CommandChunk));
+                }
+                
+                delete[] recvBuf;
+                
                 // Scan all the players
                 for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
                 {
@@ -526,16 +562,36 @@ void CMatch::ProcessPlayerCommands (void)
                 CommandChunk.Reset();
 
                 // Receive and apply the arena snapshot from the server
-                int Received = recv(MySocket, (char*)&Snapshot, sizeof(Snapshot), 0);
+                bufsize = sizeof(Snapshot);
+                recvBuf = new char[bufsize];
+                Received = 0;
+                
+                do {
+                    Received += recv(MySocket, &recvBuf[Received], bufsize, 0);
 #ifdef WIN32
-                if (Received == SOCKET_ERROR)
-                    theConsole.Write("recv error : %d\n", WSAGetLastError());
+                    if (Received == SOCKET_ERROR)
+                    {
+                        theConsole.Write("recv error : %d\n", WSAGetLastError());
+                        break;
+                    }
 #else
-                if (Received == -1)
-                    theConsole.Write("recv error : %d\n", Received);
+                    if (Received == -1)
+                    {
+                        theConsole.Write("recv error : %d\n", Received);
+                        break;
+                    }
 #endif
-
-                m_Arena.ReadSnapshot(Snapshot);
+                    bufsize -= Received;
+                }
+                while ((unsigned int)Received < sizeof(Snapshot));
+                    
+                if (Received == sizeof(Snapshot))
+                {
+                    memcpy((char *)&Snapshot, recvBuf, sizeof(Snapshot));
+                    m_Arena.ReadSnapshot(Snapshot);
+                }
+                
+                delete[] recvBuf;
             }
 
             TimeElapsedSinceLastCommandChunk = 0.0f;

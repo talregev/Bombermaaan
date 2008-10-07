@@ -56,27 +56,32 @@ class CArenaSnapshot;
 
 typedef int TBlockHas;
 
-#define BLOCKHAS_NONE          (1 << 0)  //!< The block has nothing in it
-#define BLOCKHAS_FLOOR         (1 << 1)  //!< The block has a floor
-#define BLOCKHAS_WALL          (1 << 2)  //!< The block has a wall of any kind
-#define BLOCKHAS_WALLSOFT      (1 << 3)  //!< The block has a soft wall
-#define BLOCKHAS_WALLHARD      (1 << 4)  //!< The block has a hard wall
-#define BLOCKHAS_WALLFALLING   (1 << 5)  //!< The block has a falling wall
-#define BLOCKHAS_WALLBURNING   (1 << 6)  //!< The block has a burning wall
-#define BLOCKHAS_ITEM          (1 << 7)  //!< The block has an item of any kind
-#define BLOCKHAS_ITEMBOMB      (1 << 8)  //!< The block has a bomb item
-#define BLOCKHAS_ITEMFLAME     (1 << 9)  //!< The block has a flame item
-#define BLOCKHAS_ITEMROLLER    (1 << 10) //!< The block has a roller item
-#define BLOCKHAS_ITEMSKULL     (1 << 11) //!< The block has a skull item
-#define BLOCKHAS_ITEMKICK      (1 << 12) //!< The block has a kick item
-#define BLOCKHAS_ITEMBURNING   (1 << 13) //!< The block has a burning item
-#define BLOCKHAS_BOMB          (1 << 14) //!< The block has a bomb
-#define BLOCKHAS_FLAME         (1 << 15) //!< The block has a flame
-#define BLOCKHAS_EXPLOSION     (1 << 16) //!< The block has a center of explosion
-#define BLOCKHAS_BOMBER        (1 << 17) //!< The block has at least one bomber
-#define BLOCKHAS_BOMBERALIVE   (1 << 18) //!< The block has at least one alive bomber
-#define BLOCKHAS_BOMBERDYING   (1 << 19) //!< The block has at least one dying bomber
-#define BLOCKHAS_FLOORWITHMOVEEFFECT    (1 << 20)   //!< The block makes a bomb move
+#define BLOCKHAS_NONE                   (1 <<  0) //!< The block has nothing in it
+#define BLOCKHAS_FLOOR                  (1 <<  1) //!< The block has a floor
+#define BLOCKHAS_WALL                   (1 <<  2) //!< The block has a wall of any kind
+#define BLOCKHAS_WALLSOFT               (1 <<  3) //!< The block has a soft wall
+#define BLOCKHAS_WALLHARD               (1 <<  4) //!< The block has a hard wall
+#define BLOCKHAS_WALLFALLING            (1 <<  5) //!< The block has a falling wall
+#define BLOCKHAS_WALLBURNING            (1 <<  6) //!< The block has a burning wall
+#define BLOCKHAS_ITEM                   (1 <<  7) //!< The block has an item of any kind
+#define BLOCKHAS_ITEMBOMB               (1 <<  8) //!< The block has a bomb item
+#define BLOCKHAS_ITEMFLAME              (1 <<  9) //!< The block has a flame item
+#define BLOCKHAS_ITEMROLLER             (1 << 10) //!< The block has a roller item
+#define BLOCKHAS_ITEMSKULL              (1 << 11) //!< The block has a skull item
+#define BLOCKHAS_ITEMKICK               (1 << 12) //!< The block has a kick item
+#define BLOCKHAS_ITEMBURNING            (1 << 13) //!< The block has a burning item
+#define BLOCKHAS_BOMB                   (1 << 14) //!< The block has a bomb
+#define BLOCKHAS_FLAME                  (1 << 15) //!< The block has a flame
+#define BLOCKHAS_EXPLOSION              (1 << 16) //!< The block has a center of explosion
+#define BLOCKHAS_BOMBER                 (1 << 17) //!< The block has at least one bomber
+#define BLOCKHAS_BOMBERALIVE            (1 << 18) //!< The block has at least one alive bomber
+#define BLOCKHAS_BOMBERDYING            (1 << 19) //!< The block has at least one dying bomber
+#define BLOCKHAS_FLOORWITHMOVEEFFECT    (1 << 20) //!< The block makes a bomb move
+#define BLOCKHAS_ITEMTHROW              (1 << 21) //!< The block has a throw glove item (blue glove)
+#define BLOCKHAS_ITEMPUNCH              (1 << 22) //!< The block has a punch glove item (red glove)
+#define BLOCKHAS_ITEMREMOTE             (1 << 23) //!< The block has a remote fuse bomb item
+// note hat (1 << 31) is the maximum value for a 32-bit integer
+// BLOCKHAS_ITEMx, where x = {BOMB,FLAME,ROLLER,KICK,THROW,PUNCH,REMOTE} are not necessary
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -184,6 +189,9 @@ public:
     inline bool             IsRollerItem    (int BlockX, int BlockY);
     inline bool             IsKickItem      (int BlockX, int BlockY);
     inline bool             IsSkullItem     (int BlockX, int BlockY);
+    inline bool             IsThrowItem     (int BlockX, int BlockY);
+    inline bool             IsPunchItem     (int BlockX, int BlockY);
+    inline bool             IsRemoteItem    (int BlockX, int BlockY);
     inline bool             IsBurningItem   (int BlockX, int BlockY);
     inline bool             IsBomb          (int BlockX, int BlockY);
     inline bool             IsFlame         (int BlockX, int BlockY);
@@ -446,6 +454,21 @@ inline bool CArena::IsKickItem (int BlockX, int BlockY)
 inline bool CArena::IsSkullItem (int BlockX, int BlockY) 
 { 
     return GetBlockHas(BlockX, BlockY, BLOCKHAS_ITEMSKULL); 
+}
+
+inline bool CArena::IsThrowItem (int BlockX, int BlockY)
+{
+    return GetBlockHas(BlockX, BlockY, BLOCKHAS_ITEMTHROW); 
+}
+
+inline bool CArena::IsPunchItem (int BlockX, int BlockY)
+{
+    return GetBlockHas(BlockX, BlockY, BLOCKHAS_ITEMPUNCH); 
+}
+
+inline bool CArena::IsRemoteItem (int BlockX, int BlockY)
+{
+    return GetBlockHas(BlockX, BlockY, BLOCKHAS_ITEMREMOTE); 
 }
 
 inline bool CArena::IsBurningItem (int BlockX, int BlockY) 
