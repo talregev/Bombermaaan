@@ -213,16 +213,6 @@ void COptions::SaveBeforeExit (void)
 {
     // Write the values to the XML based configuration file
     WriteXMLData();
-
-    // Try to open the configuration file
-    FILE* pConfigFile = fopen( configFileName.c_str(), "wb");
-    
-    // Write configuration to file
-    if (pConfigFile != NULL)
-    {
-        WriteData(pConfigFile);
-        fclose(pConfigFile);
-    } 
 }
 
 //******************************************************************************************************************************
@@ -256,6 +246,52 @@ void COptions::SetDefaultValues(void)
     // Initialise player inputs
     for (int i = 0 ; i < MAX_PLAYERS ; i++)
         m_PlayerInput[i] = CONFIGURATION_KEYBOARD_1 + i;
+
+    // Set default keyboard keys and joystick buttons
+    m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_UP]      = KEYBOARD_NUMPAD8;
+    m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_DOWN]    = KEYBOARD_NUMPAD5;
+    m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_LEFT]    = KEYBOARD_NUMPAD4;
+    m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_RIGHT]   = KEYBOARD_NUMPAD6;
+    m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_ACTION1] = KEYBOARD_PRIOR;
+    m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_ACTION2] = KEYBOARD_HOME;
+
+    m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_UP]      = KEYBOARD_R;
+    m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_DOWN]    = KEYBOARD_F;
+    m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_LEFT]    = KEYBOARD_D;
+    m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_RIGHT]   = KEYBOARD_G;
+    m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_ACTION1] = KEYBOARD_2;
+    m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_ACTION2] = KEYBOARD_1;
+
+    m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_UP]      = KEYBOARD_I;
+    m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_DOWN]    = KEYBOARD_K;
+    m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_LEFT]    = KEYBOARD_J;
+    m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_RIGHT]   = KEYBOARD_L;
+    m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_ACTION1] = KEYBOARD_8;
+    m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_ACTION2] = KEYBOARD_7;
+
+    m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_UP]      = KEYBOARD_H;
+    m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_DOWN]    = KEYBOARD_N;
+    m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_LEFT]    = KEYBOARD_B;
+    m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_RIGHT]   = KEYBOARD_M;
+    m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_ACTION1] = KEYBOARD_5;
+    m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_ACTION2] = KEYBOARD_4;
+
+    m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_UP]      = KEYBOARD_UP;
+    m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_DOWN]    = KEYBOARD_DOWN;
+    m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_LEFT]    = KEYBOARD_LEFT;
+    m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_RIGHT]   = KEYBOARD_RIGHT;
+    m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_ACTION1] = KEYBOARD_RCONTROL;
+    m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_ACTION2] = KEYBOARD_RSHIFT;
+
+    for ( unsigned int i = CONFIGURATION_JOYSTICK_1 ; i < MAX_PLAYER_INPUT ; i++)
+    {
+        m_Control[i][CONTROL_UP]      = JOYSTICK_UP;
+        m_Control[i][CONTROL_DOWN]    = JOYSTICK_DOWN;
+        m_Control[i][CONTROL_LEFT]    = JOYSTICK_LEFT;
+        m_Control[i][CONTROL_RIGHT]   = JOYSTICK_RIGHT;
+        m_Control[i][CONTROL_ACTION1] = JOYSTICK_BUTTON(0);
+        m_Control[i][CONTROL_ACTION2] = JOYSTICK_BUTTON(1);
+    }
 }
 
 //******************************************************************************************************************************
@@ -264,8 +300,6 @@ void COptions::SetDefaultValues(void)
 
 bool COptions::LoadConfiguration (void)
 {
-    // ---- Begin of XML test
-
     TiXmlDocument configDoc( "config.xml" );
     
     // Try to load XML file
@@ -300,127 +334,59 @@ bool COptions::LoadConfiguration (void)
             ReadIntFromXML( configDoc, "PlayerInputs", attributeName, (int*) (&m_PlayerInput[i]) );
         }
 
+        //
+        // Read the control settings
+        // List of input devices (keyboard n, joystick n) -> Control (up, down, ..., action1, action2) -> Key/Button
+        //
+
+        // Create a handle to the XML document
+        TiXmlHandle handle( &configDoc );
+
+        // Fetch the element
+        TiXmlElement *element = handle.FirstChild( "Bombermaaan" ).FirstChild( "Configuration" ).FirstChild( "ControlList" ).FirstChild( "Control" ).ToElement();
+
+        // If the element exists, go on
+        if ( element )
+        {
+            // Loop through all sub-elements of the ControlList node
+            for ( ; element; element = element->NextSiblingElement() )
+            {
+                int id = -1;
+                element->QueryIntAttribute( "id", &id );
+
+                // The id must be between 0 and MAX_PLAYER_INPUT
+                if ( id < 0 || id >= MAX_PLAYER_INPUT )
+                    continue;
+
+                // Read all control values (up, down, left, right, action1, action2)
+                for ( unsigned int ctrl = 0; ctrl < NUM_CONTROLS; ctrl++ )
+                {
+                    int ctrldata = -1;
+
+                    std::ostringstream oss;
+                    oss << "control" << ctrl;
+                    std::string attributeName = oss.str();
+
+                    element->QueryIntAttribute( attributeName, &ctrldata);
+
+                    // Verify we have read a valid number
+                    if ( ctrldata >= 0 )
+                    {
+                        m_Control[id][ctrl] = ctrldata;
+                    }
+                }
+            }
+        }
+
     } else {
 
-        // The configuration could not be loaded
-        // It might not exist, so try to create the file
+        // The configuration could not be loaded, maybe it doesn't exist
         theLog.WriteLine ("Options         => Configuration file config.xml could not be loaded." );
 
     }
 
-
-    // ---- End of XML test
-
-    // Try to open the configuration file
-    FILE* pConfigFile = fopen( configFileName.c_str(), "rb" );
-    
-    // If the configuration file doesn't exist
-    if (pConfigFile == NULL)
-    {
-        //----------------------------------
-        // Set default configuration values
-        //----------------------------------
-
-        int i;
-
-        m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_UP]      = KEYBOARD_NUMPAD8;
-        m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_DOWN]    = KEYBOARD_NUMPAD5;
-        m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_LEFT]    = KEYBOARD_NUMPAD4;
-        m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_RIGHT]   = KEYBOARD_NUMPAD6;
-        m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_ACTION1] = KEYBOARD_PRIOR;
-        m_Control[CONFIGURATION_KEYBOARD_1][CONTROL_ACTION2] = KEYBOARD_HOME;
-
-        m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_UP]      = KEYBOARD_R;
-        m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_DOWN]    = KEYBOARD_F;
-        m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_LEFT]    = KEYBOARD_D;
-        m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_RIGHT]   = KEYBOARD_G;
-        m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_ACTION1] = KEYBOARD_2;
-        m_Control[CONFIGURATION_KEYBOARD_2][CONTROL_ACTION2] = KEYBOARD_1;
-
-        m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_UP]      = KEYBOARD_I;
-        m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_DOWN]    = KEYBOARD_K;
-        m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_LEFT]    = KEYBOARD_J;
-        m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_RIGHT]   = KEYBOARD_L;
-        m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_ACTION1] = KEYBOARD_8;
-        m_Control[CONFIGURATION_KEYBOARD_3][CONTROL_ACTION2] = KEYBOARD_7;
-
-        m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_UP]      = KEYBOARD_H;
-        m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_DOWN]    = KEYBOARD_N;
-        m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_LEFT]    = KEYBOARD_B;
-        m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_RIGHT]   = KEYBOARD_M;
-        m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_ACTION1] = KEYBOARD_5;
-        m_Control[CONFIGURATION_KEYBOARD_4][CONTROL_ACTION2] = KEYBOARD_4;
-
-        m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_UP]      = KEYBOARD_UP;
-        m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_DOWN]    = KEYBOARD_DOWN;
-        m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_LEFT]    = KEYBOARD_LEFT;
-        m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_RIGHT]   = KEYBOARD_RIGHT;
-        m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_ACTION1] = KEYBOARD_RCONTROL;
-        m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_ACTION2] = KEYBOARD_RSHIFT;
-
-        for (i = CONFIGURATION_JOYSTICK_1 ; i < MAX_PLAYER_INPUT ; i++)
-        {
-            m_Control[i][CONTROL_UP]      = JOYSTICK_UP;
-            m_Control[i][CONTROL_DOWN]    = JOYSTICK_DOWN;
-            m_Control[i][CONTROL_LEFT]    = JOYSTICK_LEFT;
-            m_Control[i][CONTROL_RIGHT]   = JOYSTICK_RIGHT;
-            m_Control[i][CONTROL_ACTION1] = JOYSTICK_BUTTON(0);
-            m_Control[i][CONTROL_ACTION2] = JOYSTICK_BUTTON(1);
-        }
-
-        // Create the configuration file
-        pConfigFile = fopen( configFileName.c_str(), "wb" );
-        
-        // If creation failed
-        if (pConfigFile == NULL)
-        {
-            // Log failure
-            theLog.WriteLine ("Options         => !!! Could not create config file '%s'.", configFileName.c_str() );
-
-            return false;
-        }
-        
-        // Write the configuration file
-        WriteData(pConfigFile);
-    }
-    // If the configuration file exists
-    else
-    {
-        // Read the configuration file.
-        ReadData(pConfigFile);
-    }
-
-    // The configuration file is not needed anymore
-    fclose(pConfigFile);
-
     // Success
     return true;
-}
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-
-void COptions::ReadData (FILE* pConfigFile)
-{
-    // Some values are read into a dummy variable since they are already stored in XML based file
-    int dummy;
-
-    // Read each configuration value in the file
-    fread(&dummy, sizeof(int), 1, pConfigFile);
-    fread(&dummy, sizeof(int), 1, pConfigFile);
-    fread(&dummy, sizeof(int), 1, pConfigFile);
-    fread(&dummy, sizeof(int), 1, pConfigFile);
-    fread(&dummy, sizeof(EDisplayMode), 1, pConfigFile);
-    fread(&dummy, sizeof(int), 1, pConfigFile);
-    for (int i = 0; i < MAX_PLAYERS; i++ ) {
-        fread(&dummy, sizeof(EBomberType), 1, pConfigFile);
-    }
-    for (int i = 0; i < MAX_PLAYERS; i++ ) {
-        fread(&dummy, sizeof(int), 1, pConfigFile);
-    }
-    fread(m_Control, sizeof(int), MAX_PLAYER_INPUT * NUM_CONTROLS, pConfigFile);
-    fread(&dummy, sizeof(int), 1, pConfigFile);
 }
 
 //******************************************************************************************************************************
@@ -487,6 +453,22 @@ void COptions::WriteXMLData()
     }
     config->LinkEndChild( configPlayerInputs );
 
+    TiXmlElement* configControlList = new TiXmlElement( "ControlList" );
+    for ( unsigned int i = 0; i < MAX_PLAYER_INPUT; i++ )
+    {
+        TiXmlElement* configControl = new TiXmlElement( "Control" );
+        configControl->SetAttribute( "id", i );
+        for ( unsigned int ctrl = 0; ctrl < NUM_CONTROLS; ctrl++ )
+        {
+            std::ostringstream oss;
+            oss << "control" << ctrl;
+            std::string attributeName = oss.str();
+            configControl->SetAttribute( attributeName, (int) m_Control[i][ctrl] );
+        }
+        configControlList->LinkEndChild( configControl );
+    }
+    config->LinkEndChild( configControlList );
+
     // Save file
     bool saveOkay = newConfig.SaveFile( "config.xml" );
 
@@ -513,25 +495,6 @@ void COptions::ReadIntFromXML( TiXmlDocument &doc, std::string configNode, std::
     // The value variable stays unchanged if there's no int value
     if ( element )
         element->QueryIntAttribute( attrName, value );
-}
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-
-void COptions::WriteData (FILE* pConfigFile)
-{
-    // Write each configuration value in the file
-    fwrite(&m_TimeUpMinutes, sizeof(int), 1, pConfigFile);
-    fwrite(&m_TimeUpSeconds, sizeof(int), 1, pConfigFile);
-    fwrite(&m_TimeStartMinutes, sizeof(int), 1, pConfigFile);
-    fwrite(&m_TimeStartSeconds, sizeof(int), 1, pConfigFile);
-    fwrite(&m_DisplayMode, sizeof(EDisplayMode), 1, pConfigFile);
-    fwrite(&m_BattleCount, sizeof(int), 1, pConfigFile);
-    fwrite(m_BomberType, sizeof(EBomberType), MAX_PLAYERS, pConfigFile);
-    fwrite(m_PlayerInput, sizeof(int), MAX_PLAYERS, pConfigFile);
-    fwrite(m_Control, sizeof(int), MAX_PLAYER_INPUT * NUM_CONTROLS, pConfigFile);
-    fwrite(&m_Level, sizeof(int), 1, pConfigFile);
 }
 
 //******************************************************************************************************************************
