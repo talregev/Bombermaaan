@@ -30,6 +30,7 @@
 #include "CInput.h"
 #include "CArena.h"
 #include <sstream>
+#include "../third-party/simpleini/SimpleIni.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -729,6 +730,18 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
         if ( s.find( headerV2plus ) == 0 ) {
             // We can look for the level version now
             LevelVersion = atoi( s.substr( headerV2plus.length() ).c_str() );
+
+            // Test!!
+            // @todo Remove before final release
+            CSimpleIniA iniFile(false, false, false);
+            SI_Error rc = iniFile.LoadFile( levelFileNames_full.at(CurrentLevel).c_str() );
+            if (rc<0) return false;
+            std::string a = iniFile.GetValue( "Settings", "ContaminationsNotUsed", "xy" );
+            theLog.WriteLine ("Test: %d=%s.", rc,a.c_str());
+            int zzz = atoi( iniFile.GetValue( "General", "Height", "1" ) );
+            theLog.WriteLine ("Test2: %d.", zzz);
+            std::string b; iniFile.Save(b);
+            theLog.WriteLine ("Test3: %s.", b.c_str());
         }
         else
         {
