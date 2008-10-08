@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2008 Markus Drescher
+    Copyright (C) 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -238,7 +239,30 @@ void CMenuLevel::OnDisplay (void)
                                         (Shadow ? 3 : 2), 
                                         1, 
                                         0); 
-                
+
+                int spriteNumberAction = -1;
+
+                switch ( m_pOptions->GetBlockType(X, Y) )
+                {
+                    case BLOCKTYPE_MOVEBOMB_RIGHT:    spriteNumberAction = 4;   break;
+                    case BLOCKTYPE_MOVEBOMB_DOWN:     spriteNumberAction = 5;   break;
+                    case BLOCKTYPE_MOVEBOMB_LEFT:     spriteNumberAction = 6;   break;
+                    case BLOCKTYPE_MOVEBOMB_UP:       spriteNumberAction = 7;   break;
+                    default: break;
+                }
+
+                if ( spriteNumberAction != -1 ) 
+                {
+                    m_pDisplay->DrawSprite (MINI_ARENA_POSITION_X + X * MINI_ARENA_TILE_SIZE, 
+                                            MINI_ARENA_POSITION_Y + Y * MINI_ARENA_TILE_SIZE, 
+                                            NULL, 
+                                            NULL, 
+                                            56, 
+                                            spriteNumberAction, 
+                                            2, 
+                                            0); 
+                }
+
                 switch (BlockType)
                 {
                     case BLOCKTYPE_WHITEBOMBER :

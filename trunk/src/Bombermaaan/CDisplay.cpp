@@ -197,7 +197,7 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (1,      1,     106,     46,     true,     BMP_TITLE_CLOUD_2             ) ||
             !LoadSprites (1,      1,      66,     22,     true,     BMP_TITLE_CLOUD_3             ) ||
 #ifdef USE_32_PIXELS_PER_BLOCK
-            !LoadSprites (4,      1,      16,     16,     false,    BMP_LEVEL_MINI_TILES          ) ||
+            !LoadSprites (8,      1,      16,     16,     true,     BMP_LEVEL_MINI_TILES          ) ||
             !LoadSprites (5,      1,      24,     20,     true,     BMP_LEVEL_MINI_BOMBERS        ) ||
             !LoadSprites (7,      5,      42,     44,     true,     BMP_ARENA_BOMBER_DEATH        ) ||
             !LoadSprites (12,     6,      42,     44,     true,     BMP_ARENA_BOMBER_LIFT         ) || 
@@ -208,7 +208,7 @@ bool CDisplay::Create (int Width, int Height, bool FullScreen)
             !LoadSprites (1,      1,      30,     32,     true,     BMP_MENU_HAND_TITLE           ) ||
 			!LoadSprites (3,      1,      32,     32,     true,     BMP_ARENA_REMOTE_BOMB         ) 
 #else
-            !LoadSprites (4,      1,       8,      8,     false,    BMP_LEVEL_MINI_TILES          ) ||
+            !LoadSprites (8,      1,       8,      8,     true,     BMP_LEVEL_MINI_TILES          ) ||
             !LoadSprites (5,      1,      12,     10,     true,     BMP_LEVEL_MINI_BOMBERS        ) ||
             !LoadSprites (7,      5,      21,     22,     true,     BMP_ARENA_BOMBER_DEATH        ) ||
             !LoadSprites (12,     6,      21,     22,     true,     BMP_ARENA_BOMBER_LIFT         ) || 
