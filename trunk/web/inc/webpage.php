@@ -130,6 +130,12 @@ class WebPage {
 <hr />
 
 <div>
+<a href="http://www.stud.uni-karlsruhe.de/~uabdq/bombermaaan/levels.php" title="External link">Levels</a>
+</div>
+
+<hr />
+
+<div>
 <a href="development.php">Development</a>
 </div>
 <div>
