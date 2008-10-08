@@ -154,6 +154,11 @@ bool COptions::Create( bool useAppDataFolder, std::string dynamicDataFolder, std
     configFileName = dynamicDataFolder.c_str();
     configFileName.append( "config.xml" );
     theLog.WriteLine( "Options         => Name of config file: '%s'.", configFileName.c_str() );
+
+    // Set the file name of the old configuration file
+    oldconfigFileName = dynamicDataFolder.c_str();
+    oldconfigFileName.append( "config.dat" );
+
     
     // Set default configuration values before loading the configuration file and overwriting the default
     SetDefaultValues();
@@ -298,8 +303,42 @@ void COptions::SetDefaultValues(void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ *  For migration purposes, the old configuration file is still read.
+ *  So your settings should be seamlessly migrated to the new XML format.
+ *  Once the XML file is written, the old configuration file could be
+ *  deleted.
+ *
+ *  This feature will be removed in the future.
+ */
+
 bool COptions::LoadConfiguration (void)
 {
+    // Try to open the old configuration file
+    FILE* pConfigFile = fopen( oldconfigFileName.c_str(), "rb" );
+
+    // If the old configuration file exists
+    if ( pConfigFile != NULL )
+    {
+        theLog.WriteLine( "Options         => Note: Reading old configuration file (config.dat) values now. Once the XML file is written, you may delete the old configuration file." );
+
+        // Read each configuration value in the file
+        fread(&m_TimeUpMinutes, sizeof(int), 1, pConfigFile);
+        fread(&m_TimeUpSeconds, sizeof(int), 1, pConfigFile);
+        fread(&m_TimeStartMinutes, sizeof(int), 1, pConfigFile);
+        fread(&m_TimeStartSeconds, sizeof(int), 1, pConfigFile);
+        fread(&m_DisplayMode, sizeof(EDisplayMode), 1, pConfigFile);
+        fread(&m_BattleCount, sizeof(int), 1, pConfigFile);
+        fread(m_BomberType, sizeof(EBomberType), MAX_PLAYERS, pConfigFile);
+        fread(m_PlayerInput, sizeof(int), MAX_PLAYERS, pConfigFile);
+        fread(m_Control, sizeof(int), MAX_PLAYER_INPUT * NUM_CONTROLS, pConfigFile);
+        fread(&m_Level, sizeof(int), 1, pConfigFile);
+
+        // The configuration file is not needed anymore
+        fclose( pConfigFile );
+    }
+
+
     TiXmlDocument configDoc( configFileName );
     
     // Try to load XML file
