@@ -5,8 +5,8 @@ Geometry=1280x953+0+25
 
 [Execution]
 Program arguments=~/.Bombermaaan/Levels/EMPTY.TXT EMPTY.PNG
-Program uri=file:///home/otto/Projects/Bombermaaan/LEVELPREVIEW/LevelPreview
 Run in terminal=1
+Program uri=file:///home/otto/Projects/Bombermaaan/LEVELPREVIEW/LevelPreview
 Stop at beginning=1
 
 [Debugger]
