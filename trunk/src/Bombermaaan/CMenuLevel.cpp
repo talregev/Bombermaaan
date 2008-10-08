@@ -186,12 +186,13 @@ void CMenuLevel::OnUpdate (void)
 
 void CMenuLevel::OnDisplay (void)
 {
+    int Player;
     // Set the right font text color and write the menu title string
     m_pFont->SetTextColor (FONTCOLOR_WHITE);
     m_pFont->DrawCenteredX (0, VIEW_WIDTH - 1, TITLE_TEXT_POSITION_Y, m_pOptions->GetLevelName());
     
     bool StartPointAvailable[MAX_PLAYERS];
-    for (int Player = 0; Player < MAX_PLAYERS; Player++)
+    for (Player = 0; Player < MAX_PLAYERS; Player++)
         StartPointAvailable[Player] = false;
 
     // Scan all the blocks of the arena
@@ -279,7 +280,7 @@ void CMenuLevel::OnDisplay (void)
     
     // show warning if starting points are missing
     bool warningShown = false;
-    for (int Player = 0; Player < MAX_PLAYERS; Player++)
+    for (Player = 0; Player < MAX_PLAYERS; Player++)
     {
         if (!StartPointAvailable[Player] && m_pOptions->GetBomberType(Player) != BOMBERTYPE_OFF)
         {
