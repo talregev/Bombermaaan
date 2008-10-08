@@ -371,7 +371,7 @@ void CSound::SetPause (bool Pause)
     // If the sound works
     if (m_SoundOK)
     {    
-        if (m_GlobalPause == !Pause)
+        if (Pause)
         {    
             Mix_PauseMusic();
         }
@@ -380,7 +380,7 @@ void CSound::SetPause (bool Pause)
             Mix_ResumeMusic();	
         }
 
-        m_GlobalPause = !m_GlobalPause;
+        m_GlobalPause = Pause;
     }
 }
 
@@ -443,7 +443,7 @@ void CSound::StopSong (ESong Song)
         if (m_CurrentSong != NULL)
         {
             // Stop playing current song (we don't know which one is playing)
-            FreeSong(Song);
+            FreeSong(m_ESong);
         }
     }
 }
