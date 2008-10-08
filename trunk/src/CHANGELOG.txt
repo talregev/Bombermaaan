@@ -9,7 +9,7 @@ Changed: FMOD was replaced by the SDL_mixer library (by Markus Drescher, revisio
 Changed: When no config file is present the input for the second player is set to keyboard 2 (revision 547).
 Changed: Bigger sprites in menu level preview in 32-pixels version (revision 542).
 Changed: F1 and F2 keys don't switch to fullscreen mode in 32-pixels version since the screen resolution is too low and the graphics cannot be seen completely.
-Changed: Configuration file stored in XML format, config.xml (#2121910).
+Changed: Configuration file stored in XML format, config.xml (#2121910). The old file config.dat is still read for easy migration (this feature will be removed in the future).
 Changed: Bots "know" which bomb is ignited by another bomb.
 Changed: Algorithm for bots choosing the best block to escape / defend theirselves.
 Changed: Keyboard 3 to 5 as human input available now. Useful if you don't have joysticks (#2150405).

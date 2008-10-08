@@ -125,6 +125,7 @@ private:
 	int**				m_NumberOfItemsInWalls;
 	int**				m_InitialBomberSkills;
     std::string         configFileName;                 //!< Full name of the config file (including path)
+    std::string         oldconfigFileName;              //!< Full name of the old (binary) config file (including path)
 
     void                SetDefaultValues();             //!< Set the default configuration values
     void                WriteXMLData();                 //!< Write the options to the XML based configuration file
