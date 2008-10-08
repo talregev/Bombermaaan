@@ -312,6 +312,28 @@ void CBomb::StartMoving (EBombKick BombKick, int KickerPlayer)
     if (m_BeingHeld || m_BeingLifted || m_BeingPunched)
         return;
     
+    switch (m_BombKick)
+    {
+        case BOMBKICK_LEFT:
+        case BOMBKICK_RIGHT:
+            if (BombKick == BOMBKICK_UP || BombKick == BOMBKICK_DOWN)
+            {
+                // 90 degree changement => center bomb on X axis
+                CenterOnBlock ();
+            }
+            break;
+        case BOMBKICK_UP:
+        case BOMBKICK_DOWN:
+            if (BombKick == BOMBKICK_LEFT || BombKick == BOMBKICK_RIGHT)
+            {
+                // 90 degree changement => center bomb on Y axis
+                CenterOnBlock ();
+            }
+            break;
+        default:
+            break;
+    }
+
     m_BombKick = BombKick;
     m_KickerPlayer = KickerPlayer;
     m_HasToStopMoving = false;
