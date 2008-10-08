@@ -66,8 +66,13 @@ esac
 REVISION=`grep '^#define BOMBERMAAAN_BUILD_STRING ' ../src/Bombermaaan/CGame.cpp | sed -e 's/.* "//' -e 's/".*//'`
 VERSION=`grep '^#define BOMBERMAAAN_VERSION_STRING ' ../src/Bombermaaan/CGame.cpp | sed -e 's/.* "//' -e 's/".*//'`
 SYSTEM=`uname -s`
+MACHINE=`uname -m`
 if [ "$SYSTEM" = "Linux" ] ; then
-    SYSSUFFIX=linux32
+    if [ "$MACHINE" = "x86_64" ] ; then
+      SYSSUFFIX=linux64
+    else
+      SYSSUFFIX=linux32
+    fi
 else
     SYSSUFFIX=win32
 fi
@@ -172,6 +177,7 @@ cp ../../src/_Test_/Release/Levels/L*.TXT "$TARGETDIR/Levels/."                 
 
 if [ "$SYSTEM" = "Linux" ] ; then
     cp ../../src/Bombermaaan/Bombermaaan        "$TARGETDIR/."                  || error "Copy ended with return code $?."
+    strip $TARGETDIR/Bombermaaan                                                || error "Strip ended with return code $?."
 else
     cp ../../src/_Test_/Release/Bombermaaan.exe        "$TARGETDIR/."           || error "Copy ended with return code $?."
     cp ../../src/_Test_/Release/Bombermaaan_32.dll        "$TARGETDIR/."        || error "Copy ended with return code $?."
@@ -184,14 +190,12 @@ cp ../../docs/Readme.html        "$TARGETDIR/."                                 
 if [ "$SYSTEM" = "Linux" ] ; then
     cp ../../src/RESGEN/libbombermaaan.so.1.0.0        "$TARGETDIR/."               || error "Copy ended with return code $?."
     ( cd "$TARGETDIR/." ; ln -s libbombermaaan.so.1.0.0 libbombermaaan.so.1 )       || error "Create of symlink ended with return code $?."
-    echo "#!/bin/sh\nLD_LIBRARY_PATH=. ./Bombermaaan" > "$TARGETDIR/run-bm"         || error "Create of start script ended with return code $?."
+    echo -e "#!/bin/sh\nLD_LIBRARY_PATH=. ./Bombermaaan\n" > "$TARGETDIR/run-bm"    || error "Create of start script ended with return code $?."
     chmod u+x "$TARGETDIR/run-bm"                                                   || error "Chmod ended with return code $?."
 else
     cp ../../src/_Test_/Release/libogg*.dll            "$TARGETDIR/."               || error "Copy ended with return code $?."
     cp ../../src/_Test_/Release/libvorbis*.dll         "$TARGETDIR/."               || error "Copy ended with return code $?."
     cp ../../src/_Test_/Release/SDL*.dll               "$TARGETDIR/."               || error "Copy ended with return code $?."
-    #smpeg.dll not needed?
-    #cp ../../src/_Test_/Release/smpeg.dll              "$TARGETDIR/."              || error "Copy ended with return code $?."
 fi
 
 #
@@ -224,18 +228,33 @@ mkdir "$SRCTARGETDIR"                                                           
 mkdir "$SRCTARGETDIR/Bombermaaan"                                               || error "Mkdir ended with return code $?."
 cp ../../src/Bombermaaan/*.cpp "$SRCTARGETDIR/Bombermaaan/."                    || error "Copy ended with return code $?."
 cp ../../src/Bombermaaan/*.h "$SRCTARGETDIR/Bombermaaan/."                      || error "Copy ended with return code $?."
+if [ "$SYSTEM" = "Linux" ] ; then
+cp ../../src/Bombermaaan/*.CPP "$SRCTARGETDIR/Bombermaaan/."                    || error "Copy ended with return code $?."
+cp ../../src/Bombermaaan/*.H "$SRCTARGETDIR/Bombermaaan/."                      || error "Copy ended with return code $?."
+fi
 cp ../../src/Bombermaaan/Makefile "$SRCTARGETDIR/Bombermaaan/."                 || error "Copy ended with return code $?."
 cp ../../src/Bombermaaan/Makefile.win "$SRCTARGETDIR/Bombermaaan/."             || error "Copy ended with return code $?."
 
 mkdir "$SRCTARGETDIR/RES"                                                       || error "Mkdir ended with return code $?."
 cp ../../src/RES/*.cpp "$SRCTARGETDIR/RES/."                                    || error "Copy ended with return code $?."
 cp ../../src/RES/*.h "$SRCTARGETDIR/RES/."                                      || error "Copy ended with return code $?."
+if [ "$SYSTEM" = "Linux" ] ; then
+cp ../../src/RES/*.CPP "$SRCTARGETDIR/RES/."                                    || error "Copy ended with return code $?."
+fi
 cp ../../src/RES/Makefile.win "$SRCTARGETDIR/RES/."                             || error "Copy ended with return code $?."
 
 mkdir "$SRCTARGETDIR/RES32"                                                     || error "Mkdir ended with return code $?."
 cp ../../src/RES32/*.cpp "$SRCTARGETDIR/RES32/."                                || error "Copy ended with return code $?."
 cp ../../src/RES32/*.h "$SRCTARGETDIR/RES32/."                                  || error "Copy ended with return code $?."
+if [ "$SYSTEM" = "Linux" ] ; then
+cp ../../src/RES32/*.CPP "$SRCTARGETDIR/RES32/."                                || error "Copy ended with return code $?."
+fi
 cp ../../src/RES32/Makefile.win "$SRCTARGETDIR/RES32/."                         || error "Copy ended with return code $?."
+
+mkdir "$SRCTARGETDIR/RESGEN"                                                    || error "Mkdir ended with return code $?."
+cp ../../src/RESGEN/ResGen.cpp "$SRCTARGETDIR/RESGEN/."                         || error "Copy ended with return code $?."
+cp ../../src/RESGEN/ResGen.h "$SRCTARGETDIR/RESGEN/."                           || error "Copy ended with return code $?."
+cp ../../src/RESGEN/Makefile "$SRCTARGETDIR/RESGEN/."                           || error "Copy ended with return code $?."
 
 cp ../../src/CHANGELOG.txt        "$SRCTARGETDIR/."                             || error "Copy ended with return code $?."
 cp ../../src/Makefile        "$SRCTARGETDIR/."                                  || error "Copy ended with return code $?."
