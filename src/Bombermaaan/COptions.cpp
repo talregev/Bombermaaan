@@ -288,14 +288,14 @@ void COptions::SetDefaultValues(void)
     m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_ACTION1] = KEYBOARD_RCONTROL;
     m_Control[CONFIGURATION_KEYBOARD_5][CONTROL_ACTION2] = KEYBOARD_RSHIFT;
 
-    for ( unsigned int i = CONFIGURATION_JOYSTICK_1 ; i < MAX_PLAYER_INPUT ; i++)
+    for ( unsigned int j = CONFIGURATION_JOYSTICK_1 ; j < MAX_PLAYER_INPUT ; j++)
     {
-        m_Control[i][CONTROL_UP]      = JOYSTICK_UP;
-        m_Control[i][CONTROL_DOWN]    = JOYSTICK_DOWN;
-        m_Control[i][CONTROL_LEFT]    = JOYSTICK_LEFT;
-        m_Control[i][CONTROL_RIGHT]   = JOYSTICK_RIGHT;
-        m_Control[i][CONTROL_ACTION1] = JOYSTICK_BUTTON(0);
-        m_Control[i][CONTROL_ACTION2] = JOYSTICK_BUTTON(1);
+        m_Control[j][CONTROL_UP]      = JOYSTICK_UP;
+        m_Control[j][CONTROL_DOWN]    = JOYSTICK_DOWN;
+        m_Control[j][CONTROL_LEFT]    = JOYSTICK_LEFT;
+        m_Control[j][CONTROL_RIGHT]   = JOYSTICK_RIGHT;
+        m_Control[j][CONTROL_ACTION1] = JOYSTICK_BUTTON(0);
+        m_Control[j][CONTROL_ACTION2] = JOYSTICK_BUTTON(1);
     }
 }
 
@@ -485,9 +485,11 @@ void COptions::WriteXMLData()
     configDisplayMode->SetAttribute( "value", (int) m_DisplayMode );
     config->LinkEndChild( configDisplayMode );
 
+    int i;
+
     // BomberTypes
     TiXmlElement* configBomberTypes = new TiXmlElement( "BomberTypes" );
-    for ( int i = 0; i < MAX_PLAYERS; i++ ) {
+    for ( i = 0; i < MAX_PLAYERS; i++ ) {
         std::ostringstream oss;
         oss << "bomber" << i;
         std::string attributeName = oss.str();
@@ -497,7 +499,7 @@ void COptions::WriteXMLData()
 
     // PlayerInputs
     TiXmlElement* configPlayerInputs = new TiXmlElement( "PlayerInputs" );
-    for ( int i = 0; i < MAX_PLAYERS; i++ ) {
+    for ( i = 0; i < MAX_PLAYERS; i++ ) {
         std::ostringstream oss;
         oss << "bomber" << i;
         std::string attributeName = oss.str();
@@ -507,16 +509,16 @@ void COptions::WriteXMLData()
 
     // ControlList
     TiXmlElement* configControlList = new TiXmlElement( "ControlList" );
-    for ( unsigned int i = 0; i < MAX_PLAYER_INPUT; i++ )
+    for ( unsigned int j = 0; j < MAX_PLAYER_INPUT; j++ )
     {
         TiXmlElement* configControl = new TiXmlElement( "Control" );
-        configControl->SetAttribute( "id", i );
+        configControl->SetAttribute( "id", j );
         for ( unsigned int ctrl = 0; ctrl < NUM_CONTROLS; ctrl++ )
         {
             std::ostringstream oss;
             oss << "control" << ctrl;
             std::string attributeName = oss.str();
-            configControl->SetAttribute( attributeName, (int) m_Control[i][ctrl] );
+            configControl->SetAttribute( attributeName, (int) m_Control[j][ctrl] );
         }
         configControlList->LinkEndChild( configControl );
     }
@@ -802,7 +804,7 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
         unsigned int sumOfMaxItems;
 
         // too many items?
-        if (!CheckMaxNumberOfItems( CurrentLevel, &sumOfMaxItems ))
+        if (!ErrorOccurred && !CheckMaxNumberOfItems( CurrentLevel, &sumOfMaxItems ))
         {
             // Log there is a problem
             theLog.WriteLine ("Options         => !!! Level file is incorrect (Too many items: %d of %d allowed).", sumOfMaxItems, MAX_ITEMS);

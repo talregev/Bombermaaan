@@ -594,7 +594,7 @@ void CBomber::Action ()
                                 case BOMBERMOVE_DOWN:  deltax =  0; deltay = -1; break;
                                 case BOMBERMOVE_LEFT:  deltax =  1; deltay =  0; break;
                                 case BOMBERMOVE_RIGHT: deltax = -1; deltay =  0; break;
-                                default:               assert( false ); break;
+                                default:               assert( false ); deltax = 0; deltay = 0; break;
                             }
 
                             // Start with the bomber's current position

@@ -75,6 +75,8 @@ bool CSound::Create (void)
         // Get out
         return false;
     }
+    
+    Mix_AllocateChannels(32); // this was the default in FMOD
 	
     //---------------------
     // Load the sound data

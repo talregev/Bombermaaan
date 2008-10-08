@@ -80,7 +80,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 
 // Bombermaaan version
 #define BOMBERMAAAN_VERSION_STRING      "1.3.2"
-#define BOMBERMAAAN_BUILD_STRING        "588"
+#define BOMBERMAAAN_BUILD_STRING        "593"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -642,7 +642,7 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
     if (pos == NULL) pos = strstr(pCommandLine, "--client");
     
     // client mode and ip address given?
-    if (pos != NULL && strlen(pCommandLine) > (pos - pCommandLine + 2))
+    if (pos != NULL && strlen(pCommandLine) > (unsigned int)(pos - pCommandLine + 2))
     {
         OutputDebugString("*** STARTING GAME AS CLIENT\n");
         NetworkMode = NETWORKMODE_CLIENT;

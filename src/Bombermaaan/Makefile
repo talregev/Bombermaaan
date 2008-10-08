@@ -12,7 +12,7 @@ OBJ  = CBoard.o CClock.o CCloudManager.o CCommandChunk.o CControls.o CDemo.o CDr
 SRC  = $(OBJ:%.o=%.cpp) STDAFX.CPP
 LINKOBJ = $(OBJ) STDAFX.o $(TINYXML_PATH)/tinystr.o $(TINYXML_PATH)/tinyxmlerror.o $(TINYXML_PATH)/tinyxml.o $(TINYXML_PATH)/tinyxmlparser.o
 LIBS = -L../RESGEN $(SDL_LDFLAGS) -lbombermaaan
-CXXINCS =  -I./ -I../third-party/tinyxml
+CXXINCS =  -I./ -I$(TINYXML_PATH)
 BIN  = Bombermaaan
 STRIP = strip
 CXXFLAGS = $(CXXINCS) $(SDL_CFLAGS) -Wall -O2

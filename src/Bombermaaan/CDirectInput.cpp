@@ -397,9 +397,10 @@ bool CDirectInput::UpdateDevice (LPDIRECTINPUTDEVICE7 pDevice, void *pState, int
             
             // Assert it's not an unexpected return value
             ASSERT (hRetAcquire == DI_OK || hRetAcquire == S_FALSE || hRetAcquire == DIERR_OTHERAPPHASPRIO);
-
-            // Save the current opened state
-            Opened = (hRet == DI_OK || hRet == S_FALSE);
+            
+            // Save the current opened state (added dummy && operator which reflects the assertion (to remove g++ warning)
+            Opened = ((hRet == DI_OK || hRet == S_FALSE) &&
+                      (hRetAcquire == DI_OK || hRetAcquire == S_FALSE || hRetAcquire == DIERR_OTHERAPPHASPRIO));
             
             // Get out, we cannot do better than trying to reacquire the device
             break;
