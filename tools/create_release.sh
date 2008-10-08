@@ -153,11 +153,17 @@ if [ "$SYSTEM" != "Linux" -a "$SYSTEM" != "CYGWIN_NT-5.1" ] ; then
 fi
 
 
+#############################################################
+#
+#         Binary release
+#
+#
+
 #
 # Creating folder
 #
 
-echo Creating $RELEASETYPE release package folder for version $VERSION, rev. $REVISION now...
+echo Creating $RELEASETYPE binary release package folder for version $VERSION, rev. $REVISION now...
 
 mkdir "$TARGETDIR"                                                              || error "Mkdir ended with return code $?."
 
@@ -177,6 +183,9 @@ cp ../../docs/Readme.html        "$TARGETDIR/."                                 
 
 if [ "$SYSTEM" = "Linux" ] ; then
     cp ../../src/RESGEN/libbombermaaan.so.1.0.0        "$TARGETDIR/."               || error "Copy ended with return code $?."
+    ( cd "$TARGETDIR/." ; ln -s libbombermaaan.so.1.0.0 libbombermaaan.so.1 )       || error "Create of symlink ended with return code $?."
+    echo "#!/bin/sh\nLD_LIBRARY_PATH=. ./Bombermaaan" > "$TARGETDIR/run-bm"         || error "Create of start script ended with return code $?."
+    chmod u+x "$TARGETDIR/run-bm"                                                   || error "Chmod ended with return code $?."
 else
     cp ../../src/_Test_/Release/libogg*.dll            "$TARGETDIR/."               || error "Copy ended with return code $?."
     cp ../../src/_Test_/Release/libvorbis*.dll         "$TARGETDIR/."               || error "Copy ended with return code $?."
@@ -189,13 +198,20 @@ fi
 # Creating zip file
 #
 
-echo Creating $RELEASETYPE release package for version $VERSION, rev. $REVISION now...
+echo Creating $RELEASETYPE binary release package for version $VERSION, rev. $REVISION now...
 
 if [ "$SYSTEM" = "Linux" ] ; then
     tar czf "$TARGETGZ" "$TARGETDIR"                                                    || error "Tar ended with return code $?."
 else
     /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$TARGETZIP" "$TARGETDIR" 1> /dev/null   || error "7-Zip ended with return code $?."
 fi
+
+
+#############################################################
+#
+#         Source release
+#
+#
 
 #
 # Creating folder with source code
@@ -227,6 +243,27 @@ cp ../../COPYING.txt        "$SRCTARGETDIR/."                                   
 cp ../../docs/Readme.html        "$SRCTARGETDIR/."                              || error "Copy ended with return code $?."
 
 #
+# Creating zip files from source code folder
+#
+
+echo Creating $RELEASETYPE source release package for version $VERSION, rev. $REVISION now...
+
+if [ "$SYSTEM" = "Linux" ] ; then
+    zip "$SRCTARGETZIP" "$SRCTARGETDIR"      || error "7-Zip ended with return code $?."
+    tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
+else
+    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$SRCTARGETZIP" "$SRCTARGETDIR" 1> /dev/null      || error "7-Zip ended with return code $?."
+    tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
+fi
+
+
+#############################################################
+#
+#         Resource release
+#
+#
+
+#
 # Creating folder with resource files
 #
 
@@ -255,26 +292,19 @@ cp ../../COPYING.txt        "$RESTARGETDIR/."                                   
 cp ../../docs/Readme.html        "$RESTARGETDIR/."                              || error "Copy ended with return code $?."
 
 #
-# Creating zip files from source code folder
-#
-
-echo Creating $RELEASETYPE source release package for version $VERSION, rev. $REVISION now...
-
-if [ "$SYSTEM" = "Linux" ] ; then
-    zip "$SRCTARGETZIP" "$SRCTARGETDIR"      || error "7-Zip ended with return code $?."
-    tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
-else
-    /cygdrive/c/Programme/7-Zip/7z.exe a -tzip "$SRCTARGETZIP" "$SRCTARGETDIR" 1> /dev/null      || error "7-Zip ended with return code $?."
-    tar czf "$SRCTARGETGZ" "$SRCTARGETDIR"        || error "Tar ended with return code $?."
-fi
-
-#
 # Creating tar file from resource folder
 #
 
 echo Creating $RELEASETYPE resource release package for version $VERSION, rev. $REVISION now...
 
 tar czf "$RESTARGETGZ" "$RESTARGETDIR"        || error "Tar ended with return code $?."
+
+
+#############################################################
+#
+#         Documentation
+#
+#
 
 #
 # Creating tar file from doxygen folder
