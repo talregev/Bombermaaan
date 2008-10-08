@@ -639,7 +639,7 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
     char IpAddressString[32];
 #ifdef WIN32
     const char *pos = strstr(pCommandLine, "-c");
-    if (pos == NULL) pos = strstr(pCommandLine, "--client")
+    if (pos == NULL) pos = strstr(pCommandLine, "--client");
     
     // client mode and ip address given?
     if (pos != NULL && strlen(pCommandLine) > (pos - pCommandLine + 2))
