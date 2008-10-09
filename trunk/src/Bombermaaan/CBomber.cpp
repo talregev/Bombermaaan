@@ -331,6 +331,10 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
     m_StuntTimeElapsed = 0.0f;
     
     m_BombIndex = -1;
+
+    m_CountBomberActionDuration = BOMBERACTION_NONE;
+    m_BomberActionDuration = 0.0f;
+    m_dropMassBombPossible = false;
 }
 
 //******************************************************************************************************************************
@@ -574,27 +578,36 @@ void CBomber::Action ()
                     // If he is able to drop a bomb
                     if (m_UsedBombs < m_TotalBombs)
                     {
+                        bool dropMassBombNow =      false && // <-- false prevents the bomb-mass feature NOW...   m_hasMassBombFeature == true &&
+                                                    ( m_BomberActionDuration > 1.0f ) && m_dropMassBombPossible;
+
                         // If no wall and no bomb and no explosion at his position
                         if (!IsObstacle(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY()) && 
-                            !m_pArena->IsExplosion(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY()))
+                            !m_pArena->IsExplosion(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY())
+                            || ( m_dropMassBombPossible && dropMassBombNow ) )
                         {
                             // So we can limit the number of dropped bombs
                             int droppedBombsNow = 0;
 
                             // @todo The maximum number of bombs should depend on the bomber's skills (extra item 'mass bomb drop').
                             // @todo Maybe more bombs are only dropped if the player holds the action button for a longer time.
-                            int maxBombs = 1;
+                            // In mass-bomb mode this is the number of additional bombs
+                            int maxBombs = ( dropMassBombNow ? 4 : 1 );
+
+                            // The mass-bomb drop is only possible if we pressed the button less than a second
+                            // and the bomber didn't move
+                            m_dropMassBombPossible = ( m_BomberActionDuration < 1.0f ) && ( m_BomberMove.GetMove() == BOMBERMOVE_NONE );
 
                             // Determine the bomber's last move, that is, in which direction he
-                            // is looking. The bombs are dropped behind him.
+                            // is looking. The bombs are dropped in front of him.
                             int deltax, deltay;
                             switch (m_BomberMove.GetLastRealMove())
                             {
-                                case BOMBERMOVE_UP:    deltax =  0; deltay =  1; break;
-                                case BOMBERMOVE_DOWN:  deltax =  0; deltay = -1; break;
-                                case BOMBERMOVE_LEFT:  deltax =  1; deltay =  0; break;
-                                case BOMBERMOVE_RIGHT: deltax = -1; deltay =  0; break;
-                                default:               assert( false ); deltax = 0; deltay = 0; break;
+                                case BOMBERMOVE_UP:    deltax =  0; deltay = -1; break;
+                                case BOMBERMOVE_DOWN:  deltax =  0; deltay =  1; break;
+                                case BOMBERMOVE_LEFT:  deltax = -1; deltay =  0; break;
+                                case BOMBERMOVE_RIGHT: deltax =  1; deltay =  0; break;
+                                default:               deltax =  0; deltay =  0; assert( false ); break;  // Prevents "variable not initialized" warning -- should never happen
                             }
 
                             // Start with the bomber's current position
@@ -602,11 +615,22 @@ void CBomber::Action ()
                             x = m_BomberMove.GetBlockX();
                             y = m_BomberMove.GetBlockY();
 
+                            if ( dropMassBombNow )
+                            {
+                                // Move to the next position, since we already placed a bomb just a second ago
+                                // at the bomber's position
+                                x += deltax;
+                                y += deltay;
+
+                                // The mass-bomb drop isn't possible from now on
+                                m_dropMassBombPossible = false;
+                            }
+
                             while (true) {
 
                                 // Create the bomb (unless it is possible)
                                 if ( m_pArena->BombsInUse() >= m_pArena->MaxBombs()) break;
-                                
+
                                 m_pArena->NewBomb (x, y, GetFlameSize(), GetBombTime(), m_Player);
 
                                 // One more used and dropped bomb
@@ -1517,6 +1541,20 @@ bool CBomber::Update (float DeltaTime)
 {
     //! Manage the bomber's movement by calling CBomberMove::Update()
     m_BomberMove.Update(DeltaTime);
+
+    // Calculate button-press duration
+    // Remember how long the action button has been pressed
+    if ( m_BomberAction == BOMBERACTION_NONE ) {
+        // Reset
+        m_CountBomberActionDuration = BOMBERACTION_NONE;
+        m_BomberActionDuration = 0.0f;
+    } else if ( m_BomberAction == m_CountBomberActionDuration ) {
+        m_BomberActionDuration += DeltaTime;
+        //theLog.WriteLine( "DEBUG: Duration this button pressed=%f",m_BomberActionDuration);
+    } else {
+        m_CountBomberActionDuration = m_BomberAction;
+        m_BomberActionDuration = 0.0f;
+    }
 
     //! Update sub-components
     UsedBombs();                //! - Update the number of used bombs by calling UsedBombs().
