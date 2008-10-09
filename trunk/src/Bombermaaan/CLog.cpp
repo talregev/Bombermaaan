@@ -111,13 +111,13 @@ bool CLog::Open( const char *pFilename )
         char FirstLogEntry [128];
 #ifdef WIN32
         sprintf( FirstLogEntry,                                              // String where to write
-                 "==> Log started on %02d/%02d/%02d at %02d:%02d:%02d.\n\n", // Format to use
-                 LocalTime.wDay, LocalTime.wMonth, LocalTime.wYear,          // Time numbers to use
+                 "==> Log started on %4d-%02d-%02d at %02d:%02d:%02d.\n\n",  // Format to use
+                 LocalTime.wYear, LocalTime.wMonth, LocalTime.wDay,          // Time numbers to use
                  LocalTime.wHour, LocalTime.wMinute, LocalTime.wSecond );
 #else
-        sprintf( FirstLogEntry,                                              // String where to write
-                 "==> Log started on %02d/%02d/%02d at %02d:%02d:%02d.\n\n", // Format to use
-                 LocalTime->tm_mday, LocalTime->tm_mon, LocalTime->tm_year + 1900,          // Time numbers to use
+        sprintf( FirstLogEntry,                                                     // String where to write
+                 "==> Log started on %4d-%02d-%02d at %02d:%02d:%02d.\n\n",         // Format to use
+                 LocalTime->tm_year + 1900, LocalTime->tm_mon, LocalTime->tm_mday,  // Time numbers to use
                  LocalTime->tm_hour, LocalTime->tm_min, LocalTime->tm_sec );
 #endif
         
@@ -160,13 +160,13 @@ bool CLog::Close()
         char LastLogEntry [128];
 #ifdef WIN32
         sprintf( LastLogEntry,                                             // String where to write
-                 "==> Log ended on %02d/%02d/%02d at %02d:%02d:%02d.\n\n", // Format to use
-                 LocalTime.wDay, LocalTime.wMonth, LocalTime.wYear,        // Time numbers to use
+                 "==> Log ended on %4d-%02d-%02d at %02d:%02d:%02d.\n\n",  // Format to use
+                 LocalTime.wYear, LocalTime.wMonth, LocalTime.wDay,        // Time numbers to use
                  LocalTime.wHour, LocalTime.wMinute, LocalTime.wSecond );
 #else
-        sprintf( LastLogEntry,                                              // String where to write
-                 "==> Log ended on %02d/%02d/%02d at %02d:%02d:%02d.\n\n", // Format to use
-                 LocalTime->tm_mday, LocalTime->tm_mon, LocalTime->tm_year + 1900,          // Time numbers to use
+        sprintf( LastLogEntry,                                                      // String where to write
+                 "==> Log ended on %4d-%02d-%02d at %02d:%02d:%02d.\n\n",           // Format to use
+                 LocalTime->tm_year + 1900, LocalTime->tm_mon, LocalTime->tm_mday,  // Time numbers to use
                  LocalTime->tm_hour, LocalTime->tm_min, LocalTime->tm_sec );
 #endif
         
@@ -251,7 +251,7 @@ long CLog::Write( const char *pMessage, ... )
 #else
             sprintf ( Time,                 // String where to write
                       "%02d:%02d:%02d\n",   // Format (don't forget '\n' character!)
-                      LocalTime->tm_hour,      // Time numbers to use
+                      LocalTime->tm_hour,   // Time numbers to use
                       LocalTime->tm_min, 
                       LocalTime->tm_sec );
 #endif
@@ -324,8 +324,8 @@ long CLog::WriteLine( const char *pMessage, ... )
                       LocalTime.wSecond);
 #else
             sprintf ( Time,                 // String where to write
-                      "%02d:%02d:%02d  ",     // Format (don't forget '\n' character!)
-                      LocalTime->tm_hour,      // Time numbers to use
+                      "%02d:%02d:%02d  ",   // Format (don't forget '\n' character!)
+                      LocalTime->tm_hour,   // Time numbers to use
                       LocalTime->tm_min, 
                       LocalTime->tm_sec);
 #endif
