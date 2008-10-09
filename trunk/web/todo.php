@@ -16,6 +16,10 @@ $webpage->head();
 This list shows the ideas we had and don't want to forget.
 </p>
 
+<p>
+You can also browse a list of already <a href="http://sourceforge.net/tracker2/?func=browse&amp;group_id=81520&amp;atid=563213&amp;status=1&amp;category=531297">opened feature requests</a> at the SourceForge.net tracker.
+</p>
+
 <table>
 
 <tr>
