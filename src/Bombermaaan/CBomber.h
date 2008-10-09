@@ -165,6 +165,9 @@ private:
     static SBomberSpriteTable m_BomberSpriteTables[MAX_NUMBER_OF_STATES]; //!< Information about the sprite table to use for each bomber state.
 	bool			m_MakeInvisible;				//!< If true, the bomber isn't visible in the arena (used for contamination)
     bool            m_HasExisted;                   //!< If true, this bomber exists or has existed in this match (m_Exist is set to false after the bomber' death)
+    EBomberAction   m_CountBomberActionDuration;
+    float           m_BomberActionDuration;
+    bool            m_dropMassBombPossible;
     
     void            Animate (float DeltaTime);
     void            ReturnItems (float DeltaTime);  //!< Manage the return of the items this bomber owns if he is dead
