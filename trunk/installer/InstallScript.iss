@@ -7,13 +7,13 @@
 ; The APPID is kept as long as the first two numbers in the version are the same
 ; (the whole 1.3 version uses the same APPID)
 ; (yes, two opening curly braces and only one closing curly brace)
-#define APPID "{{577ACC96-0D1D-4AA1-BFCC-DA0630FA24B0}"
+#define APPID "{{577ACC96-0D1D-4AA1-BFCC-DA0630FA24B0}"       <------------ Needs to be changed for version 1.4!
 
 #define MAJOR 1
-#define MINOR 3
-#define RELEASE 1
-#define BUILD 476
-#define BUILDDATE "2008-07-27"
+#define MINOR 4
+#define RELEASE 0
+#define BUILD 476       <------------ Needs to be changed for version 1.4!
+#define BUILDDATE "20081011"       <------------ Needs to be changed for version 1.4!
 
 #define APPVERFULL Str(MAJOR) + "." + Str(MINOR) + "." + Str(RELEASE) + "." + Str(BUILD)
 #define APPVERMAIN Str(MAJOR) + "." + Str(MINOR)
@@ -32,7 +32,7 @@ AppUpdatesURL=http://bombermaaan.sourceforge.net/
 DefaultDirName={pf}\Bombermaaan {#APPVERMAIN}
 DefaultGroupName=Bombermaaan {#APPVERMAIN}
 AllowNoIcons=true
-LicenseFile=.\packages\Bombermaaan_{#APPVERMAIN}_2008-05-07\COPYING.txt
+LicenseFile=..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\COPYING.txt
 OutputDir=.\output
 OutputBaseFilename=Bombermaaan_{#APPVERFULL}_setup
 Compression=lzma
@@ -72,24 +72,28 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan.dll; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_16.exe; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_32.dll; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\CHANGELOG.txt; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\COPYING.txt; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\FMOD.DLL; DestDir: {app}; Flags: ignoreversion
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Readme.html; DestDir: {app}; Flags: ignoreversion; Tasks: ; Languages: 
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Bombermaaan.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Bombermaaan_16.exe; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Bombermaaan_32.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Bombermaaan_32.exe; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\CHANGELOG.txt; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\COPYING.txt; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Readme.html; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\libogg-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\libvorbis-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\libvorbisfile-3.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\SDL.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\SDL_mixer.dll; DestDir: {app}; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L1.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L2.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L3.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L4.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L5.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L6.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L7.TXT; DestDir: {app}\Levels\
-Source: .\packages\Bombermaaan_1.3.1_2008-07-27\Levels\L8.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L1.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L2.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L3.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L4.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L5.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L6.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L7.TXT; DestDir: {app}\Levels\
+Source: ..\tools\output\Bombermaaan_{#APPVERFULL}_{#BUILDDATE}_win32\Levels\L8.TXT; DestDir: {app}\Levels\
 
 [Icons]
 Name: {group}\Bombermaaan (large size); Filename: {app}\Bombermaaan_32.exe; WorkingDir: {app}; Comment: Runs Bombermaaan in a large window; IconIndex: 0; Languages: english spanish slovenian slovak russian portuguese polish norwegian italian hungarian hebrew french finnish dutch danish czech catalan brazilianportuguese basque; Parameters: --use-appdata-dir
