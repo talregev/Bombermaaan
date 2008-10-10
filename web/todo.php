@@ -55,7 +55,7 @@ You can also browse a list of already <a href="http://sourceforge.net/tracker2/?
 <td>Completed</td>
 <td>Since you can plug many USB keyboards, it could be possible to have five human players in the same game. So allow Keyboard 3 to Keyboard 5 in the input selection screen.See tracker item <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=2150405&amp;group_id=81520&amp;atid=563213">2150405</a>.</td>
 <td>2007-12-10</td>
-<td>2008-10-07</td>
+<td>2008-10-10</td>
 </tr>
 
 <tr>
@@ -64,7 +64,7 @@ You can also browse a list of already <a href="http://sourceforge.net/tracker2/?
 <td>Completed</td>
 <td>A new item can be picked up by the bombers to let the players decide whether they want their bomb explode before the default time ends. This shouldn't work when the bomber is contaminated with the &quot;long bomb explode time&quot; and the "short bomb explode time&quot;.</td>
 <td>2007-12-13</td>
-<td>2008-09-21</td>
+<td>2008-10-10</td>
 </tr>
 
 <tr>
@@ -73,7 +73,7 @@ You can also browse a list of already <a href="http://sourceforge.net/tracker2/?
 <td>Completed</td>
 <td>A common place where maps can be shared. (by Hugues, see tracker item <a href="https://sourceforge.net/tracker/index.php?func=detail&amp;aid=1941534&amp;group_id=81520&amp;atid=563213">1941534</a>). Have a look at the web-site.</td>
 <td>2008-04-16</td>
-<td>2008-04-16</td>
+<td>2008-10-10</td>
 </tr>
 
 <tr>
