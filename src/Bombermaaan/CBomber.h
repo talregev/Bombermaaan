@@ -300,9 +300,21 @@ inline bool CBomber::CanPunchBombs (void)
     return m_NumberOfPunchItems > 0; 
 }
 
+/**
+ *  The bomber can remote fuse bombs, if all of these conditions are met:
+ *  - he has at least one remote item
+ *  - he doesn't have one of these sicknesses: long ticking bomb, short ticking bomb, colic
+ *
+ *  If he can't remote fuse bombs, the dropped bombs will tick normally and explode after
+ *  its time is up.
+ */
+
 inline bool CBomber::CanRemoteFuseBombs (void)
 { 
-    return m_NumberOfRemoteItems > 0; 
+    return m_NumberOfRemoteItems > 0 &&
+           m_Sickness != SICK_LONGBOMB &&
+           m_Sickness != SICK_SHORTBOMB &&
+           m_Sickness != SICK_COLIC; 
 } 
 
 inline int CBomber::GetUsedBombsCount (void) 
