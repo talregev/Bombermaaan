@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-////////////
-// CWall.h
+/**
+ *  \file CWall.h
+ *  \brief Header file of the arena's wall element
+ */
 
 #ifndef __CWALL_H__
 #define __CWALL_H__

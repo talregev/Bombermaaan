@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CVictory.h
+/**
+ *  \file CVictory.h
+ *  \brief Header file of the victory screen
+ */
 
 #ifndef __CVICTORY_H__
 #define __CVICTORY_H__

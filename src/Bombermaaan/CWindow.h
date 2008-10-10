@@ -20,9 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////////////////////////////////
-// CWindow.h: interface for the CWindow class.
-//
+/**
+ *  \file CWindow.h
+ *  \brief Header file of the CWindow class
+ */
 
 #ifndef __CWINDOW_H__
 #define __CWINDOW_H__

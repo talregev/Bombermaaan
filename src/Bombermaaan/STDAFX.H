@@ -21,13 +21,13 @@
 ************************************************************************************/
 
 
-#ifndef __STDAFX_H__
-#define __STDAFX_H__
-
 /**
  *  \file STDAFX.H
  *  \brief Pre-compiled header file
  */
+
+#ifndef __STDAFX_H__
+#define __STDAFX_H__
 
 #include <stdlib.h>
 #include <stdio.h>

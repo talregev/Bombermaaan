@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////
-// CWall.cpp
+/**
+ *  \file CWall.cpp
+ *  \brief Wall element of the arena
+ */
 
 #include "STDAFX.H"
 #include "CWall.h"
