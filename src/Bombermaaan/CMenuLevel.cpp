@@ -22,8 +22,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuLevel.cpp
+/**
+ *  \file CMenuLevel.cpp
+ *  \brief The menu where you can choose a level
+ */
 
 #include "STDAFX.H"
 #include "CMenuLevel.h"

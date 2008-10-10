@@ -22,8 +22,10 @@
 ************************************************************************************/
 
 
-/////////////
-// CItem.h
+/**
+ *  \file CItem.h
+ *  \brief Header file of an item
+ */
 
 #ifndef __CITEM_H__
 #define __CITEM_H__

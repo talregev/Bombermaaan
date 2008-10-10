@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-///////////////////////
-// CDisplay.h
+/**
+ *  \file CDisplay.h
+ *  \brief Header file of the display
+ */
 
 #ifndef __CDISPLAY_H__
 #define __CDISPLAY_H__

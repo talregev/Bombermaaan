@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CGame.cpp
+/**
+ *  \file CGame.cpp
+ *  \brief The core of the program, handling sub-components, program control
+ */
 
 #include "STDAFX.H"
 #include "CGame.h"
@@ -1181,8 +1183,8 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
         //! Change display mode if this is a F1-F4 key
         switch (wParam)
         {
-            // Display modes #1 and #2 are not available in the 32-pixels version
-            // since the screen isn't large enough (so disable F1 and F2 keys)
+            //! Display modes #1 and #2 are not available in the 32-pixels version
+            //! since the screen isn't large enough (so disable F1 and F2 keys)
 #ifndef USE_32_PIXELS_PER_BLOCK
             case VK_F1 : DisplayMode = DISPLAYMODE_FULL1; break;
             case VK_F2 : DisplayMode = DISPLAYMODE_FULL2; break;
@@ -1205,7 +1207,7 @@ void CGame::OnKeyUp (WPARAM wParam, LPARAM lParam)
 
 	} else {
 
-        //! Quickly exit the game with CTRL + F12
+        //! Quickly exit the game with Ctrl + F12
         if (wParam == VK_F12)
         {
             FinishGameMode();

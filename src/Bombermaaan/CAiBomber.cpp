@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////
-// CAiBomber.cpp
+/**
+ *  \file CAiBomber.cpp
+ *  \brief Bomber bot
+ */
 
 #include "STDAFX.H"
 #include "CAiArena.h"

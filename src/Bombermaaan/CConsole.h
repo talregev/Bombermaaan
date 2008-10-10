@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CConsole.h
+/**
+ *  \file CConsole.h
+ *  \brief Header file of the console
+ */
 
 #ifndef __CCONSOLE_H__
 #define __CCONSOLE_H__

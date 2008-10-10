@@ -20,9 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CDirectDraw.h
-
+/**
+ *  \file CDirectDraw.h
+ *  \brief Header file of the direct draw interface
+ */
 
 #ifndef __CDIRECTDRAW_H__
 #define __CDIRECTDRAW_H__

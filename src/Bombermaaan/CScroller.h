@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CScroller.h
+/**
+ *  \file CScroller.h
+ *  \brief Header file of the scroller
+ */
 
 #ifndef __CSCROLLER_H__
 #define __CSCROLLER_H__

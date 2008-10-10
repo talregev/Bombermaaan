@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CRandomMosaic.h
+/**
+ *  \file CRandomMosaic.h
+ *  \brief Header file of a random mosaic
+ */
 
 #ifndef __CRANDOMMOSAIC_H__
 #define __CRANDOMMOSAIC_H__

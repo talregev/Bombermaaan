@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMosaic.h
+/**
+ *  \file CMosaic.h
+ *  \brief Header file of the mosaic
+ */
 
 #ifndef __CMOSAIC_H__
 #define __CMOSAIC_H__

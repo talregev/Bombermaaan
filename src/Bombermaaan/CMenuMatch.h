@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuMatch.h
+/**
+ *  \file CMenuMatch.h
+ *  \brief Header file of the match menu
+ */
 
 #ifndef __CMENUMATCH_H__
 #define __CMENUMATCH_H__

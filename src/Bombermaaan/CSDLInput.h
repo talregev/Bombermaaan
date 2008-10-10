@@ -20,8 +20,10 @@
 
 ************************************************************************************/
 
-////////////////////
-// CSDLInput.h
+/**
+ *  \file CSDLInput.h
+ *  \brief Header file of the SDL input
+ */
 
 #ifndef __CSDLINPUT_H__
 #define __CSDLINPUT_H__

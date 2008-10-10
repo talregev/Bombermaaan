@@ -20,17 +20,18 @@
 ************************************************************************************/
 
 
-/////////////////////////////////////////
-// CLog.h
-//
-// by Thibaut "Fury" Tollemer
-// 
-// Most of the code was taken in the
-// Log.cpp/Log.h files of HaCKeR source,
-// by Michaël Schoonbrood :
-//      - MadButch@OneCoolDude.Com
-//      - http://play.as/madbutch
-//
+/**
+ *  \file CLog.h
+ *  \brief Header file of the log
+ *
+ *  by Thibaut "Fury" Tollemer
+ *  
+ *  Most of the code was taken in the
+ *  Log.cpp/Log.h files of HaCKeR source,
+ *  by Michaël Schoonbrood :
+ *      - MadButch@OneCoolDude.Com
+ *      - http://play.as/madbutch
+ */
 
 #ifndef _LOG_H
 #define _LOG_H

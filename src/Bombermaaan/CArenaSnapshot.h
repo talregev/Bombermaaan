@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////
-// CArenaSnapshot.h
+/**
+ *  \file CArenaSnapshot.h
+ *  \brief Header file of the arena snapshot
+ */
 
 #ifndef __CARENASNAPSHOT_H__
 #define __CARENASNAPSHOT_H__

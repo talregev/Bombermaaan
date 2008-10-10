@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////
-// CBomberMove.h
+/**
+ *  \file CBomberMove.h
+ *  \brief Header file of bomber moves
+ */
 
 #ifndef __CBOMBERMOVE_H__
 #define __CBOMBERMOVE_H__

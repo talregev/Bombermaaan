@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CDrawGame.h
+/**
+ *  \file CDrawGame.h
+ *  \brief Header file of a draw game
+ */
 
 #ifndef __CDRAWGAME_H__
 #define __CDRAWGAME_H__

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CElement.h
+/**
+ *  \file CElement.h
+ *  \brief An element in the arena
+ */
 
 #ifndef __CELEMENT_H__
 #define __CELEMENT_H__

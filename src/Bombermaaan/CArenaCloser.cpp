@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////
-// CArenaCloser.cpp
+/**
+ *  \file CArenaCloser.cpp
+ *  \brief Arena closer (walls falling down)
+ */
 
 #include "STDAFX.H"
 #include "CArenaCloser.h"

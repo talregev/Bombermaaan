@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuYesNo.h
+/**
+ *  \file CMenuYesNo.h
+ *  \brief Header file of the yes/no menu
+ */
 
 #ifndef __CMENUYESNO_H__
 #define __CMENUYESNO_H__

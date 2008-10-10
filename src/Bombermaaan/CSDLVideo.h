@@ -20,9 +20,10 @@
 
 ************************************************************************************/
 
-///////////////////
-// CSDLVideo.h
-
+/**
+ *  \file CSDLVideo.h
+ *  \brief Header file of the SDL video
+ */
 
 #ifndef __CSDLVIDEO_H__
 #define __CSDLVIDEO_H__

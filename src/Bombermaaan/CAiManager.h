@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////
-// CAiManager.h
+/**
+ *  \file CAiManager.h
+ *  \brief Header file of the AI manager
+ */
 
 #ifndef __CAIMANAGER_H__
 #define __CAIMANAGER_H__

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuMatch.cpp
+/**
+ *  \file CMenuMatch.cpp
+ *  \brief The menu where you can set match options
+ */
 
 #include "STDAFX.H"
 #include "CMenuLevel.h"

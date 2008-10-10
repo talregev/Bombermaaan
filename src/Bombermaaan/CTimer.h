@@ -21,11 +21,14 @@
 ************************************************************************************/
 
 
-//////////////
-// CTimer.h
-// Based on the code of Dhonn Lushine
-// http://members.aol.com/dhonn
-// dhonn@usa.net
+/**
+ *  \file CTimer.h
+ *  \brief Header file of the timer
+ *
+ *  Based on the code of Dhonn Lushine
+ *  http://members.aol.com/dhonn
+ *  dhonn@usa.net
+ */
 
 #ifndef __CTIMER_H__
 #define __CTIMER_H__

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CPlayerInput.cpp
+/**
+ *  \file CPlayerInput.cpp
+ *  \brief Player's input device
+ */
 
 #include "STDAFX.H"
 #include "CPlayerInput.h"

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////
-// CBoard.h
+/**
+ *  \file CBoard.h
+ *  \brief Header file of the board
+ */
 
 #ifndef __CBOARD_H__
 #define __CBOARD_H__

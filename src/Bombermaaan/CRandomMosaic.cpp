@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CRandomMosaic.cpp
+/**
+ *  \file CRandomMosaic.cpp
+ *  \brief A random mosaic
+ */
 
 #include "STDAFX.H"
 #include "CRandomMosaic.h"

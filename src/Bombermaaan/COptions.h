@@ -22,8 +22,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// COptions.h
+/**
+ *  \file COptions.h
+ *  \brief Header file for the game options
+ */
 
 #ifndef __COPTIONS_H__
 #define __COPTIONS_H__

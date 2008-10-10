@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-////////////////////
-// CInput.h
+/**
+ *  \file CInput.h
+ *  \brief Header file of input devices
+ */
 
 #ifndef __CINPUT_H__
 #define __CINPUT_H__

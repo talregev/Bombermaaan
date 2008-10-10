@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CBoard.cpp
+/**
+ *  \file CBoard.cpp
+ *  \brief The board during a match showing time and bombers' health and wins
+ */
 
 #include "STDAFX.H"
 #include "CBoard.h"

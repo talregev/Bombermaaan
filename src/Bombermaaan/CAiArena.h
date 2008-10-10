@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////
-// CAiArena.h
+/**
+ *  \file CAiArena.h
+ *  \brief Header file of the AI arena manager
+ */
 
 #ifndef __CAIARENA_H__
 #define __CAIARENA_H__

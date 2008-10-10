@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CCloudManager.cpp
+/**
+ *  \file CCloudManager.cpp
+ *  \brief The cloud manager
+ */
 
 #include "STDAFX.H"
 #include "CCloudManager.h"

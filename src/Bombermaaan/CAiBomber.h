@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-////////////////
-// CAiBomber.h
+/**
+ *  \file CAiBomber.h
+ *  \brief Header file of the bot bomber
+ */
 
 #ifndef __CAIBOMBER_H__
 #define __CAIBOMBER_H__

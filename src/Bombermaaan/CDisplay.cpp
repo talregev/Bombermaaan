@@ -23,8 +23,10 @@
 ************************************************************************************/
 
 
-///////////////////////
-// CDisplay.cpp
+/**
+ *  \file CDisplay.cpp
+ *  \brief Load and display sprites, change screen mode
+ */
 
 #include "STDAFX.H"
 #include "CDisplay.h"

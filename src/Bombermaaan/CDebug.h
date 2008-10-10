@@ -21,9 +21,10 @@
 ************************************************************************************/
 
 
-/////////////////////////////////////////
-// CDebug.cpp
-
+/**
+ *  \file CDebug.h
+ *  \brief Header file of the debug utilities
+ */
 
 #ifndef __CDEBUG_H__
 #define __CDEBUG_H__

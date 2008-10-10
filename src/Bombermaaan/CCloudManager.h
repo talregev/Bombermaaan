@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CCloudManager.h
+/**
+ *  \file CCloudManager.h
+ *  \brief Header file of the cloud manager
+ */
 
 #ifndef __CCLOUDMANAGER_H__
 #define __CCLOUDMANAGER_H__

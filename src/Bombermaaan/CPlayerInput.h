@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CPlayerInput.h
+/**
+ *  \file CPlayerInput.h
+ *  \brief Header file of a player's input
+ */
 
 #ifndef __CPLAYERINPUT_H__
 #define __CPLAYERINPUT_H__

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuBase.cpp
+/**
+ *  \file CMenuBase.cpp
+ *  \brief The menu base
+ */
 
 #include "STDAFX.H"
 #include "CMenuBase.h"

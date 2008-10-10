@@ -20,8 +20,10 @@
 
 ************************************************************************************/
 
-//////////////////////
-// CSDLInput.cpp
+/**
+ *  \file CSDLInput.cpp
+ *  \brief SDL input devices on Linux
+ */
 
 #include "STDAFX.H"
 #include "CSDLInput.h"

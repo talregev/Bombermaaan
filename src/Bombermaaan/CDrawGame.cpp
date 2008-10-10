@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CDrawGame.cpp
+/**
+ *  \file CDrawGame.cpp
+ *  \brief Draw game - no player won
+ */
 
 #include "STDAFX.H"
 #include "CDrawGame.h"

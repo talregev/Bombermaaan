@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////
-// CFloor.h
+/**
+ *  \file CFloor.h
+ *  \brief Header file of the floor
+ */
 
 #ifndef __CFLOOR_H__
 #define __CFLOOR_H__

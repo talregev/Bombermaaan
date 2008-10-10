@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CModeScreen.cpp
+/**
+ *  \file CModeScreen.cpp
+ *  \brief The screen basics
+ */
 
 #include "STDAFX.H"
 #include "CModeScreen.h"

@@ -21,17 +21,18 @@
 ************************************************************************************/
 
 
-/////////////////////////////////////////
-// CLog.cpp
-//
-// by Thibaut "Fury" Tollemer
-// 
-// Most of the code was taken in the
-// Log.cpp/Log.h files of HaCKeR source,
-// by Michaël Schoonbrood :
-//      - MadButch@OneCoolDude.Com
-//      - http://play.as/madbutch
-//
+/**
+ *  \file CLog.cpp
+ *  \brief Handling the log
+ *
+ *  by Thibaut "Fury" Tollemer
+ *
+ *  Most of the code was taken in the
+ *  Log.cpp/Log.h files of HaCKeR source,
+ *  by Michaël Schoonbrood :
+ *      - MadButch@OneCoolDude.Com
+ *      - http://play.as/madbutch
+ */
 
 #include "STDAFX.H"
 #include "CLog.h"

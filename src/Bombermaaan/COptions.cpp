@@ -22,8 +22,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// COptions.cpp
+/**
+ *  \file COptions.cpp
+ *  \brief Handling game options, saving to and reading from file
+ */
 
 #include "STDAFX.H"
 #include "COptions.h"

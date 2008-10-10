@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CElement.cpp
+/**
+ *  \file CElement.cpp
+ *  \brief An element of the arena
+ */
 
 #include "STDAFX.H"
 #include "CElement.h"

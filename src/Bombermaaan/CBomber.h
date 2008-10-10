@@ -22,8 +22,10 @@
 ************************************************************************************/
 
 
-//////////////
-// CBomber.h
+/**
+ *  \file CBomber.h
+ *  \brief Header file of the bomber
+ */
 
 #ifndef __CBOMBER_H__
 #define __CBOMBER_H__

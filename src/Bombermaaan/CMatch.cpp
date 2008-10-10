@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CMatch.cpp
+/**
+ *  \file CMatch.cpp
+ *  \brief The match (bombers are playing)
+ */
 
 #include "STDAFX.H"
 #include "CMatch.h"

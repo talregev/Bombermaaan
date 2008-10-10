@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuBomber.h
+/**
+ *  \file CMenuBomber.h
+ *  \brief Header file of the bomber menu
+ */
 
 #ifndef __CMENUBOMBER_H__
 #define __CMENUBOMBER_H__

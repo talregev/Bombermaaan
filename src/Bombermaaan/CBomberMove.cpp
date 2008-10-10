@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CBomberMove.cpp
+/**
+ *  \file CBomberMove.cpp
+ *  \brief Bomber moves
+ */
 
 #include "STDAFX.H"
 #include "CBomberMove.h"

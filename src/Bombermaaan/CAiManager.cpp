@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CAiManager.cpp
+/**
+ *  \file CAiManager.cpp
+ *  \brief The AI management functions
+ */
 
 #include "STDAFX.H"
 #include "CAiManager.h"

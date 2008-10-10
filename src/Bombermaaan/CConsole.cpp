@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CConsole.cpp
+/**
+ *  \file CConsole.cpp
+ *  \brief The console (helpful during development)
+ */
 
 #include "STDAFX.H"
 #include "CConsole.h"

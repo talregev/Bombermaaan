@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-/////////////////////////////////////////
-// CDebug.cpp
+/**
+ *  \file CDebug.cpp
+ *  \brief Utilities for debugging
+ */
 
 #include "STDAFX.H"
 #include "CDebug.h"
