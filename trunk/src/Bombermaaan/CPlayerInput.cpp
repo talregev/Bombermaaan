@@ -27,11 +27,6 @@
 
 #include "STDAFX.H"
 #include "CPlayerInput.h"
-#ifdef WIN32
-#include "CDirectInput.h"
-#else
-#include "CSDLInput.h"
-#endif
 #include "COptions.h"
 #include "CInput.h"
 
