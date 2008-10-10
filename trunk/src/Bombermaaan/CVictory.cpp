@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CVictory.cpp
+/**
+ *  \file CVictory.cpp
+ *  \brief The victory screen (after a player has won all matches)
+ */
 
 #include "STDAFX.H"
 #include "CVictory.h"

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////
-// WinMain.cpp
+/**
+ *  \file WinMain.cpp
+ *  \brief Entry point of the program for both Linux and Windows
+ */
 
 #include "STDAFX.H"
 #include "CGame.h"

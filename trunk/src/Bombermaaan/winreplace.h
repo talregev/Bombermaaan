@@ -19,9 +19,10 @@
 
 ************************************************************************************/
 
-//////////////
-// winreplace.h
-// replaces a windows.h include
+/**
+ *  \file winreplace.h
+ *  \brief Replaces a windows.h include (for Linux)
+ */
 
 #ifndef __WINREPLACE_H__
 #define __WINREPLACE_H__

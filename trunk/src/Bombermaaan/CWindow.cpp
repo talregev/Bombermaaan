@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////////////////////////////////////
-// CWindow.cpp: implementation of the CWindow class.
+/**
+ *  \file CWindow.cpp
+ *  \brief Implementation of the CWindow class
+ */
 
 #include "STDAFX.H"
 #include "CWindow.h"

@@ -19,8 +19,10 @@
 
 ************************************************************************************/
 
-//////////////////////
-// winreplace.cpp
+/**
+ *  \file winreplace.cpp
+ *  \brief Windows function calls rewritten for Linux
+ */
 
 #include "winreplace.h"
 

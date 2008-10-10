@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CTitle.h
+/**
+ *  \file CTitle.h
+ *  \brief Header file of the title screen
+ */
 
 #ifndef __CTITLE_H__
 #define __CTITLE_H__

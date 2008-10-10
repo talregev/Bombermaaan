@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CWinner.h
+/**
+ *  \file CWinner.h
+ *  \brief Header file of the winner screen
+ */
 
 #ifndef __CWINNER_H__
 #define __CWINNER_H__

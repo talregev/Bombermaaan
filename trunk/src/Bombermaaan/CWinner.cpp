@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CWinner.cpp
+/**
+ *  \file CWinner.cpp
+ *  \brief The winner screen (after a match has ended and one bomber has won the match)
+ */
 
 #include "STDAFX.H"
 #include "CWinner.h"
