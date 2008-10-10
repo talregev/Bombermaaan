@@ -4,7 +4,7 @@ New feature: Bombs can be remotely fused by a bomber (by Jerome Bigot, revision 
 New feature: AI bomber is punching bombs when he is jammed by a bomb and picked up the punch item (by Markus Drescher).
 New feature: Bombermaaan can be compiled natively on Linux using G++ (without the need of Wine and the Bombermaaan files for Win32, thanks to Markus Drescher, revision 533).
 New feature: AI support for the blue glove - the AI players can throw bombs now (by Markus Drescher, revision 536).
-New feature: Levels may have remote fused bombs (introduced version 3).
+New feature: Levels may have remote fused bombs (can also be set in level file version 2).
 Changed: FMOD was replaced by the SDL_mixer library (by Markus Drescher, revision 533).
 Changed: When no config file is present the input for the second player is set to keyboard 2 (revision 547).
 Changed: Bigger sprites in menu level preview in 32-pixels version (revision 542).
@@ -14,6 +14,7 @@ Changed: Bots "know" which bomb is ignited by another bomb.
 Changed: Algorithm for bots choosing the best block to escape / defend theirselves.
 Changed: Keyboard 3 to 5 as human input available now. Useful if you don't have joysticks (#2150405).
 Changed: Using SimpleIni for reading version-2 level files. The level files can be treated as real INI files now.
+Changed: Arrows are displayed in level preview now (where bombs start moving, #2153008).
 Bug fix: Input field was empty / executable crashed when joystick isn't present the next game start (#2121904, revision 538, revision 539, revision 546).
 Bug fix: Bots are escaping in a certain situation if a player surrounds a bot with bombs.
 Bug fix: Sometimes bots were stuck in the "WALK MODE". If they stay in there too often, they exit the "WALK MODE".
