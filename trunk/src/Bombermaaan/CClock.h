@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////
-// CClock.h
+/**
+ *  \file CClock.h
+ *  \brief Header file of the clock
+ */
 
 #ifndef __CCLOCK_H__
 #define __CCLOCK_H__

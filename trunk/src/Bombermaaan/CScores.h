@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CScores.h
+/**
+ *  \file CScores.h
+ *  \brief Header file for the scores during a game
+ */
 
 #ifndef __CSCORES_H__
 #define __CSCORES_H__

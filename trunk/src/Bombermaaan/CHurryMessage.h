@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CHurryMessage.h
+/**
+ *  \file CHurryMessage.h
+ *  \brief Header file of the hurry message
+ */
 
 #ifndef __CHURRYMESSAGE_H__
 #define __CHURRYMESSAGE_H__

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CPauseMessage.cpp
+/**
+ *  \file CPauseMessage.cpp
+ *  \brief Pause message
+ */
 
 #include "STDAFX.H"
 #include "CPauseMessage.h"

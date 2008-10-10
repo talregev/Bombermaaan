@@ -21,12 +21,14 @@
 ************************************************************************************/
 
 
-////////////////
-// CFloor.cpp
+/**
+ *  \file CFloor.cpp
+ *  \brief Floor in the arena
+ */
 
 #include "STDAFX.H"
 #include "CFloor.h"         // CFloor
-#include "CDisplay.h"   // CDisplay
+#include "CDisplay.h"       // CDisplay
 #include "CArena.h"         // CArena and arena values
 #include "CArenaSnapshot.h"
 

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CHurryMessage.cpp
+/**
+ *  \file CHurryMessage.cpp
+ *  \brief The hurry message
+ */
 
 #include "STDAFX.H"
 #include "CHurryMessage.h"

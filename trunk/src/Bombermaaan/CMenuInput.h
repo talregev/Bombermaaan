@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuInput.h
+/**
+ *  \file CMenuInput.h
+ *  \brief Header file of the menu input
+ */
 
 #ifndef __CMENUINPUT_H__
 #define __CMENUINPUT_H__

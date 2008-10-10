@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuBomber.cpp
+/**
+ *  \file CMenuBomber.cpp
+ *  \brief The menu where you can choose the bombers
+ */
 
 #include "STDAFX.H"
 #include "CMenuBomber.h"

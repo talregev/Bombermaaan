@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-///////////////
-// CArena.h
+/**
+ *  \file CArena.h
+ *  \brief Header file of the arena
+ */
 
 #ifndef __CARENA_H__
 #define __CARENA_H__

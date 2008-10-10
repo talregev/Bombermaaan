@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CCommandChunk.cpp
+/**
+ *  \file CCommandChunk.cpp
+ *  \brief Command chunk
+ */
 
 #include "STDAFX.H"
 #include "CCommandChunk.h"

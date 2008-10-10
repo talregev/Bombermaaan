@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////
-// CAiArena.cpp
+/**
+ *  \file CAiArena.cpp
+ *  \brief The AI arena
+ */
 
 #include "STDAFX.H"
 #include "CAiArena.h"

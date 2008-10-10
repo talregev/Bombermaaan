@@ -20,7 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
+/**
+ *  \file CModeScreen.h
+ *  \brief Header file of the screen mode
+ */
 // CModeScreen.h
 
 #ifndef __CMODESCREEN_H__

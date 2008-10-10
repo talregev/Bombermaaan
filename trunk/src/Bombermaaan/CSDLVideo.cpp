@@ -20,8 +20,10 @@
 
 ************************************************************************************/
 
-///////////////////
-// CSDLVideo.cpp
+/**
+ *  \file CSDLVideo.cpp
+ *  \brief SDL video on Linux
+ */
 
 #include "STDAFX.H"
 #include "CSDLVideo.h"

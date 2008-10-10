@@ -22,11 +22,12 @@
 ************************************************************************************/
 
 
-//////////////////
-// CArena.cpp
-
-// - Ca sert a rien d'enregistrer les centres d'explosions et les bombers vivants ou entrain de mourir dans la vue.
-// - 
+/**
+ *  \file CArena.cpp
+ *  \brief Arena during a match
+ *
+ *  - Ca sert a rien d'enregistrer les centres d'explosions et les bombers vivants ou entrain de mourir dans la vue.
+ */
 
 #include "STDAFX.H"
 #include "CArena.h"

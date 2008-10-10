@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-////////////////
-// CClock.cpp
+/**
+ *  \file CClock.cpp
+ *  \brief The clock
+ */
 
 #include "STDAFX.H"
 #include "CClock.h"

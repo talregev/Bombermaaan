@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CMatch.h
+/**
+ *  \file CMatch.h
+ *  \brief Header file of a match
+ */
 
 #ifndef __CMATCH_H__
 #define __CMATCH_H__

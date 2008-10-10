@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMainInput.cpp
+/**
+ *  \file CMainInput.cpp
+ *  \brief The main input device for menu and system controls
+ */
 
 #include "STDAFX.H"
 #include "CMainInput.h"

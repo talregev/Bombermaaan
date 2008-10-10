@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CExplosion.cpp
+/**
+ *  \file CExplosion.cpp
+ *  \brief Explosions
+ */
 
 #include "STDAFX.H"
 #include "CExplosion.h"

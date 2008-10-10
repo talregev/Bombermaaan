@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuBase.h
+/**
+ *  \file CMenuBase.h
+ *  \brief Header file of the menu base
+ */
 
 #ifndef __CMENUBASE_H__
 #define __CMENUBASE_H__

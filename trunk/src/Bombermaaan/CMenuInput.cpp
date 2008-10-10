@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuInput.cpp
+/**
+ *  \file CMenuInput.cpp
+ *  \brief Handling inputs during the menu
+ */
 
 #include "STDAFX.H"
 #include "CMenuInput.h"

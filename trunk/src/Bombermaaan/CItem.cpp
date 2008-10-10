@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-////////////////
-// CItem.cpp
+/**
+ *  \file CItem.cpp
+ *  \brief Item a bomber may pick
+ */
 
 #include "STDAFX.H"
 #include "CItem.h"

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuYesNo.cpp
+/**
+ *  \file CMenuYesNo.cpp
+ *  \brief The yes/no menu
+ */
 
 #include "STDAFX.H"
 #include "CMenuYesNo.h"

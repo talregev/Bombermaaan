@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CScroller.cpp
+/**
+ *  \file CScroller.cpp
+ *  \brief The scroller used by pause and hurry message
+ */
 
 #include "STDAFX.H"
 #include "CScroller.h"

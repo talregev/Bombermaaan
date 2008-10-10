@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CSound.h
+/**
+ *  \file CSound.h
+ *  \brief Header file of the sound
+ */
 
 #ifndef __CSOUND_H__
 #define __CSOUND_H__

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////////
-// CArenaSnapshot.cpp
+/**
+ *  \file CArenaSnapshot.cpp
+ *  \brief Arena snapshot for network exchange
+ */
 
 #include "STDAFX.H"
 #include "CArenaSnapshot.h"

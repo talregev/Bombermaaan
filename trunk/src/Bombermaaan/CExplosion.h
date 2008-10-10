@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CExplosion.h
+/**
+ *  \file CExplosion.h
+ *  \brief Header file of an explosion
+ */
 
 #ifndef __CEXPLOSION_H__
 #define __CEXPLOSION_H__

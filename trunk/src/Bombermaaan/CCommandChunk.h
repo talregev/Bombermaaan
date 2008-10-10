@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-////////////////////
-// CCommandChunk.h
+/**
+ *  \file CCommandChunk.h
+ *  \brief Header file of the command chunk
+ */
 
 #ifndef __CCOMMANDCHUNK_H__
 #define __CCOMMANDCHUNK_H__

@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CControls.cpp
+/**
+ *  \file CControls.cpp
+ *  \brief The control settings screen
+ */
 
 #include "STDAFX.H"
 #include "CControls.h"

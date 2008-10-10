@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CScores.cpp
+/**
+ *  \file CScores.cpp
+ *  \brief The scores
+ */
 
 #include "STDAFX.H"
 #include "CScores.h"

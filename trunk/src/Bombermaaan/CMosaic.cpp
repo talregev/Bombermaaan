@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMosaic.cpp
+/**
+ *  \file CMosaic.cpp
+ *  \brief Mosaic background in menus
+ */
 
 #include "STDAFX.H"
 #include "CMosaic.h"

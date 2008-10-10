@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CMenuLevel.h
+/**
+ *  \file CMenuLevel.h
+ *  \brief Header file of the level menu
+ */
 
 #ifndef __CMENULEVEL_H__
 #define __CMENULEVEL_H__

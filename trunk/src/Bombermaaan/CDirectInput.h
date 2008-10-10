@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-////////////////////
-// CDirectInput.h
+/**
+ *  \file CDirectInput.h
+ *  \brief Header file of the direct input on Windows
+ */
 
 #ifndef __CDIRECTINPUT_H__
 #define __CDIRECTINPUT_H__

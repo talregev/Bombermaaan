@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CDirectDraw.cpp
+/**
+ *  \file CDirectDraw.cpp
+ *  \brief Direct draw function calls on Windows
+ */
 
 #include "STDAFX.H"
 #include "CDirectDraw.h"

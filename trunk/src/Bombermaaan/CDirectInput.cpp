@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CDirectInput.cpp
+/**
+ *  \file CDirectInput.cpp
+ *  \brief Handling input devices on Windows
+ */
 
 #include "STDAFX.H"
 #include "CDirectInput.h"

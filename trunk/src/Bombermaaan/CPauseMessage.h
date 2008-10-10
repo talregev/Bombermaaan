@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-/////////////////////////
-// CPauseMessage.h
+/**
+ *  \file CPauseMessage.h
+ *  \brief Header file of the pause message
+ */
 
 #ifndef __CPAUSEMESSAGE_H__
 #define __CPAUSEMESSAGE_H__

@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CControls.h
+/**
+ *  \file CControls.h
+ *  \brief Header file of the controls
+ */
 
 #ifndef __CCONTROLS_H__
 #define __CCONTROLS_H__

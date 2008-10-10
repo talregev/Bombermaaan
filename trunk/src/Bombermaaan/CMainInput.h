@@ -21,8 +21,10 @@
 ************************************************************************************/
 
 
-//////////////////////
-// CMainInput.h
+/**
+ *  \file CMainInput.h
+ *  \brief Header file of the main input
+ */
 
 #ifndef __CMAININPUT_H__
 #define __CMAININPUT_H__

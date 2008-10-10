@@ -20,8 +20,10 @@
 ************************************************************************************/
 
 
-///////////////////
-// CArenaCloser.h
+/**
+ *  \file CArenaCloser.h
+ *  \brief Header file of the arena closer
+ */
 
 #ifndef __CARENACLOSER_H__
 #define __CARENACLOSER_H__
