@@ -29,11 +29,10 @@
 #define __CPLAYERINPUT_H__
 
 #include "COptions.h"
-
 #ifdef WIN32
-class CDirectInput;
+#include "CDirectInput.h"
 #else
-class CSDLInput;
+#include "CSDLInput.h"
 #endif
 
 //******************************************************************************************************************************
@@ -60,11 +59,7 @@ class CPlayerInput
 {
 private:
 
-#ifdef WIN32
-	CDirectInput*       m_pDirectInput;
-#else
-	CSDLInput*			m_pDirectInput;
-#endif
+	InputClass*         m_pDirectInput;
     COptions*           m_pOptions;
     int                 m_PlayerInput;
     char                m_Name [MAX_PLAYER_INPUT_NAME_LENGTH];
@@ -76,13 +71,8 @@ public:
                         
                         CPlayerInput();
                         ~CPlayerInput();
-#ifdef WIN32
-    inline CDirectInput *GetDirectInput (void);
-    inline void         SetDirectInput (CDirectInput* pDirectInput);
-#else
-    inline CSDLInput   *GetDirectInput (void);
-    inline void         SetDirectInput (CSDLInput* pDirectInput);
-#endif
+    inline InputClass*  GetDirectInput (void);
+    inline void         SetDirectInput (InputClass* pDirectInput);
     inline void         SetOptions (COptions* pOptions);
     void                Create (int PlayerInput);
     void                Destroy (void);
@@ -106,20 +96,12 @@ public:
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-#ifdef WIN32
-inline CDirectInput* CPlayerInput::GetDirectInput (void)
-#else
-inline CSDLInput* CPlayerInput::GetDirectInput (void)
-#endif
+inline InputClass* CPlayerInput::GetDirectInput (void)
 {
     return m_pDirectInput;
 }
 
-#ifdef WIN32
-inline void CPlayerInput::SetDirectInput (CDirectInput* pDirectInput)
-#else
-inline void CPlayerInput::SetDirectInput (CSDLInput* pDirectInput)
-#endif
+inline void CPlayerInput::SetDirectInput (InputClass* pDirectInput)
 {
     m_pDirectInput = pDirectInput;
 }

@@ -89,11 +89,7 @@ class CMainInput
 private:
 
     CTimer*         m_pTimer;
-#ifdef WIN32
-	CDirectInput*   m_pDirectInput;
-#else
-	CSDLInput*		m_pDirectInput;
-#endif
+	InputClass*     m_pDirectInput;
     SMenuControl    m_MenuControls [NUMBER_OF_MENU_CONTROLS];
     SSystemControl  m_SystemControls [NUMBER_OF_SYSTEM_CONTROLS];
 
@@ -101,13 +97,8 @@ public:
 
                     CMainInput (void);
                     ~CMainInput (void);
-#ifdef WIN32
-	inline CDirectInput* GetDirectInput (void);
-	inline void     SetDirectInput (CDirectInput* pDirectInput);
-#else
-	inline CSDLInput* GetDirectInput (void);
-	inline void     SetDirectInput (CSDLInput* pDirectInput);
-#endif
+	inline InputClass* GetDirectInput (void);
+	inline void     SetDirectInput (InputClass* pDirectInput);
     inline void     SetTimer (CTimer* pTimer);
     void            Create (void);
     void            Destroy (void);
@@ -129,20 +120,12 @@ public:
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-#ifdef WIN32
-inline CDirectInput* CMainInput::GetDirectInput (void)
-#else
-inline CSDLInput* CMainInput::GetDirectInput (void)
-#endif
+inline InputClass* CMainInput::GetDirectInput (void)
 {
     return m_pDirectInput;
 }
 
-#ifdef WIN32
-inline void CMainInput::SetDirectInput (CDirectInput* pDirectInput)
-#else
-inline void CMainInput::SetDirectInput (CSDLInput* pDirectInput)
-#endif
+inline void CMainInput::SetDirectInput (InputClass* pDirectInput)
 {
     m_pDirectInput = pDirectInput;
 }
