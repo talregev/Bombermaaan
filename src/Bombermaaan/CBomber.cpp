@@ -229,7 +229,7 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
  *  \brief Manhattan distance
  *  Used for contamination to determine if a bomber can be considered to be NEAR another bomber.
  *  A bomber is near another if abs(x2-x1) + abs(y2-y1) <= CONTAMINATION_NEAR. 
- *  This is the manhanttan distance in pixels (http://en.wikipedia.org/wiki/Manhattan_distance).
+ *  This is the manhattan distance in pixels (http://en.wikipedia.org/wiki/Manhattan_distance).
  */
 #define CONTAMINATION_NEAR      9        
 
@@ -921,7 +921,7 @@ void CBomber::Animate (float DeltaTime)
         else if (m_BomberState == BOMBERSTATE_WALK ||
                  m_BomberState == BOMBERSTATE_WALK_HOLD)
         {        
-            // If the bomber Has to move (no sickness) or he has the inertia 
+            // If the bomber has to move (no sickness) or he has the inertia 
             // sickness and he could move, then play the walk animation
             if (m_BomberMove.GetMove() != BOMBERMOVE_NONE && 
                (m_Sickness != SICK_INERTIA || m_BomberMove.CouldMove()))
@@ -1222,8 +1222,9 @@ void CBomber::Animate (float DeltaTime)
         if (m_SickTimer < ANIMSICK_TIME1)
         {
             // Sick color
-            if ( m_BomberState == BOMBERSTATE_WALK && m_Sickness == SICK_INVISIBILITY ) {
-                // The bomber-walk sprites have an additional series if the bomber is invisible (only the bomber's border can be seen)
+            if ( m_Sickness == SICK_INVISIBILITY )
+            {
+                // The arena-bomber-alive sprites have an additional series for the invisible bomber (only the bomber's border can be seen)
                 m_Sprite += SICK_SPRITE_ROW_SHADOW * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
             } else {
                 m_Sprite += SICK_SPRITE_ROW_FULL * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
@@ -1244,8 +1245,8 @@ void CBomber::Animate (float DeltaTime)
             // Reset timer
             m_SickTimer = 0.0f;
             // Sick color
-            if ( m_BomberState == BOMBERSTATE_WALK && m_Sickness == SICK_INVISIBILITY ) {
-                // The bomber-walk sprites have an additional series if the bomber is invisible (only the bomber's border can be seen)
+            if ( m_Sickness == SICK_INVISIBILITY ) {
+                // The arena-bomber-alive sprites have an additional series for the invisible bomber (only the bomber's border can be seen)
                 m_Sprite += SICK_SPRITE_ROW_SHADOW * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
             } else {
                 m_Sprite += SICK_SPRITE_ROW_FULL * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
