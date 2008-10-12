@@ -101,8 +101,13 @@
 #define ANIM_FIRE7      6
 
 // Offset when drawing fire sprites
+#ifdef USE_32_PIXELS_PER_BLOCK
+#define FIRE_OFFSETX        (-10)
+#define FIRE_OFFSETY        (-(54-32))
+#else
 #define FIRE_OFFSETX        (-5)
-#define FIRE_OFFSETY        (-11)
+#define FIRE_OFFSETY        (-(27-16))
+#endif
 
 #define ARENA_ITEM_SPRITETABLE              3
 #define ARENA_FIRE_SPRITETABLE              6
