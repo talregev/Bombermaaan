@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -113,19 +114,27 @@ void CDemo::Create (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+/**
+ *  \brief Modify the options to suit the demo mode.
+ *
+ *  We are working on a copy of the game options, so we can the settings without influencing the game options.
+ *
+ *  \sa CDemo::SetOptions
+ */
+
 void CDemo::SetupOptions (void)
 {
-    // For each player
+    //! For each player
     for (int Player = 0 ; Player < MAX_PLAYERS ; Player++)
     {
-        // This player is the computer
+        //! - This player is the computer
         m_Options.SetBomberType (Player, BOMBERTYPE_COM);
     }
 
-    // Play in a random level
+    //! Play in a random level.
     m_Options.SetLevel (RANDOM(m_Options.GetNumberOfLevels()));
 
-    // Set default start time and time up.
+    //! Set default start time (1:00 min.) and time up (35 sec.).
     m_Options.SetTimeStart (1, 0);
     m_Options.SetTimeUp (0, 35);
 }
@@ -142,8 +151,8 @@ void CDemo::CreateMainComponents (void)
     m_Clock.Create (CLOCKTYPE_COUNTDOWN,                    // Time decreases until zero
                     CLOCKMODE_MS,                           // Compute minutes and seconds
                     0,                                      // Start hours
-                    1,                                      // Start minutes
-                    0,                                      // Start seconds
+                    m_Options.GetTimeStartMinutes(),        // Start minutes
+                    m_Options.GetTimeStartSeconds(),        // Start seconds
                     0);                                     // Start seconds100
 }
 
@@ -344,16 +353,16 @@ void CDemo::ManageExit (void)
 void CDemo::UpdateMatch (void)
 {
     // If the hurry up is enabled
-    if (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0)
+    if (m_Options.GetTimeUpMinutes() != 0 || m_Options.GetTimeUpSeconds() != 0)
     {
         // If the arena is not closing
         if (!m_NoticedTimeUp && !m_Arena.GetArenaCloser().IsClosing())
         {
             // If the clock's current time is less than (or equal to) to the timeup's time
-            if (m_Clock.GetMinutes() < m_pOptions->GetTimeUpMinutes() 
+            if (m_Clock.GetMinutes() < m_Options.GetTimeUpMinutes() 
                 ||
-                (m_Clock.GetMinutes() == m_pOptions->GetTimeUpMinutes() && 
-                 m_Clock.GetSeconds() <= m_pOptions->GetTimeUpSeconds()))
+                (m_Clock.GetMinutes() == m_Options.GetTimeUpMinutes() && 
+                 m_Clock.GetSeconds() <= m_Options.GetTimeUpSeconds()))
             {
                 // Make the arena start closing
                 m_Arena.GetArenaCloser().Start ();
@@ -404,11 +413,11 @@ void CDemo::UpdateDemoText (void)
 void CDemo::ManageHurryUpMessage (void)
 {
     // If the hurry up is enabled
-    if (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0)
+    if (m_Options.GetTimeUpMinutes() != 0 || m_Options.GetTimeUpSeconds() != 0)
     {
         // Dummy variables
         int ClockTotalSeconds = m_Clock.GetMinutes() * 60 + m_Clock.GetSeconds();
-        int TimeUpTotalSeconds = m_pOptions->GetTimeUpMinutes() * 60 + m_pOptions->GetTimeUpSeconds();
+        int TimeUpTotalSeconds = m_Options.GetTimeUpMinutes() * 60 + m_Options.GetTimeUpSeconds();
 
         //// If the time is between TIMEUP and TIMEUP+1sec
         //if (ClockTotalSeconds >= TimeUpTotalSeconds && ClockTotalSeconds <= TimeUpTotalSeconds + 1)
@@ -527,8 +536,8 @@ void CDemo::ManageMatchOver (void)
         m_ExitModeTime = m_ModeTime + PAUSE_WINNER;
     }
     // If time is up (match is finished)
-    else if (m_pOptions->GetTimeUpMinutes() == 0 && m_pOptions->GetTimeUpSeconds() == 0 &&
-             (m_pOptions->GetTimeStartMinutes() != 0 || m_pOptions->GetTimeStartSeconds() != 0) &&
+    else if (m_Options.GetTimeUpMinutes() == 0 && m_Options.GetTimeUpSeconds() == 0 &&
+             (m_Options.GetTimeStartMinutes() != 0 || m_Options.GetTimeStartSeconds() != 0) &&
              m_Clock.GetMinutes() == 0 && m_Clock.GetSeconds() == 0)
     {
         // Match is over

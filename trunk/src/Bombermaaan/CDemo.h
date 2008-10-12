@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -128,10 +129,10 @@ inline void CDemo::SetOptions (COptions *pOptions)
     
     CModeScreen::SetOptions (pOptions);
     
-    // Make a copy of the options object. This copy will be customized to suit our needs.
+    //! Make a copy of the options object. This copy will be customized to suit our needs.
     m_Options = *pOptions;
     
-    // Give the objects of the demo match this copy of the options object
+    //! Give the objects of the demo match this copy of the options object.
     m_Board.SetOptions (&m_Options);
     m_Arena.SetOptions (&m_Options);
 }
