@@ -380,6 +380,17 @@ void CBomber::Die (void)
                         // Make him throw the bomb (with no bomber throwing animation)
                         MakeBombFly(BOMBFLIGHTTYPE_THROW);
                     }
+                    // If the bomber died while punching a bomb
+                    else if (m_BomberState == BOMBERSTATE_PUNCH )
+                    {
+                        // Make him punch the bomb now (with no bomber punching animation).
+                        // Yes, that's strange, since he is dying now. But we have to release the bomb
+                        // otherwise it won't explode (bug tracker #2160381). Besides, this can only happen
+                        // during the first animation sequence (ANIMBOMBPUNCHING_TIME1) so the human
+                        // players should not notice since it's just 0.08 seconds currently.
+                        MakeBombFly(BOMBFLIGHTTYPE_PUNCH);
+                    }
+                    //! @todo check if another else assert(0) makes sense since we still have a bomb (m_BombIndex != -1)
                 }
 
                 m_Dead = DEAD_DYING;
