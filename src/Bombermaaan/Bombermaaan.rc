@@ -80,7 +80,7 @@ BEGIN
   BEGIN
     BLOCK "040904E4"
     BEGIN
-      VALUE "CompanyName", "\0"
+      VALUE "CompanyName", "http://bombermaaan.sourceforge.net/\0"
       VALUE "FileVersion", "1.3.2.540\0"
       VALUE "FileDescription", "Bombermaaan executable file\0"
       VALUE "InternalName", "Bombermaaan.exe\0"
@@ -92,7 +92,7 @@ BEGIN
     END
     BLOCK "040704E4"
     BEGIN
-      VALUE "CompanyName", "\0"
+      VALUE "CompanyName", "http://bombermaaan.sourceforge.net/\0"
       VALUE "FileVersion", "1.3.2.540\0"
       VALUE "FileDescription", "Bombermaaan ausführbare Datei\0"
       VALUE "InternalName", "Bombermaaan.exe\0"
