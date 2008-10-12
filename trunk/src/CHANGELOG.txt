@@ -21,6 +21,7 @@ Bug fix: Sometimes bots were stuck in the "WALK MODE". If they stay in there too
 Bug fix: A bomb could have been "lifted again" if it already was lifted.
 Bug fix: A level could contain too many items (in walls/initial skills of the bomber). That means the sum of maximum items must not exceed 50. (Initial skill items * 5 + Items in Walls <= 50)
 Bug fix: Sometimes too many walls were created causing a game crash.
+Bug fix: A bomb was not exploding after being punched and the punching bomber was killed (bug tracker #2160381).
 
 
 ----------------------------

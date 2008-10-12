@@ -631,7 +631,9 @@ bool CBomb::Update (float DeltaTime)
     if (!m_Dead)
     {    
         // If there is no bomber doing something on this bomb and it is not flying,
-        // then it can tick and explode
+        // then it can tick and explode.
+        // Note: The states set by a bomber (lifted, held, punched) must be reset 
+        //       when a bomber dies or the bomb will never explode (see CBomber::Die()).
         if (!m_BeingLifted && !m_BeingHeld && !m_BeingPunched && m_BombFly == BOMBFLY_NONE)
         {        
 			// dont update timer if it is a not activated remote bomb
