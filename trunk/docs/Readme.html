@@ -66,18 +66,18 @@ recommended you set your display to at least
 16 bit color depth. A sound card is recommended.
 </p>
 
-<h2>Parameters and switches</h2>
+<h2>Parameters and switches for Win32</h2>
 
 <p>
 When Bombermaaan is called without a command line parameter (started with mouse click for example),
 the game fetches level files from the directory &lt;path-to-exe-file&gt;\Levels. The configuration
-file named config.dat and log file named log.dat are read and/or written in the same folder where
+file named config.xml and log file named log.txt are read and/or written in the same folder where
 the called exe file resides.
 </p>
 
 <p>
 Since some Windows systems (Vista for example) don't allow the creation of files in the program's
-directory, Bombermaaan was modified so the dynamic files (config.dat and log.dat) are handled
+directory, Bombermaaan was modified so the dynamic files (config.xml and log.txt) are handled
 in a subfolder of the user's application data folder.<br />
 You can use <kbd>echo %appdata%</kbd> in the command line to see where your application folder is
 placed. Bombermaaan creates a subfolder called &quot;Bombermaaan&quot;. You can browse to this folder by
@@ -89,6 +89,29 @@ Bombermaaan exe file.<br />
 Users can store their own level files in the %appdata%\Bombermaaan\Levels directory. These files
 are also loaded as level files. So there is no need to touch the program files directory. Remember:
 this behaviour is enabled when the <kbd>--use-appdata-dir</kbd> parameter is used.
+</p>
+
+<p>
+You can call Bombermaaan with the <kbd>--help</kbd> switch to see a message box with
+copyright and license notice.
+</p>
+
+<h3>Parameters and switches for Linux</h2>
+
+<p>
+When Bombermaaan is called without a command line parameter (started with mouse click for example),
+the game fetches level files from the directory &lt;path-to-executable-file&gt;\Levels. The configuration
+file named config.xml and log file named log.txt are read and/or written in your home folder <code>~/.Bombermaaan</code>.
+<br />
+Users can store their own level files in the ~\.Bombermaaan\Levels directory. These files
+are also loaded as level files. So there is no need to touch the folder where the executable files are stored.
+</p>
+
+<p>
+If you don't like this behavior you can pass the <kbd>--dont-use-appdata-dir</kbd> switch to the executable.<br />
+<strong>This behaviour is NOT enabled by default.</strong><br />
+To enable the use of the local folder, append <kbd>--dont-use-appdata-dir</kbd> when calling the
+Bombermaaan executable file.
 </p>
 
 <p>
