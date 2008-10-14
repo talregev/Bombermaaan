@@ -66,23 +66,31 @@ These are the steps how to get Bombermaaan successfully compiled on Windows 32 b
 
 <h2>Compiler setup Linux</h2>
 
-These are the steps how to get Bombermaaan successfully compiled on Linux. This list was not verified yet.
-I assume you already have the basic GNU compiler and linker package installed.
+These are the steps how to get Bombermaaan successfully compiled on Linux. This list has not been verified yet.
+I assume you already have the basic GNU compiler and linker package installed. Sorry, I don't know the necessary package 
+names at the moment. I'll add them as soon as I know.
 
 - Install the development libraries for SDL and SDL_mixer<br>
   sudo apt-get install libsdl1.2-dev libsdl-mixer1.2-dev
 
+- Create a new directory
+
 - Get the source code from the SourceForge.net download page:
   https://sourceforge.net/project/showfiles.php?group_id=81520<br>
   The source code packages are named like <i>Bombermaaan_1.3.2.557e_20081004_<strong>src</strong>.tar.gz</i><br>
-  Extract the contents
+  Extract the contents to the new directory
 
 - Get the resource files (sound and image):
   https://sourceforge.net/project/showfiles.php?group_id=81520&package_id=293941<br>
   The resource packages are named like <i>Bombermaaan_1.3.2.572e_20081006_<strong>res</strong>.tar.gz</i><br>
-  Extract the contents to the Bombermaaan folder
+  Extract the contents to the same new directory
 
-- You should be able to compile Bombermaaan now
+- You should be able to compile Bombermaaan now<br>
+  Change to the new directory and type <kbd>make</kbd>
+
+- Ensure you have some level files in the ./Bombermaaan/Levels directory
+
+- Change to directory ./Bombermaaan and type <kbd>LD_LIBRARY_PATH=../RESGEN ./Bombermaaan</kbd>
 
 
 <h2>Credits</h2>
