@@ -46,8 +46,6 @@ case "$1" in
                         RELEASETYPE=experimental
                         ;;
     --stable)
-                        # Not working yet
-                        usage
                         RELEASETYPE=stable
                         ;;
     --snapshot)
@@ -78,7 +76,11 @@ else
 fi
 
 # The 'e' means experimental
-BASENAME=Bombermaaan_${VERSION}.${REVISION}e_`date '+%Y%m%d'`
+if [ "$RELEASETYPE" = "experimental" ] ; then
+    BASENAME=Bombermaaan_${VERSION}.${REVISION}e_`date '+%Y%m%d'`
+else
+    BASENAME=Bombermaaan_${VERSION}.${REVISION}_`date '+%Y%m%d'`
+fi
 TARGETDIR=${BASENAME}_${SYSSUFFIX}
 TARGETGZ=${BASENAME}_${SYSSUFFIX}.tar.gz
 TARGETZIP=${BASENAME}_${SYSSUFFIX}.zip
@@ -179,8 +181,22 @@ if [ "$SYSTEM" = "Linux" ] ; then
     cp ../../src/Bombermaaan/Bombermaaan        "$TARGETDIR/."                  || error "Copy ended with return code $?."
     strip $TARGETDIR/Bombermaaan                                                || error "Strip ended with return code $?."
 else
-    cp ../../src/_Test_/Release/Bombermaaan.exe        "$TARGETDIR/."           || error "Copy ended with return code $?."
-    cp ../../src/_Test_/Release/Bombermaaan_32.dll        "$TARGETDIR/."        || error "Copy ended with return code $?."
+    if [ "$RELEASETYPE" = "experimental" ] ; then
+        # Experimental release: only the 32-pixels version is distributed
+        cp ../../src/_Test_/Release/Bombermaaan.exe        "$TARGETDIR/."           || error "Copy ended with return code $?."
+        cp ../../src/_Test_/Release/Bombermaaan_32.dll        "$TARGETDIR/."        || error "Copy ended with return code $?."
+    else
+        # Stable release: distribute both 16- and 32-pixels version
+        # The files have to be renamed manually to ..._16.exe and ..._32.exe
+        # Build 32-pixels version, rename output file Bombermaaan.exe to Bombermaaan_32.exe
+        # Change file STDAFX.H: comment define USE_32_PIXELS_PER_BLOCK and rebuild solution
+        # Rename output file Bombermaaan.exe to Bombermaaan_16.exe
+        # Run this script again
+        cp ../../src/_Test_/Release/Bombermaaan_16.exe        "$TARGETDIR/."        || error "Copy ended with return code $?."
+        cp ../../src/_Test_/Release/Bombermaaan_32.exe        "$TARGETDIR/."        || error "Copy ended with return code $?."
+        cp ../../src/_Test_/Release/Bombermaaan.dll        "$TARGETDIR/."           || error "Copy ended with return code $?."
+        cp ../../src/_Test_/Release/Bombermaaan_32.dll        "$TARGETDIR/."        || error "Copy ended with return code $?."
+    fi
 fi
 
 cp ../../src/CHANGELOG.txt        "$TARGETDIR/."                                || error "Copy ended with return code $?."
@@ -228,33 +244,33 @@ mkdir "$SRCTARGETDIR"                                                           
 mkdir "$SRCTARGETDIR/Bombermaaan"                                               || error "Mkdir ended with return code $?."
 cp ../../src/Bombermaaan/*.cpp "$SRCTARGETDIR/Bombermaaan/."                    || error "Copy ended with return code $?."
 cp ../../src/Bombermaaan/*.h "$SRCTARGETDIR/Bombermaaan/."                      || error "Copy ended with return code $?."
-if [ "$SYSTEM" = "Linux" ] ; then
 cp ../../src/Bombermaaan/*.CPP "$SRCTARGETDIR/Bombermaaan/."                    || error "Copy ended with return code $?."
 cp ../../src/Bombermaaan/*.H "$SRCTARGETDIR/Bombermaaan/."                      || error "Copy ended with return code $?."
-fi
+cp ../../src/Bombermaaan/*.rc "$SRCTARGETDIR/Bombermaaan/."                     || error "Copy ended with return code $?."
 cp ../../src/Bombermaaan/Makefile "$SRCTARGETDIR/Bombermaaan/."                 || error "Copy ended with return code $?."
 cp ../../src/Bombermaaan/Makefile.win "$SRCTARGETDIR/Bombermaaan/."             || error "Copy ended with return code $?."
 
 mkdir "$SRCTARGETDIR/RES"                                                       || error "Mkdir ended with return code $?."
 cp ../../src/RES/*.cpp "$SRCTARGETDIR/RES/."                                    || error "Copy ended with return code $?."
 cp ../../src/RES/*.h "$SRCTARGETDIR/RES/."                                      || error "Copy ended with return code $?."
-if [ "$SYSTEM" = "Linux" ] ; then
 cp ../../src/RES/*.CPP "$SRCTARGETDIR/RES/."                                    || error "Copy ended with return code $?."
-fi
+cp ../../src/RES/*.rc "$SRCTARGETDIR/RES/."                                     || error "Copy ended with return code $?."
 cp ../../src/RES/Makefile.win "$SRCTARGETDIR/RES/."                             || error "Copy ended with return code $?."
 
 mkdir "$SRCTARGETDIR/RES32"                                                     || error "Mkdir ended with return code $?."
 cp ../../src/RES32/*.cpp "$SRCTARGETDIR/RES32/."                                || error "Copy ended with return code $?."
 cp ../../src/RES32/*.h "$SRCTARGETDIR/RES32/."                                  || error "Copy ended with return code $?."
-if [ "$SYSTEM" = "Linux" ] ; then
 cp ../../src/RES32/*.CPP "$SRCTARGETDIR/RES32/."                                || error "Copy ended with return code $?."
-fi
+cp ../../src/RES32/*.rc "$SRCTARGETDIR/RES32/."                                 || error "Copy ended with return code $?."
 cp ../../src/RES32/Makefile.win "$SRCTARGETDIR/RES32/."                         || error "Copy ended with return code $?."
 
 mkdir "$SRCTARGETDIR/RESGEN"                                                    || error "Mkdir ended with return code $?."
 cp ../../src/RESGEN/ResGen.cpp "$SRCTARGETDIR/RESGEN/."                         || error "Copy ended with return code $?."
 cp ../../src/RESGEN/ResGen.h "$SRCTARGETDIR/RESGEN/."                           || error "Copy ended with return code $?."
 cp ../../src/RESGEN/Makefile "$SRCTARGETDIR/RESGEN/."                           || error "Copy ended with return code $?."
+
+mkdir "$SRCTARGETDIR/third-party"                                               || error "Mkdir ended with return code $?."
+rsync -a --exclude '.svn' ../../src/third-party/* "$SRCTARGETDIR/third-party/."                     || error "Rsync ended with return code $?."
 
 cp ../../src/CHANGELOG.txt        "$SRCTARGETDIR/."                             || error "Copy ended with return code $?."
 cp ../../src/Makefile        "$SRCTARGETDIR/."                                  || error "Copy ended with return code $?."
