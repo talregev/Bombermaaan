@@ -347,6 +347,8 @@ tar czf "$RESTARGETGZ" "$RESTARGETDIR"        || error "Tar ended with return co
 
 echo Creating $RELEASETYPE resource release package for version $VERSION, rev. $REVISION now...
 
+# Delete MD5 files (I don't think we need them)
+rm -rf ../../doxygen/output/html/*.md5
 tar czf "$DXDTARGETGZ" "../../doxygen/output/html"        || error "Tar ended with return code $?."
 
 #
