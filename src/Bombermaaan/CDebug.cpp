@@ -101,30 +101,37 @@ CDebug& CDebug::GetInstance()
 //******************************************************************************************************************************
 
 /**
- * @brief   handles a key code for debug purposes
- * @param   VirtualKeyCode  Key to handle
- * @param   Modifier        Modifier (SDL only)
+ *  @brief   Handles a key code for debug purposes
+ *
+ *  While holding the CTRL key:
+ *
+ *  CONTROL GAME SPEED
+ *  The enter key on the numeric pad sets the game speed to normal
+ *  The * on the numeric pad makes the game very fast
+ *  The / on the numeric pad makes the game very slow
+ *  The + on the numeric pad increases the game speed
+ *  The - on the numeric pad decreases the game speed
+ *
+ *  START OR RESTART A MATCH
+ *  Press the F1 key
+ *  You may run out of bombs if you do this to often. Example: one bomber is holding a bomb
+ *  while restarting the match by pressing Ctrl+F1. This is because m_BombsInUse of CArena is 
+ *  not reduced.
+ *  I guess it can't happen in a 'normal' game because the bomber throws his bomb when he dies or
+ *  he is the winner of the match. At least I couldn't recreate this issue in a 'normal' game.
+ *
+ *  TOGGLE THE BOMBERS' INVULNERABILITY
+ *  Press the F2 key
+ *
+ *  TOGGLE THE DEBUGGING INFORMATION OF EACH COMPUTER PLAYER
+ *  Press the number of the player (0-4)
+ *
+ *  @param   VirtualKeyCode  Key to handle
+ *  @param   Modifier        Modifier (SDL only)
  */
 
 void CDebug::HandleKey (DWORD VirtualKeyCode, DWORD Modifier)
 {
-    // While holding the CTRL key :
-    
-    // CONTROL GAME SPEED
-    // The return key on the numeric pad sets the game speed to normal
-    // The * on the numeric pad makes the game very fast
-    // The / on the numeric pad makes the game very slow
-    // The + on the numeric pad increases the game speed
-    // The - on the numeric pad decreases the game speed
-
-    // START OR RESTART A MATCH
-    // Press the F1 key
-
-    // TOGGLE THE BOMBERS' INVULNERABILITY
-    // Press the F2 key
-
-    // TOGGLE THE DEBUGGING INFORMATION OF EACH COMPUTER PLAYER
-    // Press the number of the player (0-4)
     
 #ifdef WIN32
     if (GetKeyState(VK_CONTROL) & 0x8000)
