@@ -2,7 +2,7 @@ CPP  = g++
 CC   = gcc
 HOSTCPP = g++
 WINDRES = 
-RES  = 
+RES  = $(wildcard ../RES32/IMAGE/*.bmp) $(wildcard ../RES32/SOUND/*.*)
 OBJ  = ResData.o
 LINKOBJ  = ResData.o
 LIBS = 
@@ -46,6 +46,6 @@ ResData.o: ResData.c
 ResData.c: $(RESGENBIN)
 	$(RESGENBIN)
 
-ResGen: ResGen.cpp
+ResGen: $(RES) ResGen.cpp
 	$(HOSTCPP) -o ResGen ResGen.cpp $(CXXFLAGS)
 
