@@ -5,15 +5,15 @@
 ;
 
 ; The APPID is kept as long as the first two numbers in the version are the same
-; (the whole 1.3 version uses the same APPID)
+; (the whole 1.4 version uses the same APPID)
 ; (yes, two opening curly braces and only one closing curly brace)
-#define APPID "{{577ACC96-0D1D-4AA1-BFCC-DA0630FA24B0}"       <------------ Needs to be changed for version 1.4!
+#define APPID "{{451C4ACA-0B6A-4564-BD9D-A6C365DB9C76}"
 
 #define MAJOR 1
 #define MINOR 4
 #define RELEASE 0
-#define BUILD 476       <------------ Needs to be changed for version 1.4!
-#define BUILDDATE "20081011"       <------------ Needs to be changed for version 1.4!
+#define BUILD 627
+#define BUILDDATE "20081018"
 
 #define APPVERFULL Str(MAJOR) + "." + Str(MINOR) + "." + Str(RELEASE) + "." + Str(BUILD)
 #define APPVERMAIN Str(MAJOR) + "." + Str(MINOR)
@@ -41,7 +41,7 @@ VersionInfoVersion={#APPVERFULL}
 VersionInfoDescription=Installer for Bombermaaan
 VersionInfoCopyright=Copyright (C) 2000-2002, 2007, 2008 Thibaut Tollemer, Bernd Arnold, Jerome Bigot, Markus Drescher
 WizardImageFile=compiler:wizmodernimage-is.bmp
-; This is not the best image since the setup dialog shows only square, not a rectangle
+; This is not the best image since the setup dialog shows only a square, not a rectangle
 WizardSmallImageFile=HeaderImage_Innosetup.bmp
 WizardImageStretch=false
 
@@ -117,7 +117,7 @@ Name: {app}\Levels
 
 [Registry]
 Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: InstallDirectory; ValueData: {app}\; Flags: uninsdeletekey; Tasks: ; Languages: 
-; The data of the following three registry keys is updated for every update of version 1.3 - so it reflects the latest update of version 1.3
+; The data of the following three registry keys is updated for every update of version 1.4 - so it reflects the latest update of version 1.4
 Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: Version; ValueData: {#APPVERFULL}; Flags: uninsdeletekey; Tasks: ; Languages: 
 Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: Build; ValueData: {#BUILD}; Flags: uninsdeletekey; Tasks: ; Languages: 
 Root: HKLM; Subkey: Software\Bombermaaan\Version {#APPVERMAIN}; ValueType: string; ValueName: Builddate; ValueData: {#BUILDDATE}; Flags: uninsdeletekey; Tasks: ; Languages: 

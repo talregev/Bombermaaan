@@ -1,4 +1,6 @@
-Next version
+Version 1.4
+
+Released on October 18, 2008
 
 New feature: Bombs can be remotely fused by a bomber (by Jerome Bigot, revision 527, #2122157) including AI support (by Markus Drescher, revision 536).
 New feature: AI bomber is punching bombs when he is jammed by a bomb and picked up the punch item (by Markus Drescher).
