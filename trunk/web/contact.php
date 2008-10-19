@@ -53,7 +53,7 @@ If you like to tell us bugs or feature requests etc., please use the trackers li
 <h2>Forums</h2>
 
 <p>
-You can visit the <a href="https://sourceforge.net/forum/?group_id=81520">forums</a> on SourceForge.net.
+You can visit the <a href="http://apps.sourceforge.net/phpbb/bombermaaan/">forums</a>, based on phpBB. The forums are not completely set up. There's only a test forum so far.
 </p>
 
 </div>

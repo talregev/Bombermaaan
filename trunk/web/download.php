@@ -9,23 +9,45 @@ $webpage->head();
 $downloads = array(
 	"stable" => array(
 		array(
-		"Bombermaaan_1.3.1.476_setup.exe",
+		"Bombermaaan_1.4.0.627_setup.exe",
 		"Installer for Win32",
-		"ae7d8bdefb90a7b01692f3f7f652cbe0", // MD5
-		"d5397092732f21a2f1febced85d1fe7777e19d7a"  // SHA1
+        "Installs Bombermaaan on your Windows system. An uninstaller is provided, too.",
 		),
 		array(
-		"Bombermaaan_1.3.1_2008-07-27.zip",
+		"Bombermaaan_1.4.0.627_20081018_win32.zip",
 		"Zip file for Win32",
-		"1918c688f0ba318ea58e39ed69e15565",  // MD5
-		"1c278a34cc94ec853a04b140e2aafa40067047ce",  // SHA1
+        "Simply play Bombermaaan without installing it. Just extract all files to a folder and run Bombermaaan. No files are changed outside this directory.",
 		),
-		/** not available yet
 		array(
-		"Bombermaaan_102_src.zip",
-		"Source",
+		"bombermaaan_1.4.0-1_i386.deb",
+		"Debian package for i386",
+        "Installer package. The bombermaaan-data package is required, too.",
 		),
-		**/
+		array(
+		"bombermaaan-data_1.4.0-1_i386.deb",
+		"Debian package for i386",
+        "Installer package for the data files. The bombermaaan package is required, too.",
+		),
+		array(
+		"bombermaaan_1.4.0-1_amd64.deb",
+		"Debian package for AMD64",
+        "Installer package. The bombermaaan-data package is required, too.",
+		),
+		array(
+		"bombermaaan-data_1.4.0-1_amd64.deb",
+		"Debian package for AMD64",
+        "Installer package for the data files. The bombermaaan package is required, too.",
+		),
+		array(
+		"Bombermaaan_1.4.0.627_20081018_linux32.tar.gz",
+		"Tar.gz file for Linux 32 bit",
+        "Simple play Bombermaaan without installing it. Just extract all files to a folder and run Bombermaaan.",
+		),
+		array(
+		"Bombermaaan_1.4.0.627_20081018_linux64.tar.gz",
+		"Tar.gz file for Linux 64 bit",
+        "Simple play Bombermaaan without installing it. Just extract all files to a folder and run Bombermaaan.",
+		),
 	),
 	"experimental" => array(
 		array(
@@ -49,57 +71,6 @@ $downloads = array(
 		"e8cfe19883caacce252381bb2b4ccf4fb66e67d4",  // SHA1
 		"2008-09-18",
 		),
-/***
-		array(
-		"Bombermaaan_16pixels_rev264_2.zip",
-		"Zip file for Win32",
-		"7d76897f720618c0d07f738a55e5acf7",  // MD5
-		"e3c22b1ad1354dc1e30363fd40bd0a79cbee7cdc",  // SHA1
-		"2008-02-11",
-		),
-		array(
-		"Bombermaaan_32pixels_rev264_2.zip",
-		"Zip file for Win32",
-		"34e31b4f3fdde59a043816eb77c13a25",  // MD5
-		"02dc2b9b76764b25000ff84185470148ef2d492f",  // SHA1
-		"2008-02-11",
-		),
-		array(
-		"Bombermaaan_16pixels_rev247.zip",
-		"Zip file for Win32",
-		"f8e2805b2412393938a797878913a107",  // MD5
-		"c709932483ff95248855e9a3b70de80b6841aadf",  // SHA1
-		"2008-01-08",
-		),
-		array(
-		"Bombermaaan_32pixels_rev247.zip",
-		"Zip file for Win32",
-		"104d77c19a842bd32431152cc63c52d6",  // MD5
-		"bf798be3603625ebc83ffdcfa207e51a422edb30",  // SHA1
-		"2008-01-08",
-		),
-		array(
-		"Bombermaaan_16pixels_rev153.zip",
-		"Zip file for Win32",
-		"1181367d3f2d981541ee83cb941a96cd",  // MD5
-		"2e09f99b46e2bdb8b99359f31f2ee9d5f6f53731",  // SHA1
-		"2008-01-02",
-		),
-		array(
-		"Bombermaaan_32pixels_rev153.zip",
-		"Zip file for Win32",
-		"13c300843201b08bba3153122055e94e",  // MD5
-		"3c0d513e7cf240a0609bfb36476ab1345a7defde",  // SHA1
-		"2008-01-02",
-		),
-		array(
-		"Bombermaaan_blocksize_32pixels_rev115.zip",
-		"Zip file for Win32",
-		"8719b863dae7e22e697354ba3c509a8f",  // MD5
-		"36cbd33e892c95135914cf7ffbd5d707e0dac7d9",  // SHA1
-		"2007-12-19",
-		),
-***/
 	),
 );
 
@@ -118,13 +89,13 @@ $downloads = array(
 </ul>
 </div>
 
-<h2><a id="stable">The current stable version is 1.3.1</a></h2>
+<h2><a id="stable">The current stable version is 1.4</a></h2>
 
 <table class="downloadbox">
 
 <tr>
 <th colspan="2">Package</th>
-<th>Checksums</th>
+<th>Description</th>
 </tr>
 
 <?php
@@ -133,8 +104,7 @@ foreach ( $downloads[ "stable" ] as $item ) {
 
 	$file = $item[ 0 ];
 	$text = $item[ 1 ];
-	$md5 = $item[ 2 ];
-	$sha1 = $item[ 3 ];
+    $desc = $item[ 2 ];
 
 ?>	
 <tr>
@@ -145,8 +115,7 @@ foreach ( $downloads[ "stable" ] as $item ) {
 <?php echo htmlentities( $text ); ?>
 </td>
 <td>
-<?php if ( ! empty( $md5 ) ) { echo "<small>MD5:&nbsp;</small><code>$md5</code><br />"; } ?>
-<?php if ( ! empty( $sha1 ) ) { echo "<small>SHA1:&nbsp;</small><code>$sha1</code><br />"; } ?>
+<?php echo htmlentities( $desc ); ?>
 </td>
 </tr>
 
@@ -159,7 +128,11 @@ foreach ( $downloads[ "stable" ] as $item ) {
 </table>
 
 <p>
-You can view the <a href="https://sourceforge.net/project/shownotes.php?release_id=615987&amp;group_id=81520">release notes</a> on the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download page</a> on SourceForge.net.
+<strong>The Linux files will be added soon!</strong>
+</p>
+
+<p>
+You can view the <a href="https://sourceforge.net/project/shownotes.php?release_id=634161&amp;group_id=81520">release notes</a> (including MD5 and SHA1 checksums) on the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520">download page</a> on SourceForge.net.
 </p>
 
 <p>
@@ -179,24 +152,20 @@ We release new packages from time to time. There is no fix time table.
 </p>
 
 <p>
-Looking for Linux files?<br />
-You can download <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331&amp;release_id=627216">Debian Linux package files</a> for x86 and AMD64.
-</p>
-
-<p>
 You can view the release notes. Check for the <img src="https://s.fsdn.com/sf/images/phoneix/icons/tango/edit-paste.png" alt="Release notes icon" /> icon near the release name. 
 You will also find the MD5 and SHA1 checksums there.
 </p>
 
-<h2><a id="sourcecode">Sourcecode</a></h2>
+<h2><a id="sourcecode">Source code</a></h2>
 
 <p>
-The sourcecode is hosted in the Subversion repository on SourceForge.net. 
+The source code is hosted in the Subversion repository on SourceForge.net. 
 If you have <a href="http://tortoisesvn.net/">TortoiseSVN</a> installed, you can check out the <a href="tsvn:https://bombermaaan.svn.sourceforge.net/svnroot/bombermaaan/trunk">whole sourcecode</a> by clicking on the weblink.
 </p>
 
 <p>
-The source code is also available as a package, see the <code>*_src.zip</code> and <code>*_src.tar.gz</code> files
+You can also download the source code of Bombermaaan in a single .zip and .tar.gz file. 
+See the <code>*_src.zip</code> and <code>*_src.tar.gz</code> files
 in the <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=83430">stable</a>
 and
 <a href="https://sourceforge.net/project/showfiles.php?group_id=81520&amp;package_id=256331">experimental</a>

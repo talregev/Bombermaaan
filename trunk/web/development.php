@@ -38,10 +38,7 @@ There is also a <code>*_srcdoc.tar.gz</code> file available in the <a href="http
 <h2>Compile Bombermaaan by yourself</h2>
 
 <p>
-There is a (incomplete so far) <a href="http://bombermaaan.svn.sourceforge.net/viewvc/*checkout*/bombermaaan/trunk/docs/how-to-compile.txt?revision=152">how-to guide</a> you can use if you want to compile Bombermaaan by yourself.
-Unfortunately, the image and sound files are not in the subversion repository yet. You can get them from the source package, though.
-This is true for the small sprites (16 pixels per block). You can delete the RES32 project from your VC++ solution to get Bombermaaan compiled.
-The RES32 project generates the DLL for the larger sprites (32 pixels per block).
+There is a <a href="http://bombermaaan.sourceforge.net/doxydoc/html/compileinstructions.html">how-to guide</a> you can use if you want to compile Bombermaaan by yourself.
 </p>
 
 <h2>Release steps</h2>
@@ -54,9 +51,14 @@ Compile instructions for Win32
 <li>Update version strings in file <code>src/Bombermaaan/Bombermaaan.rc</code> (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/Bombermaaan.rc?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
 <li>Update <code>BOMBERMAAAN_VERSION_STRING</code> and <code>BOMBERMAAAN_BUILD_STRING</code> in CGame.cpp (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/CGame.cpp?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
 <li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in <code>CGame.cpp</code> to comment</li>
-<li>Disable the console window (<code>#define ENABLE_CONSOLE</code> in CGame.cpp)</li>
+<li>Disable the console window (<code>#define ENABLE_CONSOLE</code> in <code>CGame.cpp</code>)</li>
 <li>Select configuration &quot;Release&quot; in the solution</li>
+<li>Enable switch <code>#define USE_32_PIXELS_PER_BLOCK</code> in <code>STDAFX.H</code></li>
 <li>Rebuild the solution</li>
+<li>Rename file <code>Bombermaaan.exe</code> by <code>Bombermaaan_32.exe</code></li>
+<li>Disable switch <code>#define USE_32_PIXELS_PER_BLOCK</code> in <code>STDAFX.H</code></li>
+<li>Rebuild the solution</li>
+<li>Rename file <code>Bombermaaan.exe</code> by <code>Bombermaaan_16.exe</code></li>
 </ul>
 
 <p>
@@ -65,13 +67,14 @@ Zip package for Win32
 
 <ul>
 <li>Update the file <code>CHANGELOG.txt</code></li>
-<li>Create a new folder <span title="For example, Bombermaaan_1.3_2008-05-07 (stable release) Bombermaaan_rev423_2008-05-07 (experimental release)"><code>Bombermaaan_<i>VERSION</i>_<i>RELEASE-DATE</i></code></span>.</li>
-<li>Place the files <code>Bombermaaan.exe</code>, <code>Bombermaaan.dll</code> and <code>FMOD.dll</code> in this directory</li>
-<li>Add the readme file <code>Readme.html</code></li>
-<li>Add the license file <code>COPYING.txt</code></li>
-<li>Add the file <code>CHANGELOG.txt</code></li>
-<li>Copy the directory with level files in the new folder</li>
-<li>Zip the folder</li>
+<li>Call the <code>create-release.sh</code> script with parameter <kbd>--stable</kbd></li>
+<li style="color: #aaa;">(done by script) Create a new folder <span title="For example, Bombermaaan_1.3_2008-05-07 (stable release) Bombermaaan_rev423_2008-05-07 (experimental release)"><code>Bombermaaan_<i>VERSION</i>_<i>RELEASE-DATE</i></code></span>.</li>
+<li style="color: #aaa;">(done by script) Place the files <code>Bombermaaan_16.exe</code>, <code>Bombermaaan_32.exe</code>, <code>Bombermaaan.dll</code> and <code>FMOD.dll</code> in this directory</li>
+<li style="color: #aaa;">(done by script) Add the readme file <code>Readme.html</code></li>
+<li style="color: #aaa;">(done by script) Add the license file <code>COPYING.txt</code></li>
+<li style="color: #aaa;">(done by script) Add the file <code>CHANGELOG.txt</code></li>
+<li style="color: #aaa;">(done by script) Copy the directory with level files in the new folder</li>
+<li style="color: #aaa;">(done by script) Zip the folder</li>
 </ul>
 
 <p>
@@ -79,8 +82,8 @@ Installer package for Win32
 </p>
 
 <ul>
-<li>Update version strings</li>
-<li>...</li>
+<li>Update version strings (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/installer/InstallScript.iss?r1=627&amp;r2=626&amp;pathrev=627">example</a>, see also <a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/installer/InstallScript.iss?r1=555&amp;r2=611&amp;pathrev=627">version numbers</a>)</li>
+<li>Generate installer .exe file using InnoSetup</li>
 </ul>
 
 <p>
@@ -89,9 +92,13 @@ Publishing
 
 <ul>
 <li>Upload the zip file to the SourceForge.net FTP server</li>
-<li>Add the file in the file release system</li>
+<li>Upload the installer file to the SourceForge.net FTP server</li>
+<li>Upload the source files to the SourceForge.net FTP server</li>
+<li>Upload the development files to the SourceForge.net FTP server</li>
+<li>Add the files in the file release system</li>
 <li>Update download page file web/download.php</li>
 <li>Upload file <code>CHANGELOG.txt</code> to web space</li>
+<li>Upload documentation files to web space</li>
 </ul>
 
 
