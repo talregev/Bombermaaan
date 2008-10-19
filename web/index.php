@@ -15,8 +15,7 @@ $webpage->head();
 <h2>Introduction</h2>
 
 <p>
-Bombermaaan is a classic bomberman game. It runs stable on Win32 and - very soon - on Linux, too. You can 
-already try the experimental release on Linux.
+Bombermaaan is a classic bomberman game. It runs stable on Win32 and Linux, too.
 </p>
 
 <p>
