@@ -1,3 +1,0 @@
-?package(abuse):needs="X11" section="Games/Action" \
-  title="Bombermaaan" command="/usr/games/Bombermaaan" \
-  hints="2D,Arcade"
