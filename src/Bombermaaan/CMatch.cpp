@@ -103,6 +103,9 @@ void CMatch::Create (void)
     // Don't have to exit this mode yet
     m_HaveToExit = false;
 
+    // Don't force a draw game at the beginning of the match
+    m_ForceDrawGame = false;
+
     if (NetworkMode != NETWORKMODE_LOCAL)
     {
         m_pOptions->SetTimeStart(2, 0);
@@ -653,8 +656,49 @@ void CMatch::UpdateMatch (void)
     // If the match is not paused
     if (m_pPauseMessage == NULL)
     {
+        int AliveCount_Human = 0;   // Number of alive human bombers
+        int AliveCount_AI    = 0;   // Number of alive computer controlled bombers
+
+        // Count human and AI bombers
+        for (int Player = 0 ; Player < m_Arena.MaxBombers() ; Player++)
+        {
+            // If this bomber exists
+            if (m_Arena.GetBomber(Player).Exist())
+            {
+                // If this bomber is alive
+                if (m_Arena.GetBomber(Player).IsAlive())        
+                {
+                    // Count number of human and AI alive bombers
+                    switch ( m_Arena.GetBomber(Player).GetBomberType() ) {
+                        case BOMBERTYPE_MAN:
+                        case BOMBERTYPE_NET:    AliveCount_Human++; break;
+                        case BOMBERTYPE_COM:    AliveCount_AI++;    break;
+                    }
+
+                }
+            }
+        }
+
+        bool ForceArenaClosing = false;
+
+        if ( AliveCount_Human == 0 && AliveCount_AI > 1 ) {
+
+            switch ( m_pOptions->GetOption_ActionWhenOnlyAIPlayersLeft() ) {
+                case ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME: m_ForceDrawGame = true; break;
+                case ACTIONONLYAIPLAYERSALIVE_STARTCLOSING: ForceArenaClosing = true; break;
+                case ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME: break;
+                default: ASSERT( false );
+            }
+
+            if ( ForceArenaClosing ) {
+                // Stop the match music song (the normal one)
+                m_pSound->StopSong( SONG_MATCH_MUSIC_1_NORMAL );
+            }
+
+        }
+
         // If the hurry up is enabled
-        if (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0)
+        if (m_pOptions->GetTimeUpMinutes() != 0 || m_pOptions->GetTimeUpSeconds() != 0 || ForceArenaClosing )
         {
             //------------------------------------
             // Check if arena should close
@@ -667,7 +711,9 @@ void CMatch::UpdateMatch (void)
                 if (m_Clock.GetMinutes() < m_pOptions->GetTimeUpMinutes() 
                     ||
                     (m_Clock.GetMinutes() == m_pOptions->GetTimeUpMinutes() && 
-                     m_Clock.GetSeconds() <= m_pOptions->GetTimeUpSeconds()))
+                     m_Clock.GetSeconds() <= m_pOptions->GetTimeUpSeconds())
+                    ||
+                    ForceArenaClosing )
                 {
                     // Make the arena start closing
                     m_Arena.GetArenaCloser().Start ();
@@ -797,6 +843,39 @@ void CMatch::ManageMatchOver (void)
 
             // Determine mode time when we have to start the last black screen
             m_ExitModeTime = m_ModeTime + PAUSE_DRAWGAME;
+        }
+        // If only AI bombers are alive then this is also a draw game
+        else if ( m_ForceDrawGame )
+        {
+            // Stop the match song which was playing
+            m_pSound->StopSong (m_CurrentSong);
+
+            // Match is over
+            m_MatchOver = true;
+        
+            // There is no winner
+            m_WinnerPlayer = NO_WINNER_PLAYER;
+
+            // Tell the arena to stop closing if it is
+            m_Arena.GetArenaCloser().Stop ();
+
+            // Make the board's clock animation stop
+            m_Board.SetClockAnimation (false);
+
+            // Determine mode time when we have to start the last black screen
+            m_ExitModeTime = m_ModeTime + PAUSE_DRAWGAME;
+
+            // Tell the bombers there is no command
+            for (int Player = 0 ; Player < m_Arena.MaxBombers() ; Player++)
+            {
+                // If the bomber exists and is alive
+                if (m_Arena.GetBomber(Player).Exist() &&
+                    m_Arena.GetBomber(Player).IsAlive())
+                {
+                    // Send him no commands so as to avoid a bug where he keeps walking
+                    m_Arena.GetBomber(Player).Command (BOMBERMOVE_NONE, BOMBERACTION_NONE);
+                }
+            }
         }
         // If one bomber is alive and none is dying then a bomber has won the match
         else if (AliveCount == 1 && DyingCount == 0) 

@@ -80,6 +80,7 @@ private:
     int             m_ExitGameMode;             //!< Game mode to ask for when exiting
     bool            m_HaveToExit;               //!< Do we have to exit this mode?
     bool            computerPlayersPresent;     //!< True, when there are AI players
+    bool            m_ForceDrawGame;            //!< Force a draw game when only AI bombers are alive?
     
     void            CreateMainComponents (void);
     void            DestroyHurryUpMessage (void);
