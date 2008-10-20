@@ -684,9 +684,10 @@ void CMatch::UpdateMatch (void)
         if ( AliveCount_Human == 0 && AliveCount_AI > 1 ) {
 
             switch ( m_pOptions->GetOption_ActionWhenOnlyAIPlayersLeft() ) {
-                case ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME: m_ForceDrawGame = true; break;
-                case ACTIONONLYAIPLAYERSALIVE_STARTCLOSING: ForceArenaClosing = true; break;
-                case ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME: break;
+                case ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME: m_ForceDrawGame = true;     break;
+                case ACTIONONLYAIPLAYERSALIVE_STARTCLOSING:     ForceArenaClosing = true;   break;
+                case ACTIONONLYAIPLAYERSALIVE_SPEEDUPGAME:      m_pTimer->SetSpeed( 7.0f ); break;
+                case ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME:     break;
                 default: ASSERT( false );
             }
 
@@ -958,6 +959,12 @@ void CMatch::ManageMatchOver (void)
 
             // Determine mode time when we have to start the last black screen
             m_ExitModeTime = m_ModeTime + PAUSE_DRAWGAME;
+        }
+
+        if ( m_MatchOver )
+        {
+            // Set the game speed to normal
+            m_pTimer->SetSpeed( 1.0f );
         }
     }
 }

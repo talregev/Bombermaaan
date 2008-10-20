@@ -94,7 +94,8 @@ enum EActionAIAlive
 {
     ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME,      //!< The game continues when only AI players are alive
     ACTIONONLYAIPLAYERSALIVE_STARTCLOSING,      //!< The arena starts closing when only AI players are alive
-    ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME   //!< The match ends and there is a draw game when only AI players are alive
+    ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME,  //!< The match ends and there is a draw game when only AI players are alive
+    ACTIONONLYAIPLAYERSALIVE_SPEEDUPGAME        //!< The game speed is increased
 };
 
 //******************************************************************************************************************************
@@ -327,6 +328,7 @@ inline EActionAIAlive COptions::GetOption_ActionWhenOnlyAIPlayersLeft()
 {
     //! @TODO This should really be an option
     return ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME;
+//    return ACTIONONLYAIPLAYERSALIVE_SPEEDUPGAME;
     //return ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME;
 }
 
