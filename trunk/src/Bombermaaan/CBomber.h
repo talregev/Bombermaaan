@@ -32,6 +32,7 @@
 
 #include "CElement.h"
 #include "CBomberMove.h"
+#include "COptions.h"
 
 class CArena;
 class CDisplay;
@@ -167,6 +168,7 @@ private:
     static SBomberSpriteTable m_BomberSpriteTables[MAX_NUMBER_OF_STATES]; //!< Information about the sprite table to use for each bomber state.
 	bool			m_MakeInvisible;				//!< If true, the bomber isn't visible in the arena (used for contamination)
     bool            m_HasExisted;                   //!< If true, this bomber exists or has existed in this match (m_Exist is set to false after the bomber' death)
+    COptions*       p_Options;                      //!< Pointer to the COptions object
     EBomberAction   m_CountBomberActionDuration;
     float           m_BomberActionDuration;
     bool            m_dropMassBombPossible;
@@ -233,6 +235,7 @@ public:
     inline int      GetBombIndex (void);            //!< Return the index of the bomb the bomber is possibly holding, lifting, or punching (if the bomber is throwing, this index is -1).
     inline bool     HasExisted(void);               //!< Return the has existed status variable
     inline void     ResetHasExisted(void);          //!< Reset the existed status variable to false
+    inline EBomberType GetBomberType (void);        //!< Return the bomber type (@see EBomberType)
 };
 
 //******************************************************************************************************************************
@@ -377,6 +380,11 @@ inline bool CBomber::HasExisted(void)
 inline void CBomber::ResetHasExisted(void)
 {
     m_HasExisted = false;
+}
+
+inline EBomberType CBomber::GetBomberType (void)
+{
+    return p_Options->GetBomberType( m_Player );
 }
 
 //******************************************************************************************************************************

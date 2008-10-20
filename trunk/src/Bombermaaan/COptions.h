@@ -90,6 +90,17 @@ enum EBomberSkills
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
+enum EActionAIAlive
+{
+    ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME,      //!< The game continues when only AI players are alive
+    ACTIONONLYAIPLAYERSALIVE_STARTCLOSING,      //!< The arena starts closing when only AI players are alive
+    ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME   //!< The match ends and there is a draw game when only AI players are alive
+};
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
 #define MAX_PLAYER_INPUT        10
 #define NUM_CONTROLS            6
 
@@ -170,6 +181,7 @@ public:
     inline int          GetLevel (void);
     inline int          GetNumberOfLevels (void);
     inline const char*  GetLevelName (void);
+    inline EActionAIAlive   GetOption_ActionWhenOnlyAIPlayersLeft();
 };
 
 //******************************************************************************************************************************
@@ -309,6 +321,13 @@ inline const char* COptions::GetLevelName (void)
 {
     ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
     return levelFileNames_short.at( m_Level ).c_str();
+}
+
+inline EActionAIAlive COptions::GetOption_ActionWhenOnlyAIPlayersLeft()
+{
+    //! @TODO This should really be an option
+    return ACTIONONLYAIPLAYERSALIVE_CONTINUEGAME;
+    //return ACTIONONLYAIPLAYERSALIVE_ENDMATCHDRAWGAME;
 }
 
 //******************************************************************************************************************************

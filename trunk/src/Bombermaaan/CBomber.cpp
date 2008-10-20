@@ -254,6 +254,9 @@ SBomberSpriteTable CBomber::m_BomberSpriteTables[MAX_NUMBER_OF_STATES] =
 CBomber::CBomber (void) : CElement()
 {
     m_HasExisted = false; // the bomber did not exist, yet.
+    
+    // Initialize pointer
+    p_Options = NULL;
 }
 
 //******************************************************************************************************************************
@@ -274,6 +277,8 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
     CElement::Create();
     
     m_HasExisted = true; // the bomber exists now (must not be reset unless the match is finished/canceled)
+
+    p_Options = options;
 
     m_BomberMove.Create (BlockX, BlockY, Player);
     
