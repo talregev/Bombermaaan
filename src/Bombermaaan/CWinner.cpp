@@ -226,6 +226,12 @@ void CWinner::Destroy (void)
 void CWinner::OpenInput (void)
 {
     m_pInput->GetMainInput().Open();
+
+    // Open everyone's input device so the screen can be left with specific joystick button
+    for (int i = 0; i < m_pInput->GetPlayerInputCount(); i++)
+    {
+        m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Open();
+    }
 }
 
 //******************************************************************************************************************************
@@ -235,6 +241,12 @@ void CWinner::OpenInput (void)
 void CWinner::CloseInput (void)
 {
     m_pInput->GetMainInput().Close();
+
+    // Close everyone's input device
+    for (int i = 0; i < m_pInput->GetPlayerInputCount(); i++)
+    {
+        m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Close();
+    }
 }
                    
 //******************************************************************************************************************************
@@ -278,8 +290,21 @@ EGameMode CWinner::Update (void)
         // If minimum duration of the mode has elapsed
         if (m_ModeTime >= WINNER_MINIMUM_DURATION)
         {
+            bool LeaveScreen = false;
+
+            // Check everyone's joystick button if the 'next' button was pressed
+            for (int i = 0; i < m_pInput->GetPlayerInputCount(); i++)
+            {
+                m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Update();
+                // LeaveScreen ||= resulted in error C2059
+                LeaveScreen |= m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(1)).TestMenuNext();
+            }
+
+            // Check the keyboard as well
+            LeaveScreen |= m_pInput->GetMainInput().TestNext();
+
             // If the NEXT control is active
-            if (m_pInput->GetMainInput().TestNext())
+            if ( LeaveScreen )
             {
                 // Remember we have to exit this mode
                 m_HaveToExit = true;

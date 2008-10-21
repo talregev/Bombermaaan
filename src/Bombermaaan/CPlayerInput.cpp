@@ -30,8 +30,6 @@
 #include "COptions.h"
 #include "CInput.h"
 
-#define NUMBER_OF_JOYSTICK_DIRECTIONS     4       //!< Number of joystick directions (up down left right)
-
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -298,6 +296,30 @@ bool CPlayerInput::TestControl (int Control)
 
     ASSERT(false);
     return false;
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+/**
+ *  \brief Check for a joystick button controlling the menu
+ *
+ *  This function can be used to check for a joystick button (used for menu control).
+ *  Implemented only for leaving the winner screen so far (2008-10-21).
+ */
+
+bool CPlayerInput::TestMenuControl (int MenuControl)
+{
+    // If the player input is one of the keyboard configurations, leave!
+    // This function is only for joystick control. Keyboard controls are handled by MainInput.
+    if (m_PlayerInput < NUMBER_OF_KEYBOARD_CONFIGURATIONS)
+    {
+        return false;
+    }
+
+    // If the player input is a joystick
+    return m_pDirectInput->GetJoystickButton (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS, MenuControl - NUMBER_OF_JOYSTICK_DIRECTIONS);
 }
 
 //******************************************************************************************************************************
