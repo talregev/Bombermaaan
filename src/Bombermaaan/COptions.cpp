@@ -172,7 +172,7 @@ void COptions::SetDefaultValues(void)
     m_BattleCount = 3;
 
     // First level file (index=0) is selected
-    m_Level = 2;
+    m_Level = 0;
 
     // Default display mode is windowed, not full-screen
     m_DisplayMode = DISPLAYMODE_WINDOWED;
