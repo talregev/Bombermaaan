@@ -124,6 +124,8 @@ src/Bombermaaan/CInput.cpp -text
 src/Bombermaaan/CInput.h -text
 src/Bombermaaan/CItem.cpp -text
 src/Bombermaaan/CItem.h -text
+src/Bombermaaan/CLevel.cpp -text
+src/Bombermaaan/CLevel.h -text
 src/Bombermaaan/CLog.cpp -text
 src/Bombermaaan/CLog.h -text
 src/Bombermaaan/CMainInput.cpp -text
