@@ -99,6 +99,8 @@ Publishing
 <li>Update download page file web/download.php</li>
 <li>Upload file <code>CHANGELOG.txt</code> to web space</li>
 <li>Upload documentation files to web space</li>
+<li>Change group name &quot;Next Release&quot; to &quot;Release <i>x.y</i>&quot; in feature request tracker</li>
+<li>Create new group name &quot;Next Release&quot; in feature request tracker</li>
 </ul>
 
 
