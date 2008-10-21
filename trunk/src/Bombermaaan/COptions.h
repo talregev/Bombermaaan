@@ -32,6 +32,7 @@
 
 #include "CDisplay.h"
 #include "CItem.h"
+#include "CLevel.h"
 #include "../third-party/tinyxml/tinyxml.h"
 
 //******************************************************************************************************************************
@@ -45,45 +46,6 @@ enum EBomberType
     BOMBERTYPE_MAN,     //!< The bomber is controlled by a local human player
     BOMBERTYPE_COM,     //!< The bomber is controlled by the computer
     BOMBERTYPE_NET      //!< The bomber is controlled by a human player on the network
-};
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-
-enum EBlockType
-{
-    BLOCKTYPE_HARDWALL,     //!< There must be a hard wall here
-    BLOCKTYPE_RANDOM,       //!< There must be either a soft wall, or a free place here (random)
-    BLOCKTYPE_FREE,         //!< There must be a free place here 
-    BLOCKTYPE_WHITEBOMBER,  //!< The white bomber must start here
-    BLOCKTYPE_BLACKBOMBER,  //!< The black bomber must start here
-    BLOCKTYPE_REDBOMBER,    //!< The red bomber must start here
-    BLOCKTYPE_BLUEBOMBER,   //!< The blue bomber must start here
-    BLOCKTYPE_GREENBOMBER,  //!< The green bomber must start here
-    BLOCKTYPE_MOVEBOMB_RIGHT,   //!< A bomb starts moving right if placed here
-    BLOCKTYPE_MOVEBOMB_DOWN,    //!< A bomb starts moving down if placed here
-    BLOCKTYPE_MOVEBOMB_LEFT,    //!< A bomb starts moving left if placed here
-    BLOCKTYPE_MOVEBOMB_UP       //!< A bomb starts moving up if placed here
-};
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-
-enum EBomberSkills
-{
-	BOMBERSKILL_DUMMYFIRST,
-    BOMBERSKILL_FLAME,
-	BOMBERSKILL_BOMBS,
-	BOMBERSKILL_BOMBITEMS,
-	BOMBERSKILL_FLAMEITEMS,
-	BOMBERSKILL_ROLLERITEMS,
-	BOMBERSKILL_KICKITEMS,
-	BOMBERSKILL_THROWITEMS,
-	BOMBERSKILL_PUNCHITEMS,
-	BOMBERSKILL_REMOTEITEMS,
-	NUMBER_OF_BOMBERSKILLS
 };
 
 //******************************************************************************************************************************
@@ -131,13 +93,8 @@ private:
     int                 m_PlayerInput [MAX_PLAYERS];    //!< Player input to use for each player
     EDisplayMode        m_DisplayMode;                  //!< Current display mode to use in the CDisplay object
     int                 m_Control[MAX_PLAYER_INPUT][NUM_CONTROLS]; //!< Control number to use for each player input and for each control
-    EBlockType***       m_LevelsData;
-    std::vector<std::string>  levelFileNames_short;     //!< A list with file names, one entry for each level (short name withouth path, also see levelFileNames_full)
-    std::vector<std::string>  levelFileNames_full;      //!< A list with file names, one entry for each level (short name withouth path, also see levelFileNames_short)
     int                 m_Level;
-    int                 m_NumberOfLevels;
-	int**				m_NumberOfItemsInWalls;
-	int**				m_InitialBomberSkills;
+    std::vector<CLevel> m_Levels;
     std::string         configFileName;                 //!< Full name of the config file (including path)
     std::string         oldconfigFileName;              //!< Full name of the old (binary) config file (including path)
 
@@ -146,10 +103,6 @@ private:
     void                ReadIntFromXML( TiXmlDocument &doc, std::string configNode, std::string attrName, int *value );
     bool                LoadLevels( std::string appDataFolder, std::string pgmFolder );              //!< Load game levels data and names from the level directory.
     bool                LoadConfiguration (void);       //!< Load the configuration file, create default if it does not exist.
-    void                AllocateLevels (int NumberOfLevels); //!< Allocate data and names for the specified number of levels. Warning : does not allocate the names strings (just the array of string pointers).
-    bool                LoadLevel_Version1( ifstream& File, int CurrentLevel ); //!< Load level file version 1
-    bool                LoadLevel_Version2( std::string fileName, int CurrentLevel, bool requireRemoteFuse = false ); //!< Load level file version 2 (requiredRemoteFuse = false) or 3 (requiredRemoteFuse = true)
-    bool                CheckMaxNumberOfItems( int Level, unsigned int *sumOfMaxItems ); //!< Check if number of max items is valid
                         
 public:                 
                         
@@ -279,32 +232,28 @@ inline void COptions::SetControl (int PlayerInput, int Control, int Value)
 
 inline EBlockType COptions::GetBlockType (int X, int Y)
 {
-    ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
-    ASSERT (X >= 0 && X < ARENA_WIDTH);
-    ASSERT (Y >= 0 && Y < ARENA_HEIGHT);
+    ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
 
-    return m_LevelsData[m_Level][X][Y];
+    return m_Levels.at(m_Level).GetBlockType(X,Y);
 }
 
 inline int COptions::GetNumberOfItemsInWalls ( EItemType ItemType )
 {
-	ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
-	ASSERT (ItemType > ITEM_NONE && ItemType < NUMBER_OF_ITEMS);
+	ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
 
-    return m_NumberOfItemsInWalls[m_Level][ItemType];
+    return m_Levels.at(m_Level).GetNumberOfItemsInWalls(ItemType);
 }
 
 inline int COptions::GetInitialBomberSkills ( EBomberSkills BomberSkill )
 {
-	ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
-	ASSERT (BomberSkill > BOMBERSKILL_DUMMYFIRST && BomberSkill < NUMBER_OF_BOMBERSKILLS);
+	ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
 
-	return m_InitialBomberSkills[m_Level][BomberSkill];
+    return m_Levels.at(m_Level).GetInitialBomberSkills(BomberSkill);
 }
 
 inline void COptions::SetLevel (int Level)
 {
-    ASSERT (Level >= 0 && Level < m_NumberOfLevels);
+    ASSERT (Level >= 0 && Level < m_Levels.size());
     m_Level = Level;
 }
 
@@ -315,13 +264,13 @@ inline int COptions::GetLevel (void)
 
 inline int COptions::GetNumberOfLevels (void)
 {
-    return m_NumberOfLevels;
+    return m_Levels.size();
 }
 
 inline const char* COptions::GetLevelName (void)
 {
-    ASSERT (m_Level >= 0 && m_Level < m_NumberOfLevels);
-    return levelFileNames_short.at( m_Level ).c_str();
+    ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
+    return m_Levels.at( m_Level ).GetLevelName();
 }
 
 inline EActionAIAlive COptions::GetOption_ActionWhenOnlyAIPlayersLeft()

@@ -496,6 +496,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CLevel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CLevel.h"
+				>
+			</File>
+			<File
 				RelativePath=".\CMainInput.cpp"
 				>
 			</File>

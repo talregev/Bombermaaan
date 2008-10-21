@@ -32,7 +32,6 @@
 #include "CInput.h"
 #include "CArena.h"
 #include <sstream>
-#include "../third-party/simpleini/SimpleIni.h"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -56,31 +55,12 @@
 #error "Mismatch between first joystick input and number of keyboard configurations"
 #endif
 
-// Initial number of items when a new arena is built
-#define INITIAL_ITEMBOMB        11
-#define INITIAL_ITEMFLAME       8
-#define INITIAL_ITEMROLLER      7
-#define INITIAL_ITEMKICK        2
-#define INITIAL_ITEMSKULL       1
-#define INITIAL_ITEMTHROW       2
-#define INITIAL_ITEMPUNCH       2
-#define INITIAL_ITEMREMOTE      2
-
-// Initial flame size
-#define INITIAL_FLAMESIZE       2
-
-// Initial number of bombs the bomber can drop
-#define INITIAL_BOMBS           1
-
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
 COptions::COptions (void)
 {
-    m_LevelsData = NULL;
-	m_NumberOfItemsInWalls = NULL;
-	m_InitialBomberSkills = NULL;
 }
 
 //******************************************************************************************************************************
@@ -103,7 +83,7 @@ COptions& COptions::operator = (COptions& Copy)
     m_TimeUpMinutes = Copy.m_TimeUpMinutes;
     m_TimeUpSeconds = Copy.m_TimeUpSeconds;
 
-    int i, j, k;
+    int i, j;
 
     for (i = 0 ; i < MAX_PLAYERS ; i++)
     {
@@ -120,28 +100,9 @@ COptions& COptions::operator = (COptions& Copy)
             m_Control[i][j] = Copy.m_Control[i][j];
     
     m_Level = Copy.m_Level;
-    m_NumberOfLevels = Copy.m_NumberOfLevels;
-    
-    AllocateLevels(m_NumberOfLevels);
 
-    for (i = 0 ; i < m_NumberOfLevels ; i++)
-    {
-        levelFileNames_short = Copy.levelFileNames_short;
-        levelFileNames_full  = Copy.levelFileNames_full;
-
-        for (j = 0 ; j < ARENA_WIDTH ; j++)
-            for (k = 0 ; k < ARENA_HEIGHT ; k++)
-                m_LevelsData[i][j][k] = Copy.m_LevelsData[i][j][k];
-
-        for (j = ITEM_NONE ; j < NUMBER_OF_ITEMS ; j++) {
-            m_NumberOfItemsInWalls[i][j] = Copy.m_NumberOfItemsInWalls[i][j];
-        }
-
-        for (j = BOMBERSKILL_DUMMYFIRST ; j < NUMBER_OF_BOMBERSKILLS ; j++) {
-            m_InitialBomberSkills[i][j] = Copy.m_InitialBomberSkills[i][j];
-        }
-
-    }
+    // Copy all the level data files
+    m_Levels = Copy.m_Levels;
 
     return *this;
 }
@@ -183,33 +144,6 @@ bool COptions::Create( bool useAppDataFolder, std::string dynamicDataFolder, std
 
 void COptions::Destroy (void)
 {
-    int i, j;
-    
-    //-------------------------------
-    // Free all level data and names
-    //-------------------------------
-
-    if (m_LevelsData != NULL)
-    {
-        for (i = 0 ; i < m_NumberOfLevels ; i++)
-        {
-            for (j = 0 ; j < ARENA_WIDTH ; j++)
-                delete [] m_LevelsData[i][j];
-
-            delete [] m_LevelsData[i];
-            delete [] m_InitialBomberSkills[i];
-            delete [] m_NumberOfItemsInWalls[i];
-        }
-
-        delete [] m_LevelsData;
-        delete [] m_InitialBomberSkills;
-        delete [] m_NumberOfItemsInWalls;
-        m_LevelsData = NULL;
-        m_NumberOfItemsInWalls = NULL;
-        m_InitialBomberSkills = NULL;
-
-        m_NumberOfLevels = 0;
-    }
 }
 
 //******************************************************************************************************************************
@@ -569,37 +503,10 @@ void COptions::ReadIntFromXML( TiXmlDocument &doc, std::string configNode, std::
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-void COptions::AllocateLevels (int NumberOfLevels)
-{
-    ASSERT(m_LevelsData == NULL);
-	ASSERT(m_NumberOfItemsInWalls == NULL);
-	ASSERT(m_InitialBomberSkills == NULL);
-    
-    m_LevelsData = new EBlockType** [NumberOfLevels];
-	m_NumberOfItemsInWalls = new int* [NumberOfLevels];
-	m_InitialBomberSkills = new int* [NumberOfLevels];
-
-    for (int i = 0 ; i < NumberOfLevels ; i++)
-    {
-        m_LevelsData[i] = new EBlockType* [ARENA_WIDTH];
-
-        for (int j = 0 ; j < ARENA_WIDTH ; j++)
-            m_LevelsData[i][j] = new EBlockType [ARENA_HEIGHT];
-
-        m_NumberOfItemsInWalls[i] = new int [NUMBER_OF_ITEMS];
-        m_InitialBomberSkills[i] = new int [NUMBER_OF_BOMBERSKILLS];
-    }
-}
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-
 bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder )
 {
     long FindHandle;
     _finddata_t FindData;
-    m_NumberOfLevels = 0;
 
 #ifndef WIN32
     // initialise OUR data structure
@@ -647,14 +554,12 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
     {
         do 
         {
-            m_NumberOfLevels++;
-
             std::string fileNameWithoutPath( FindData.name );
             std::string fileNameWithPath( levelFilePath_pgmFolder );
             fileNameWithPath.append( FindData.name );
 
-            levelFileNames_short.push_back( fileNameWithoutPath );
-            levelFileNames_full.push_back( fileNameWithPath );
+            // Create a new CLevel element and add it to the level container
+            m_Levels.push_back( CLevel( fileNameWithPath, fileNameWithoutPath ) );
         }
         while (_findnext(FindHandle, &FindData) != -1);
     }
@@ -696,14 +601,12 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
         {
             do 
             {
-                m_NumberOfLevels++;
-
                 std::string fileNameWithoutPath( FindData.name );
                 std::string fileNameWithPath( levelFilePath_dynamicDataFolder );
                 fileNameWithPath.append( FindData.name );
 
-                levelFileNames_short.push_back( fileNameWithoutPath );
-                levelFileNames_full.push_back( fileNameWithPath );
+                // Create a new CLevel element and add it to the level container
+                m_Levels.push_back( CLevel( fileNameWithPath, fileNameWithoutPath ) );
             }
             while (_findnext(FindHandle, &FindData) != -1);
         }
@@ -718,7 +621,7 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
     //---------------------
 
     // If there is no level
-    if (m_NumberOfLevels == 0)
+    if (m_Levels.size() == 0)
     {
         // Log failure
         theLog.WriteLine ("Options         => !!! There should be at least 1 level.");
@@ -727,104 +630,26 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
     }
 
     // If the level number we read in the cfg file is invalid compared to the number of existing levels
-    if (m_Level >= m_NumberOfLevels)
+    if (m_Level >= m_Levels.size())
     {
         // Select the first level
         m_Level = 0;
     }
 
-    //-----------------------------------
-    // Allocate data and name for levels
-    //-----------------------------------
-
-    AllocateLevels(m_NumberOfLevels);
-    
     //------------------------------------------------------
     // Load all the level files detected earlier
     //------------------------------------------------------
     
     bool ErrorOccurred = false;    
     
-    for( unsigned int CurrentLevel = 0; CurrentLevel < levelFileNames_short.size(); CurrentLevel++ ) {
+    for( unsigned int CurrentLevel = 0; CurrentLevel < m_Levels.size(); CurrentLevel++ )
+    {
 
         //theLog.WriteLine ("Options         => Loading level file %s...", levelFileNames_full.at(CurrentLevel).c_str() );
 
-        // Open the existing level file for reading
-        ifstream in;
-        in.open( levelFileNames_full.at(CurrentLevel).c_str(), ios_base::in );
-
-        // If it failed
-        if (!in.is_open())
+        if ( !m_Levels.at( CurrentLevel ).LoadFromFile() )
         {
-            theLog.WriteLine ("Options         => Loading level file %s failed.", levelFileNames_full.at(CurrentLevel).c_str() );
-            // Stop loading levels
-            break;
-        }
-
-
-        // This is the first line for the level files beginning with version 2 (therefore "V2plus")
-        string headerV2plus( "; Bombermaaan level file version=" );
-
-        string s;
-        getline( in, s );
-        int LevelVersion;
-
-        // When header string is found at the beginning of the string, find() returns 0 (offset 0)
-        if ( s.find( headerV2plus ) == 0 ) {
-            // We can look for the level version now
-            LevelVersion = atoi( s.substr( headerV2plus.length() ).c_str() );
-        }
-        else
-        {
-            LevelVersion = 1;
-        }
-        
-        switch ( LevelVersion ) {
-
-            case 1:
-                if (!LoadLevel_Version1( in, CurrentLevel ) ) {
-                    ErrorOccurred = true;
-                }
-                break;
-
-            case 2:
-                if (!LoadLevel_Version2( levelFileNames_full.at(CurrentLevel), CurrentLevel ) ) {
-                    ErrorOccurred = true;
-                }
-                break;
-
-            default:
-                theLog.WriteLine ("Options         => !!! Unsupported version of level file %s.", levelFileNames_short.at(CurrentLevel).c_str());
-                ErrorOccurred = true;
-                break;
-
-        }
-
-		// Close the level file
-        in.close();
-        
-        unsigned int sumOfMaxItems;
-
-        // too many items?
-        if (!ErrorOccurred && !CheckMaxNumberOfItems( CurrentLevel, &sumOfMaxItems ))
-        {
-            // Log there is a problem
-            theLog.WriteLine ("Options         => !!! Level file is incorrect (Too many items: %d of %d allowed).", sumOfMaxItems, MAX_ITEMS);
-
-            // Stop loading levels
             ErrorOccurred = true;
-        }
-
-        // If there wasn't any problem
-        if (!ErrorOccurred)
-        {
-            theLog.WriteLine ("Options         => Level file %s was successfully loaded (version %d).", levelFileNames_short.at(CurrentLevel).c_str(), LevelVersion);
-        }
-        // If there was a problem
-        else
-        {
-            theLog.WriteLine ("Options         => !!! Could not load level file %s (version %d).", levelFileNames_short.at(CurrentLevel).c_str(), LevelVersion);
-            // Stop loading levels
             break;
         }
 
@@ -842,299 +667,3 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
-
-bool COptions::LoadLevel_Version1( ifstream& File, int CurrentLevel ) {
-
-    bool StopReadingFile = false;
-    filebuf *pbuf = File.rdbuf();
-    
-    // go to the beginning
-    pbuf->pubseekpos (0,ios::in);
-
-    // For each line of characters to read
-    for (int y = 0 ; y < ARENA_HEIGHT ; y++)
-    {
-        // Buffer where we'll store one line of characters. We'll read the two EOL characters as well.
-        string Line;
-        int ReadBytes;
-    
-        // Read one line of characters (including the EOL chars)
-        if (File.good())
-        {
-            getline( File, Line );
-            ReadBytes = Line.size();
-        }
-        else
-        {
-            ReadBytes = 0;
-        }
-
-        // Check if all the characters were read
-        if (ReadBytes < ARENA_WIDTH)
-        {
-            // Log there is a problem
-            theLog.WriteLine ("Options         => !!! Level file is incorrect (Line: %d, Length: %d).", y+1, ReadBytes);
-        
-            // Close the level file
-            File.close();
-
-            // Stop loading levels
-            StopReadingFile = true;
-            break;
-        }
-
-        // For each character representing a block in this line
-        for (int x = 0 ; x < ARENA_WIDTH ; x++)
-        {
-            // According to the character value, store the corresponding block type in the current position and level
-            switch(Line.c_str()[x])
-            {
-                case '*' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_HARDWALL;    break;
-                case '-' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_RANDOM;      break;
-                case ' ' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_FREE;        break;
-                case '1' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_WHITEBOMBER; break;
-                case '2' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLACKBOMBER; break;
-                case '3' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_REDBOMBER;   break;
-                case '4' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLUEBOMBER;  break;
-                case '5' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_GREENBOMBER; break;
-                case 'R' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_RIGHT; break;
-                case 'D' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_DOWN;  break;
-                case 'L' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_LEFT;  break;
-                case 'U' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_UP;    break;
-                default  : 
-                {
-                    // Log there is a problem
-                    theLog.WriteLine ("Options         => !!! Level file is incorrect (unknown character %c).", Line[x]);
-                
-                    // Close the level file
-                    File.close();
-
-                    // Stop loading levels
-                    StopReadingFile = true;
-                    break;
-                }
-            }
-        }
-
-        // If there was a problem
-        if (StopReadingFile)
-        {
-            // Stop reading this level file
-            break;
-        }
-    }
-
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] = INITIAL_ITEMBOMB;
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] = INITIAL_ITEMFLAME;
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] = INITIAL_ITEMKICK;
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] = INITIAL_ITEMROLLER;
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] = INITIAL_ITEMSKULL;
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] = INITIAL_ITEMTHROW;
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] = INITIAL_ITEMPUNCH;
-	m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = INITIAL_ITEMREMOTE;
-
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAME ] = INITIAL_FLAMESIZE;
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBS ] = INITIAL_BOMBS;
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_BOMBITEMS ] = 0;
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_FLAMEITEMS ] = 0;
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_ROLLERITEMS ] = 0;
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_KICKITEMS ] = 0;
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_THROWITEMS ] = 0;
-    m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_PUNCHITEMS ] = 0;
-	m_InitialBomberSkills[CurrentLevel][ BOMBERSKILL_REMOTEITEMS ] = 0;
-    
-    return !StopReadingFile;
-
-}
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-
-bool COptions::LoadLevel_Version2( std::string fileName, int CurrentLevel, bool requireRemoteFuse )
-{
-    // Define INI file
-    CSimpleIniA iniFile(false, false, false);
-
-    // Load INI file
-    SI_Error rc = iniFile.LoadFile( levelFileNames_full.at(CurrentLevel).c_str() );
-    if (rc<0) return false;
-
-    string s;
-    int value;
-
-    // Read the width of the map and check whether it is allowed
-    // At the moment the width is fix, but maybe the width can be changed in the future
-    value = atoi( iniFile.GetValue( "General", "Width", "0" ) );
-    if ( value != ARENA_WIDTH ) {
-        theLog.WriteLine ("Options         => !!! Invalid arena width %d. Only %d is allowed.", value, ARENA_WIDTH );
-        return false;
-    }
-
-    // Read the height of the map and check whether it is allowed
-    // At the moment the height is fix, but maybe the height can be changed in the future
-    value = atoi( iniFile.GetValue( "General", "Height", "0" ) );
-    if ( value != ARENA_HEIGHT ) {
-        theLog.WriteLine ("Options         => !!! Invalid arena height %d. Only %d is allowed.", value, ARENA_HEIGHT );
-        return false;
-    }
-
-    // Read the maximum number of players allowed with this level
-    // At the moment this must be set to 5
-    // Maybe this is changed in the future
-    value = atoi( iniFile.GetValue( "General", "MaxPlayers", "0" ) );
-    if ( value != 5 ) {
-        theLog.WriteLine ("Options         => !!! Invalid maximum players %d. Only %d is allowed.", value, 5 );
-        return false;
-    }
-
-    // Read the maximum number of players allowed with this level
-    // Currently this must be set to 1, though a game with 1 player is not possible
-    // Maybe this is changed in the future
-    value = atoi( iniFile.GetValue( "General", "MinPlayers", "0" ) );
-    if ( value != 1 ) {
-        theLog.WriteLine ("Options         => !!! Invalid minimum players %d. Only %d is allowed.", value, 1 );
-        return false;
-    }
-
-    // Check if there is a line with the creator
-    // The creator can be empty, it's not stored anywhere at the moment
-    std::string creator = iniFile.GetValue( "General", "Creator", "" );
-
-    // Priority line following
-    // The priority setting is not used currently
-    // For future use:
-    // - The levels are first sorted by priority and then by the file name
-    value = atoi( iniFile.GetValue( "General", "Priority", "0" ) );
-
-    // Comment line following (not used currently)
-    std::string comment = iniFile.GetValue( "General", "Comment", "" );
-
-    // Description line following (not used currently)
-    std::string description = iniFile.GetValue( "General", "Description", "" );
-
-    // For each line of characters to read
-    for (int y = 0 ; y < ARENA_HEIGHT ; y++)
-    {
-        std::ostringstream oss;
-        oss << "Line." << y;
-        std::string keyName = oss.str();
-
-        std::string arenaLine = iniFile.GetValue( "Map", keyName.c_str(), "" );
-
-        if ( arenaLine.length() != ARENA_WIDTH ) {
-            theLog.WriteLine ("Options         => !!! Level file is incorrect (Line.%d wrong length %d).", y, arenaLine.length() );
-            return false;
-        }
-
-        // For each character representing a block in this line
-        for (int x = 0 ; x < ARENA_WIDTH ; x++)
-        {
-            // According to the character value, store the corresponding block type in the current position and level
-            switch(arenaLine.at(x))
-            {
-                case '*' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_HARDWALL;    break;
-                case '-' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_RANDOM;      break;
-                case ' ' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_FREE;        break;
-                case '1' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_WHITEBOMBER; break;
-                case '2' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLACKBOMBER; break;
-                case '3' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_REDBOMBER;   break;
-                case '4' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_BLUEBOMBER;  break;
-                case '5' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_GREENBOMBER; break;
-                case 'R' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_RIGHT; break;
-                case 'D' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_DOWN;  break;
-                case 'L' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_LEFT;  break;
-                case 'U' : m_LevelsData[CurrentLevel][x][y] = BLOCKTYPE_MOVEBOMB_UP;    break;
-                default  : 
-                {
-                    // Log there is a problem
-                    theLog.WriteLine ("Options         => !!! Level file is incorrect (unknown character %c).", arenaLine.at(x) );
-                    return false;
-                }
-            }
-        }
-
-    }
-
-    //---------------------
-    // Read the ItemsInWalls values
-    //---------------------
-
-    //! @todo Replace fix value (third parameter of GetValue(...)) by default setting
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_BOMB] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Bombs", "0" ) );
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_FLAME] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Flames", "0" ) );
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_KICK] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Kicks", "0" ) );
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_ROLLER] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Rollers", "0" ) );
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_SKULL] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Skulls", "0" ) );
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_THROW] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Throws", "0" ) );
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_PUNCH] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Punches", "0" ) );
-    m_NumberOfItemsInWalls[CurrentLevel][ITEM_REMOTE] = atoi( iniFile.GetValue( "Settings", "ItemsInWalls.Remotes", "2" /*INITIAL_ITEMREMOTE*/ ) );
-
-    
-    //---------------------
-    // Read the BomberSkillsAtStart values
-    //---------------------
-
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAME] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.FlameSize", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.MaxBombs", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_BOMBITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.BombItems", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_FLAMEITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.FlameItems", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_ROLLERITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.RollerItems", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_KICKITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.KickItems", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_THROWITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.ThrowItems", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_PUNCHITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.PunchItems", "0" ) );
-    m_InitialBomberSkills[CurrentLevel][BOMBERSKILL_REMOTEITEMS] = atoi( iniFile.GetValue( "Settings", "BomberSkillsAtStart.RemoteItems", "0" ) );
-
-
-    //---------------------
-    // Read the ContaminationsNotUsed setting
-    //---------------------
-
-    // This setting controls which contamination should not be used in this level
-    // The only one value allowed is "None" at the moment
-
-    std::string contaminationsNotToUse = iniFile.GetValue( "Settings", "ContaminationsNotUsed", "" );
-
-
-    // Everything went right
-    return true;
-
-}
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-
-/**
- * @brief   check if this level does not exceed the maximum possible number of items
- * @param   Level           the number of the level to check
- * @param   sumOfMaxItems   pointer to an integer variable where the sum of max items is counted
- * @return  true if the number of maximum allowed items is not exceeded, false otherwise
- */
-bool COptions::CheckMaxNumberOfItems( int Level, unsigned int *sumOfMaxItems )
-{
-    // check if maximum number of items is not exceeded
-    // we do this, because if there is a draw game when many bombers die
-    // they all lose their items at the same time.
-    *sumOfMaxItems = 0;
-    unsigned int i;
-
-    // count items in walls
-    for (i = ITEM_NONE + 1; i < NUMBER_OF_ITEMS; i++)
-    {
-        *sumOfMaxItems += m_NumberOfItemsInWalls[Level][i];
-    }
-
-    // count initial bomber skills (note: count the worst case with five players)
-    for (i = BOMBERSKILL_DUMMYFIRST + 1; i < NUMBER_OF_BOMBERSKILLS; i++)
-    {
-        // initial skills like bombs and flames will not be lost
-        if (i != BOMBERSKILL_FLAME && i != BOMBERSKILL_BOMBS)
-            *sumOfMaxItems += m_InitialBomberSkills[Level][i] * MAX_PLAYERS;
-    }
-        
-    if (*sumOfMaxItems > MAX_ITEMS)
-        return false;
-    else
-        return true;
-}
