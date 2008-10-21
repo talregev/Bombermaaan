@@ -1,3 +1,11 @@
+Next version
+
+Changed: Winner screen can be left with 3rd joystick button (#2121895).
+
+
+----------------------------
+
+
 Version 1.4
 
 Released on October 18, 2008

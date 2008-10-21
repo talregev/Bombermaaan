@@ -47,6 +47,11 @@
 #define JOYSTICK_RIGHT      3
 #define JOYSTICK_BUTTON(x)  (4 + x)
 
+#define NUMBER_OF_JOYSTICK_DIRECTIONS     4     //!< Number of joystick directions (up down left right)
+
+//! The third joystick button can be used for leaving the winner screen
+#define JOYSTICK_BUTTON_MENU_NEXT   JOYSTICK_BUTTON(2)
+
 #define NO_ACTIVATED_CONTROL    -1
 
 #define MAX_CONTROL_NAME_LENGTH     20
@@ -87,9 +92,11 @@ public:
     inline bool         TestRight (void);
     inline bool         TestAction1 (void);
     inline bool         TestAction2 (void);
+    inline bool         TestMenuNext (void);
     int                 GetActivatedControl (void);
     const char*         GetControlName (int Control);
     bool                TestControl (int Control);
+    bool                TestMenuControl (int MenuControl);
 };
 
 //******************************************************************************************************************************
@@ -144,6 +151,13 @@ inline bool CPlayerInput::TestAction1 (void)
 inline bool CPlayerInput::TestAction2 (void)
 {
     return TestControl (CONTROL_ACTION2);
+}
+
+//! The "menu next" button was pressed?
+
+inline bool CPlayerInput::TestMenuNext (void)
+{
+    return TestMenuControl (JOYSTICK_BUTTON_MENU_NEXT);
 }
 
 //******************************************************************************************************************************
