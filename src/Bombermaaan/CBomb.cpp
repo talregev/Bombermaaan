@@ -177,6 +177,8 @@ void CBomb::Create (int BlockX, int BlockY, int FlameSize, float TimeLeft, int O
 {
     CElement::Create();
 
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "New bomb [x=%02d, y=%02d, flamesize=%02d, owner=%d].", BlockX, BlockY, FlameSize, OwnerPlayer );
+
     m_iX = m_pArena->ToPosition (BlockX); 
     m_iY = m_pArena->ToPosition (BlockY);
     m_X = float (m_iX);
@@ -247,6 +249,8 @@ void CBomb::Destroy (void)
 
 void CBomb::Explode (void)
 {
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "Bomb exploding [x=%02d, y=%02d, flamesize=%02d, owner=%d].", m_BlockX, m_BlockY, m_FlameSize, m_OwnerPlayer );
+
     // Create the explosion
     m_pArena->NewExplosion (m_BlockX, m_BlockY, m_FlameSize);
     
@@ -281,6 +285,8 @@ void CBomb::Explode (void)
 
 void CBomb::Crush (void)
 {
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "Bomb crushing [x=%02d, y=%02d, owner=%d].", m_BlockX, m_BlockY, m_OwnerPlayer );
+
     Explode ();
 }
 
@@ -295,6 +301,8 @@ void CBomb::Crush (void)
 
 void CBomb::Burn (void)
 {
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "Bomb burning [x=%02d, y=%02d, owner=%d].", m_BlockX, m_BlockY, m_OwnerPlayer );
+
     if (m_TimeLeft > EXPLODE_SOON) 
         m_TimeLeft = EXPLODE_SOON;
 }
@@ -314,6 +322,8 @@ void CBomb::StartMoving (EBombKick BombKick, int KickerPlayer)
     if (m_BeingHeld || m_BeingLifted || m_BeingPunched)
         return;
     
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "Bomb starts moving [x=%02d, y=%02d, owner=%d, new_direction=%d, kicker=%d, old_direction=%d].", m_BlockX, m_BlockY, m_OwnerPlayer, BombKick, KickerPlayer, m_BombKick );
+
     switch (m_BombKick)
     {
         case BOMBKICK_LEFT:

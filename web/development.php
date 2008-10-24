@@ -51,6 +51,7 @@ Compile instructions for Win32
 <li>Update version strings in file <code>src/Bombermaaan/Bombermaaan.rc</code> (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/Bombermaaan.rc?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
 <li>Update <code>BOMBERMAAAN_VERSION_STRING</code> and <code>BOMBERMAAAN_BUILD_STRING</code> in CGame.cpp (<a href="http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan/trunk/src/Bombermaaan/CGame.cpp?r1=529&amp;r2=528&amp;pathrev=529">example</a>)</li>
 <li>Set line <code>#define ENABLE_DEBUG_KEYS</code> in <code>CGame.cpp</code> to comment</li>
+<li>Disable the debug log (<code>#define ENABLE_DEBUG_LOG</code> in <code>CGame.cpp</code>)</li>
 <li>Disable the console window (<code>#define ENABLE_CONSOLE</code> in <code>CGame.cpp</code>)</li>
 <li>Select configuration &quot;Release&quot; in the solution</li>
 <li>Enable switch <code>#define USE_32_PIXELS_PER_BLOCK</code> in <code>STDAFX.H</code></li>
