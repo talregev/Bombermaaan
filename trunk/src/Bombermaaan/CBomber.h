@@ -342,23 +342,25 @@ inline int CBomber::GetRollerItemsCount (void)
 
 inline int CBomber::GetTotalBombs (void) 
 { 
-    return m_NumberOfBombItems + 1; 
+    return m_NumberOfBombItems + 1;
 }
 
 inline int CBomber::GetX (void) 
 { 
-    return m_BomberMove.GetX(); 
+    return m_BomberMove.GetX();
 }
 
 inline int CBomber::GetY (void) 
 { 
-    return m_BomberMove.GetY(); 
+    return m_BomberMove.GetY();
 }
 
 inline void CBomber::SetSickness (ESick Sickness) 
 { 
-    m_Sickness = Sickness; 
-    m_JustGotSick = true; 
+    m_Sickness = Sickness;
+    m_JustGotSick = true;
+
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMBER, "Bomber getting sick [id=%d, sickness=%02d].", m_Player, Sickness );
 }
 
 inline EBomberState CBomber::GetState (void)

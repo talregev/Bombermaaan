@@ -50,6 +50,9 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 // Define this if the log file should be enabled
 #define ENABLE_LOG
 
+// Define this if the debug log file should be enabled
+//#define ENABLE_DEBUG_LOG
+
 // Define this if the console window should be enabled
 //#define ENABLE_CONSOLE
 
@@ -447,6 +450,19 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
 
     // Open the log file
     theLog.Open( logFileName.c_str() );
+
+#endif
+
+	  //! @see ENABLE_DEBUG_LOG
+
+#ifdef ENABLE_DEBUG_LOG
+
+    std::string debugLogFileName;
+    debugLogFileName.append( dynamicDataFolder );
+    debugLogFileName.append( "debug.log" );
+
+    // Open the log file
+    debugLog.Open( debugLogFileName.c_str() );
 
 #endif
 
@@ -869,6 +885,13 @@ void CGame::Destroy (void)
 
     // Close the log file
     theLog.Close ();
+
+#endif
+
+#ifdef ENABLE_DEBUG_LOG
+
+    // Close the debug log file
+    debugLog.Close ();
 
 #endif
 

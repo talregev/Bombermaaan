@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2008 Markus Drescher
+    Copyright (C) 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -70,6 +71,18 @@ CLog& CLog::GetLog()
    static CLog rLog;    // r = reference
 
    return rLog;
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+// Get an instance of CLog (singleton)
+CLog& CLog::GetDebugLog()
+{
+   static CLog rDebugLog;    // r = reference
+
+   return rDebugLog;
 }
 
 //******************************************************************************************************************************
@@ -333,6 +346,92 @@ long CLog::WriteLine( const char *pMessage, ... )
             
             // Write the time string
             m_theLog.write( Time, strlen( Time ) );
+
+            // Write the message
+            m_theLog.write( Message, strlen( Message ) );
+        }
+        // If the message doesn't start with a blank line
+        else
+        {
+            // Write the message without the time
+            m_theLog.write( Message, strlen( Message ) );
+        }
+
+        // Write a blank line
+        m_theLog.write( "\n", strlen( "\n" ) );
+
+        m_theLog.flush();
+    }
+    // If the log is not open
+    else
+    {
+        // Couldn't write to Log!
+        return 0;
+    }
+
+    return 1;
+}
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+// Write a line into the Log
+long CLog::WriteDebugMsg( EDebugSection section, const char *pMessage, ... )
+{
+    // Format the given string using the given arguments ("..." parameter)
+    char Message [2048];
+    va_list argList;
+    va_start( argList, pMessage );
+	vsprintf(Message, pMessage, argList);
+    va_end (argList);
+
+    // If the log is open
+    if( m_bOpen )
+    {
+        // If the message starts with a blank line
+        if( Message[0] != '\n' )
+        {
+            // Get current time
+#ifdef WIN32
+            SYSTEMTIME LocalTime;
+            GetLocalTime (&LocalTime);
+#else
+            struct tm *LocalTime;
+            time_t curTime = time(NULL);
+            LocalTime = localtime(&curTime);
+#endif
+    
+            // Store the time string
+            char Time [64];
+#ifdef WIN32
+            sprintf ( Time,                 // String where to write
+                      "%02d:%02d:%02d  ",   // Format
+                      LocalTime.wHour,      // Time numbers to use
+                      LocalTime.wMinute, 
+                      LocalTime.wSecond);
+#else
+            sprintf ( Time,                 // String where to write
+                      "%02d:%02d:%02d  ",   // Format (don't forget '\n' character!)
+                      LocalTime->tm_hour,   // Time numbers to use
+                      LocalTime->tm_min, 
+                      LocalTime->tm_sec);
+#endif
+            
+            // Write the time string
+            m_theLog.write( Time, strlen( Time ) );
+
+            static char* sectionString;
+
+            switch( section )
+            {
+                case DEBUGSECT_BOMBER:      sectionString = "BOMBER:     "; break;
+                case DEBUGSECT_BOMB:        sectionString = "BOMB:       "; break;
+                case DEBUGSECT_EXPLOSION:   sectionString = "EXPLOSION:  "; break;
+                default:                    sectionString = "UNKNOWN:    "; break;
+            }
+
+            m_theLog.write( sectionString, strlen( sectionString ) );
 
             // Write the message
             m_theLog.write( Message, strlen( Message ) );

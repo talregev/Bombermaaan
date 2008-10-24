@@ -239,6 +239,8 @@ inline void CBomb::SetPosition (int X, int Y)
 
 inline void CBomb::SetBeingLifted (void)
 {
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "Bomb set being lifted [x=%02d, y=%02d, owner=%d].", m_BlockX, m_BlockY, m_OwnerPlayer );
+
     ASSERT(!m_Dead);
     ASSERT(!m_BeingHeld);
     ASSERT(!m_BeingLifted);
@@ -253,6 +255,8 @@ inline void CBomb::SetBeingLifted (void)
 
 inline void CBomb::SetBeingHeld (void)
 {
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "Bomb set being held [x=%02d, y=%02d, owner=%d].", m_BlockX, m_BlockY, m_OwnerPlayer );
+
     ASSERT(m_BombKick == BOMBKICK_NONE);
     ASSERT(!m_HasToStopMoving);
     ASSERT(!m_Dead);
@@ -267,6 +271,8 @@ inline void CBomb::SetBeingHeld (void)
 
 inline void CBomb::SetBeingPunched (void)
 {
+    debugLog.WriteDebugMsg( DEBUGSECT_BOMB, "Bomb set being punched [x=%02d, y=%02d, owner=%d].", m_BlockX, m_BlockY, m_OwnerPlayer );
+
     ASSERT(!m_Dead);
     ASSERT(!m_BeingLifted);
     ASSERT(!m_BeingHeld);

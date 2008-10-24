@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
 
@@ -47,7 +48,18 @@
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-#define theLog  CLog::GetLog()
+#define theLog      CLog::GetLog()
+#define debugLog    CLog::GetDebugLog()
+
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+//******************************************************************************************************************************
+
+enum EDebugSection {
+    DEBUGSECT_BOMBER,
+    DEBUGSECT_BOMB,
+    DEBUGSECT_EXPLOSION
+};
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -60,12 +72,14 @@ public:
                     CLog();
     virtual         ~CLog();
     static CLog&    GetLog();                               //!< Get an instance of CLog (singleton)
+    static CLog&    GetDebugLog();                          //!< Get an instance of CLog (singleton) for debug messages
     bool            Open( const char *pFilename );          //!< Open the log
     bool            Close();                                //!< Close the log
     void            LogLastError();                         //!< Log the last occured error!
     long            Write ( const char *pMessage, ... );
     long            WriteLine( const char *pMessage, ... ); //!< Write a line to the log
     inline bool     IsOpen();                               //!< Return whether the log is open or not
+    long            WriteDebugMsg( EDebugSection section, const char *pMessage, ... ); //!< Write a line to the log
 
 private:
 
