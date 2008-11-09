@@ -274,19 +274,20 @@ bool CGame::Create (char **pCommandLine, int pCommandLineCount)
 
 
     // A folder where log file and configuration file are stored.
-    // Is %APPDATA%\Bombermaaan when called with --use-appdata-dir (see below).
+    // Is %APPDATA%\Bombermaaan when called with --use-appdata-dir (see below) on Windows
+    // and $HOME/.Bombermaaan when NOT called with --ignore-home-dir (see below) on Linux.
     std::string dynamicDataFolder;
 
-    // The "--use-appdata-dir" switch creates config and log file in the user's %APPDATA% directory
 #ifdef WIN32
+    // The "--use-appdata-dir" switch creates config and log file in the user's %APPDATA% directory (Windows)
     bool useAppDataFolder = ( strstr( pCommandLine, "--use-appdata-dir" ) != NULL );
 #else
-    // in linux do the opposite. it's more useful if we save our data in ~/.Bombermaaan
+    // In linux do the opposite - it's more useful if we save our data in ~/.Bombermaaan
     bool useAppDataFolder = true;
 
     for (int i = 0; i < pCommandLineCount; i++)
 	{
-        if (strncmp(pCommandLine[i], "--dont-use-appdata-dir", 22) == 0)
+        if (strncmp(pCommandLine[i], "--ignore-home-dir", 22) == 0)
         {
             useAppDataFolder = false;
             break;
