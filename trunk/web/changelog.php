@@ -34,9 +34,13 @@ if ( $fp ) {
 				case "Bug fix": $atid = 563210; break;
 				default: $atid = 0;
 			}
+            // Make artifact number clickable for features and bugs
 			if ( $atid != 0 ) {
 				$html = preg_replace_callback( "/#([[:digit:]]+)/", create_function( '$matches', 'return "<a href=\"https://sourceforge.net/tracker/index.php?func=detail&amp;aid=" . $matches[ 1 ] . "&amp;group_id=81520&amp;atid=' . $atid . '\">" . $matches[ 0 ] . "</a>";' ), $html );
 			}
+            // Replace "revision XXX" by a link to the web view of the subversion repository 
+            $html = preg_replace_callback( "/revision ([[:digit:]]+)/", create_function( '$matches', 'return "<a href=\"http://bombermaaan.svn.sourceforge.net/viewvc/bombermaaan?view=rev&amp;revision=" . $matches[ 1 ] . "\">" . $matches[ 0 ] . "</a>";' ), $html );
+            // Output text
 			echo "<div><strong>" . htmlentities( $match[ 1 ] ) . "</strong>: " . $html . "</div>";
 		} elseif ( preg_match( "/^Version .*/", $line )  or  preg_match( "/^Next version/", $line ) ) {
 			echo "<h2>" . htmlentities( $line ) . "</h2>";
