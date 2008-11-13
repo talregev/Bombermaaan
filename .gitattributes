@@ -313,6 +313,12 @@ web/features.php -text
 web/history.php -text
 web/images/arena_item_0-bomb.png -text
 web/images/arena_item_1-flame.png -text
+web/images/arena_item_2-kick.png -text
+web/images/arena_item_3-speed.png -text
+web/images/arena_item_4-skull.png -text
+web/images/arena_item_5-throw.png -text
+web/images/arena_item_6-punch.png -text
+web/images/arena_item_7-remote.png -text
 web/images/arena_item_missing.png -text
 web/images/bomber_a.png -text
 web/images/feed-icon-14x14.png -text

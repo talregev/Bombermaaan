@@ -47,6 +47,10 @@ If you like to tell us bugs or feature requests etc., please use the trackers li
 </p>
 
 <p>
+<a href="https://sourceforge.net/tracker/?atid=563211&amp;group_id=81520&amp;func=browse">Support requests</a>: Get help when you are stuck compiling or playing Bombermaaan.
+</p>
+
+<p>
 <a href="https://sourceforge.net/tracker/?atid=563212&amp;group_id=81520&amp;func=browse">Patches</a>: Submit and share your patches.
 </p>
 

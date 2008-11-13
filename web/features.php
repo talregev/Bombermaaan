@@ -40,7 +40,7 @@ function _add( $headline, $additionaltext, $additionalhtml = "" ) {
 <div id="content">
 
 <p>
-Bombermaaan already provides these features:
+Bombermaaan already provides these features (click on the feature text to see details):
 </p>
 
 <div id="featurelist">
@@ -51,7 +51,7 @@ _add( "Classic Bomberman game", "Bombermaaan is a classic Bomberman game. There'
 
 _add( "Original gameplay and fun with minor adjustments", "If you're familiar with other Bomberman games, you already know how to play Bombermaaan." );
 
-_add( "Up to 5 players on the same computer", "You can play against four human players if you are using joysticks or more USB keyboards." );
+_add( "Up to 5 players on the same computer", "You can play against four human players if you are using joysticks or USB keyboards." );
 
 _add( "Various levels of computer AI", "No additional text available." );
 
@@ -63,16 +63,17 @@ _add( "Keyboard and joystick support", "No additional text available." );
 
 _add( "Full screen and windowed display modes", "<kbd>F1</kbd>: full screen mode, 320x240 pixels<br /><kbd>F2</kbd>: full screen mode, 512x384 pixels<br /><kbd>F3</kbd>: full screen mode, 640x480 pixels<br /><kbd>F4</kbd>: windowed mode, 240x234 pixels in 16-pixels version, 480x442 pixels in 32-pixels version<br />The <kbd>F1</kbd> and <kbd>F2</kbd> keys are only available in the 32-pixels version." );
 
-_add( "Various power-ups", "At the beginning of a match your bomber can drop only one bomb with a flame size of two blocks. This can be changed during the game by collecting power-up icons. These icons are hidden in the soft walls. Destroy the soft walls to look for the power-ups. These items can improve your bomber skills: additional bomb, increase flame size, ability to kick bombs, increase speed, ability to throw bombs, ability to punch bombs.", "<img src=\"images/arena_item_0-bomb.png\" alt=\"Bomb item\" /> Additional bomb: you can put one more bomb<br />
+_add( "Various power-ups", "At the beginning of a match your bomber can drop only one bomb with a flame size of two blocks. This can be changed during the game by collecting power-up icons. These icons are hidden in the soft walls. Destroy the soft walls to look for the power-ups. These items can improve your bomber skills: additional bomb, increase flame size, ability to kick bombs, increase speed, ability to throw bombs, ability to punch bombs.", 
+"<img src=\"images/arena_item_0-bomb.png\" alt=\"Bomb item\" /> Additional bomb: you can put one more bomb<br />
 <img src=\"images/arena_item_1-flame.png\" alt=\"Flame item\" /> Increase flame size: the flame of your bombs grows one block each time you pick up this item<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;skater&quot;\" /> Increase speed: you can walk a little faster each time you pick up this item (<i>Image not available yet.</i>)<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;bomb &amp; foot&quot;\" /> Kick bombs: bombs start moving away when you walk towards them (<i>Image not available yet.</i>)<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;skull&quot;\" /> Contaminations: see the contaminations section below (<i>Image not available yet.</i>)<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;hand&quot;\" /> Throw bombs: pick up bombs, carry them and throw them away (<i>Image not available yet.</i>)<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;glove&quot;\" /> Punch bombs: punch a bomb that is lying in front of you (<i>Image not available yet.</i>)<br />
-<img src=\"images/arena_item_missing.png\" alt=\"Missing image &quot;glove&quot;\" /> Remote fuse: remote fuse a bomb (<i>Image not available yet.</i>)<br />" );
+<img src=\"images/arena_item_3-speed.png\" alt=\"Skater item\" /> Increase speed: you can walk a little faster each time you pick up this item<br />
+<img src=\"images/arena_item_2-kick.png\" alt=\"Bomb &amp; foot item\" /> Kick bombs: bombs start moving away when you walk towards them<br />
+<img src=\"images/arena_item_4-skull.png\" alt=\"Skull item\" /> Contaminations: see the contaminations section below<br />
+<img src=\"images/arena_item_5-throw.png\" alt=\"Hand item (blue)\" /> Throw bombs: pick up bombs, carry them and throw them away<br />
+<img src=\"images/arena_item_6-punch.png\" alt=\"Glove item\" /> Punch bombs: punch a bomb that is lying in front of you<br />
+<img src=\"images/arena_item_7-remote.png\" alt=\"Remote item\" /> Remote fuse: remote fuse a bomb<br />" );
 
-_add( "Various contaminations after skull item is taken", "The skull item influences the health and skills of your bomber. It can result to: inverted controls, bombs with small flames, have no bombs to place, always dropping bombs, slow speed, fast speed, always move, bombs ticking shorter, bombs ticking longer than usual, invisibility of a bomber, and bomber is flameproof." );
+_add( "Various contaminations after skull item is taken", "The skull item influences the health and skills of your bomber. It can result to: inverted controls, bombs with small flames, having no bombs to place, always dropping bombs, slow speed, fast speed, always move, bombs ticking shorter, bombs ticking longer than usual, invisibility of a bomber, and to a flameproof bomber." );
 
 _add( "Item amount in walls as well as bomber skills on startup can be set on a per-level basis", "For this feature a new layout for level files has been designed to configure the amount of items and the skills at the start of a match." );
 
