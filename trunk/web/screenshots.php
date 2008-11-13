@@ -32,7 +32,8 @@ $webpage->head();
 <h2><a id="pr528">Preview version Rev. 528</a></h2>
 
 <p>
-Showing the feature &quot;remote fusing bombs&quot;
+Showing the feature &quot;remote fusing bombs&quot;.<br />
+The remote control item (top row) has been changed in the future.
 </p>
 
 <p>
@@ -42,7 +43,9 @@ Showing the feature &quot;remote fusing bombs&quot;
 <h2><a id="pr153">Preview version Rev. 153</a></h2>
 
 <p>
-Running Bombermaaan on Vista
+Running Bombermaaan on Vista.<br />
+With this revision, the bombers are misplaced and the area besides the score board is left black.
+The graphics of floors, soft walls and the background color of the score board has been changed in the future.
 </p>
 
 <p>

@@ -313,6 +313,12 @@ trunk/web/features.php -text
 trunk/web/history.php -text
 trunk/web/images/arena_item_0-bomb.png -text
 trunk/web/images/arena_item_1-flame.png -text
+trunk/web/images/arena_item_2-kick.png -text
+trunk/web/images/arena_item_3-speed.png -text
+trunk/web/images/arena_item_4-skull.png -text
+trunk/web/images/arena_item_5-throw.png -text
+trunk/web/images/arena_item_6-punch.png -text
+trunk/web/images/arena_item_7-remote.png -text
 trunk/web/images/arena_item_missing.png -text
 trunk/web/images/bomber_a.png -text
 trunk/web/images/feed-icon-14x14.png -text
