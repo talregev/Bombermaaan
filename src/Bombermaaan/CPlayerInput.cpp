@@ -282,10 +282,11 @@ bool CPlayerInput::TestControl (int Control)
         {
             switch (OptControl)
             {   
-                case JOYSTICK_UP    : return (m_pDirectInput->GetJoystickAxisY (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) < 0);
-                case JOYSTICK_DOWN  : return (m_pDirectInput->GetJoystickAxisY (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) > 0);
-                case JOYSTICK_LEFT  : return (m_pDirectInput->GetJoystickAxisX (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) < 0);
-                case JOYSTICK_RIGHT : return (m_pDirectInput->GetJoystickAxisX (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) > 0);
+                // Changed checks from 0 to 100/-100 so the gamepad is not too sensitive
+                case JOYSTICK_UP    : return (m_pDirectInput->GetJoystickAxisY (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) < -100);
+                case JOYSTICK_DOWN  : return (m_pDirectInput->GetJoystickAxisY (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) > 100);
+                case JOYSTICK_LEFT  : return (m_pDirectInput->GetJoystickAxisX (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) < -100);
+                case JOYSTICK_RIGHT : return (m_pDirectInput->GetJoystickAxisX (m_PlayerInput - NUMBER_OF_KEYBOARD_CONFIGURATIONS) > 100);
             }
         }
         else
