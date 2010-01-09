@@ -297,7 +297,7 @@ EGameMode CWinner::Update (void)
             {
                 m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Update();
                 // LeaveScreen ||= resulted in error C2059
-                LeaveScreen |= m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(1)).TestMenuNext();
+                LeaveScreen |= m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).TestMenuNext();
             }
 
             // Check the keyboard as well
