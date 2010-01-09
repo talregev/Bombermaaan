@@ -614,8 +614,38 @@ void CMatch::ProcessPlayerCommands (void)
 
 void CMatch::ManagePauseMessage (void)
 {
+    // Check if a joystick pressed the "start" button
+    // There is no check which joystick had requested the pause, so the pause can be ended
+    // by every joystick and even the keyboard
+    bool joystickRequestedPause = false;
+
+    for ( int Player = 0; Player < MAX_PLAYERS; Player++ ) {
+
+        // If this player plays and is a human
+        if (m_pOptions->GetBomberType (Player) == BOMBERTYPE_MAN &&
+            m_Arena.GetBomber(Player).Exist())
+        {   
+            // If its bomber is still alive
+            if (m_Arena.GetBomber (Player).IsAlive())
+            {
+                // Get his player input using the options object
+                int PlayerInputNr = m_pOptions->GetPlayerInput (Player);
+
+                // If this player input is opened
+                if (m_pInput->GetPlayerInput(PlayerInputNr).IsOpened()) {
+
+                    if ( m_pInput->GetPlayerInput(PlayerInputNr).TestPause() ) {
+                        joystickRequestedPause  = true;
+                    }
+
+                }
+            }
+        }
+
+    }
+
     // If the pause control is active
-    if (m_pInput->GetMainInput().TestPause())
+    if (m_pInput->GetMainInput().TestPause() || joystickRequestedPause )
     {
         // If the pause message is not created
         if (m_pPauseMessage == NULL)
@@ -637,6 +667,11 @@ void CMatch::ManagePauseMessage (void)
         // Update the pause message
         m_pPauseMessage->Update (m_pTimer->GetDeltaTime());
         
+        // Update joysticks
+        for ( int i = 0; i < m_pInput->GetPlayerInputCount(); i++ ) {
+            m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Update();
+        }
+
         // If the pause message has left the screen
         if (m_pPauseMessage->IsOutOfBounds())
         {

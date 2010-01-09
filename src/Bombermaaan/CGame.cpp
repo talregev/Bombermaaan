@@ -85,7 +85,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 
 // Bombermaaan version
 #define BOMBERMAAAN_VERSION_STRING      "1.4.0"
-#define BOMBERMAAAN_BUILD_STRING        "627"
+#define BOMBERMAAAN_BUILD_STRING        "648"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

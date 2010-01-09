@@ -52,6 +52,9 @@
 //! The third joystick button can be used for leaving the winner screen
 #define JOYSTICK_BUTTON_MENU_NEXT   JOYSTICK_BUTTON(2)
 
+//! The 9th joystick button (this usually is the "start" button) can be used for leaving the winner screen
+#define JOYSTICK_BUTTON_PAUSE       JOYSTICK_BUTTON(9)
+
 #define NO_ACTIVATED_CONTROL    -1
 
 #define MAX_CONTROL_NAME_LENGTH     20
@@ -93,6 +96,7 @@ public:
     inline bool         TestAction1 (void);
     inline bool         TestAction2 (void);
     inline bool         TestMenuNext (void);
+    inline bool         TestPause (void);
     int                 GetActivatedControl (void);
     const char*         GetControlName (int Control);
     bool                TestControl (int Control);
@@ -158,6 +162,13 @@ inline bool CPlayerInput::TestAction2 (void)
 inline bool CPlayerInput::TestMenuNext (void)
 {
     return TestMenuControl (JOYSTICK_BUTTON_MENU_NEXT);
+}
+
+//! The "pause" button was pressed?
+
+inline bool CPlayerInput::TestPause (void)
+{
+    return TestMenuControl (JOYSTICK_BUTTON_PAUSE);
 }
 
 //******************************************************************************************************************************

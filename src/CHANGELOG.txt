@@ -2,6 +2,7 @@ Next version
 
 Changed: Winner screen can be left with 3rd joystick button (#2121895).
 Changed: Parameter --use-appdata-dir replaced by --ignore-home-dir on Linux. On Windows it's still --use-appdata-dir.
+New feature: Game can be paused/unpaused with the "start" button of the joysticks (#2907122)
 
 
 ----------------------------
