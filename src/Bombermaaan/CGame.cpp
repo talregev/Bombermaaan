@@ -83,9 +83,9 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 #  define NAME_OF_BOMBERMAN_DLL "libbombermaaan.so"
 #endif
 
-// Bombermaaan version
+// Bombermaaan version (build is suffixed with an "e" if the build is an experimental release)
 #define BOMBERMAAAN_VERSION_STRING      "1.4.0"
-#define BOMBERMAAAN_BUILD_STRING        "648"
+#define BOMBERMAAAN_BUILD_STRING        "649e"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************

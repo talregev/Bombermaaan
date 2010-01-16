@@ -293,11 +293,22 @@ EGameMode CWinner::Update (void)
             bool LeaveScreen = false;
 
             // Check everyone's joystick button if the 'next' button was pressed
-            for (int i = 0; i < m_pInput->GetPlayerInputCount(); i++)
-            {
-                m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Update();
-                // LeaveScreen ||= resulted in error C2059
-                LeaveScreen |= m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).TestMenuNext();
+            for ( int Player = 0; Player < MAX_PLAYERS; Player++ ) {
+
+                // If this player plays and is a human
+                if (m_pOptions->GetBomberType (Player) == BOMBERTYPE_MAN)
+                {   
+                    // Get his player input using the options object
+                    int PlayerInputNr = m_pOptions->GetPlayerInput (Player);
+
+                    // If this player input is opened
+                    if (m_pInput->GetPlayerInput(PlayerInputNr).IsOpened()) {
+                        m_pInput->GetPlayerInput(PlayerInputNr).Update();
+                        // LeaveScreen ||= resulted in error C2059
+                        LeaveScreen |= m_pInput->GetPlayerInput(PlayerInputNr).TestMenuNext();
+                    }
+                }
+
             }
 
             // Check the keyboard as well
