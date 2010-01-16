@@ -1,0 +1,10 @@
+Release notes for Bombermaaan 1.4.0.649e
+========================================
+
+This is an EXPERIMENTAL release of Bombermaaan.
+
+Bombermaaan web site: http://bombermaaan.sourceforge.net/
+
+This release should fix the game crash in the winner screen reported by Adam Jimenez on SourceForge.net.
+
+See: http://sourceforge.net/tracker/?func=detail&aid=2907122&group_id=81520&atid=563213.
