@@ -95,7 +95,8 @@ FILE_PATTERNS          = *.c \
                          *.cpp \
                          *.h \
                          *.hh \
-                         *.dox
+                         *.dox \
+                         *.html
 RECURSIVE              = NO
 EXCLUDE                = 
 EXCLUDE_SYMLINKS       = NO
