@@ -4,6 +4,7 @@ docs/Compile[!!-~]instructions.dox -text
 docs/Doxyfile -text
 docs/Level_File_Layout_Version2.html -text
 docs/RELEASE_NOTES_r649.txt -text
+docs/RELEASE_NOTES_r655.txt -text
 docs/Readme.html -text
 docs/_generate.cmd -text
 docs/_main.txt -text
