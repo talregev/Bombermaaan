@@ -1,0 +1,15 @@
+Release notes for Bombermaaan 1.4.0.655e
+========================================
+
+This is an EXPERIMENTAL release of Bombermaaan.
+
+Bombermaaan web site: http://bombermaaan.sourceforge.net/
+
+This release should (really!) fix the game crash in the winner screen 
+and during the match when pressing a joystick's start button
+as reported by Adam Jimenez on SourceForge.net.
+
+There had to be at least two joysticks attached, otherwise the game didn't crash.
+
+See: http://sourceforge.net/tracker/?func=detail&aid=2907122&group_id=81520&atid=563213.
+See: http://sourceforge.net/tracker/?func=detail&aid=2933852&group_id=81520&atid=563210.
