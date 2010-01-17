@@ -196,11 +196,16 @@ inline void COptions::SetBattleCount (int BattleCount)
 
 inline int COptions::GetPlayerInput (int Player)
 {
+    ASSERT (Player >= 0 && Player < MAX_PLAYERS);
+
     return m_PlayerInput[Player];
 }
 
 inline void COptions::SetPlayerInput (int Player, int PlayerInput)
 {
+    ASSERT (Player >= 0 && Player < MAX_PLAYERS);
+    //TODO: ASSERT PlayerInput
+
     m_PlayerInput[Player] = PlayerInput;
 }
 
