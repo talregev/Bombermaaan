@@ -668,7 +668,7 @@ void CMatch::ManagePauseMessage (void)
         m_pPauseMessage->Update (m_pTimer->GetDeltaTime());
         
         // Update joysticks
-        for ( int i = 0; i < m_pInput->GetPlayerInputCount(); i++ ) {
+        for ( int i = 0; i < MAX_PLAYERS; i++ ) {
             m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Update();
         }
 
