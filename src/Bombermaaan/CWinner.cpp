@@ -228,7 +228,7 @@ void CWinner::OpenInput (void)
     m_pInput->GetMainInput().Open();
 
     // Open everyone's input device so the screen can be left with specific joystick button
-    for (int i = 0; i < m_pInput->GetPlayerInputCount(); i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Open();
     }
@@ -243,7 +243,7 @@ void CWinner::CloseInput (void)
     m_pInput->GetMainInput().Close();
 
     // Close everyone's input device
-    for (int i = 0; i < m_pInput->GetPlayerInputCount(); i++)
+    for (int i = 0; i < MAX_PLAYERS; i++)
     {
         m_pInput->GetPlayerInput(m_pOptions->GetPlayerInput(i)).Close();
     }
