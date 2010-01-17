@@ -54,6 +54,7 @@
 #define JOYSTICK_BUTTON_MENU_NEXT   JOYSTICK_BUTTON(2)
 
 //! The 9th joystick button (this usually is the "start" button) can be used for leaving the winner screen
+//! On xbox controller, the start button could be the 7th button (see tracker item #2907122)
 #define JOYSTICK_BUTTON_PAUSE       JOYSTICK_BUTTON(9)
 
 #define NO_ACTIVATED_CONTROL    -1
