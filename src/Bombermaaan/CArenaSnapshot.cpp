@@ -1,6 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
+    Copyright (C) 2010 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -27,6 +28,8 @@
 
 #include "STDAFX.H"
 #include "CArenaSnapshot.h"
+
+#include <string.h>
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -89,7 +92,7 @@ void CArenaSnapshot::ReadInteger (int* pValue)
 {
     ASSERT(m_Position + sizeof(int) < ARENA_SNAPSHOT_SIZE);
 
-    *pValue = *((int*)&m_Buffer[m_Position]);
+    memcpy(pValue, &m_Buffer[m_Position], sizeof(int)); // #3078839
     
 #ifdef ENABLE_PRINT_CONSOLE
     theConsole.Write("READ INT %d FROM POS %d\n", *pValue, m_Position);
@@ -106,7 +109,7 @@ void CArenaSnapshot::ReadFloat (float* pValue)
 {
     ASSERT(m_Position + sizeof(float) < ARENA_SNAPSHOT_SIZE);
 
-    *pValue = *((float*)&m_Buffer[m_Position]);
+    memcpy(pValue, &m_Buffer[m_Position], sizeof(float)); // #3078839
 
 #ifdef ENABLE_PRINT_CONSOLE
     theConsole.Write("READ FLOAT %f FROM POS %d\n", *pValue, m_Position);
@@ -123,7 +126,7 @@ void CArenaSnapshot::ReadBoolean (bool* pValue)
 {
     ASSERT(m_Position + sizeof(bool) < ARENA_SNAPSHOT_SIZE);
 
-    *pValue = *((bool*)&m_Buffer[m_Position]);
+    memcpy(pValue, &m_Buffer[m_Position], sizeof(bool)); // #3078839
 
 #ifdef ENABLE_PRINT_CONSOLE
     theConsole.Write("READ BOOL %d FROM POS %d\n", *pValue, m_Position);
@@ -140,7 +143,7 @@ void CArenaSnapshot::WriteInteger (int Value)
 {
     ASSERT(m_Position + sizeof(int) < ARENA_SNAPSHOT_SIZE);
     
-    *((int*)&m_Buffer[m_Position]) = Value;
+    memcpy(&m_Buffer[m_Position], &Value, sizeof(int)); // #3078839
 
 #ifdef ENABLE_PRINT_CONSOLE
     theConsole.Write("WRITE INT %d TO POS %d\n", Value, m_Position);
@@ -157,7 +160,7 @@ void CArenaSnapshot::WriteFloat (float Value)
 {
     ASSERT(m_Position + sizeof(float) < ARENA_SNAPSHOT_SIZE);
 
-    *((float*)&m_Buffer[m_Position]) = Value;
+    memcpy(&m_Buffer[m_Position], &Value, sizeof(float)); // #3078839
 
 #ifdef ENABLE_PRINT_CONSOLE
     theConsole.Write("WRITE FLOAT %f TO POS %d\n", Value, m_Position);
@@ -174,7 +177,7 @@ void CArenaSnapshot::WriteBoolean (bool Value)
 {
     ASSERT(m_Position + sizeof(bool) < ARENA_SNAPSHOT_SIZE);
 
-    *((bool*)&m_Buffer[m_Position]) = Value;
+    memcpy(&m_Buffer[m_Position], &Value, sizeof(bool)); // #3078839
 
 #ifdef ENABLE_PRINT_CONSOLE
     theConsole.Write("WRITE BOOL %d TO POS %d\n", Value, m_Position);

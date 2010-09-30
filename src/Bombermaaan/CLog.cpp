@@ -1,7 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
-    Copyright (C) 2008 Markus Drescher
+    Copyright (C) 2008-2010 Markus Drescher
     Copyright (C) 2008 Bernd Arnold
 
     This file is part of Bombermaaan.
@@ -209,6 +209,7 @@ void CLog::LogLastError()
 
     FormatMessage(  FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
                     NULL,
+
                     GetLastError(),
                     MAKELANGID( LANG_NEUTRAL, SUBLANG_DEFAULT ), // Default language
                     (char *) &lpMsgBuf,
@@ -421,17 +422,28 @@ long CLog::WriteDebugMsg( EDebugSection section, const char *pMessage, ... )
             // Write the time string
             m_theLog.write( Time, strlen( Time ) );
 
-            static char* sectionString;
+            std::string sectionString; // #3078839
 
             switch( section )
             {
-                case DEBUGSECT_BOMBER:      sectionString = "BOMBER:     "; break;
-                case DEBUGSECT_BOMB:        sectionString = "BOMB:       "; break;
-                case DEBUGSECT_EXPLOSION:   sectionString = "EXPLOSION:  "; break;
-                default:                    sectionString = "UNKNOWN:    "; break;
+                case DEBUGSECT_BOMBER:
+                  sectionString = "BOMBER:     "; // #3078839
+                  break;
+                  
+                case DEBUGSECT_BOMB:
+                  sectionString = "BOMB:       "; // #3078839
+                  break;
+                  
+                case DEBUGSECT_EXPLOSION:
+                  sectionString = "EXPLOSION:  "; // #3078839
+                  break;
+                  
+                default:
+                  sectionString = "UNKNOWN:    "; // #3078839
+                  break;
             }
 
-            m_theLog.write( sectionString, strlen( sectionString ) );
+            m_theLog << sectionString; // #3078839
 
             // Write the message
             m_theLog.write( Message, strlen( Message ) );
