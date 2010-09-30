@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007-2010 Bernd Arnold
+    Copyright (C) 2010 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -708,6 +709,7 @@ void CMatch::UpdateMatch (void)
                         case BOMBERTYPE_MAN:
                         case BOMBERTYPE_NET:    AliveCount_Human++; break;
                         case BOMBERTYPE_COM:    AliveCount_AI++;    break;
+                        default:                break; // #3078839
                     }
 
                 }
@@ -1153,14 +1155,14 @@ void CMatch::DisplayPauseMessage (void)
 
 void CMatch::_Debug_WriteBombsToLog() {
 
-	theLog.WriteLine( "CMatch::_Debug_WriteBombsToLog(): Bombs in m_Arena -- BEGIN --" );
+    theLog.WriteLine( "CMatch::_Debug_WriteBombsToLog(): Bombs in m_Arena -- BEGIN --" );
 
-	for ( int i = 0; i < m_Arena.MaxBombs(); i++ ) {
-		theLog.WriteLine( "--------------------------- Bomb %d -------------------------", i );
+    for ( int i = 0; i < m_Arena.MaxBombs(); i++ ) {
+        theLog.WriteLine( "--------------------------- Bomb %d -------------------------", i );
         m_Arena.GetBomb( i )._Debug_WriteToLog();
-	}
+    }
 
-	theLog.WriteLine( "CMatch::_Debug_WriteBombsToLog(): Bombs in m_Arena -- END --" );
+    theLog.WriteLine( "CMatch::_Debug_WriteBombsToLog(): Bombs in m_Arena -- END --" );
 
 }
 
@@ -1169,3 +1171,4 @@ void CMatch::_Debug_WriteBombsToLog() {
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 //******************************************************************************************************************************
+

@@ -2,7 +2,8 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
-	Copyright (C) 2008 Jerome Bigot
+    Copyright (C) 2008 Jerome Bigot
+    Copyright (C) 2010 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -288,8 +289,8 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
 
     m_Dead = DEAD_ALIVE;
 
-	m_FlameSize = options->GetInitialBomberSkills( BOMBERSKILL_FLAME );
-	m_TotalBombs = options->GetInitialBomberSkills( BOMBERSKILL_BOMBS );
+    m_FlameSize = options->GetInitialBomberSkills( BOMBERSKILL_FLAME );
+    m_TotalBombs = options->GetInitialBomberSkills( BOMBERSKILL_BOMBS );
     m_UsedBombs = 0;
     m_Speed = SPEED_NORMAL;
     
@@ -313,10 +314,10 @@ void CBomber::Create (int BlockX, int BlockY, int Player, COptions* options)
     m_NumberOfBombItems = options->GetInitialBomberSkills( BOMBERSKILL_BOMBITEMS );
     m_NumberOfFlameItems = options->GetInitialBomberSkills( BOMBERSKILL_FLAMEITEMS );
     m_NumberOfRollerItems = options->GetInitialBomberSkills( BOMBERSKILL_ROLLERITEMS );
-	m_NumberOfKickItems = options->GetInitialBomberSkills( BOMBERSKILL_KICKITEMS );
+    m_NumberOfKickItems = options->GetInitialBomberSkills( BOMBERSKILL_KICKITEMS );
     m_NumberOfThrowItems = options->GetInitialBomberSkills( BOMBERSKILL_THROWITEMS );
     m_NumberOfPunchItems = options->GetInitialBomberSkills( BOMBERSKILL_PUNCHITEMS );
-	m_NumberOfRemoteItems = options->GetInitialBomberSkills( BOMBERSKILL_REMOTEITEMS );
+    m_NumberOfRemoteItems = options->GetInitialBomberSkills( BOMBERSKILL_REMOTEITEMS );
 
     // increase initial speed
     m_Speed += SPEED_INC * m_NumberOfRollerItems;
@@ -421,10 +422,10 @@ void CBomber::Burn ()
 {
     debugLog.WriteDebugMsg( DEBUGSECT_BOMBER, "Bomber burning [id=%d, x=%02d, y=%02d].", m_Player, m_BomberMove.GetBlockX(), m_BomberMove.GetBlockY() );
 
-	// The bomber cannot die by flames if he/she has the flameproof contamination
-	if ( m_Sickness != SICK_FLAMEPROOF ) {
-	    Die ();
-	}
+    // The bomber cannot die by flames if he/she has the flameproof contamination
+    if ( m_Sickness != SICK_FLAMEPROOF ) {
+        Die ();
+    }
 }
 
 //******************************************************************************************************************************
@@ -479,7 +480,7 @@ void CBomber::Command (EBomberMove BomberMove, EBomberAction BomberAction)
         case SICK_SHORTBOMB :
         case SICK_INVERTION :
         case SICK_INERTIA :
-		case SICK_INVISIBILITY :
+        case SICK_INVISIBILITY :
         {
             m_BomberAction = BomberAction; 
             break;
@@ -610,8 +611,8 @@ void CBomber::Action ()
                                                     ( m_BomberActionDuration > 1.0f ) && m_dropMassBombPossible;
 
                         // If no wall and no bomb and no explosion at his position
-                        if (!IsObstacle(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY()) && 
-                            !m_pArena->IsExplosion(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY())
+                        if ((!IsObstacle(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY()) && 
+                            !m_pArena->IsExplosion(m_BomberMove.GetBlockX(),m_BomberMove.GetBlockY()))
                             || ( m_dropMassBombPossible && dropMassBombNow ) )
                         {
                             // So we can limit the number of dropped bombs
@@ -782,8 +783,8 @@ void CBomber::Action ()
                     }
                 }
 
-				
-				// If the bomber can remote fuse bombs and we didn't punch a bomb (see above)
+                
+                // If the bomber can remote fuse bombs and we didn't punch a bomb (see above)
                 if (CanRemoteFuseBombs() && !bomberHasPunchedBomb)
                 {
                     float timeMax = 0.0f;   // time elapsed since bomb was created
@@ -791,7 +792,7 @@ void CBomber::Action ()
                     
                     // Find the first bomb, i.e. the one which was planted first, to fuse.
                     for (int Index = 0 ; Index < m_pArena->MaxBombs() ; Index++)
-                    {			
+                    {            
                         CBomb& myBomb = m_pArena->GetBomb(Index); // help variable
                         
                         // Test existence and kicker player number
@@ -924,8 +925,8 @@ void CBomber::Animate (float DeltaTime)
     // Bomber state to set before exiting this method
     EBomberState NewBomberState = m_BomberState;
 
-	// By default, the bomber can be seen in the arena
-	m_MakeInvisible = false;
+    // By default, the bomber can be seen in the arena
+    m_MakeInvisible = false;
 
     // If the bomber is alive (not dead and not dying)
     if (m_Dead == DEAD_ALIVE)
@@ -1266,13 +1267,13 @@ void CBomber::Animate (float DeltaTime)
         }
         else if (m_SickTimer < ANIMSICK_TIME2)
         {
-			// Player color
-			m_Sprite += m_Player * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
+            // Player color
+            m_Sprite += m_Player * m_BomberSpriteTables[m_BomberState].NumberOfSpritesPerColor;
 
-			// If it is the invisibility contamination, make the bomber invisible during this time
-			if ( m_Sickness == SICK_INVISIBILITY ) {
-				m_MakeInvisible = true;
-			}
+            // If it is the invisibility contamination, make the bomber invisible during this time
+            if ( m_Sickness == SICK_INVISIBILITY ) {
+                m_MakeInvisible = true;
+            }
         }
         else
         {
@@ -1454,7 +1455,8 @@ void CBomber::OnWriteSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.WriteInteger(m_NumberOfKickItems);
     Snapshot.WriteInteger(m_NumberOfThrowItems);
     Snapshot.WriteInteger(m_NumberOfPunchItems);
-	Snapshot.WriteInteger(m_NumberOfRemoteItems);
+    Snapshot.WriteInteger(m_NumberOfRemoteItems);
+
     Snapshot.WriteBoolean(m_ReturnedItems);
     Snapshot.WriteInteger(m_Player);
     Snapshot.WriteInteger(m_Dead);
@@ -1504,7 +1506,7 @@ void CBomber::OnReadSnapshot (CArenaSnapshot& Snapshot)
     Snapshot.ReadInteger(&m_NumberOfKickItems);
     Snapshot.ReadInteger(&m_NumberOfThrowItems);
     Snapshot.ReadInteger(&m_NumberOfPunchItems);
-	Snapshot.ReadInteger(&m_NumberOfRemoteItems);
+    Snapshot.ReadInteger(&m_NumberOfRemoteItems);
     Snapshot.ReadBoolean(&m_ReturnedItems);
     Snapshot.ReadInteger(&m_Player);
     Snapshot.ReadInteger((int*)&m_Dead);
@@ -1554,7 +1556,7 @@ void CBomber::ReturnItems (float DeltaTime)
                                     0,
                                     m_NumberOfThrowItems,
                                     m_NumberOfPunchItems,
-									m_NumberOfRemoteItems))
+                                    m_NumberOfRemoteItems))
             {
                 // Play the item fumes sound
                 m_pSound->PlaySample (SAMPLE_ITEM_FUMES);
@@ -1701,7 +1703,7 @@ void CBomber::ItemEffect (EItemType Type)
                 break;
             }
 
-			case ITEM_REMOTE :
+            case ITEM_REMOTE :
             {
                 // One more picked up remote controler item
                 m_NumberOfRemoteItems++;
@@ -1818,7 +1820,7 @@ void CBomber::Stunt (void)
 
     EItemType ItemType = ITEM_NONE;
     
-	if (m_NumberOfRemoteItems > 0)
+    if (m_NumberOfRemoteItems > 0)
     {   
         m_NumberOfRemoteItems--;
         ItemType = ITEM_REMOTE;
