@@ -2,6 +2,7 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007-2010 Bernd Arnold
+    Copyright (C) 2010 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -85,7 +86,7 @@ SOCKET          ClientSocket = INVALID_SOCKET;
 
 // Bombermaaan version (build is suffixed with an "e" if the build is an experimental release)
 #define BOMBERMAAAN_VERSION_STRING      "1.4.0"
-#define BOMBERMAAAN_BUILD_STRING        "655e"
+#define BOMBERMAAAN_BUILD_STRING        "657e"
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -1299,17 +1300,9 @@ bool CGame::OnSysCommand (WPARAM wParam, LPARAM lParam)
 
 void CGame::OnSize (WPARAM wParam, LPARAM lParam) 
 { 
-    // Check to see if we are losing our window...
 #ifndef WIN32
-	SDL_ResizeEvent *resize = (SDL_ResizeEvent *)wParam;
-	
-	CSDLVideo m_pSDLVideo = m_Display.GetSDLVideo();
-	SDL_Surface *pPrimary;
-	
-	// resize window
-    pPrimary = SDL_SetVideoMode(resize->w, resize->h, 0, SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_RESIZABLE);
-	m_pSDLVideo.SetNewPrimary(pPrimary);
-
+  // Rework necessary
+  // Removed due to B
 #endif
 }
 

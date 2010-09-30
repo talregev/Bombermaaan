@@ -2,7 +2,8 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008 Bernd Arnold
-	Copyright (C) 2008 Jerome Bigot
+    Copyright (C) 2008 Jerome Bigot
+    Copyright (C) 2010 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -630,7 +631,7 @@ bool COptions::LoadLevels( std::string dynamicDataFolder, std::string pgmFolder 
     }
 
     // If the level number we read in the cfg file is invalid compared to the number of existing levels
-    if (m_Level >= m_Levels.size())
+    if (m_Level >= (int)m_Levels.size()) // #3078839
     {
         // Select the first level
         m_Level = 0;

@@ -2,7 +2,8 @@
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
     Copyright (C) 2007, 2008, 2010 Bernd Arnold
-	Copyright (C) 2008 Jerome Bigot
+    Copyright (C) 2008 Jerome Bigot
+    Copyright (C) 2010 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -129,8 +130,8 @@ public:
     inline int          GetControl (int PlayerInput, int Control);
     inline void         SetControl (int PlayerInput, int Control, int Value);
     inline EBlockType   GetBlockType (int X, int Y);
-	inline int			GetNumberOfItemsInWalls (EItemType ItemType);
-	inline int			GetInitialBomberSkills (EBomberSkills BomberSkill);
+    inline int            GetNumberOfItemsInWalls (EItemType ItemType);
+    inline int            GetInitialBomberSkills (EBomberSkills BomberSkill);
     inline void         SetLevel (int Level);
     inline int          GetLevel (void);
     inline int          GetNumberOfLevels (void);
@@ -237,28 +238,29 @@ inline void COptions::SetControl (int PlayerInput, int Control, int Value)
 
 inline EBlockType COptions::GetBlockType (int X, int Y)
 {
-    ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
+    ASSERT (m_Level >= 0 && m_Level < (int)m_Levels.size());
 
     return m_Levels.at(m_Level).GetBlockType(X,Y);
 }
 
 inline int COptions::GetNumberOfItemsInWalls ( EItemType ItemType )
 {
-	ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
+    ASSERT (m_Level >= 0 && m_Level < (int)m_Levels.size()); // #3078839
 
     return m_Levels.at(m_Level).GetNumberOfItemsInWalls(ItemType);
 }
 
 inline int COptions::GetInitialBomberSkills ( EBomberSkills BomberSkill )
 {
-	ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
+    // #3078839
+    ASSERT (m_Level >= 0 && m_Level < (int)m_Levels.size()); // #3078839
 
     return m_Levels.at(m_Level).GetInitialBomberSkills(BomberSkill);
 }
 
 inline void COptions::SetLevel (int Level)
 {
-    ASSERT (Level >= 0 && Level < m_Levels.size());
+    ASSERT (Level >= 0 && Level < (int)m_Levels.size()); // #3078839
     m_Level = Level;
 }
 
@@ -274,7 +276,7 @@ inline int COptions::GetNumberOfLevels (void)
 
 inline const char* COptions::GetLevelName (void)
 {
-    ASSERT (m_Level >= 0 && m_Level < m_Levels.size());
+    ASSERT (m_Level >= 0 && m_Level < (int)m_Levels.size()); // #3078839
     return m_Levels.at( m_Level ).GetLevelName();
 }
 
@@ -291,3 +293,4 @@ inline EActionAIAlive COptions::GetOption_ActionWhenOnlyAIPlayersLeft()
 //******************************************************************************************************************************
 
 #endif  // __COPTIONS_H__
+
