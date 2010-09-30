@@ -1,7 +1,7 @@
 /************************************************************************************
 
     Copyright (C) 2000-2002, 2007 Thibaut Tollemer
-    Copyright (C) 2008 Markus Drescher
+    Copyright (C) 2008-2010 Markus Drescher
 
     This file is part of Bombermaaan.
 
@@ -27,8 +27,6 @@
 
 #include "STDAFX.H"
 #include "CSDLInput.h"
-
-static const char* GetSDLInputError (HRESULT hRet);
 
 //******************************************************************************************************************************
 //******************************************************************************************************************************
@@ -88,12 +86,12 @@ bool CSDLInput::Create (void)
         // Prepare the friendly name for each key
         MakeKeyFriendlyNames ();
 
-		// Create all joysticks that are installed on the system
-		for(int i=0; i < SDL_NumJoysticks(); i++ ) 
-		{
-			SJoystick *pJoystick = new SJoystick;
+        // Create all joysticks that are installed on the system
+        for(int i=0; i < SDL_NumJoysticks(); i++ ) 
+        {
+            SJoystick *pJoystick = new SJoystick;
 
-			if (pJoystick == NULL)
+            if (pJoystick == NULL)
             {
                 // Log failure
                 theLog.WriteLine ("SDLInput        => !!! Could not allocate memory for a joystick.");
@@ -102,7 +100,7 @@ bool CSDLInput::Create (void)
                 return false;
             }
 
-			// Reset the joystick state
+            // Reset the joystick state
             memset (&pJoystick->State, 0, sizeof(pJoystick->State));
             
             // The joystick is not opened yet
@@ -111,17 +109,17 @@ bool CSDLInput::Create (void)
             // Set the joystick's device to NULL (will be created later)
             pJoystick->pDevice = NULL;
 
-	        m_pJoysticks.push_back (pJoystick); // the joystick is not opened
+            m_pJoysticks.push_back (pJoystick); // the joystick is not opened
 
-        	theLog.WriteLine ("SDLInput        => A joystick was added.");
-			
-		}
-		
+            theLog.WriteLine ("SDLInput        => A joystick was added.");
+            
+        }
+        
         m_Ready = true;
     }
 
-	SDL_JoystickEventState(SDL_ENABLE);
-	
+    SDL_JoystickEventState(SDL_ENABLE);
+    
     // Everything went right
     return true;
 }
@@ -326,59 +324,3 @@ void CSDLInput::MakeKeyFriendlyNames (void)
 //******************************************************************************************************************************
 //******************************************************************************************************************************
 
-// WARNING : Only necessary SDLInput return values are here.
-// It you get a "Unknown SDLInput error!", then maybe it's
-// an error return value that wasn't added to the switch statement.
-
-static const char* GetSDLInputError (HRESULT hRet)
-{
-    switch (hRet)
-    {
-        /* case DI_OK : return "DI_OK";
-        case DIERR_ACQUIRED : return "DIERR_ACQUIRED";
-        case DIERR_BETASDLINPUTVERSION : return "DIERR_BETASDLINPUTVERSION";
-        case DIERR_DEVICENOTREG : return "DIERR_DEVICENOTREG";
-        case DIERR_INVALIDPARAM : return "DIERR_INVALIDPARAM";
-        case DIERR_NOINTERFACE : return "DIERR_NOINTERFACE";
-        case DIERR_NOTINITIALIZED : return "DIERR_NOTINITIALIZED";
-        case DIERR_OLDSDLINPUTVERSION : return "DIERR_OLDSDLINPUTVERSION";
-        case DIERR_OUTOFMEMORY : return "DIERR_OUTOFMEMORY";
-        case E_HANDLE : return "E_HANDLE"; */
-        default : return "Unknown SDLInput error!";
-    }
-}
-
-/*
-
-data format
-
-DIERR_ACQUIRED  
-DIERR_INVALIDPARAM  
-DIERR_NOTINITIALIZED  
-
-coop level
-
-DIERR_INVALIDPARAM  
-DIERR_NOTINITIALIZED  
-E_HANDLE 
-
-create device ex
-
-DIERR_DEVICENOTREG  
-DIERR_INVALIDPARAM  
-DIERR_NOINTERFACE  
-DIERR_NOTINITIALIZED  
-DIERR_OUTOFMEMORY  
-
-dinputcreateex
-
-DIERR_BETASDLINPUTVERSION  
-DIERR_INVALIDPARAM  
-DIERR_OLDSDLINPUTVERSION  
-DIERR_OUTOFMEMORY  
-
-*/
-
-//******************************************************************************************************************************
-//******************************************************************************************************************************
-//******************************************************************************************************************************
