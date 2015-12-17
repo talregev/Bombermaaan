@@ -1,0 +1,1 @@
+https://github.com/reven86/dreamfarmgdk/blob/master/Source/third_party/dxsdk-9.0c-sum04/Lib/x64/dinput.lib

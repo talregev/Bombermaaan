@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Bombermaaan\afxres.h" />
+    <ClInclude Include="..\Bombermaaan\BombermaaanIco.h" />
+    <ClInclude Include="..\Bombermaaan\CAiArena.h" />
+    <ClInclude Include="..\Bombermaaan\CAiBomber.h" />
+    <ClInclude Include="..\Bombermaaan\CAiManager.h" />
+    <ClInclude Include="..\Bombermaaan\CArena.h" />
+    <ClInclude Include="..\Bombermaaan\CArenaCloser.h" />
+    <ClInclude Include="..\Bombermaaan\CArenaSnapshot.h" />
+    <ClInclude Include="..\Bombermaaan\CBoard.h" />
+    <ClInclude Include="..\Bombermaaan\CBomb.h" />
+    <ClInclude Include="..\Bombermaaan\CBomber.h" />
+    <ClInclude Include="..\Bombermaaan\CBomberMove.h" />
+    <ClInclude Include="..\Bombermaaan\CClock.h" />
+    <ClInclude Include="..\Bombermaaan\CCloudManager.h" />
+    <ClInclude Include="..\Bombermaaan\CCommandChunk.h" />
+    <ClInclude Include="..\Bombermaaan\CConsole.h" />
+    <ClInclude Include="..\Bombermaaan\CControls.h" />
+    <ClInclude Include="..\Bombermaaan\CDebug.h" />
+    <ClInclude Include="..\Bombermaaan\CDemo.h" />
+    <ClInclude Include="..\Bombermaaan\CDirectDraw.h" />
+    <ClInclude Include="..\Bombermaaan\CDirectInput.h" />
+    <ClInclude Include="..\Bombermaaan\CDisplay.h" />
+    <ClInclude Include="..\Bombermaaan\CDrawGame.h" />
+    <ClInclude Include="..\Bombermaaan\CElement.h" />
+    <ClInclude Include="..\Bombermaaan\CExplosion.h" />
+    <ClInclude Include="..\Bombermaaan\CFloor.h" />
+    <ClInclude Include="..\Bombermaaan\CFont.h" />
+    <ClInclude Include="..\Bombermaaan\CGame.h" />
+    <ClInclude Include="..\Bombermaaan\CHurryMessage.h" />
+    <ClInclude Include="..\Bombermaaan\CInput.h" />
+    <ClInclude Include="..\Bombermaaan\CItem.h" />
+    <ClInclude Include="..\Bombermaaan\CLog.h" />
+    <ClInclude Include="..\Bombermaaan\CMainInput.h" />
+    <ClInclude Include="..\Bombermaaan\CMatch.h" />
+    <ClInclude Include="..\Bombermaaan\CMenu.h" />
+    <ClInclude Include="..\Bombermaaan\CMenuBase.h" />
+    <ClInclude Include="..\Bombermaaan\CMenuBomber.h" />
+    <ClInclude Include="..\Bombermaaan\CMenuInput.h" />
+    <ClInclude Include="..\Bombermaaan\CMenuLevel.h" />
+    <ClInclude Include="..\Bombermaaan\CMenuMatch.h" />
+    <ClInclude Include="..\Bombermaaan\CMenuYesNo.h" />
+    <ClInclude Include="..\Bombermaaan\CModeScreen.h" />
+    <ClInclude Include="..\Bombermaaan\CMosaic.h" />
+    <ClInclude Include="..\Bombermaaan\COptions.h" />
+    <ClInclude Include="..\Bombermaaan\CPauseMessage.h" />
+    <ClInclude Include="..\Bombermaaan\CPlayerInput.h" />
+    <ClInclude Include="..\Bombermaaan\CRandomMosaic.h" />
+    <ClInclude Include="..\Bombermaaan\CScores.h" />
+    <ClInclude Include="..\Bombermaaan\CScroller.h" />
+    <ClInclude Include="..\Bombermaaan\CSDLInput.h" />
+    <ClInclude Include="..\Bombermaaan\CSDLVideo.h" />
+    <ClInclude Include="..\Bombermaaan\CSound.h" />
+    <ClInclude Include="..\Bombermaaan\CTimer.h" />
+    <ClInclude Include="..\Bombermaaan\CTitle.h" />
+    <ClInclude Include="..\Bombermaaan\CVictory.h" />
+    <ClInclude Include="..\Bombermaaan\CWall.h" />
+    <ClInclude Include="..\Bombermaaan\CWindow.h" />
+    <ClInclude Include="..\Bombermaaan\CWinner.h" />
+    <ClInclude Include="..\Bombermaaan\RESOURCE.H" />
+    <ClInclude Include="..\Bombermaaan\STDAFX.H" />
+    <ClInclude Include="..\Bombermaaan\winres.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Bombermaaan\CAiArena.cpp" />
+    <ClCompile Include="..\Bombermaaan\CAiBomber.cpp" />
+    <ClCompile Include="..\Bombermaaan\CAiManager.cpp" />
+    <ClCompile Include="..\Bombermaaan\CArena.cpp" />
+    <ClCompile Include="..\Bombermaaan\CArenaCloser.cpp" />
+    <ClCompile Include="..\Bombermaaan\CArenaSnapshot.cpp" />
+    <ClCompile Include="..\Bombermaaan\CBoard.cpp" />
+    <ClCompile Include="..\Bombermaaan\CBomb.cpp" />
+    <ClCompile Include="..\Bombermaaan\CBomber.cpp" />
+    <ClCompile Include="..\Bombermaaan\CBomberMove.cpp" />
+    <ClCompile Include="..\Bombermaaan\CClock.cpp" />
+    <ClCompile Include="..\Bombermaaan\CCloudManager.cpp" />
+    <ClCompile Include="..\Bombermaaan\CCommandChunk.cpp" />
+    <ClCompile Include="..\Bombermaaan\CConsole.cpp" />
+    <ClCompile Include="..\Bombermaaan\CControls.cpp" />
+    <ClCompile Include="..\Bombermaaan\CDebug.cpp" />
+    <ClCompile Include="..\Bombermaaan\CDemo.cpp" />
+    <ClCompile Include="..\Bombermaaan\CDirectDraw.cpp" />
+    <ClCompile Include="..\Bombermaaan\CDirectInput.cpp" />
+    <ClCompile Include="..\Bombermaaan\CDisplay.cpp" />
+    <ClCompile Include="..\Bombermaaan\CDrawGame.cpp" />
+    <ClCompile Include="..\Bombermaaan\CElement.cpp" />
+    <ClCompile Include="..\Bombermaaan\CExplosion.cpp" />
+    <ClCompile Include="..\Bombermaaan\CFloor.cpp" />
+    <ClCompile Include="..\Bombermaaan\CFont.cpp" />
+    <ClCompile Include="..\Bombermaaan\CGame.cpp" />
+    <ClCompile Include="..\Bombermaaan\CHurryMessage.cpp" />
+    <ClCompile Include="..\Bombermaaan\CInput.cpp" />
+    <ClCompile Include="..\Bombermaaan\CItem.cpp" />
+    <ClCompile Include="..\Bombermaaan\CLog.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMainInput.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMatch.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMenu.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMenuBase.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMenuBomber.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMenuInput.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMenuLevel.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMenuMatch.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMenuYesNo.cpp" />
+    <ClCompile Include="..\Bombermaaan\CModeScreen.cpp" />
+    <ClCompile Include="..\Bombermaaan\CMosaic.cpp" />
+    <ClCompile Include="..\Bombermaaan\COptions.cpp" />
+    <ClCompile Include="..\Bombermaaan\CPauseMessage.cpp" />
+    <ClCompile Include="..\Bombermaaan\CPlayerInput.cpp" />
+    <ClCompile Include="..\Bombermaaan\CRandomMosaic.cpp" />
+    <ClCompile Include="..\Bombermaaan\CScores.cpp" />
+    <ClCompile Include="..\Bombermaaan\CScroller.cpp" />
+    <ClCompile Include="..\Bombermaaan\CSDLInput.cpp" />
+    <ClCompile Include="..\Bombermaaan\CSDLVideo.cpp" />
+    <ClCompile Include="..\Bombermaaan\CSound.cpp" />
+    <ClCompile Include="..\Bombermaaan\CTitle.cpp" />
+    <ClCompile Include="..\Bombermaaan\CVictory.cpp" />
+    <ClCompile Include="..\Bombermaaan\CWall.cpp" />
+    <ClCompile Include="..\Bombermaaan\CWindow.cpp" />
+    <ClCompile Include="..\Bombermaaan\CWinner.cpp" />
+    <ClCompile Include="..\Bombermaaan\STDAFX.CPP" />
+    <ClCompile Include="..\Bombermaaan\WinMain.cpp" />
+    <ClCompile Include="..\third-party\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\third-party\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\third-party\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\third-party\tinyxml\tinyxmlparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Bombermaaan\Bombermaaan.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="RES32.vcxproj">
+      <Project>{3c060398-2d9a-4c1c-8243-b40b824f1006}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="tinyxml.vcxproj">
+      <Project>{b779b9b5-a18b-44c5-bdf7-4590868cb873}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1C8FEA41-FC95-4B53-B275-0B015D663FE7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Bombermaaan</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\third-party\SDL-1.2.15\include;..\third-party\SDL_mixer-1.2.12\include;..\Bombermaaan</AdditionalIncludeDirectories>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\third-party\SDL-1.2.15\lib\x86\SDL.lib;..\third-party\SDL-1.2.15\lib\x86\SDLmain.lib;..\third-party\SDL_mixer-1.2.12\lib\x86\SDL_mixer.lib;..\third-party\Windows\lib\x86\dinput.lib;ddraw.lib;dxguid.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\third-party\SDL-1.2.15\include;..\third-party\SDL_mixer-1.2.12\include;..\Bombermaaan</AdditionalIncludeDirectories>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\third-party\SDL-1.2.15\lib\x64\SDL.lib;..\third-party\SDL-1.2.15\lib\x64\SDLmain.lib;..\third-party\SDL_mixer-1.2.12\lib\x64\SDL_mixer.lib;..\third-party\Windows\lib\x64\dinput.lib;ddraw.lib;dxguid.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\third-party\SDL-1.2.15\include;..\third-party\SDL_mixer-1.2.12\include;..\Bombermaaan</AdditionalIncludeDirectories>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>..\third-party\SDL-1.2.15\lib\x86\SDL.lib;..\third-party\SDL-1.2.15\lib\x86\SDLmain.lib;..\third-party\SDL_mixer-1.2.12\lib\x86\SDL_mixer.lib;..\third-party\Windows\lib\x86\dinput.lib;ddraw.lib;dxguid.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\third-party\SDL-1.2.15\include;..\third-party\SDL_mixer-1.2.12\include;..\Bombermaaan</AdditionalIncludeDirectories>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>..\third-party\SDL-1.2.15\lib\x64\SDL.lib;..\third-party\SDL-1.2.15\lib\x64\SDLmain.lib;..\third-party\SDL_mixer-1.2.12\lib\x64\SDL_mixer.lib;..\third-party\Windows\lib\x64\dinput.lib;ddraw.lib;dxguid.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

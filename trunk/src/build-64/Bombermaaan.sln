@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bombermaaan", "Bombermaaan.vcxproj", "{1C8FEA41-FC95-4B53-B275-0B015D663FE7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RES32", "RES32.vcxproj", "{3C060398-2D9A-4C1C-8243-B40B824F1006}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml", "tinyxml.vcxproj", "{B779B9B5-A18B-44C5-BDF7-4590868CB873}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C8FEA41-FC95-4B53-B275-0B015D663FE7}.Debug|x64.ActiveCfg = Debug|x64
+		{1C8FEA41-FC95-4B53-B275-0B015D663FE7}.Debug|x64.Build.0 = Debug|x64
+		{1C8FEA41-FC95-4B53-B275-0B015D663FE7}.Release|x64.ActiveCfg = Release|x64
+		{1C8FEA41-FC95-4B53-B275-0B015D663FE7}.Release|x64.Build.0 = Release|x64
+		{3C060398-2D9A-4C1C-8243-B40B824F1006}.Debug|x64.ActiveCfg = Debug|x64
+		{3C060398-2D9A-4C1C-8243-B40B824F1006}.Debug|x64.Build.0 = Debug|x64
+		{3C060398-2D9A-4C1C-8243-B40B824F1006}.Release|x64.ActiveCfg = Release|x64
+		{3C060398-2D9A-4C1C-8243-B40B824F1006}.Release|x64.Build.0 = Release|x64
+		{B779B9B5-A18B-44C5-BDF7-4590868CB873}.Debug|x64.ActiveCfg = Debug|x64
+		{B779B9B5-A18B-44C5-BDF7-4590868CB873}.Debug|x64.Build.0 = Debug|x64
+		{B779B9B5-A18B-44C5-BDF7-4590868CB873}.Release|x64.ActiveCfg = Release|x64
+		{B779B9B5-A18B-44C5-BDF7-4590868CB873}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
