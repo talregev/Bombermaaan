@@ -71,7 +71,6 @@
     <ClInclude Include="..\Bombermaaan\CWinner.h" />
     <ClInclude Include="..\Bombermaaan\RESOURCE.H" />
     <ClInclude Include="..\Bombermaaan\STDAFX.H" />
-    <ClInclude Include="..\Bombermaaan\winres.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Bombermaaan\CAiArena.cpp" />
