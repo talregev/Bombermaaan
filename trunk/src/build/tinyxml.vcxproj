@@ -75,9 +75,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\third-party\tinyxml\tinystr.cpp" />
     <ClCompile Include="..\third-party\tinyxml\tinyxml.cpp" />
     <ClCompile Include="..\third-party\tinyxml\tinyxmlerror.cpp" />

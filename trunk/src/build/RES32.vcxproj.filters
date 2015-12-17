@@ -24,9 +24,6 @@
     <ClInclude Include="..\RES32\StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\RES32\winres.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\RES32\RES.CPP">
