@@ -1,0 +1,10 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="CopyDLLFiles" DependsOnTargets="Build" AfterTargets="Build">
+		<ItemGroup>
+			<SDL 		Include="..\third-party\SDL\lib\x86\*.dll" />
+			<SDL_mixer	Include="..\third-party\SDL_mixer\lib\x86\*.dll" />
+		</ItemGroup>
+		<Copy SourceFiles="@(SDL)"			DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="@(SDL_mixer)"	DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+	</Target>
+</Project>

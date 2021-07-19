@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C55A1706-1D17-4210-852B-FADC36A87ABA}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.31401.40</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\..\_Test_\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\..\_Test_\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>false</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\..\_Test_\Debug/RES32.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;RES_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Debug/RES32.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SDKs\Windows\v6.0\Samples\winui\tsfapp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\_Test_\Debug/Bombermaaan_32.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\..\_Test_\Debug/Bombermaaan_32.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\..\_Test_\Debug/Bombermaaan_32.lib</ImportLibrary>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\..\_Test_\Release/RES32.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;RES_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Release/RES32.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft SDKs\Windows\v6.0\Samples\winui\tsfapp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\_Test_\Release/Bombermaaan_32.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>.\..\_Test_\Release/Bombermaaan_32.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\..\_Test_\Release/Bombermaaan_32.lib</ImportLibrary>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="RES.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="StdAfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="IMAGE\arena_arrows.bmp" />
+    <Image Include="Image\arena_bomber_death.bmp" />
+    <Image Include="Image\arena_bomber_lift.bmp" />
+    <Image Include="Image\arena_bomber_punch.bmp" />
+    <Image Include="Image\arena_bomber_stunt.bmp" />
+    <Image Include="Image\arena_bomber_throw.bmp" />
+    <Image Include="Image\arena_bomber_walk.bmp" />
+    <Image Include="Image\arena_bomber_walk_hold.bmp" />
+    <Image Include="Image\arena_fumes.bmp" />
+    <Image Include="IMAGE\arena_remote_bomb.bmp" />
+    <Image Include="Image\board_drawgame.bmp" />
+    <Image Include="Image\board_heads.bmp" />
+    <Image Include="Image\board_time.bmp" />
+    <Image Include="Image\controls_background.bmp" />
+    <Image Include="Image\controls_background_2.bmp" />
+    <Image Include="Image\controls_background_3.bmp" />
+    <Image Include="Image\hurry.bmp" />
+    <Image Include="Image\level_mini_bombers.bmp" />
+    <Image Include="Image\level_mini_tiles.bmp" />
+    <Image Include="Image\menu_background.bmp" />
+    <Image Include="Image\menu_background_2.bmp" />
+    <Image Include="Image\menu_background_3.bmp" />
+    <Image Include="IMAGE\menu_frame.bmp" />
+    <Image Include="Image\menu_frame_2.bmp" />
+    <Image Include="Image\pause.bmp" />
+    <Image Include="Image\title_backg.bmp" />
+    <Image Include="Image\title_bombers.bmp" />
+    <Image Include="Image\title_cloud_1.bmp" />
+    <Image Include="Image\title_cloud_2.bmp" />
+    <Image Include="Image\title_cloud_3.bmp" />
+    <Image Include="Image\title_menu_items.bmp" />
+    <Image Include="Image\title_title.bmp" />
+    <Image Include="Image\winner_background.bmp" />
+    <Image Include="Image\winner_background_2.bmp" />
+    <Image Include="Image\winner_background_3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sound\BOMBER_DEATH.mp3" />
+    <Media Include="Sound\BOMBER_LOSE_ITEM.mp3" />
+    <Media Include="Sound\Bomber_punch.mp3" />
+    <Media Include="Sound\Bomber_throw.mp3" />
+    <Media Include="Sound\BOMB_BOUNCE.mp3" />
+    <Media Include="Sound\BOMB_DROP.mp3" />
+    <Media Include="Sound\Break_1.mp3" />
+    <Media Include="Sound\Break_2.mp3" />
+    <Media Include="Sound\DRAW_GAME.mp3" />
+    <Media Include="Sound\EXPLOSION_01_1.mp3" />
+    <Media Include="Sound\EXPLOSION_01_2.mp3" />
+    <Media Include="Sound\EXPLOSION_02_1.mp3" />
+    <Media Include="Sound\EXPLOSION_02_2.mp3" />
+    <Media Include="Sound\EXPLOSION_03_1.mp3" />
+    <Media Include="Sound\EXPLOSION_03_2.mp3" />
+    <Media Include="Sound\EXPLOSION_04_1.mp3" />
+    <Media Include="Sound\EXPLOSION_04_2.mp3" />
+    <Media Include="Sound\EXPLOSION_05_1.mp3" />
+    <Media Include="Sound\EXPLOSION_05_2.mp3" />
+    <Media Include="Sound\EXPLOSION_06_1.mp3" />
+    <Media Include="Sound\EXPLOSION_06_2.mp3" />
+    <Media Include="Sound\EXPLOSION_07_1.mp3" />
+    <Media Include="Sound\EXPLOSION_07_2.mp3" />
+    <Media Include="Sound\EXPLOSION_08_1.mp3" />
+    <Media Include="Sound\EXPLOSION_08_2.mp3" />
+    <Media Include="Sound\EXPLOSION_09_1.mp3" />
+    <Media Include="Sound\EXPLOSION_09_2.mp3" />
+    <Media Include="Sound\EXPLOSION_10_1.mp3" />
+    <Media Include="Sound\EXPLOSION_10_2.mp3" />
+    <Media Include="Sound\Hurry.mp3" />
+    <Media Include="Sound\ITEM_FUMES.mp3" />
+    <Media Include="Sound\MENU_BEEP.mp3" />
+    <Media Include="Sound\MENU_ERROR.mp3" />
+    <Media Include="Sound\MENU_NEXT.mp3" />
+    <Media Include="Sound\MENU_PREVIOUS.mp3" />
+    <Media Include="Sound\Pause.mp3" />
+    <Media Include="Sound\PICK_ITEM_1.mp3" />
+    <Media Include="Sound\PICK_ITEM_2.mp3" />
+    <Media Include="Sound\RING_DING.mp3" />
+    <Media Include="Sound\Sick_1.mp3" />
+    <Media Include="Sound\Sick_2.mp3" />
+    <Media Include="Sound\Sick_3.mp3" />
+    <Media Include="Sound\Victory.mp3" />
+    <Media Include="Sound\WALL_CLAP_1.mp3" />
+    <Media Include="Sound\WALL_CLAP_2.mp3" />
+    <Media Include="Sound\Winner.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sound\CONTROLS_MUSIC.S3M" />
+    <None Include="Sound\Match_music_1_fast.mod" />
+    <None Include="Sound\Match_music_1_normal.mod" />
+    <None Include="Sound\Menu_music.s3m" />
+    <None Include="Sound\TITLE_MUSIC.S3M" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

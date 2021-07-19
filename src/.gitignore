@@ -1,0 +1,10 @@
+.vs/
+Debug/
+Release/
+*.bmp
+*.ogg
+*.s3m
+*.mod
+*.aps
+afxres.h
+dinput.lib

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CF0E1EDA-9BF5-4995-B6D9-AA07ED4BEB21}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>16.0.31401.40</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\..\_Test_\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\..\_Test_\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\..\_Test_\Debug/Bombermaaan.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft DirectX SDK (April 2007)\Include;..\DXSDK\INCLUDE;../third-party/SDL_mixer/include;../third-party/SDL/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>STDAFX.H</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Debug/Bombermaaan.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;ddraw.lib;dxguid.lib;dinput.lib;SDLmain.lib;SDL.lib;SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\..\_Test_\Debug/Bombermaaan.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (April 2007)\Lib\x86;../DXSDK/LIB;../third-party/SDL/lib/x86;../third-party/SDL_mixer/lib/x86;../third-party/DXSDK/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\..\_Test_\Debug/Bombermaaan.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>.\Debug/Bombermaaan.map</MapFileName>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\..\_Test_\Release/Bombermaaan.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Program Files\Microsoft DirectX SDK (April 2007)\Include;..\DXSDK\INCLUDE;../third-party/SDL_mixer/include;../third-party/SDL/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>STDAFX.H</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Release/Bombermaaan.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <CompileAs>Default</CompileAs>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040c</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>ws2_32.lib;ddraw.lib;dxguid.lib;dinput.lib;SDLmain.lib;SDL.lib;SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\..\_Test_\Release/Bombermaaan.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>C:\Program Files\Microsoft DirectX SDK (April 2007)\Lib\x86;../DXSDK/LIB;../third-party/SDL/lib/x86;../third-party/SDL_mixer/lib/x86;../third-party/DXSDK/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\third-party\tinyxml\tinystr.cpp" />
+    <ClCompile Include="..\third-party\tinyxml\tinyxml.cpp" />
+    <ClCompile Include="..\third-party\tinyxml\tinyxmlerror.cpp" />
+    <ClCompile Include="..\third-party\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="CAiArena.cpp" />
+    <ClCompile Include="CAiBomber.cpp" />
+    <ClCompile Include="CAiManager.cpp" />
+    <ClCompile Include="CArena.cpp" />
+    <ClCompile Include="CArenaCloser.cpp" />
+    <ClCompile Include="CArenaSnapshot.cpp" />
+    <ClCompile Include="CBoard.cpp" />
+    <ClCompile Include="CBomb.cpp" />
+    <ClCompile Include="CBomber.cpp" />
+    <ClCompile Include="CBomberMove.cpp" />
+    <ClCompile Include="CClock.cpp" />
+    <ClCompile Include="CCloudManager.cpp" />
+    <ClCompile Include="CCommandChunk.cpp" />
+    <ClCompile Include="CConsole.cpp" />
+    <ClCompile Include="CControls.cpp" />
+    <ClCompile Include="CDebug.cpp" />
+    <ClCompile Include="CDemo.cpp" />
+    <ClCompile Include="CDirectDraw.cpp" />
+    <ClCompile Include="CDirectInput.cpp" />
+    <ClCompile Include="CDisplay.cpp" />
+    <ClCompile Include="CDrawGame.cpp" />
+    <ClCompile Include="CElement.cpp" />
+    <ClCompile Include="CExplosion.cpp" />
+    <ClCompile Include="CFloor.cpp" />
+    <ClCompile Include="CFont.cpp" />
+    <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CHurryMessage.cpp" />
+    <ClCompile Include="CInput.cpp" />
+    <ClCompile Include="CItem.cpp" />
+    <ClCompile Include="CLevel.cpp" />
+    <ClCompile Include="CLog.cpp" />
+    <ClCompile Include="CMainInput.cpp" />
+    <ClCompile Include="CMatch.cpp" />
+    <ClCompile Include="CMenu.cpp" />
+    <ClCompile Include="CMenuBase.cpp" />
+    <ClCompile Include="CMenuBomber.cpp" />
+    <ClCompile Include="CMenuInput.cpp" />
+    <ClCompile Include="CMenuLevel.cpp" />
+    <ClCompile Include="CMenuMatch.cpp" />
+    <ClCompile Include="CMenuYesNo.cpp" />
+    <ClCompile Include="CModeScreen.cpp" />
+    <ClCompile Include="CMosaic.cpp" />
+    <ClCompile Include="COptions.cpp" />
+    <ClCompile Include="CPauseMessage.cpp" />
+    <ClCompile Include="CPlayerInput.cpp" />
+    <ClCompile Include="CRandomMosaic.cpp" />
+    <ClCompile Include="CScores.cpp" />
+    <ClCompile Include="CScroller.cpp" />
+    <ClCompile Include="CSound.cpp" />
+    <ClCompile Include="CTitle.cpp" />
+    <ClCompile Include="CVictory.cpp" />
+    <ClCompile Include="CWall.cpp" />
+    <ClCompile Include="CWindow.cpp" />
+    <ClCompile Include="CWinner.cpp" />
+    <ClCompile Include="STDAFX.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\third-party\tinyxml\tinystr.h" />
+    <ClInclude Include="..\third-party\tinyxml\tinyxml.h" />
+    <ClInclude Include="CAiArena.h" />
+    <ClInclude Include="CAiBomber.h" />
+    <ClInclude Include="CAiManager.h" />
+    <ClInclude Include="CArena.h" />
+    <ClInclude Include="CArenaCloser.h" />
+    <ClInclude Include="CArenaSnapshot.h" />
+    <ClInclude Include="CBoard.h" />
+    <ClInclude Include="CBomb.h" />
+    <ClInclude Include="CBomber.h" />
+    <ClInclude Include="CBomberMove.h" />
+    <ClInclude Include="CClock.h" />
+    <ClInclude Include="CCloudManager.h" />
+    <ClInclude Include="CCommandChunk.h" />
+    <ClInclude Include="CConsole.h" />
+    <ClInclude Include="CControls.h" />
+    <ClInclude Include="CDebug.h" />
+    <ClInclude Include="CDemo.h" />
+    <ClInclude Include="CDirectDraw.h" />
+    <ClInclude Include="CDirectInput.h" />
+    <ClInclude Include="CDisplay.h" />
+    <ClInclude Include="CDrawGame.h" />
+    <ClInclude Include="CElement.h" />
+    <ClInclude Include="CExplosion.h" />
+    <ClInclude Include="CFloor.h" />
+    <ClInclude Include="CFont.h" />
+    <ClInclude Include="CGame.h" />
+    <ClInclude Include="CHurryMessage.h" />
+    <ClInclude Include="CInput.h" />
+    <ClInclude Include="CItem.h" />
+    <ClInclude Include="CLevel.h" />
+    <ClInclude Include="CLog.h" />
+    <ClInclude Include="CMainInput.h" />
+    <ClInclude Include="CMatch.h" />
+    <ClInclude Include="CMenu.h" />
+    <ClInclude Include="CMenuBase.h" />
+    <ClInclude Include="CMenuBomber.h" />
+    <ClInclude Include="CMenuInput.h" />
+    <ClInclude Include="CMenuLevel.h" />
+    <ClInclude Include="CMenuMatch.h" />
+    <ClInclude Include="CMenuYesNo.h" />
+    <ClInclude Include="CModeScreen.h" />
+    <ClInclude Include="CMosaic.h" />
+    <ClInclude Include="COptions.h" />
+    <ClInclude Include="CPauseMessage.h" />
+    <ClInclude Include="CPlayerInput.h" />
+    <ClInclude Include="CRandomMosaic.h" />
+    <ClInclude Include="CScores.h" />
+    <ClInclude Include="CScroller.h" />
+    <ClInclude Include="CSound.h" />
+    <ClInclude Include="CTimer.h" />
+    <ClInclude Include="CTitle.h" />
+    <ClInclude Include="CVictory.h" />
+    <ClInclude Include="CWall.h" />
+    <ClInclude Include="CWindow.h" />
+    <ClInclude Include="CWinner.h" />
+    <ClInclude Include="RESOURCE.H" />
+    <ClInclude Include="STDAFX.H" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Bombermaaan.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Bombermaaan.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="doc.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RES\RES.vcxproj">
+      <Project>{e8c3ff7a-c478-4173-970f-6b195606f77f}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <Import Project="finalize.targets" />
+</Project>
