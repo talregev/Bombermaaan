@@ -1,0 +1,45 @@
+name: Linux
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: linux-build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y p7zip-full zip libsdl1.2-dev libSDL-mixer1.2-dev
+          curl -L "https://sourceforge.net/projects/bombermaaan/files/3 - DevelTools/1.4.0.627/Bombermaaan_1.4.0.627_20081018_res.tar.gz" --output Bombermaaan_res.tar.gz
+          tar -xzvf Bombermaaan_res.tar.gz --strip=1 --directory src
+
+      - name: Build
+        if: success()
+        run: cd src && make
+
+      - name: Prepare artifacts for deploy
+        if: success()
+        run: |
+          mkdir output
+          cp src/Bombermaaan/Bombermaaan output
+          cp src/RESGEN/*.so* output
+          cp -R src/_Test_/Release/Levels/ output          
+          strip output/Bombermaaan
+          echo -e '#!'"/bin/sh\nLD_LIBRARY_PATH=. ./Bombermaaan\n" > output/run-bm
+          chmod +x output/run-bm
+          7z a -t7z -mx=9 bombermaaan.7z -r0 output/*
+
+      - uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: bombermaaan_linux_${{ github.event.pull_request.head.sha }}
+          path: bombermaaan.7z

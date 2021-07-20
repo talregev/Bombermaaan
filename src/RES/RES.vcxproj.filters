@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{9989fb31-3661-40ba-baea-74d1bb9902a8}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{1baa2ca3-8534-4c6e-876a-88a64c2d7d49}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{6ad0f019-bca4-4539-a401-3967c295cadb}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RES.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Image\arena_arrows.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_bomber_death.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_bomber_lift.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_bomber_punch.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_bomber_stunt.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_bomber_throw.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_bomber_walk.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_bomber_walk_hold.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\arena_fumes.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="IMAGE\arena_remote_bomb.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\board_drawgame.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\board_heads.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\board_time.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\controls_background.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\controls_background_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\controls_background_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\hurry.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\level_mini_bombers.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\level_mini_tiles.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\menu_background.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\menu_background_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\menu_background_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="IMAGE\menu_frame.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\menu_frame_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\pause.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\title_backg.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\title_bombers.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\title_cloud_1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\title_cloud_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\title_cloud_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\title_menu_items.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\title_title.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\winner_background.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\winner_background_2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Image\winner_background_3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sound\BOMB_BOUNCE.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\BOMB_DROP.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\BOMBER_DEATH.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\BOMBER_LOSE_ITEM.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Bomber_punch.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Bomber_throw.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Break_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Break_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\DRAW_GAME.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_01_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_01_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_02_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_02_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_03_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_03_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_04_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_04_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_05_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_05_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_06_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_06_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_07_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_07_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_08_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_08_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_09_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_09_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_10_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\EXPLOSION_10_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Hurry.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\ITEM_FUMES.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\MENU_BEEP.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\MENU_ERROR.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\MENU_NEXT.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\MENU_PREVIOUS.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Pause.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\PICK_ITEM_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\PICK_ITEM_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\RING_DING.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Sick_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Sick_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Sick_3.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Victory.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\WALL_CLAP_1.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\WALL_CLAP_2.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Sound\Winner.mp3">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sound\CONTROLS_MUSIC.S3M">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Sound\Match_music_1_fast.mod">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Sound\Match_music_1_normal.mod">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Sound\Menu_music.s3m">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Sound\TITLE_MUSIC.S3M">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

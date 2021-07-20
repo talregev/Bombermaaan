@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Screens">
+      <UniqueIdentifier>{26eba1b5-6cf5-4c52-970b-0a3c22c96a51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{61dde283-5819-40b1-82cc-b400d5258a7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{9c98e086-6c26-48ea-830f-e97f77929271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arena">
+      <UniqueIdentifier>{530c607b-bad3-4066-9946-e4fafddf2414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Computer">
+      <UniqueIdentifier>{0da03c85-cc30-43c9-b20c-cce7580dd736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{05fb5c4e-ccb8-4632-8bdb-aabbe151cdf1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CBoard.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CClock.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CCloudManager.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CCommandChunk.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CControls.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CDemo.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CDrawGame.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CHurryMessage.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMatch.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenu.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuBase.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuBomber.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuInput.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuLevel.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuMatch.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMenuYesNo.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CModeScreen.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CMosaic.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CPauseMessage.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CRandomMosaic.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CScroller.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitle.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CVictory.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CWinner.cpp">
+      <Filter>Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CConsole.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirectDraw.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirectInput.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CLog.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CWindow.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="CDebug.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CDisplay.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CFont.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CGame.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CInput.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevel.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainInput.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="COptions.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerInput.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CScores.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CArena.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CArenaCloser.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CArenaSnapshot.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CBomb.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CBomber.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CBomberMove.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CElement.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CExplosion.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CFloor.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CWall.cpp">
+      <Filter>Arena</Filter>
+    </ClCompile>
+    <ClCompile Include="CAiArena.cpp">
+      <Filter>Computer</Filter>
+    </ClCompile>
+    <ClCompile Include="CAiBomber.cpp">
+      <Filter>Computer</Filter>
+    </ClCompile>
+    <ClCompile Include="CAiManager.cpp">
+      <Filter>Computer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third-party\tinyxml\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third-party\tinyxml\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third-party\tinyxml\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\third-party\tinyxml\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="STDAFX.CPP" />
+    <ClCompile Include="WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CBoard.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CClock.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CCloudManager.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CCommandChunk.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CControls.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CDemo.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CDrawGame.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CHurryMessage.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMatch.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenu.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuBase.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuBomber.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuInput.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuLevel.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuMatch.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenuYesNo.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CModeScreen.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CMosaic.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CPauseMessage.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CRandomMosaic.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CScroller.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitle.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CVictory.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CWinner.h">
+      <Filter>Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="CConsole.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirectDraw.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirectInput.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CLog.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CTimer.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CWindow.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="CDebug.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CDisplay.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CFont.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CGame.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CInput.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainInput.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="COptions.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerInput.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CScores.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CArena.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CArenaCloser.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CArenaSnapshot.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CBomb.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CBomber.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CBomberMove.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CElement.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CExplosion.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CFloor.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CWall.h">
+      <Filter>Arena</Filter>
+    </ClInclude>
+    <ClInclude Include="CAiArena.h">
+      <Filter>Computer</Filter>
+    </ClInclude>
+    <ClInclude Include="CAiBomber.h">
+      <Filter>Computer</Filter>
+    </ClInclude>
+    <ClInclude Include="CAiManager.h">
+      <Filter>Computer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third-party\tinyxml\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\third-party\tinyxml\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="RESOURCE.H" />
+    <ClInclude Include="STDAFX.H" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Bombermaaan.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Bombermaaan.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="doc.txt" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,56 @@
+name: Windows
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: windows-build
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Download Dependencies
+        if: ${{ success() }}
+        shell: cmd
+        run: |
+          curl -L "https://sourceforge.net/projects/bombermaaan/files/3 - DevelTools/1.4.0.627/Bombermaaan_1.4.0.627_20081018_res.tar.gz" --output Bombermaaan_res.tar.gz
+          curl -L https://www.libsdl.org/release/SDL-devel-1.2.15-VC.zip --output SDL-devel-1.2.15-VC.zip
+          curl -L https://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.12-VC.zip --output SDL_mixer-devel-1.2.12-VC.zip
+          curl -L https://github.com/milliet/DDReader/raw/master/c/sdk-directx9/Lib/dinput.lib --output dinput.lib
+          curl -L https://github.com/microsoft/Windows-classic-samples/raw/master/Samples/Win7Samples/winui/tsf/tsfcompart/afxres.h --output afxres.h
+          tar -xzvf Bombermaaan_res.tar.gz --strip=1 --directory src
+          7z x SDL-devel-1.2.15-VC.zip -osrc\third-party
+          7z x SDL_mixer-devel-1.2.12-VC.zip -osrc\third-party
+          rename src\third-party\SDL-1.2.15\ SDL
+          rename src\third-party\SDL_mixer-1.2.12\ SDL_mixer
+          mkdir src\third-party\DXSDK\lib
+          copy dinput.lib src\third-party\DXSDK\lib
+          copy afxres.h src\Bombermaaan
+          copy afxres.h src\RES
+          copy afxres.h src\RES32
+
+      - name: Build
+        if: success()
+        run: msbuild src\Bombermaaan-vs2019.sln -p:Configuration=Release -p:Platform=Win32 -m
+   
+      - name: Prepare artifacts for deploy
+        if: success()
+        run: |
+          7z a -t7z -mx=9 bombermaaan.7z -r0 src\_Test_\Release\*
+
+      - uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: bombermaaan_windows_${{ github.event.pull_request.head.sha }}
+          path: bombermaaan.7z
